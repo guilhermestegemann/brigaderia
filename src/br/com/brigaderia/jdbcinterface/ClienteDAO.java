@@ -1,0 +1,15 @@
+package br.com.brigaderia.jdbcinterface;
+
+import java.util.List;
+
+import br.com.brigaderia.objetos.Cliente;
+import br.com.brigaderia.objetos.DadosClientesVO;
+
+public interface ClienteDAO {
+	
+	public boolean cadastrar (Cliente cliente);
+	public List<DadosClientesVO> buscarClientes (String valorBusca);
+	public boolean deletar (int codigo);
+	public Cliente buscarPeloCodigo(int codigo);
+	public boolean atualizar (Cliente cliente);
+}

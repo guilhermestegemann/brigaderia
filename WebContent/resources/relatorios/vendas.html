@@ -1,0 +1,111 @@
+<link rel="stylesheet" type="text/css" href="resources/relatorios/vendas-estoque.css">
+
+<div class='jumbotron'>
+	<h1>Vendas</h1>
+	<hr>
+	<div class="col-sm-12 row">
+		<form >
+			<div class="form-group col-sm-12" id="radioButtons">
+				<label for="rdbtnTipoRelatorio">Tipo Relatório</label><br/>
+				<label><input type="radio" name="rdbtnTipoRelatorio"> Produtos</label>
+				<label><input type="radio" name="rdbtnTipoRelatorio"> Clientes</label>
+			</div>
+			<div class="form-group col-sm-6">
+				<input type="text" class="form-control" placeholder="Informe um cliente para filtrar sua busca...">
+			</div>
+			<div class="form-group col-sm-6">
+				<input type="text" class="form-control" placeholder="Informe um produto para filtrar sua busca..."/>
+			</div>
+			<div class="form-group col-sm-2">
+				<input type="text" class="form-control datePicker" placeholder="Data Início"/>
+			</div>
+			<div class="form-group col-sm-2">
+				<input type="text" class="form-control datePicker" placeholder="Data Fim"/>
+			</div>
+			<div class="form-group col-sm-2">
+				<input type="text" class="form-control" placeholder="Número de Registros"/>
+			</div>
+			<div class="form-group col-sm-3">
+				<label for="rdbtnOrdenacao">Ordenação</label><br/>
+				<label><input type="radio" name="rdbtnOrdenacao"> Valor Venda</label>
+				<label><input type="radio" name="rdbtnOrdenacao"> Quantidade</label>
+			</div>
+			<div class="checkbox form-group col-sm-2">
+				<label><input type="checkbox" id='ordenaDecrescente' name='ordenaDecrescente'><strong> Ordenação Decrescente</strong></label>
+			</div>
+			<button class="btn btn-success col-sm-12" type="button">Visualizar</button>
+		</form>
+	</div>
+</div>
+<div class="col-sm-12">
+	<table class='table col-sm-12'>
+		<thead>
+			<tr>
+				<th>Código</th>
+				<th>Nome</th>
+				<th>Quantidade</th>
+				<th>Total Venda</th>
+				<th>Venda/Total</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>35</td>
+				<td>Leite Condensado</td>
+				<td>17</td>
+				<td>120.00</td>
+				<td>50%</td>
+			</tr>
+			<tr>
+				<td>35</td>
+				<td>Leite Condensado</td>
+				<td>17</td>
+				<td>120.00</td>
+				<td>50%</td>
+			</tr>
+			<tr>
+				<td>35</td>
+				<td>Leite Condensado</td>
+				<td>17</td>
+				<td>120.00</td>
+				<td>50%</td>
+			</tr>
+			<tr>
+				<td>35</td>
+				<td>Leite Condensado</td>
+				<td>17</td>
+				<td>120.00</td>
+				<td>50%</td>
+			</tr>
+			<tr>
+				<td>35</td>
+				<td>Leite Condensado</td>
+				<td>17</td>
+				<td>120.00</td>
+				<td>50%</td>
+			</tr>
+			<tr>
+				<td>35</td>
+				<td>Leite Condensado</td>
+				<td>17</td>
+				<td>120.00</td>
+				<td>50%</td>
+			</tr>
+			<tr>
+				<td>35</td>
+				<td>Leite Condensado</td>
+				<td>17</td>
+				<td>120.00</td>
+				<td>50%</td>
+			</tr>
+			<tr>
+				<td>35</td>
+				<td>Leite Condensado</td>
+				<td>17</td>
+				<td>120.00</td>
+				<td>50%</td>
+			</tr>
+			
+		</tbody>
+	</table>
+</div>

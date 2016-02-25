@@ -1,0 +1,47 @@
+<div class='jumbotron'>
+	<h1>Cadastro de Produtos</h1>
+	<hr>
+	<form method='POST' role='form' class='form-group' action=''>
+		<div class="form-group col-sm-6">
+			<label for='txtDescricao'>Descrição</label>
+			<input type="text" class="form-control" id="txtDescricao" name="txtDescricao" />
+		</div>
+		<div class="form-group col-sm-2">
+			<label for='txtQtdeEntrada'>Qtde Entrada</label>
+			<input type="text" class="form-control" id="txtQtdeEntrada" name="txtQtdeEntrada" />
+		</div>
+		<div class="form-group col-sm-2">
+			<label for='txtUnEntrada'>UN Entrada</label>
+			<input type="text" class="form-control" id="txtUnEntrada" name="txtUnEntrada" />
+		</div>
+		<div class="form-group col-sm-2">
+			<label for='txtValorCusto'>Valor Custo</label>
+			<input type="text" class="form-control" id="txtValorCusto" name="txtValorCusto" />
+		</div>
+		<div class="form-group col-sm-2">
+			<label for='txtEstoque'>Estoque</label>
+			<input type="text" class="form-control" id="txtEstoque" name="txtEstoque" />
+		</div>
+		<div class="form-group col-sm-2">
+			<label for='txtUnEstoque'>UN Estoque</label>
+			<input type="text" class="form-control" id="txtUnEstoque" name="txtUnEstoque" />
+		</div>
+		<div class="form-group col-sm-2">
+			<label for='txtMargem'>Margem</label>
+			<input type="text" class="form-control" id="txtMargem" name="txtMargem" />
+		</div>
+		<div class="form-group col-sm-2">
+			<label for='txtValorVenda'>Valor Venda</label>
+			<input type="text" class="form-control" id="txtValorVenda" name="txtValorVenda" />
+		</div>
+		<div class="form-group col-sm-3">
+			<label for="cbxtipoItem">Tipo Item</label>
+			<select class="form-control" id="cbxTipoItem" name="cbxTipoItem"></select>
+		</div>
+
+		<div class="btn pull-right form-group">
+			<button class="btn btn-primary btn-lg" type="button">Salvar</button>
+			<button class="btn btn-danger btn-lg" onclick= "carregarConteudo('resources/gerenciar/gerenciarProdutos.html')" type="button">Cancelar</button>
+		</div>
+	</form>
+</div>

@@ -1,0 +1,35 @@
+<script type="text/javascript" src="resources/cadastro/js/cliente-service.js"></script>
+<script type="text/javascript" src="resources/gerenciar/js/gerenciarClientes.js"></script>
+<script type="text/javascript" src="resources/js/convertData.js"></script>
+
+
+<div class='jumbotron container-fluid'>
+	<h1>Clientes</h1>
+	<hr>
+	<div class="">
+		<div class="input-group col-sm-9">
+			<input type="text" class="form-control col-sm-6" id="buscaCliente" placeholder="Procure pelo Cliente...">
+			<span class="input-group-btn">
+				<button class="btn btn-success" id="buttonPesquisar" type="button">Pesquisar</button>
+			</span>
+			<button class='btn btn-primary btn pull-right' onclick="BRIGADERIA.gerenciarClientes.cadastrarCliente()">Cadastrar Cliente</button>
+		</div>
+	</div>
+	
+	<table id="resultadoClientes" class='table col-sm-12'>
+		<thead>
+			<tr>
+				<th><strong>Cód. Cliente</strong></th>
+				<th>Nome</th>
+				<th>Cidade</th>
+				<th>Bairro</th>
+				<th>Última Venda</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+		
+		</tbody>
+	</table>
+</div>
+  

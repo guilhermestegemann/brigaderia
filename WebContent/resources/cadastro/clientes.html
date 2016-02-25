@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/plain; charset=UTF-8">
+<title>Consulta de Cliente</title>
+
+<script type="text/javascript" src="resources/cadastro/js/cliente-service.js"></script>
+<script type="text/javascript" src="resources/cadastro/js/bairro.js"></script>
+<script type="text/javascript" src="resources/cadastro/js/cidade.js"></script>
+<script type="text/javascript" src="resources/cadastro/js/clientes.js"></script>
+<script type="text/javascript" src="resources/js/convertData.js"></script>
+</head>
+<body>
+<div class='jumbotron container-fluid'>
+	<h1 id="titulo">Cadastro de Clientes</h1>
+	<hr>
+	<form method='POST' role='form' class='form-group' action=''>
+		<div class="form-group col-sm-6">
+			<label for='nome'>*Nome</label>
+			<input type="text" class="form-control" id="nome" name="nome" />
+		</div>
+		<div class="form-group col-sm-3">
+			<label for='rg'>R.G</label>
+			<input type="text" class="form-control" id="rg" name="rg" />
+		</div>
+		<div class="form-group col-sm-3">
+			<label for='cpf'>CPF</label>
+			<input type="text" class="form-control" id="cpf" name="cpf" />
+		</div>
+		<div class="form-group col-sm-7">
+			<label for='endereco'>Endereco</label>
+			<input type="text" class="form-control" id="endereco" name="endereco" />
+		</div>
+		<div class="form-group col-sm-2">
+			<label for='numero'>Número</label>
+			<input type="text" class="form-control" id="numero" name="numero" />
+		</div>
+		<div class="form-group col-sm-3">
+			<label for='complemento'>Complemento</label>
+			<input type="text" class="form-control" id="complemento" name="complemento" />
+		</div>
+		<div class="form-group col-sm-3">
+			<label for='cep'>CEP</label>
+			<input type="text" class="form-control" id="cep" name="cep" />
+		</div>
+		<div class="form-group col-sm-3">
+			<label for='cidade'>Cidade</label>
+			<select class="form-control" id="cidade" name="cidade">
+			<option value="">Selecione</option>
+			</select>
+		</div>
+		<div class="form-group col-sm-3">
+			<label for='bairro'>Bairro</label>
+			<select class="form-control" id="bairro" name="bairro">
+			<option value="">Selecione</option>
+			</select>
+		</div>		
+		<div class="form-group col-sm-3">
+			<label for='aniversario'>Data de Nascimento</label>
+			<input type="text" class="form-control" id="aniversario" name="aniversario" />
+		</div>
+		<div class="form-group col-sm-5">
+			<label for='email'>Email</label>
+			<input type="text" class="form-control" id="email" name="email" />
+		</div>
+		<div class="form-group col-sm-2">
+			<label for='telefone'>Telefone</label>
+			<input type="text" class="form-control" id="telefone" name="telefone" />
+		</div>
+		<div class="form-group col-sm-2">
+			<label for='celular'>Celular</label>
+			<input type="text" class="form-control" id="celular" name="celular" />
+		</div>
+		<div class="form-group col-sm-3">
+			<label for='dataCadastro'>Data do Cadastro</label>
+			<input type="text" class="form-control" id="dataCadastro" name="dataCadastro" readonly/>
+		</div>
+		<div class="btn pull-right form-group">
+			<br/><br/><br/><br/>
+			<button class="btn btn-primary btn-lg" onclick= "BRIGADERIA.clientes.adicionar()" type="button" id="btnConfirmar">Salvar</button>
+			<button class="btn btn-danger btn-lg" onclick= "carregarConteudo('resources/gerenciar/gerenciarClientes.html')" type="button">Cancelar</button>
+		</div>
+	</form>
+</div>
+</body>
+</html>
+
