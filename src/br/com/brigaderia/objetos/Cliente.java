@@ -22,13 +22,20 @@ public class Cliente implements Serializable{
 	private int cep;
 	private int bairro;
 	private int cidade;
-	private Date aniversario;
+	private Date aniversarioDate;
+	private String aniversario;
 	private Date dataCadastro;
 	private String email;
 	private Long telefone;
 	private Long celular;
 	
 	
+	public Date getAniversarioDate() {
+		return aniversarioDate;
+	}
+	public void setAniversarioDate(Date aniversarioDate) {
+		this.aniversarioDate = aniversarioDate;
+	}
 	public int getCodigo() {
 		return codigo;
 	}
@@ -89,10 +96,10 @@ public class Cliente implements Serializable{
 	public void setCidade(int cidade) {
 		this.cidade = cidade;
 	}
-	public Date getAniversario() {
+	public String getAniversario() {
 		return aniversario;
 	}
-	public void setAniversario(Date aniversario) {
+	public void setAniversario(String aniversario) {
 		this.aniversario = aniversario;
 	}
 	public Date getDataCadastro() {

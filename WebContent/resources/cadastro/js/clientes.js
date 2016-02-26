@@ -68,7 +68,9 @@ $(document).ready(function() {
 				}
 				BRIGADERIA.clientes.listarCidade(cliente.cidade);
 				BRIGADERIA.clientes.listarBairro(cliente.bairro);
-				$("#aniversario").val(BRIGADERIA.convertData.dateToStr(cliente.aniversario));
+				if (cliente.aniversario != null) {
+					$("#aniversario").val(BRIGADERIA.convertData.dateToStr(cliente.aniversario));
+				}
 				$("#email").val(cliente.email);
 				if (cliente.telefone != "0") {
 					$("#telefone").val(cliente.telefone);
@@ -97,7 +99,9 @@ $(document).ready(function() {
 		newCliente.cep = $("#cep").val().replace(/[^\d]+/g,'');
 		newCliente.telefone = $("#telefone").val().replace(/[^\d]+/g,'');
 		newCliente.celular = $("#celular").val().replace(/[^\d]+/g,'');
-		newCliente.aniversario = BRIGADERIA.convertData.strToDate(newCliente.aniversario);
+		if (newCliente.aniversario != "") {
+			newCliente.aniversario = BRIGADERIA.convertData.strToDate(newCliente.aniversario);
+		}
 		BRIGADERIA.clienteService.adicionar(newCliente);
 	};
 	

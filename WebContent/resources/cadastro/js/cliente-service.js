@@ -40,6 +40,9 @@ $(document).ready(function() {
 			success : function (sucesso) {
 				bootbox.alert(sucesso);
 				carregarConteudo ('resources/gerenciar/gerenciarClientes.html');
+			},
+			error : function (err) {
+				bootbox.alert(err.ResponseText);
 			}
 		};
 		BRIGADERIA.ajax.post(BRIGADERIA.clienteService.defaultCfg(cfg));

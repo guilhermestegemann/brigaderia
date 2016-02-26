@@ -43,7 +43,11 @@ public class JDBCClienteDAO implements ClienteDAO{
 			p.setInt(7, cliente.getCep());
 			p.setInt(8, cliente.getCidade());
 			p.setInt(9, cliente.getBairro());
-			p.setDate(10, new java.sql.Date(cliente.getAniversario().getTime()));
+			if (cliente.getAniversario() == null) {
+				p.setDate(10, null);
+			}else{
+				p.setDate(10, new java.sql.Date(cliente.getAniversarioDate().getTime()));
+			}
 			p.setString(11, cliente.getEmail());
 			if (cliente.getTelefone() == null) {
 				p.setLong(12, 0);
@@ -153,7 +157,7 @@ public class JDBCClienteDAO implements ClienteDAO{
 				cliente.setCep(cep);
 				cliente.setBairro(bairro);
 				cliente.setCidade(cidade);
-				cliente.setAniversario(aniversario);
+				cliente.setAniversarioDate(aniversario);
 				cliente.setDataCadastro(dataCadastro);
 				cliente.setEmail(email);
 				cliente.setTelefone(telefone);
@@ -193,7 +197,7 @@ public class JDBCClienteDAO implements ClienteDAO{
 	    	p.setInt(7, cliente.getCep());
 	    	p.setInt(8, cliente.getBairro());
 	    	p.setInt(9, cliente.getCidade());
-	    	p.setDate(10, new java.sql.Date(cliente.getAniversario().getTime()));
+	    	p.setDate(10, new java.sql.Date(cliente.getAniversarioDate().getTime()));
 	    	p.setString(11, cliente.getEmail());
 			if (cliente.getTelefone() == null) {
 				p.setLong(12, 0);

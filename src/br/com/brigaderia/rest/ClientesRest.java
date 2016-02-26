@@ -2,7 +2,6 @@ package br.com.brigaderia.rest;
 
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -23,39 +22,25 @@ import br.com.brigaderia.jdbc.JDBCClienteDAO;
 import br.com.brigaderia.jdbcinterface.ClienteDAO;
 import br.com.brigaderia.objetos.Cliente;
 import br.com.brigaderia.objetos.DadosClientesVO;
+import br.com.brigaderia.service.ClienteService;
 
 
 @Path("clientes")
 
 public class ClientesRest extends UtilRest{
 	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	
-	public Response listar() {
-		return super.buildResponse(new ArrayList<Cliente>());
-	}
 	
 	@POST
 	@Path ("/adicionar")
 	@Consumes(MediaType.APPLICATION_JSON)
 	
 	public Response adicionar(String param) {
+		
 		try {
 			Cliente cliente = new ObjectMapper().readValue(param, Cliente.class);
-			Date d = new Date();
-			cliente.setDataCadastro(d);
-			Conexao conec = new Conexao();
-			Connection conexao = conec.abrirConexao();
-			ClienteDAO jdbcCliente = new JDBCClienteDAO(conexao);
-			boolean retorno = jdbcCliente.cadastrar(cliente);
-			conec.fecharConexao();
-			
-			if (retorno) {
-				return super.buildResponse("Cliente cadastrado com sucesso");
-			}else{
-				return super.buildErrorResponse("Erro ao cadastrar cliente!");
-			}
+			ClienteService service = new ClienteService();
+			service.adicionarCliente(cliente);
+			return super.buildResponse("Cliente cadastrado com sucesso");
 		}catch (Exception e){
 			e.printStackTrace();
 			return super.buildErrorResponse(e.getMessage());
@@ -106,11 +91,8 @@ public class ClientesRest extends UtilRest{
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	public Response buscarClientePeloCodigo(@PathParam("codigo")int codigo) {
 		try {
-			Conexao conec = new Conexao();
-			Connection conexao = conec.abrirConexao();
-			ClienteDAO jdbcCliente = new JDBCClienteDAO(conexao);
-			Cliente cliente = jdbcCliente.buscarPeloCodigo(codigo);
-			return this.buildResponse(cliente);
+			ClienteService service = new ClienteService(); 
+			return this.buildResponse(service.buscarClientePeloCodigo(codigo));
 		}catch (Exception e) {
 			e.printStackTrace();
 			return this.buildErrorResponse(e.getMessage());
