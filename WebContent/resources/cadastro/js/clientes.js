@@ -99,6 +99,13 @@ $(document).ready(function() {
 		newCliente.cep = $("#cep").val().replace(/[^\d]+/g,'');
 		newCliente.telefone = $("#telefone").val().replace(/[^\d]+/g,'');
 		newCliente.celular = $("#celular").val().replace(/[^\d]+/g,'');
+		//debugger;
+		if (newCliente.cidade == "") {
+			newCliente.cidade = null;
+		}
+		if (newCliente.bairro == "") {
+			newCliente.bairro = null;
+		}
 		if (newCliente.aniversario != "") {
 			newCliente.aniversario = BRIGADERIA.convertData.strToDate(newCliente.aniversario);
 		}
@@ -112,7 +119,9 @@ $(document).ready(function() {
 		cliente.cep = $("#cep").val().replace(/[^\d]+/g,'');
 		cliente.telefone = $("#telefone").val().replace(/[^\d]+/g,'');
 		cliente.celular = $("#celular").val().replace(/[^\d]+/g,'');
-		cliente.aniversario = BRIGADERIA.convertData.strToDate(cliente.aniversario);
+		if (cliente.aniversario != "") {
+			cliente.aniversario = BRIGADERIA.convertData.strToDate(cliente.aniversario);
+		}
 		cliente.dataCadastro = BRIGADERIA.convertData.strToDate(cliente.dataCadastro);
 		cliente.codigo = $("#codigo").val();
 		BRIGADERIA.clienteService.atualizar(cliente);

@@ -1,9 +1,5 @@
 package br.com.brigaderia.rest;
 
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -17,11 +13,7 @@ import javax.ws.rs.core.Response;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import br.com.brigaderia.bd.conexao.Conexao;
-import br.com.brigaderia.jdbc.JDBCClienteDAO;
-import br.com.brigaderia.jdbcinterface.ClienteDAO;
 import br.com.brigaderia.objetos.Cliente;
-import br.com.brigaderia.objetos.DadosClientesVO;
 import br.com.brigaderia.service.ClienteService;
 
 
@@ -54,15 +46,9 @@ public class ClientesRest extends UtilRest{
 	public Response buscarClientes (@PathParam("valorBusca") String valorBusca) {
 		
 		try {
-			List<DadosClientesVO> dadosClientesVO = new ArrayList<DadosClientesVO>();
-			
-			Conexao conec = new Conexao();
-			Connection conexao = conec.abrirConexao();
-			ClienteDAO jdbcCliente = new JDBCClienteDAO(conexao);
-			dadosClientesVO = jdbcCliente.buscarClientes(valorBusca);
-			conec.fecharConexao();
-			
-			return this.buildResponse(dadosClientesVO);
+			//List<DadosClientesVO> dadosClientesVO = new ArrayList<DadosClientesVO>();
+			ClienteService service = new ClienteService();
+			return this.buildResponse(service.buscarClientesVO(valorBusca));
 		}catch(Exception e) {
 			e.printStackTrace();
 			return this.buildErrorResponse(e.getMessage());
@@ -75,10 +61,8 @@ public class ClientesRest extends UtilRest{
 	
 	public Response deletar (@PathParam("codigo") int codigo) {
 		try {
-			Conexao conec = new Conexao();
-			Connection conexao = conec.abrirConexao();
-			ClienteDAO jdbcCliente = new JDBCClienteDAO(conexao);
-			jdbcCliente.deletar(codigo);
+			ClienteService service = new ClienteService();
+			service.deletarCliente(codigo);
 			return this.buildResponse("Cliente deletado!");
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -105,11 +89,8 @@ public class ClientesRest extends UtilRest{
 	public Response atualizar (String clienteEditado) {
 		try {
 			Cliente cliente = new ObjectMapper().readValue(clienteEditado, Cliente.class);
-			Conexao conec = new Conexao();
-			Connection conexao = conec.abrirConexao();
-			ClienteDAO jdbcCliente = new JDBCClienteDAO(conexao);
-			jdbcCliente.atualizar(cliente);
-			conec.fecharConexao();
+			ClienteService service = new ClienteService();
+			service.atualizarCliente(cliente);
 			return this.buildResponse("Cliente editado com sucesso.");
 		}catch (Exception e) {
 			e.printStackTrace();

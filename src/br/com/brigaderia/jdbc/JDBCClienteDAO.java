@@ -14,6 +14,7 @@ import java.util.List;
 
 
 
+
 import br.com.brigaderia.jdbcinterface.ClienteDAO;
 import br.com.brigaderia.objetos.Cliente;
 import br.com.brigaderia.objetos.DadosClientesVO;
@@ -43,7 +44,7 @@ public class JDBCClienteDAO implements ClienteDAO{
 			p.setInt(7, cliente.getCep());
 			p.setInt(8, cliente.getCidade());
 			p.setInt(9, cliente.getBairro());
-			if (cliente.getAniversario() == null) {
+			if (cliente.getAniversario() == "") {
 				p.setDate(10, null);
 			}else{
 				p.setDate(10, new java.sql.Date(cliente.getAniversarioDate().getTime()));
@@ -197,7 +198,11 @@ public class JDBCClienteDAO implements ClienteDAO{
 	    	p.setInt(7, cliente.getCep());
 	    	p.setInt(8, cliente.getBairro());
 	    	p.setInt(9, cliente.getCidade());
-	    	p.setDate(10, new java.sql.Date(cliente.getAniversarioDate().getTime()));
+	    	if (cliente.getAniversarioDate() != null) {
+	    		p.setDate(10, new java.sql.Date(cliente.getAniversarioDate().getTime()));
+	    	}else {
+	    		p.setDate(10, null);
+	    	}
 	    	p.setString(11, cliente.getEmail());
 			if (cliente.getTelefone() == null) {
 				p.setLong(12, 0);
