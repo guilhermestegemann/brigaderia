@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import br.com.brigaderia.exception.ClienteComPedidoException;
 import br.com.brigaderia.objetos.Cliente;
 import br.com.brigaderia.service.ClienteService;
 
@@ -34,7 +35,6 @@ public class ClientesRest extends UtilRest{
 			service.adicionarCliente(cliente);
 			return super.buildResponse("Cliente cadastrado com sucesso");
 		}catch (Exception e){
-			e.printStackTrace();
 			return super.buildErrorResponse(e.getMessage());
 		}
 	}
@@ -46,7 +46,7 @@ public class ClientesRest extends UtilRest{
 	public Response buscarClientes (@PathParam("valorBusca") String valorBusca) {
 		
 		try {
-			//List<DadosClientesVO> dadosClientesVO = new ArrayList<DadosClientesVO>();
+			
 			ClienteService service = new ClienteService();
 			return this.buildResponse(service.buscarClientesVO(valorBusca));
 		}catch(Exception e) {
@@ -64,7 +64,7 @@ public class ClientesRest extends UtilRest{
 			ClienteService service = new ClienteService();
 			service.deletarCliente(codigo);
 			return this.buildResponse("Cliente deletado!");
-		}catch (Exception e) {
+		}catch (ClienteComPedidoException e) {
 			e.printStackTrace();
 			return this.buildErrorResponse(e.getMessage());
 		}

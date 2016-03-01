@@ -87,7 +87,6 @@ public class JDBCClienteDAO implements ClienteDAO{
 		try {
 			Statement stmt = conexao.createStatement();
 			ResultSet rs = stmt.executeQuery(comando);
-			dadosClientesVO = new DadosClientesVO();
 			while(rs.next()) {
 				dadosClientesVO = new DadosClientesVO();
 				int codCliente = rs.getInt("CODIGOCLIENTE");

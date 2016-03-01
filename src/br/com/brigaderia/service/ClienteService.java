@@ -8,19 +8,19 @@ import java.util.List;
 
 import br.com.brigaderia.bd.conexao.Conexao;
 import br.com.brigaderia.exception.BrigaderiaException;
+import br.com.brigaderia.exception.ClienteComPedidoException;
 import br.com.brigaderia.jdbc.JDBCClienteDAO;
+import br.com.brigaderia.jdbc.JDBCPedidoDAO;
 import br.com.brigaderia.jdbcinterface.ClienteDAO;
+import br.com.brigaderia.jdbcinterface.PedidoDAO;
 import br.com.brigaderia.objetos.Cliente;
 import br.com.brigaderia.objetos.DadosClientesVO;
 
 public class ClienteService {
 	
-	public void adicionarCliente (Cliente cliente) throws BrigaderiaException{
+	public void adicionarCliente (Cliente cliente) {
 		Conexao conec = new Conexao();
-		if (cliente.getAniversario() != "") {
-			throw new BrigaderiaException();
 		
-		}
 		try {
 			Connection conexao = conec.abrirConexao();
 			Date dataCadastro = new Date();
@@ -53,11 +53,9 @@ public class ClienteService {
 				cliente.setAniversario((String)formatter.format(dataAniversario));
 			}
 			
-			
 			return cliente;
 			
 		}catch (Exception e) {
-			e.printStackTrace();
 			throw new BrigaderiaException();
 		}finally{
 			conec.fecharConexao();
@@ -83,14 +81,16 @@ public class ClienteService {
 		}
 	}
 	
-	public void deletarCliente (int codigo) {
+	public void deletarCliente (int codigo) throws ClienteComPedidoException{
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
+			PedidoDAO jdbcPedido = new JDBCPedidoDAO(conexao);
+			jdbcPedido.verificaPedidoCliente(codigo);
 			ClienteDAO jdbcCliente = new JDBCClienteDAO(conexao);
 			jdbcCliente.deletar(codigo);
-		}catch (Exception e) {
-			e.printStackTrace();
+		}catch (ClienteComPedidoException e) {
+			throw e;
 		}finally {
 			conec.fecharConexao();
 		}

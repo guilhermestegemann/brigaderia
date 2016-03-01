@@ -70,8 +70,7 @@ $(document).ready(function() {
 							BRIGADERIA.gerenciarClientes.buscar();
 						},
 						error: function(err) {
-							console.log(err);
-							bootbox.alert("Erro ao deletar funcionário");
+							bootbox.alert(err.responseText);
 						}
 					})
 				}
