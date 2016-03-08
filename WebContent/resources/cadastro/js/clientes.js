@@ -93,6 +93,7 @@ $(document).ready(function() {
 	};
 	
 	BRIGADERIA.clientes.adicionar = function () {
+		
 		var newCliente = new Object();
 		$('form input, form select').each(function(){newCliente[this.name]=this.value;})
 		newCliente.cep = $("#cep").val().replace(/[^\d]+/g,'');
@@ -100,16 +101,22 @@ $(document).ready(function() {
 		newCliente.celular = $("#celular").val().replace(/[^\d]+/g,'');
 		newCliente.cpf = $("#cpf").val().replace(/[^\d]+/g,'');
 		newCliente.rg = $("#rg").val().replace(/[^\d]+/g,'');
-		if (newCliente.cidade == "") {
-			newCliente.cidade = null;
+		retornoValida = BRIGADERIA.validaClientes.validar(newCliente);
+		if (retornoValida == "") {
+			if (newCliente.cidade == "") {
+				newCliente.cidade = null;
+			}
+			if (newCliente.bairro == "") {
+				newCliente.bairro = null;
+			}
+			if (newCliente.aniversario != "") {
+				newCliente.aniversario = BRIGADERIA.convertData.strToDate(newCliente.aniversario);
+			}
+			BRIGADERIA.clienteService.adicionar(newCliente);
+		}else{
+			bootbox.alert("Favor verificar os campos obrigatórios: " + retornoValida);
 		}
-		if (newCliente.bairro == "") {
-			newCliente.bairro = null;
-		}
-		if (newCliente.aniversario != "") {
-			newCliente.aniversario = BRIGADERIA.convertData.strToDate(newCliente.aniversario);
-		}
-		BRIGADERIA.clienteService.adicionar(newCliente);
+		
 	};
 	
 	BRIGADERIA.clientes.salvarEdicao = function () {
