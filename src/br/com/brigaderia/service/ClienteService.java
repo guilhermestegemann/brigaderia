@@ -9,22 +9,27 @@ import java.util.List;
 import br.com.brigaderia.bd.conexao.Conexao;
 import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.exception.ClienteComPedidoException;
+import br.com.brigaderia.exception.CpfInvalidoException;
+import br.com.brigaderia.exception.ValidaClientesException;
 import br.com.brigaderia.jdbc.JDBCClienteDAO;
 import br.com.brigaderia.jdbc.JDBCPedidoDAO;
 import br.com.brigaderia.jdbcinterface.ClienteDAO;
 import br.com.brigaderia.jdbcinterface.PedidoDAO;
 import br.com.brigaderia.objetos.Cliente;
 import br.com.brigaderia.objetos.DadosClientesVO;
+import br.com.brigaderia.validacoes.ValidaCliente;
 
 public class ClienteService {
 	
-	public void adicionarCliente (Cliente cliente) {
+	public void adicionarCliente (Cliente cliente) throws ValidaClientesException, CpfInvalidoException{
 		Conexao conec = new Conexao();
 		
 		try {
 			Connection conexao = conec.abrirConexao();
 			Date dataCadastro = new Date();
 			cliente.setDataCadastro(dataCadastro);
+			ValidaCliente validaCliente = new ValidaCliente();
+			validaCliente.validarCliente(cliente);
 			DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			if (cliente.getAniversario() != "") {
 				String aniversarioStr = cliente.getAniversario();
@@ -34,7 +39,11 @@ public class ClienteService {
 			
 			ClienteDAO jdbcCliente = new JDBCClienteDAO(conexao);
 			jdbcCliente.cadastrar(cliente);
-		}catch (Exception e) {
+		}catch (ValidaClientesException e) {
+			throw e;
+		}catch (CpfInvalidoException e) {
+			throw e;
+		}catch (Exception e){
 			e.printStackTrace();
 		}finally {
 			conec.fecharConexao();
@@ -62,11 +71,13 @@ public class ClienteService {
 		}	
 	}
 	
-	public void atualizarCliente (Cliente cliente) {
+	public void atualizarCliente (Cliente cliente) throws ValidaClientesException, CpfInvalidoException{
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
 			ClienteDAO jdbcCliente = new JDBCClienteDAO(conexao);
+			ValidaCliente validaCliente = new ValidaCliente();
+			validaCliente.validarCliente(cliente);
 			DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			if (cliente.getAniversario() != "") {
 				String aniversarioStr = cliente.getAniversario();
@@ -74,6 +85,10 @@ public class ClienteService {
 				cliente.setAniversarioDate(dataAniversario);
 			}
 			jdbcCliente.atualizar(cliente);
+		}catch (ValidaClientesException e) {
+			throw e;
+		}catch (CpfInvalidoException e) {
+			throw e;
 		}catch (Exception e) {
 			e.printStackTrace();
 		}finally{

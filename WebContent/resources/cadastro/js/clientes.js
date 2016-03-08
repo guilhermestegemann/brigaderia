@@ -93,13 +93,13 @@ $(document).ready(function() {
 	};
 	
 	BRIGADERIA.clientes.adicionar = function () {
-		
 		var newCliente = new Object();
 		$('form input, form select').each(function(){newCliente[this.name]=this.value;})
 		newCliente.cep = $("#cep").val().replace(/[^\d]+/g,'');
 		newCliente.telefone = $("#telefone").val().replace(/[^\d]+/g,'');
 		newCliente.celular = $("#celular").val().replace(/[^\d]+/g,'');
-		//debugger;
+		newCliente.cpf = $("#cpf").val().replace(/[^\d]+/g,'');
+		newCliente.rg = $("#rg").val().replace(/[^\d]+/g,'');
 		if (newCliente.cidade == "") {
 			newCliente.cidade = null;
 		}
@@ -119,6 +119,8 @@ $(document).ready(function() {
 		cliente.cep = $("#cep").val().replace(/[^\d]+/g,'');
 		cliente.telefone = $("#telefone").val().replace(/[^\d]+/g,'');
 		cliente.celular = $("#celular").val().replace(/[^\d]+/g,'');
+		cliente.cpf = $("#cpf").val().replace(/[^\d]+/g,'');
+		cliente.rg = $("#rg").val().replace(/[^\d]+/g,'');
 		if (cliente.aniversario != "") {
 			cliente.aniversario = BRIGADERIA.convertData.strToDate(cliente.aniversario);
 		}

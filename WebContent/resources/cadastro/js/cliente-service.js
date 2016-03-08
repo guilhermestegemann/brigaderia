@@ -42,7 +42,7 @@ $(document).ready(function() {
 				carregarConteudo ('resources/gerenciar/gerenciarClientes.html');
 			},
 			error : function (err) {
-				bootbox.alert(err.ResponseText);
+				bootbox.alert(err.responseText);
 			}
 		};
 		BRIGADERIA.ajax.post(BRIGADERIA.clienteService.defaultCfg(cfg));
@@ -55,6 +55,9 @@ $(document).ready(function() {
 			success : function(sucesso) {
 				bootbox.alert(sucesso);
 				carregarConteudo ('resources/gerenciar/gerenciarClientes.html');
+			},
+			error : function (err) {
+				bootbox.alert(err.responseText);
 			}
 		};
 		BRIGADERIA.ajax.put(BRIGADERIA.clienteService.defaultCfg(cfg));
