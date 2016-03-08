@@ -49,7 +49,7 @@ $(document).ready(function() {
 	};
 
 	BRIGADERIA.clientes.exibirEdicao = function (codigo) {
-		var html = "<input type='text' class='form-control' id='codigo' name='codigo' />";
+		var html = "<input type='text' class='form-control' id='codigo' name='codigo' style='display:none' />";
 		$("#conteudo").append(html);
 		BRIGADERIA.clienteService.buscarClientePeloCodigo({
 			codigo : codigo,

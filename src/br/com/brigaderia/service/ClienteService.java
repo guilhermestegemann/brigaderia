@@ -9,6 +9,7 @@ import java.util.List;
 import br.com.brigaderia.bd.conexao.Conexao;
 import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.exception.ClienteComPedidoException;
+import br.com.brigaderia.exception.CpfDuplicadoException;
 import br.com.brigaderia.exception.CpfInvalidoException;
 import br.com.brigaderia.exception.ValidaClientesException;
 import br.com.brigaderia.jdbc.JDBCClienteDAO;
@@ -21,27 +22,29 @@ import br.com.brigaderia.validacoes.ValidaCliente;
 
 public class ClienteService {
 	
-	public void adicionarCliente (Cliente cliente) throws ValidaClientesException, CpfInvalidoException{
+	public void adicionarCliente (Cliente cliente) throws ValidaClientesException, CpfInvalidoException, CpfDuplicadoException {
 		Conexao conec = new Conexao();
 		
 		try {
 			Connection conexao = conec.abrirConexao();
+			ValidaCliente validaCliente = new ValidaCliente();
+			ClienteDAO jdbcCliente = new JDBCClienteDAO(conexao);
+			jdbcCliente.verificarCpfDuplicado(cliente.getCpf());
+			validaCliente.validarCliente(cliente);
 			Date dataCadastro = new Date();
 			cliente.setDataCadastro(dataCadastro);
-			ValidaCliente validaCliente = new ValidaCliente();
-			validaCliente.validarCliente(cliente);
 			DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			if (cliente.getAniversario() != "") {
 				String aniversarioStr = cliente.getAniversario();
 				Date dataAniversario = (Date)formatter.parse(aniversarioStr);
 				cliente.setAniversarioDate(dataAniversario);
 			}
-			
-			ClienteDAO jdbcCliente = new JDBCClienteDAO(conexao);
 			jdbcCliente.cadastrar(cliente);
 		}catch (ValidaClientesException e) {
 			throw e;
 		}catch (CpfInvalidoException e) {
+			throw e;
+		}catch (CpfDuplicadoException e) {
 			throw e;
 		}catch (Exception e){
 			e.printStackTrace();
@@ -71,11 +74,14 @@ public class ClienteService {
 		}	
 	}
 	
-	public void atualizarCliente (Cliente cliente) throws ValidaClientesException, CpfInvalidoException{
+	public void atualizarCliente (Cliente cliente) throws ValidaClientesException, CpfInvalidoException, CpfDuplicadoException{
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
 			ClienteDAO jdbcCliente = new JDBCClienteDAO(conexao);
+			if (!cliente.getCpf().equals("")){
+				jdbcCliente.verificarCpfDuplicadoEdicao(cliente.getCpf(), cliente.getCodigo());
+			}
 			ValidaCliente validaCliente = new ValidaCliente();
 			validaCliente.validarCliente(cliente);
 			DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -88,6 +94,8 @@ public class ClienteService {
 		}catch (ValidaClientesException e) {
 			throw e;
 		}catch (CpfInvalidoException e) {
+			throw e;
+		}catch (CpfDuplicadoException e) {
 			throw e;
 		}catch (Exception e) {
 			e.printStackTrace();

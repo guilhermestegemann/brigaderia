@@ -1,9 +1,6 @@
 package br.com.brigaderia.exception;
 
 public class ValidaClientesException extends BrigaderiaException{
-
-	
-	
 	/**
 	 * 
 	 */

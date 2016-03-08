@@ -9,12 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
-
-
-
+import br.com.brigaderia.exception.CpfDuplicadoException;
 import br.com.brigaderia.jdbcinterface.ClienteDAO;
 import br.com.brigaderia.objetos.Cliente;
 import br.com.brigaderia.objetos.DadosClientesVO;
@@ -219,6 +214,44 @@ public class JDBCClienteDAO implements ClienteDAO{
 	    	return false;
 	    }
 	    return true;
+	}
+	
+	public void verificarCpfDuplicado (String cpf) throws CpfDuplicadoException {
+		String comando = "SELECT COUNT(*) AS QTDECLIENTE FROM CLIENTE WHERE CLIENTE.CPF = '" + cpf + "'";
+		int qtdeClientes = 0;
+		try {
+			Statement stmt = conexao.createStatement();
+			ResultSet rs = stmt.executeQuery(comando);
+			while(rs.next()) {
+				qtdeClientes = rs.getInt("QTDECLIENTE");
+			}
+			if (qtdeClientes > 0) {
+				throw new CpfDuplicadoException();
+			}
+		}catch (CpfDuplicadoException e) {
+			throw e;
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void verificarCpfDuplicadoEdicao (String cpf, int codigo) throws CpfDuplicadoException {
+		String comando = "SELECT COUNT(*) AS QTDECLIENTE FROM CLIENTE WHERE CLIENTE.CPF = '" + cpf + "' AND CLIENTE.CODIGO <> " + codigo;
+		int qtdeClientes = 0;
+		try {
+			Statement stmt = conexao.createStatement();
+			ResultSet rs = stmt.executeQuery(comando);
+			while(rs.next()) {
+				qtdeClientes = rs.getInt("QTDECLIENTE");
+			}
+			if (qtdeClientes > 0) {
+				throw new CpfDuplicadoException();
+			}
+		}catch (CpfDuplicadoException e) {
+			throw e;
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
