@@ -1,67 +1,40 @@
 BRIGADERIA.validaCpf = new Object();
 
 
-	BRIGADERIA.validaCpf.validarCpf  = function(cpf) {
-		if (!cpf.equals("")) {
-			boolean isCpf = BRIGADERIA.Cpf(cpf);
-			if ((!isCpf) || cpf.matches("^(0{11}|1{11}|2{11}|3{11}|4{11}|5{11}|6{11}|7{11}|9{11}|9{11})$")){
-				return false;
-			}else{
-				return true;
-			}
-		}	
-	};
-
-	BRIGADERIA.validaCpf.Cpf = function (cpf) {
-	       String strCpf = cpf;
-	        
-	        
-	        int d1, d2;
-	        int digito1, digito2, resto;
-	        int digitoCPF;
-	        String nDigResult;
-	
-	        d1 = d2 = 0;
-	        digito1 = digito2 = resto = 0;
-	
-	        for (var nCount = 1; nCount < strCpf.length() - 1; nCount++) {
-	            digitoCPF = Integer.valueOf(strCpf.substring(nCount - 1, nCount)).intValue();
-	
-	            //multiplique a ultima casa por 2 a seguinte por 3 a seguinte por 4 e assim por diante.  
-	            d1 = d1 + (11 - nCount) * digitoCPF;
-	
-	            //para o segundo digito repita o procedimento incluindo o primeiro digito calculado no passo anterior.  
-	            d2 = d2 + (12 - nCount) * digitoCPF;
-	        }
-	
-	        //Primeiro resto da divisão por 11.  
-	        resto = (d1 % 11);
-	
-	        //Se o resultado for 0 ou 1 o digito é 0 caso contrário o digito é 11 menos o resultado anterior.  
-	        if (resto < 2) {
-	            digito1 = 0;
-	        } else {
-	            digito1 = 11 - resto;
-	        }
-	
-	        d2 += 2 * digito1;
-	
-	        //Segundo resto da divisão por 11.  
-	        resto = (d2 % 11);
-	
-	        //Se o resultado for 0 ou 1 o digito é 0 caso contrário o digito é 11 menos o resultado anterior.  
-	        if (resto < 2) {
-	            digito2 = 0;
-	        } else {
-	            digito2 = 11 - resto;
-	        }
-	
-	        //Digito verificador do CPF que está sendo validado.  
-	        String nDigVerific = strCpf.substring(strCpf.length() - 2, strCpf.length());
-	
-	        //Concatenando o primeiro resto com o segundo.  
-	        nDigResult = String.valueOf(digito1) + String.valueOf(digito2);
-	
-	        //comparar o digito verificador do cpf com o primeiro resto + o segundo resto.  
-	        return nDigVerific.equals(nDigResult);
-	    };
+	BRIGADERIA.validaCpf.validarCpf  = function (cpf) {  
+		
+	    //cpf = cpf.replace(/[^\d]+/g,'');    
+	    //if(cpf == '') return false; 
+	    // Elimina CPFs invalidos conhecidos    
+	    if (cpf.length != 11 || 
+	        cpf == "00000000000" || 
+	        cpf == "11111111111" || 
+	        cpf == "22222222222" || 
+	        cpf == "33333333333" || 
+	        cpf == "44444444444" || 
+	        cpf == "55555555555" || 
+	        cpf == "66666666666" || 
+	        cpf == "77777777777" || 
+	        cpf == "88888888888" || 
+	        cpf == "99999999999")
+	            return false;       
+	    // Valida 1o digito 
+	    add = 0;    
+	    for (i=0; i < 9; i ++)       
+	        add += parseInt(cpf.charAt(i)) * (10 - i);  
+	        rev = 11 - (add % 11);  
+	        if (rev == 10 || rev == 11)     
+	            rev = 0;    
+	        if (rev != parseInt(cpf.charAt(9)))     
+	            return false;       
+	    // Valida 2o digito 
+	    add = 0;    
+	    for (i = 0; i < 10; i ++)        
+	        add += parseInt(cpf.charAt(i)) * (11 - i);  
+	    rev = 11 - (add % 11);  
+	    if (rev == 10 || rev == 11) 
+	        rev = 0;    
+	    if (rev != parseInt(cpf.charAt(10)))
+	        return false;       
+	    return true;   
+	}

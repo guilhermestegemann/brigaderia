@@ -29,7 +29,9 @@ public class ClienteService {
 			Connection conexao = conec.abrirConexao();
 			ValidaCliente validaCliente = new ValidaCliente();
 			ClienteDAO jdbcCliente = new JDBCClienteDAO(conexao);
-			jdbcCliente.verificarCpfDuplicado(cliente.getCpf());
+			if (!cliente.getCpf().equals("")) {
+				jdbcCliente.verificarCpfDuplicado(cliente.getCpf());
+			}
 			validaCliente.validarCliente(cliente);
 			Date dataCadastro = new Date();
 			cliente.setDataCadastro(dataCadastro);
@@ -44,7 +46,7 @@ public class ClienteService {
 			throw e;
 		}catch (CpfInvalidoException e) {
 			throw e;
-		}catch (CpfDuplicadoException e) {
+		}catch (CpfDuplicadoException e) {//remover todos e deixar só da Brigaderia
 			throw e;
 		}catch (Exception e){
 			e.printStackTrace();

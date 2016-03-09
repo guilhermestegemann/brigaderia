@@ -14,7 +14,7 @@ public class ValidaCpf {
 		
 	}
 	
-	public static boolean  CPF(String cpf) {
+	private static boolean  CPF(String cpf) {
 	       String strCpf = cpf;
 	        
 	        

@@ -101,22 +101,29 @@ $(document).ready(function() {
 		newCliente.celular = $("#celular").val().replace(/[^\d]+/g,'');
 		newCliente.cpf = $("#cpf").val().replace(/[^\d]+/g,'');
 		newCliente.rg = $("#rg").val().replace(/[^\d]+/g,'');
-		retornoValida = BRIGADERIA.validaClientes.validar(newCliente);
-		if (retornoValida == "") {
-			if (newCliente.cidade == "") {
-				newCliente.cidade = null;
+		if (newCliente.cpf != "") {
+			var cpfValido = BRIGADERIA.validaCpf.validarCpf(newCliente.cpf);
+			if (!cpfValido) {
+				bootbox.alert("Cpf Inválido, por favor verifique!");
 			}
-			if (newCliente.bairro == "") {
-				newCliente.bairro = null;
-			}
-			if (newCliente.aniversario != "") {
-				newCliente.aniversario = BRIGADERIA.convertData.strToDate(newCliente.aniversario);
-			}
-			BRIGADERIA.clienteService.adicionar(newCliente);
-		}else{
-			bootbox.alert("Favor verificar os campos obrigatórios: " + retornoValida);
 		}
-		
+		if ((newCliente.cpf == "") || (cpfValido)) {
+			retornoValida = BRIGADERIA.validaClientes.validar(newCliente);
+			if (retornoValida == "") {
+				if (newCliente.cidade == "") {
+					newCliente.cidade = null;
+				}
+				if (newCliente.bairro == "") {
+					newCliente.bairro = null;
+				}
+				if (newCliente.aniversario != "") {
+					newCliente.aniversario = BRIGADERIA.convertData.strToDate(newCliente.aniversario);
+				}
+				BRIGADERIA.clienteService.adicionar(newCliente);
+			}else{
+				bootbox.alert("Favor verificar os campos obrigatórios: " + retornoValida);
+			}
+		}
 	};
 	
 	BRIGADERIA.clientes.salvarEdicao = function () {
@@ -128,12 +135,27 @@ $(document).ready(function() {
 		cliente.celular = $("#celular").val().replace(/[^\d]+/g,'');
 		cliente.cpf = $("#cpf").val().replace(/[^\d]+/g,'');
 		cliente.rg = $("#rg").val().replace(/[^\d]+/g,'');
-		if (cliente.aniversario != "") {
-			cliente.aniversario = BRIGADERIA.convertData.strToDate(cliente.aniversario);
+		if (cliente.cpf != "") {
+			var cpfValido = BRIGADERIA.validaCpf.validarCpf(cliente.cpf);
+			if (!cpfValido) {
+				bootbox.alert("Cpf Inválido, por favor verifique!");
+			}
 		}
-		cliente.dataCadastro = BRIGADERIA.convertData.strToDate(cliente.dataCadastro);
-		cliente.codigo = $("#codigo").val();
-		BRIGADERIA.clienteService.atualizar(cliente);
+		if ((cliente.cpf == "") || (cpfValido)) {
+			retornoValida = BRIGADERIA.validaClientes.validar(cliente);
+			if (retornoValida == "") {
+				if (cliente.aniversario != "") {
+					cliente.aniversario = BRIGADERIA.convertData.strToDate(cliente.aniversario);
+				}
+				cliente.dataCadastro = BRIGADERIA.convertData.strToDate(cliente.dataCadastro);
+				cliente.codigo = $("#codigo").val();
+				BRIGADERIA.clienteService.atualizar(cliente);
+			}else{
+				bootbox.alert("Favor verificar os campos obrigatórios: " + retornoValida);
+			}
+		}
+		
+		
 	};
 	
 	BRIGADERIA.clientes.aplicarMask();

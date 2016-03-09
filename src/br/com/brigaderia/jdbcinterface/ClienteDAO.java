@@ -8,7 +8,7 @@ import br.com.brigaderia.objetos.DadosClientesVO;
 
 public interface ClienteDAO {
 	
-	public boolean cadastrar (Cliente cliente);
+	public void cadastrar (Cliente cliente);
 	public List<DadosClientesVO> buscarClientes (String valorBusca);
 	public boolean deletar (int codigo);
 	public Cliente buscarPeloCodigo(int codigo);

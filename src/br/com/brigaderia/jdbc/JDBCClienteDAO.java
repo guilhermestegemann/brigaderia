@@ -23,7 +23,7 @@ public class JDBCClienteDAO implements ClienteDAO{
 		this.conexao = conexao;
 	}
 	
-	public boolean cadastrar (Cliente cliente) {
+	public void cadastrar (Cliente cliente) {
 		String comando = "INSERT INTO CLIENTE (NOME, RG, CPF, ENDERECO, NUMERO, COMPLEMENTO, CEP, CIDADE, BAIRRO, ANIVERSARIO, "
 				+ "EMAIL, TELEFONE, CELULAR, DATACADASTRO) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement p;
@@ -59,8 +59,8 @@ public class JDBCClienteDAO implements ClienteDAO{
 			p.execute();
 		}catch (SQLException e) {
 			e.printStackTrace();
-			return false;
-		}return true;
+			
+		}
 	}
 	
 	public List<DadosClientesVO> buscarClientes (String valorBusca) {
@@ -89,14 +89,13 @@ public class JDBCClienteDAO implements ClienteDAO{
 				String nomeCidade = rs.getString("NOMECIDADE");
 				String uf = rs.getString("UFESTADO");
 				String nomeBairro = rs.getString("NOMEBAIRRO");
-				Date ultimaVenda = rs.getDate("ULTIMAVENDA");
 				
 				dadosClientesVO.setCodigo(codCliente);
 				dadosClientesVO.setNome(nomeCliente);
 				dadosClientesVO.setCidade(nomeCidade);
 				dadosClientesVO.setUf(uf);
 				dadosClientesVO.setBairro(nomeBairro);
-				dadosClientesVO.setUltimaVenda(ultimaVenda);
+				dadosClientesVO.setUltimaVenda(rs.getDate("ULTIMAVENDA")); //fazer isso em todos os result set
 				listDadosClientes.add(dadosClientesVO);
 			}
 		}catch(Exception e){
@@ -247,7 +246,7 @@ public class JDBCClienteDAO implements ClienteDAO{
 			if (qtdeClientes > 0) {
 				throw new CpfDuplicadoException();
 			}
-		}catch (CpfDuplicadoException e) {
+		}catch (CpfDuplicadoException e) {// remover
 			throw e;
 		}catch (SQLException e) {
 			e.printStackTrace();

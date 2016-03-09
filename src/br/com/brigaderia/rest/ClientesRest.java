@@ -26,6 +26,7 @@ import br.com.brigaderia.service.ClienteService;
 public class ClientesRest extends UtilRest{
 	
 	
+	
 	@POST
 	@Path ("/adicionar")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -38,9 +39,9 @@ public class ClientesRest extends UtilRest{
 			service.adicionarCliente(cliente);
 			return super.buildResponse("Cliente cadastrado com sucesso");
 		}catch (ValidaClientesException e){
-			return this.buildErrorResponse(e.getMessage());
+			return buildErrorResponse(e.getMessage());
 		}catch(CpfInvalidoException e) {
-			return this.buildErrorResponse(e.getMessage());
+			return buildErrorResponse(e.getMessage());
 		}catch (CpfDuplicadoException e) {
 			return this.buildErrorResponse(e.getMessage());	
 		}catch (Exception e) {

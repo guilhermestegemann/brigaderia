@@ -42,11 +42,11 @@ $(document).ready(function() {
 				}
 				
 				$("tbody").html(html);
-				
-				},
-				error : function(err) {
-					console.log(err);
-				} 
+			
+			},
+			error : function(err) {
+				console.log(err);
+			} 
 		});		   		
 	};
 	
