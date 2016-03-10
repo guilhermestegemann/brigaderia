@@ -3,17 +3,18 @@ package br.com.brigaderia.jdbcinterface;
 import java.util.List;
 
 
-import br.com.brigaderia.exception.CpfDuplicadoException;
+
+import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.objetos.Cliente;
 import br.com.brigaderia.objetos.DadosClientesVO;
 
 public interface ClienteDAO {
 	
-	public void cadastrar (Cliente cliente);
-	public List<DadosClientesVO> buscarClientes (String valorBusca);
-	public boolean deletar (int codigo);
-	public Cliente buscarPeloCodigo(int codigo);
-	public boolean atualizar (Cliente cliente);
-	public void verificarCpfDuplicado (String cpf) throws CpfDuplicadoException;
-	public void verificarCpfDuplicadoEdicao (String cpf, int id) throws CpfDuplicadoException;
+	public void cadastrar (Cliente cliente) throws BrigaderiaException;
+	public List<DadosClientesVO> buscarClientes (String valorBusca) throws BrigaderiaException;
+	public void deletar (int codigo) throws BrigaderiaException;
+	public Cliente buscarPeloCodigo(int codigo) throws BrigaderiaException;
+	public void atualizar (Cliente cliente) throws BrigaderiaException;
+	public void verificarCpfDuplicado (String cpf) throws BrigaderiaException;
+	public void verificarCpfDuplicadoEdicao (String cpf, int id) throws BrigaderiaException;
 }

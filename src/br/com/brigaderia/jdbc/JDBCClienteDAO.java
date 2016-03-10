@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
+import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.exception.CpfDuplicadoException;
 import br.com.brigaderia.jdbcinterface.ClienteDAO;
 import br.com.brigaderia.objetos.Cliente;
@@ -23,7 +25,7 @@ public class JDBCClienteDAO implements ClienteDAO{
 		this.conexao = conexao;
 	}
 	
-	public void cadastrar (Cliente cliente) {
+	public void cadastrar (Cliente cliente)  throws BrigaderiaException{
 		String comando = "INSERT INTO CLIENTE (NOME, RG, CPF, ENDERECO, NUMERO, COMPLEMENTO, CEP, CIDADE, BAIRRO, ANIVERSARIO, "
 				+ "EMAIL, TELEFONE, CELULAR, DATACADASTRO) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement p;
@@ -59,11 +61,11 @@ public class JDBCClienteDAO implements ClienteDAO{
 			p.execute();
 		}catch (SQLException e) {
 			e.printStackTrace();
-			
+			throw new BrigaderiaException();
 		}
 	}
 	
-	public List<DadosClientesVO> buscarClientes (String valorBusca) {
+	public List<DadosClientesVO> buscarClientes (String valorBusca) throws BrigaderiaException {
 		
 		String comando = "SELECT CLIENTE.CODIGO AS CODIGOCLIENTE, CLIENTE.NOME AS NOMECLIENTE, CIDADE.NOME AS NOMECIDADE, "
 					   + "ESTADO.UF AS UFESTADO, BAIRRO.NOME AS NOMEBAIRRO, PEDIDO.EMISSAO AS ULTIMAVENDA "
@@ -92,13 +94,15 @@ public class JDBCClienteDAO implements ClienteDAO{
 				dadosClientesVO.setUltimaVenda(rs.getDate("ULTIMAVENDA")); 
 				listDadosClientes.add(dadosClientesVO);
 			}
-		}catch(Exception e){
+		}catch(SQLException e){
 			e.printStackTrace();
-		}return listDadosClientes;
+			throw new BrigaderiaException();
+		}
+		return listDadosClientes;
 		
 	}
 	
-	public boolean deletar (int codigo) {
+	public void deletar (int codigo) throws BrigaderiaException{
 		String comando = "DELETE FROM CLIENTE WHERE CLIENTE.CODIGO = " + codigo;
 		Statement p;
 		
@@ -107,12 +111,11 @@ public class JDBCClienteDAO implements ClienteDAO{
 			p.execute(comando);
 		}catch (SQLException e) {
 			e.printStackTrace();
-			return false;
+			throw new BrigaderiaException();	
 		}
-		return true;
 	}
 	
-	public Cliente buscarPeloCodigo (int codigo) {
+	public Cliente buscarPeloCodigo (int codigo) throws BrigaderiaException{
 		String comando = "SELECT * FROM CLIENTE WHERE CLIENTE.CODIGO = " + codigo;
 		Cliente cliente = new Cliente();
 		try {
@@ -135,13 +138,13 @@ public class JDBCClienteDAO implements ClienteDAO{
 				cliente.setTelefone(rs.getLong("telefone"));
 				cliente.setCelular(rs.getLong("celular"));
 			}
-		}catch (Exception e) {
-			e.printStackTrace();
+		}catch (SQLException e) {
+			throw new BrigaderiaException();
 		}
 		return cliente;
 	}
 	
-	public boolean atualizar (Cliente cliente) {
+	public void atualizar (Cliente cliente) throws BrigaderiaException {
 		String comando = "UPDATE CLIENTE SET " 
 							+ "CLIENTE.NOME = ?, "
 							+ "CLIENTE.RG = ?, "
@@ -188,12 +191,11 @@ public class JDBCClienteDAO implements ClienteDAO{
 	    	p.executeUpdate();
 	    }catch (SQLException e) {
 	    	e.printStackTrace();
-	    	return false;
+	    	throw new BrigaderiaException();
 	    }
-	    return true;
 	}
 	
-	public void verificarCpfDuplicado (String cpf) throws CpfDuplicadoException {
+	public void verificarCpfDuplicado (String cpf) throws BrigaderiaException {
 		String comando = "SELECT COUNT(*) AS QTDECLIENTE FROM CLIENTE WHERE CLIENTE.CPF = '" + cpf + "'";
 		int qtdeClientes = 0;
 		try {
@@ -205,14 +207,16 @@ public class JDBCClienteDAO implements ClienteDAO{
 			if (qtdeClientes > 0) {
 				throw new CpfDuplicadoException();
 			}
-		}catch (CpfDuplicadoException e) {
+		}catch (BrigaderiaException e) {
+			e.printStackTrace();
 			throw e;
 		}catch (SQLException e) {
 			e.printStackTrace();
+			throw new BrigaderiaException();
 		}
 	}
 	
-	public void verificarCpfDuplicadoEdicao (String cpf, int codigo) throws CpfDuplicadoException {
+	public void verificarCpfDuplicadoEdicao (String cpf, int codigo) throws BrigaderiaException {
 		String comando = "SELECT COUNT(*) AS QTDECLIENTE FROM CLIENTE WHERE CLIENTE.CPF = '" + cpf + "' AND CLIENTE.CODIGO <> " + codigo;
 		int qtdeClientes = 0;
 		try {
@@ -224,8 +228,13 @@ public class JDBCClienteDAO implements ClienteDAO{
 			if (qtdeClientes > 0) {
 				throw new CpfDuplicadoException();
 			}
-		}catch (SQLException e) {
+		}catch (BrigaderiaException e) {
 			e.printStackTrace();
+			throw e;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			throw new BrigaderiaException();
 		}
 	}
 

@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.exception.ClienteComPedidoException;
 import br.com.brigaderia.jdbcinterface.PedidoDAO;
 
@@ -17,7 +18,7 @@ public class JDBCPedidoDAO implements PedidoDAO{
 		this.conexao = conexao;
 	}
 	
-	public void verificaPedidoCliente (int codigo) throws ClienteComPedidoException {
+	public void verificaPedidoCliente (int codigo) throws BrigaderiaException {
 		String comando = "SELECT COUNT(*) AS QTDEPEDIDOS FROM PEDIDO  WHERE PEDIDO.CLIENTE = " + codigo;
 		int qtdeClientes = 0;
 		try {
@@ -29,10 +30,12 @@ public class JDBCPedidoDAO implements PedidoDAO{
 			if (qtdeClientes > 0) {
 				throw new ClienteComPedidoException();
 			}
-		}catch (ClienteComPedidoException e) {
+		}catch (BrigaderiaException e) {
+			e.printStackTrace();
 			throw e;
 		}catch (SQLException e) {
 			e.printStackTrace();
+			throw new BrigaderiaException();
 		}
 	}
 

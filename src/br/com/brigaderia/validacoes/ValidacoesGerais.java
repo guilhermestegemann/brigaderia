@@ -2,11 +2,11 @@ package br.com.brigaderia.validacoes;
 
 import br.com.brigaderia.exception.CpfInvalidoException;
 
-public class ValidaCpf {
+public class ValidacoesGerais {
 	
 	public void validarCpf (String cpf) throws CpfInvalidoException{
 		if (!cpf.equals("")) {
-			boolean isCpf = CPF(cpf);
+			boolean isCpf = cpf(cpf);
 			if ((!isCpf) || cpf.matches("^(0{11}|1{11}|2{11}|3{11}|4{11}|5{11}|6{11}|7{11}|9{11}|9{11})$")){
 				throw new CpfInvalidoException();
 			}
@@ -14,7 +14,7 @@ public class ValidaCpf {
 		
 	}
 	
-	private static boolean  CPF(String cpf) {
+	private static boolean  cpf(String cpf) {
 	       String strCpf = cpf;
 	        
 	        

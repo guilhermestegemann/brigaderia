@@ -44,9 +44,11 @@ public class ClienteService {
 			}
 			jdbcCliente.cadastrar(cliente);
 		}catch (BrigaderiaException e) {
-			throw e;
-		}catch (Exception e){
 			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new BrigaderiaException();
 		}finally {
 			conec.fecharConexao();
 		}
@@ -65,9 +67,13 @@ public class ClienteService {
 			
 			return cliente;
 			
+		}catch (BrigaderiaException e) {
+			throw e;
 		}catch (Exception e) {
+			e.printStackTrace();
 			throw new BrigaderiaException();
-		}finally{
+		}
+		finally{
 			conec.fecharConexao();
 		}	
 	}
@@ -93,15 +99,17 @@ public class ClienteService {
 			}
 			jdbcCliente.atualizar(cliente);
 		}catch (BrigaderiaException e) {
+			e.printStackTrace();
 			throw e;
 		}catch (Exception e) {
 			e.printStackTrace();
+			throw new BrigaderiaException();
 		}finally{
 			conec.fecharConexao();
 		}
 	}
 	
-	public void deletarCliente (int codigo) throws ClienteComPedidoException{
+	public void deletarCliente (int codigo) throws BrigaderiaException{
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
@@ -123,8 +131,7 @@ public class ClienteService {
 			ClienteDAO jdbcCliente = new JDBCClienteDAO(conexao);
 			return jdbcCliente.buscarClientes(valorBusca);
 		}catch (Exception e) {
-			e.printStackTrace();
-			throw new BrigaderiaException();
+			throw e;
 		}finally{
 			conec.fecharConexao();
 		}

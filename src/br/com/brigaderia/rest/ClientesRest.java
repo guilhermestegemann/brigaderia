@@ -14,7 +14,6 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import br.com.brigaderia.exception.BrigaderiaException;
-import br.com.brigaderia.exception.ClienteComPedidoException;
 import br.com.brigaderia.objetos.Cliente;
 import br.com.brigaderia.service.ClienteService;
 
@@ -23,7 +22,7 @@ import br.com.brigaderia.service.ClienteService;
 
 public class ClientesRest extends UtilRest{
 	
-	
+	static final String ERROINESPERADO = "Ocorreu um erro inesperado. Entre em contato com o administrador do sistema.";
 	
 	@POST
 	@Path ("/adicionar")
@@ -39,7 +38,7 @@ public class ClientesRest extends UtilRest{
 		}catch (BrigaderiaException e){
 			return buildErrorResponse(e.getMessage());
 		}catch (Exception e) {
-			throw new BrigaderiaException(e);
+			return buildErrorResponse(ERROINESPERADO);
 		}
 	}
 	
@@ -47,15 +46,16 @@ public class ClientesRest extends UtilRest{
 	@Path("/buscarClientes/{valorBusca}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	
-	public Response buscarClientes (@PathParam("valorBusca") String valorBusca) {
+	public Response buscarClientes (@PathParam("valorBusca") String valorBusca) throws BrigaderiaException{
 		
 		try {
 			
 			ClienteService service = new ClienteService();
 			return buildResponse(service.buscarClientesVO(valorBusca));
-		}catch(Exception e) {
-			e.printStackTrace();
+		}catch (BrigaderiaException e) {
 			return buildErrorResponse(e.getMessage());
+		}catch(Exception e) {
+			return buildErrorResponse(ERROINESPERADO);
 		}
 	}
 	
@@ -63,27 +63,29 @@ public class ClientesRest extends UtilRest{
 	@Path("/deletar/{codigo}")
 	@Consumes("application/*")
 	
-	public Response deletar (@PathParam("codigo") int codigo) {
+	public Response deletar (@PathParam("codigo") int codigo) throws BrigaderiaException{
 		try {
 			ClienteService service = new ClienteService();
 			service.deletarCliente(codigo);
 			return this.buildResponse("Cliente deletado!");
-		}catch (ClienteComPedidoException e) {
-			e.printStackTrace();
+		}catch (BrigaderiaException e) {
 			return buildErrorResponse(e.getMessage());
+		}catch (Exception e) {
+			return buildErrorResponse(ERROINESPERADO);
 		}
 	}
 	
 	@GET
 	@Path("/buscarClientePeloCodigo/{codigo}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public Response buscarClientePeloCodigo(@PathParam("codigo")int codigo) {
+	public Response buscarClientePeloCodigo(@PathParam("codigo")int codigo) throws BrigaderiaException{
 		try {
 			ClienteService service = new ClienteService(); 
 			return buildResponse(service.buscarClientePeloCodigo(codigo));
-		}catch (Exception e) {
-			e.printStackTrace();
+		}catch (BrigaderiaException e) {
 			return buildErrorResponse(e.getMessage());
+		}catch (Exception e) {
+			return buildErrorResponse(ERROINESPERADO);
 		}
 	}
 	
@@ -99,8 +101,7 @@ public class ClientesRest extends UtilRest{
 		}catch (BrigaderiaException e){
 			return buildErrorResponse(e.getMessage());
 		}catch (Exception e) {
-			e.printStackTrace();
-			throw new BrigaderiaException(e);
+			return buildErrorResponse(ERROINESPERADO);
 		}
 	}
 
