@@ -3,9 +3,7 @@ BRIGADERIA.validaCpf = new Object();
 
 	BRIGADERIA.validaCpf.validarCpf  = function (cpf) {  
 		
-	    //cpf = cpf.replace(/[^\d]+/g,'');    
-	    //if(cpf == '') return false; 
-	    // Elimina CPFs invalidos conhecidos    
+	        
 	    if (cpf.length != 11 || 
 	        cpf == "00000000000" || 
 	        cpf == "11111111111" || 

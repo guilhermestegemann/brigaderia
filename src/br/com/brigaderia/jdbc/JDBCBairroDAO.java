@@ -32,11 +32,8 @@ public class JDBCBairroDAO implements BairroDAO{
 			ResultSet rs = stmt.executeQuery(comando);
 			while(rs.next()) {
 				bairro = new Bairro();
-				int codigo = rs.getInt("codigo");
-				String nome = rs.getString("nome");
-				
-				bairro.setCodigo(codigo);
-				bairro.setNome(nome);
+				bairro.setCodigo(rs.getInt("codigo"));
+				bairro.setNome(rs.getString("nome"));
 				listBairro.add(bairro);
 			}
 		}catch (Exception e) {

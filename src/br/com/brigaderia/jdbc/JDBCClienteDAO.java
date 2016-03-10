@@ -1,13 +1,13 @@
 package br.com.brigaderia.jdbc;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 import br.com.brigaderia.exception.CpfDuplicadoException;
 import br.com.brigaderia.jdbcinterface.ClienteDAO;
@@ -84,18 +84,12 @@ public class JDBCClienteDAO implements ClienteDAO{
 			ResultSet rs = stmt.executeQuery(comando);
 			while(rs.next()) {
 				dadosClientesVO = new DadosClientesVO();
-				int codCliente = rs.getInt("CODIGOCLIENTE");
-				String nomeCliente = rs.getString("NOMECLIENTE");
-				String nomeCidade = rs.getString("NOMECIDADE");
-				String uf = rs.getString("UFESTADO");
-				String nomeBairro = rs.getString("NOMEBAIRRO");
-				
-				dadosClientesVO.setCodigo(codCliente);
-				dadosClientesVO.setNome(nomeCliente);
-				dadosClientesVO.setCidade(nomeCidade);
-				dadosClientesVO.setUf(uf);
-				dadosClientesVO.setBairro(nomeBairro);
-				dadosClientesVO.setUltimaVenda(rs.getDate("ULTIMAVENDA")); //fazer isso em todos os result set
+				dadosClientesVO.setCodigo(rs.getInt("CODIGOCLIENTE"));
+				dadosClientesVO.setNome(rs.getString("NOMECLIENTE"));
+				dadosClientesVO.setCidade(rs.getString("NOMECIDADE"));
+				dadosClientesVO.setUf(rs.getString("UFESTADO"));
+				dadosClientesVO.setBairro(rs.getString("NOMEBAIRRO"));
+				dadosClientesVO.setUltimaVenda(rs.getDate("ULTIMAVENDA")); 
 				listDadosClientes.add(dadosClientesVO);
 			}
 		}catch(Exception e){
@@ -125,37 +119,21 @@ public class JDBCClienteDAO implements ClienteDAO{
 			Statement stmt = conexao.createStatement();
 			ResultSet rs = stmt.executeQuery(comando);
 			while(rs.next()) {
-				int codigoCliente = rs.getInt("codigo");
-				String nome = rs.getString("nome");
-				String rg = rs.getString("rg");
-				String cpf = rs.getString("cpf");
-				String endereco = rs.getString("endereco");
-				String numero = rs.getString("numero");
-				String complemento = rs.getString("complemento");
-				int cep = rs.getInt("cep");
-				int bairro = rs.getInt("bairro");
-				int cidade = rs.getInt("cidade");
-				Date aniversario = rs.getDate("aniversario");
-				Date dataCadastro = rs.getDate("datacadastro");
-				String email = rs.getString("email");
-				Long telefone = rs.getLong("telefone");
-				Long celular = rs.getLong("celular");
-				
-				cliente.setCodigo(codigoCliente);
-				cliente.setNome(nome);
-				cliente.setRg(rg);
-				cliente.setCpf(cpf);
-				cliente.setEndereco(endereco);
-				cliente.setNumero(numero);
-				cliente.setComplemento(complemento);
-				cliente.setCep(cep);
-				cliente.setBairro(bairro);
-				cliente.setCidade(cidade);
-				cliente.setAniversarioDate(aniversario);
-				cliente.setDataCadastro(dataCadastro);
-				cliente.setEmail(email);
-				cliente.setTelefone(telefone);
-				cliente.setCelular(celular);
+				cliente.setCodigo(rs.getInt("codigo"));
+				cliente.setNome(rs.getString("nome"));
+				cliente.setRg(rs.getString("rg"));
+				cliente.setCpf(rs.getString("cpf"));
+				cliente.setEndereco(rs.getString("endereco"));
+				cliente.setNumero(rs.getString("numero"));
+				cliente.setComplemento(rs.getString("complemento"));
+				cliente.setCep(rs.getInt("cep"));
+				cliente.setBairro(rs.getInt("bairro"));
+				cliente.setCidade(rs.getInt("cidade"));
+				cliente.setAniversarioDate(rs.getDate("aniversario"));
+				cliente.setDataCadastro(rs.getDate("datacadastro"));
+				cliente.setEmail(rs.getString("email"));
+				cliente.setTelefone(rs.getLong("telefone"));
+				cliente.setCelular(rs.getLong("celular"));
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -246,8 +224,6 @@ public class JDBCClienteDAO implements ClienteDAO{
 			if (qtdeClientes > 0) {
 				throw new CpfDuplicadoException();
 			}
-		}catch (CpfDuplicadoException e) {// remover
-			throw e;
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}

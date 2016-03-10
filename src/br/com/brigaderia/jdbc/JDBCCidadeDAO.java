@@ -31,15 +31,9 @@ public class JDBCCidadeDAO implements CidadeDAO{
 			ResultSet rs = stmt.executeQuery(comando);
 			while (rs.next()) {
 				cidade = new Cidade();
-				int codigo = rs.getInt("CODIGO");
-				String nome = rs.getString("NOME");
-				int codigoEstado = rs.getInt("CODIGOESTADO");
-				String nomeEstado = rs.getString("NOMEESTADO");
-				String ufEstado = rs.getString("UFESTADO");
-				
-				cidade.setCodigo(codigo);
-				cidade.setNome(nome);
-				cidade.setEstado(new Estado(codigoEstado, nomeEstado, ufEstado));
+				cidade.setCodigo(rs.getInt("CODIGO"));
+				cidade.setNome(rs.getString("NOME"));
+				cidade.setEstado(new Estado(rs.getInt("CODIGOESTADO"), rs.getString("NOMEESTADO"), rs.getString("UFESTADO")));
 				listCidade.add(cidade);
 			}
 		}catch (Exception e) {
