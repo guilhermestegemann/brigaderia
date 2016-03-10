@@ -13,10 +13,8 @@ import javax.ws.rs.core.Response;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
+import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.exception.ClienteComPedidoException;
-import br.com.brigaderia.exception.CpfDuplicadoException;
-import br.com.brigaderia.exception.CpfInvalidoException;
-import br.com.brigaderia.exception.ValidaClientesException;
 import br.com.brigaderia.objetos.Cliente;
 import br.com.brigaderia.service.ClienteService;
 
@@ -38,12 +36,8 @@ public class ClientesRest extends UtilRest{
 			ClienteService service = new ClienteService();
 			service.adicionarCliente(cliente);
 			return super.buildResponse("Cliente cadastrado com sucesso");
-		}catch (ValidaClientesException e){
+		}catch (BrigaderiaException e){
 			return buildErrorResponse(e.getMessage());
-		}catch(CpfInvalidoException e) {
-			return buildErrorResponse(e.getMessage());
-		}catch (CpfDuplicadoException e) {
-			return this.buildErrorResponse(e.getMessage());	
 		}catch (Exception e) {
 			e.printStackTrace();
 			return this.buildErrorResponse("Ocorreu algum erro!");
@@ -103,15 +97,11 @@ public class ClientesRest extends UtilRest{
 			ClienteService service = new ClienteService();
 			service.atualizarCliente(cliente);
 			return this.buildResponse("Cliente editado com sucesso.");
-		}catch (ValidaClientesException e){
-			return this.buildErrorResponse(e.getMessage());
-		}catch (CpfInvalidoException e) {
-			return this.buildErrorResponse(e.getMessage());
-		}catch (CpfDuplicadoException e) {
-			return this.buildErrorResponse(e.getMessage());
+		}catch (BrigaderiaException e){
+			return buildErrorResponse(e.getMessage());
 		}catch (Exception e) {
 			e.printStackTrace();
-			return this.buildErrorResponse(e.getMessage());
+			return buildErrorResponse(e.getMessage());
 		}
 	}
 
