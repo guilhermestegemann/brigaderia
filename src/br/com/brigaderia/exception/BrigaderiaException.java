@@ -9,7 +9,7 @@ public class BrigaderiaException extends Exception{
 	
 	
 	public BrigaderiaException(){
-		super("Ocorreu um erro inesperado.");
+		super("Ocorreu um erro inesperado. Entre em contato com o administrador do sistema.");
 	}
 	public BrigaderiaException(String msg){
 		super(msg);

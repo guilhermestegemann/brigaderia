@@ -29,18 +29,17 @@ public class ClientesRest extends UtilRest{
 	@Path ("/adicionar")
 	@Consumes(MediaType.APPLICATION_JSON)
 	
-	public Response adicionar(String param) {
+	public Response adicionar(String param) throws BrigaderiaException {
 		
 		try {
 			Cliente cliente = new ObjectMapper().readValue(param, Cliente.class);
 			ClienteService service = new ClienteService();
 			service.adicionarCliente(cliente);
-			return super.buildResponse("Cliente cadastrado com sucesso");
+			return buildResponse("Cliente cadastrado com sucesso");
 		}catch (BrigaderiaException e){
 			return buildErrorResponse(e.getMessage());
 		}catch (Exception e) {
-			e.printStackTrace();
-			return this.buildErrorResponse("Ocorreu algum erro!");
+			throw new BrigaderiaException(e);
 		}
 	}
 	
@@ -53,10 +52,10 @@ public class ClientesRest extends UtilRest{
 		try {
 			
 			ClienteService service = new ClienteService();
-			return this.buildResponse(service.buscarClientesVO(valorBusca));
+			return buildResponse(service.buscarClientesVO(valorBusca));
 		}catch(Exception e) {
 			e.printStackTrace();
-			return this.buildErrorResponse(e.getMessage());
+			return buildErrorResponse(e.getMessage());
 		}
 	}
 	
@@ -71,7 +70,7 @@ public class ClientesRest extends UtilRest{
 			return this.buildResponse("Cliente deletado!");
 		}catch (ClienteComPedidoException e) {
 			e.printStackTrace();
-			return this.buildErrorResponse(e.getMessage());
+			return buildErrorResponse(e.getMessage());
 		}
 	}
 	
@@ -81,27 +80,27 @@ public class ClientesRest extends UtilRest{
 	public Response buscarClientePeloCodigo(@PathParam("codigo")int codigo) {
 		try {
 			ClienteService service = new ClienteService(); 
-			return this.buildResponse(service.buscarClientePeloCodigo(codigo));
+			return buildResponse(service.buscarClientePeloCodigo(codigo));
 		}catch (Exception e) {
 			e.printStackTrace();
-			return this.buildErrorResponse(e.getMessage());
+			return buildErrorResponse(e.getMessage());
 		}
 	}
 	
 	@PUT
 	@Path("/atualizar")
 	@Consumes("application/*")
-	public Response atualizar (String clienteEditado) {
+	public Response atualizar (String clienteEditado) throws BrigaderiaException {
 		try {
 			Cliente cliente = new ObjectMapper().readValue(clienteEditado, Cliente.class);
 			ClienteService service = new ClienteService();
 			service.atualizarCliente(cliente);
-			return this.buildResponse("Cliente editado com sucesso.");
+			return buildResponse("Cliente editado com sucesso.");
 		}catch (BrigaderiaException e){
 			return buildErrorResponse(e.getMessage());
 		}catch (Exception e) {
 			e.printStackTrace();
-			return buildErrorResponse(e.getMessage());
+			throw new BrigaderiaException(e);
 		}
 	}
 
