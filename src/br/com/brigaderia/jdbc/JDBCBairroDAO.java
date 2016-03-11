@@ -2,10 +2,12 @@ package br.com.brigaderia.jdbc;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.jdbcinterface.BairroDAO;
 import br.com.brigaderia.objetos.Bairro;
 
@@ -13,16 +15,12 @@ public class JDBCBairroDAO implements BairroDAO{
 	
 	private Connection conexao;
 	
-	
-	
 	public JDBCBairroDAO(Connection conexao) {
 		super();
 		this.conexao = conexao;
 	}
 
-
-
-	public List<Bairro> buscar() {
+	public List<Bairro> buscar() throws BrigaderiaException{
 		
 		String comando = "SELECT * FROM BAIRRO ";
 		List<Bairro> listBairro = new ArrayList<Bairro>();
@@ -36,8 +34,9 @@ public class JDBCBairroDAO implements BairroDAO{
 				bairro.setNome(rs.getString("nome"));
 				listBairro.add(bairro);
 			}
-		}catch (Exception e) {
+		}catch (SQLException e) {
 			e.printStackTrace();
+			throw new BrigaderiaException();
 		}return listBairro;
 		
 	}
