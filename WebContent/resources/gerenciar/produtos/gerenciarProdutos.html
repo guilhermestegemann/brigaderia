@@ -1,0 +1,110 @@
+<script type="text/javascript">
+	$(".deletaRegistro").on( "click", function() {
+		bootbox.confirm({ 
+		    size: 'small',
+		    message: "Deseja deletar o Produto?", 
+		    callback: function(result){
+		    }
+		})
+	})
+</script>
+<div class='jumbotron container-fluid'>
+	<h1>Produtos</h1>
+	<hr>
+	<div class="">
+		<div class="input-group col-sm-9">
+			<input type="text" class="form-control col-sm-6" placeholder="Procure pelo Produto...">
+			<span class="input-group-btn">
+				<button class="btn btn-success" type="button">Pesquisar</button>
+			</span>
+			<button class='btn btn-primary btn pull-right' onclick="carregarConteudo('resources/cadastro/produtos/produtos.html')">Cadastrar Produto</button>
+		</div>
+	</div>
+	<table class='table col-sm-12'>
+		<thead>
+			<tr>
+				<th><strong>Cód. Produto</strong></th>
+				<th>Nome</th>
+				<th>Estoque</th>
+				<th>Valor Custo</th>
+				<th>Valor Venda</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>1</td>
+				<td>Brigadeiro Beijinho</td>
+				<td>10</td>
+				<td>1.00</td>
+				<td>2.00</td>
+				<td><a href='#' onclick="carregarConteudo('resources/cadastro/produtos/produtos.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>Brigadeiro Beijinho</td>
+				<td>10</td>
+				<td>1.00</td>
+				<td>2.00</td>
+				<td><a href='#' onclick="carregarConteudo('resources/cadastro/produtos/produtos.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>Brigadeiro Beijinho</td>
+				<td>10</td>
+				<td>1.00</td>
+				<td>2.00</td>
+				<td><a href='#' onclick="carregarConteudo('resources/cadastro/produtos/produtos.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>Brigadeiro Beijinho</td>
+				<td>10</td>
+				<td>1.00</td>
+				<td>2.00</td>
+				<td><a href='#' onclick="carregarConteudo('resources/cadastro/produtos/produtos.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>Brigadeiro Beijinho</td>
+				<td>10</td>
+				<td>1.00</td>
+				<td>2.00</td>
+				<td><a href='#' onclick="carregarConteudo('resources/cadastro/produtos/produtos.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>Brigadeiro Beijinho</td>
+				<td>10</td>
+				<td>1.00</td>
+				<td>2.00</td>
+				<td><a href='#' onclick="carregarConteudo('resources/cadastro/produtos/produtos.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>Brigadeiro Beijinho</td>
+				<td>10</td>
+				<td>1.00</td>
+				<td>2.00</td>
+				<td><a href='#' onclick="carregarConteudo('resources/cadastro/produtos/produtos.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>Brigadeiro Beijinho</td>
+				<td>10</td>
+				<td>1.00</td>
+				<td>2.00</td>
+				<td><a href='#' onclick="carregarConteudo('resources/cadastro/produtos/produtos.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>Brigadeiro Beijinho</td>
+				<td>10</td>
+				<td>1.00</td>
+				<td>2.00</td>
+				<td><a href='#' onclick="carregarConteudo('resources/cadastro/produtos/produtos.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
+			</tr>
+			
+		</tbody>
+	</table>
+</div>

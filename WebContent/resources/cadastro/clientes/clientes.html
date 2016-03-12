@@ -4,11 +4,11 @@
 <meta http-equiv="Content-Type" content="text/plain; charset=UTF-8">
 <title>Consulta de Cliente</title>
 <script type="text/javascript" src="resources/js/validaCpf.js"></script>
-<script type="text/javascript" src="resources/cadastro/js/cliente-service.js"></script>
-<script type="text/javascript" src="resources/cadastro/js/bairro.js"></script>
-<script type="text/javascript" src="resources/cadastro/js/cidade.js"></script>
-<script type="text/javascript" src="resources/cadastro/js/clientes.js"></script>
-<script type="text/javascript" src="resources/cadastro/js/validaClientes.js"></script>
+<script type="text/javascript" src="resources/cadastro/clientes/js/cliente-service.js"></script>
+<script type="text/javascript" src="resources/cadastro/bairros/js/bairro.js"></script>
+<script type="text/javascript" src="resources/cadastro/cidades/js/cidade.js"></script>
+<script type="text/javascript" src="resources/cadastro/clientes/js/clientes.js"></script>
+<script type="text/javascript" src="resources/cadastro/clientes/js/validaClientes.js"></script>
 <script type="text/javascript" src="resources/js/convertData.js"></script>
 
 
@@ -21,7 +21,7 @@
 	<form method='POST' role='form' class='form-group' action=''>
 		<div class="form-group col-sm-6">
 			<label for='nome'>*Nome</label>
-			<input type="text" class="form-control" id="nome" name="nome" />
+			<input type="text" class="form-control" id="nome" name="nome" maxlength="45"/>
 		</div>
 		<div class="form-group col-sm-3">
 			<label for='rg'>R.G</label>
@@ -31,17 +31,17 @@
 			<label for='cpf'>CPF</label>
 			<input type="text" class="form-control" id="cpf" name="cpf" />
 		</div>
-		<div class="form-group col-sm-7">
+		<div class="form-group col-sm-6">
 			<label for='endereco'>Endereco</label>
-			<input type="text" class="form-control" id="endereco" name="endereco" />
+			<input type="text" class="form-control" id="endereco" name="endereco" maxlength="60"/>
 		</div>
 		<div class="form-group col-sm-2">
 			<label for='numero'>Número</label>
-			<input type="text" class="form-control" id="numero" name="numero" />
+			<input type="text" class="form-control" id="numero" name="numero" maxlength="5"/>
 		</div>
-		<div class="form-group col-sm-3">
+		<div class="form-group col-sm-4">
 			<label for='complemento'>Complemento</label>
-			<input type="text" class="form-control" id="complemento" name="complemento" />
+			<input type="text" class="form-control" id="complemento" name="complemento" maxlength="40"/>
 		</div>
 		<div class="form-group col-sm-3">
 			<label for='cep'>CEP</label>
@@ -65,7 +65,7 @@
 		</div>
 		<div class="form-group col-sm-5">
 			<label for='email'>Email</label>
-			<input type="text" class="form-control" id="email" name="email" />
+			<input type="text" class="form-control" id="email" name="email" maxlength="45"/>
 		</div>
 		<div class="form-group col-sm-2">
 			<label for='telefone'>Telefone</label>
@@ -82,7 +82,7 @@
 		<div class="btn pull-right form-group">
 			<br/><br/><br/><br/>
 			<button class="btn btn-primary btn-lg" onclick= "BRIGADERIA.clientes.adicionar()" type="button" id="btnConfirmar">Salvar</button>
-			<button class="btn btn-danger btn-lg" onclick= "carregarConteudo('resources/gerenciar/gerenciarClientes.html')" type="button">Cancelar</button>
+			<button class="btn btn-danger btn-lg" onclick= "carregarConteudo('resources/gerenciar/clientes/gerenciarClientes.html')" type="button">Cancelar</button>
 		</div>
 	</form>
 </div>
