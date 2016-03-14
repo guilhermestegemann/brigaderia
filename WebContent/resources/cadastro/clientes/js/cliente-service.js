@@ -39,7 +39,7 @@ $(document).ready(function() {
 			data: cliente,
 			success : function (sucesso) {
 				bootbox.alert(sucesso);
-				carregarConteudo ('resources/gerenciar/gerenciarClientes.html');
+				carregarConteudo ('resources/gerenciar/clientes/gerenciarClientes.html');
 			},
 			error : function (err) {
 				bootbox.alert(err.responseText);
@@ -54,7 +54,7 @@ $(document).ready(function() {
 			data: cliente,
 			success : function(sucesso) {
 				bootbox.alert(sucesso);
-				carregarConteudo ('resources/gerenciar/gerenciarClientes.html');
+				carregarConteudo ('resources/gerenciar/clientes/gerenciarClientes.html');
 			},
 			error : function (err) {
 				bootbox.alert(err.responseText);
