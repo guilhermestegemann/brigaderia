@@ -1,10 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/plain; charset=UTF-8">
+<title>Cadastro de Produtos</title>
+<script type="text/javascript" src="resources/cadastro/produtos/js/produto-service.js"></script>
+<script type="text/javascript" src="resources/cadastro/tipoItem/js/tipoItem.js"></script>
+<script type="text/javascript" src="resources/cadastro/produtos/js/produtos.js"></script>
+</head>
+<body>
 <div class='jumbotron'>
 	<h1>Cadastro de Produtos</h1>
 	<hr>
 	<form method='POST' role='form' class='form-group' action=''>
 		<div class="form-group col-sm-3">
 			<label for="tipoItem">Tipo Item</label>
-			<select class="form-control" id="tipoItem" name="tipoItem"></select>
+			<select class="form-control" id="tipoItem" name="tipoItem">
+			<option value="">Selecione</option></select>
 		</div>
 		<div class="form-group col-sm-6">
 			<label for='descricao'>Descrição</label>
@@ -15,28 +26,28 @@
 			<input type="text" class="form-control" id="qtdeEntrada" name="qtdeEntrada" />
 		</div>
 		<div class="form-group col-sm-2">
-			<label for='txtUnEntrada'>UN Entrada</label>
-			<input type="text" class="form-control" id="txtUnEntrada" name="txtUnEntrada" />
+			<label for='unEntrada'>UN Entrada</label>
+			<input type="text" class="form-control" id="unEntrada" name="unEntrada" />
 		</div>
 		<div class="form-group col-sm-2">
-			<label for='txtValorCusto'>Valor Custo</label>
-			<input type="text" class="form-control" id="txtValorCusto" name="txtValorCusto" />
+			<label for='valorCusto'>Valor Custo</label>
+			<input type="text" class="form-control" id="valorCusto" name="valorCusto" readonly/>
 		</div>
 		<div class="form-group col-sm-2">
-			<label for='txtEstoque'>Estoque</label>
-			<input type="text" class="form-control" id="txtEstoque" name="txtEstoque" />
+			<label for='estoque'>Estoque</label>
+			<input type="text" class="form-control" id="estoque" name="estoque" />
 		</div>
 		<div class="form-group col-sm-2">
-			<label for='txtUnEstoque'>UN Estoque</label>
-			<input type="text" class="form-control" id="txtUnEstoque" name="txtUnEstoque" />
+			<label for='unEstoque'>UN Estoque</label>
+			<input type="text" class="form-control" id="unEstoque" name="unEstoque" />
 		</div>
 		<div class="form-group col-sm-2">
-			<label for='txtMargem'>Margem</label>
-			<input type="text" class="form-control" id="txtMargem" name="txtMargem" />
+			<label for='margem'>Margem</label>
+			<input type="text" class="form-control" id="margem" name="margem" />
 		</div>
 		<div class="form-group col-sm-2">
-			<label for='txtValorVenda'>Valor Venda</label>
-			<input type="text" class="form-control" id="txtValorVenda" name="txtValorVenda" />
+			<label for='valorVenda'>Valor Venda</label>
+			<input type="text" class="form-control" id="valorVenda" name="valorVenda" />
 		</div>
 		
 

@@ -1,3 +1,9 @@
+<head>
+<meta http-equiv="Content-Type" content="text/plain; charset=UTF-8">
+<title>Cadastro de Ficha Técnica</title>
+<script type="text/javascript" src="resources/cadastro/fichaTecnica/js/fichaTecnica-service.js"></script>
+<script type="text/javascript" src="resources/cadastro/fichaTecnica/js/fichaTecnica.js"></script>
+</head>
 <div class='jumbotron'>
 	<h1>Cadastro de Ficha Técnica</h1>
 	<div class="col-sm-12">
@@ -5,40 +11,36 @@
 	</div>
 	<form method='POST' role='form' class='form-group' action=''>
 		<div class="form-group col-sm-6">
-			<label for='txtNome'>Nome</label>
-			<input type="text" class="form-control" id="txtNome" name="txtNome" />
+			<label for='nome'>Nome</label>
+			<input type="text" class="form-control" id="nome" name="nome" />
 		</div>
 		<div class="form-group col-sm-2">
-			<label for='txtData'>Data</label>
-			<input type="text" class="form-control" id="txtData" name="txtData" readonly />
+			<label for='data'>Data</label>
+			<input type="text" class="form-control" id="data" name="data" readonly />
 		</div>
 		<div class="form-group col-sm-2">
-			<label for='txtCustoTotal'>Custo Total</label>
-			<input type="text" class="form-control" id="txtCustoTotal" name="txtCustoTotal" readonly />
-		</div>
-		<div class="form-group col-sm-6">
-			<label for="cbxProduto">Produto</label>
-			<select class="form-control" id="cbxProduto" name="cbxProduto"></select>
+			<label for='custoTotal'>Custo Total</label>
+			<input type="text" class="form-control" id="custoTotal" name="custoTotal" readonly />
 		</div>
 		<div class="form-group col-sm-2">
-			<label for='txtQtdeProduto'>Quantidade</label>
-			<input type="text" class="form-control" id="txtQtdeProduto" name="txtQtdeProduto" />
+			<label for='qtdeProduto'>Quantidade</label>
+			<input type="text" class="form-control" id="qtdeProduto" name="qtdeProduto" />
 		</div>
 		<div class="form-group col-sm-10">
-			<label for="txtaProcedimento">Procedimento</label>
-			<textarea class="form-control" rows="5" id="txtaProcedimento"></textarea>
+			<label for="procedimento">Procedimento</label>
+			<textarea class="form-control" rows="5" id="procedimento"></textarea>
 		</div>
 		<div class="col-sm-12">
 			<hr>
 		</div>
 		<div class="col-sm-10">
 			<div class="form-group col-sm-7">
-				<label for='cbxIngrediente'>Ingrediente</label>
-				<select class="form-control" id="cbxIngrediente" name="cbxIngrediente"></select>
+				<label for='ingrediente'>Ingrediente</label>
+				<select class="form-control" id="ingrediente" name="ingrediente"></select>
 			</div>
 			<div class="form-group col-sm-3">
-				<label for='txtQtdeIngrediente'>Quantidade</label>
-				<input type="text" class="form-control" id="txtQtdeIngrediente" name="txtQtdeIngrediente" />
+				<label for='qtdeIngrediente'>Quantidade</label>
+				<input type="text" class="form-control" id="qtdeIngrediente" name="qtdeIngrediente" />
 			</div>
 			<div class="btn pull-right form-group">
 				<button class="btn btn-primary btn-lg" type="button">Incluir</button>

@@ -1,13 +1,6 @@
-<script type="text/javascript">
-	$(".deletaRegistro").on( "click", function() {
-		bootbox.confirm({ 
-		    size: 'small',
-		    message: "Deseja deletar o Produto?", 
-		    callback: function(result){
-		    }
-		})
-	})
-</script>
+<script type="text/javascript" src="resources/cadastro/produtos/js/produto-service.js"></script>
+<script type="text/javascript" src="resources/gerenciar/produtos/js/gerenciarProdutos.js"></script>
+
 <div class='jumbotron container-fluid'>
 	<h1>Produtos</h1>
 	<hr>
@@ -17,7 +10,7 @@
 			<span class="input-group-btn">
 				<button class="btn btn-success" type="button">Pesquisar</button>
 			</span>
-			<button class='btn btn-primary btn pull-right' onclick="carregarConteudo('resources/cadastro/produtos/produtos.html')">Cadastrar Produto</button>
+			<button class='btn btn-primary btn pull-right' onclick="BRIGADERIA.gerenciarProdutos.cadastrarProduto()">Cadastrar Produto</button>
 		</div>
 	</div>
 	<table class='table col-sm-12'>

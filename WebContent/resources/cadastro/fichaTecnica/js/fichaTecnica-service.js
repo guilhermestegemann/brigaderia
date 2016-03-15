@@ -1,10 +1,10 @@
 $(document).ready(function() {
-	if(BRIGADERIA.produtoService == undefined){
-		BRIGADERIA.produtoService = {};
+	if(BRIGADERIA.fichaTecnicaService == undefined){
+		BRIGADERIA.fichaTecnicaService = {};
 	}
 	
-	BRIGADERIA.produtoService.defaultCfg = function(cfg) {
-		var url = "rest/produtos";// url padrão
+	BRIGADERIA.fichaTecnicaService.defaultCfg = function(cfg) {
+		var url = "rest/fichatecnica";// url padrão
 		if(cfg && cfg.url){// se cfg nao for undefined e tiver url
 			url = cfg.url;// altera a url pra url que veio no objeto cfg
 		}
@@ -30,18 +30,16 @@ $(document).ready(function() {
 	
 	
 	
-	BRIGADERIA.produtoService.adicionar = function(produto) {
+	BRIGADERIA.fichaTecnicaService.listarIngredientes = function(cfg) {
 		cfg = {
-			url: "rest/produtos/adicionar",
-			data: produto,
+			url: "rest/produtos/listarIngredientes",
 			success : function (sucesso) {
 				bootbox.alert(sucesso);
-				carregarConteudo ('resources/gerenciar/gerenciarProdutos.html');
 			},
 			error : function (err) {
 				bootbox.alert(err.responseText);
 			}
 		};
-		BRIGADERIA.ajax.post(BRIGADERIA.produtoService.defaultCfg(cfg));
+		BRIGADERIA.ajax.get(BRIGADERIA.produtoService.defaultCfg(cfg));
 	};
 });
