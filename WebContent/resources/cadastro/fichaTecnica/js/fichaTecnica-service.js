@@ -28,18 +28,8 @@ $(document).ready(function() {
 		};
 	};
 	
-	
-	
 	BRIGADERIA.fichaTecnicaService.listarIngredientes = function(cfg) {
-		cfg = {
-			url: "rest/produtos/listarIngredientes",
-			success : function (sucesso) {
-				bootbox.alert(sucesso);
-			},
-			error : function (err) {
-				bootbox.alert(err.responseText);
-			}
-		};
-		BRIGADERIA.ajax.get(BRIGADERIA.produtoService.defaultCfg(cfg));
+		cfg.url = "rest/produtos/listarIngredientes";
+		BRIGADERIA.ajax.get(BRIGADERIA.fichaTecnicaService.defaultCfg(cfg));
 	};
 });
