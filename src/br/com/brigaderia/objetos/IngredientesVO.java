@@ -11,8 +11,15 @@ public class IngredientesVO implements Serializable{
 	
 	private int codigo;
 	private String descricao;
+	String un ;
 	
 	
+	public String getUn() {
+		return un;
+	}
+	public void setUn(String un) {
+		this.un = un;
+	}
 	public int getCodigo() {
 		return codigo;
 	}

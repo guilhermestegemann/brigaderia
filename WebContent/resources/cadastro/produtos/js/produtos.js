@@ -26,12 +26,15 @@ $(document).ready(function() {
 	
 	$("#tipoItem").on('change',function(){
 		if ($("#tipoItem").val() == 1) {
+			$("#btnSalvarProduto").hide();
+			$("#btnCancelarProduto").hide();
 			$("#subConteudo").load("resources/cadastro/fichaTecnica/fichaTecnica.html", function (){
-				debugger;
 				BRIGADERIA.fichaTecnica.exibirFormulario();
 			});
 		}else{
 			$("#subConteudo").text("");
+			$("#btnSalvarProduto").show();
+			$("#btnCancelarProduto").show();
 		}
 	});
 	

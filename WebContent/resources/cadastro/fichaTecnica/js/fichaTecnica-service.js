@@ -29,7 +29,7 @@ $(document).ready(function() {
 	};
 	
 	BRIGADERIA.fichaTecnicaService.listarIngredientes = function(cfg) {
-		cfg.url = "rest/produtos/listarIngredientes";
+		cfg.url = "rest/fichaTecnica/listarIngredientes";
 		BRIGADERIA.ajax.get(BRIGADERIA.fichaTecnicaService.defaultCfg(cfg));
 	};
 });
