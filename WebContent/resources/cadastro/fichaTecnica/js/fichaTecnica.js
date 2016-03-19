@@ -37,8 +37,7 @@ $(document).ready(function(){
 			var descricao = "";
 			var un = "";
 			var qtde = $("#qtdeIngrediente").val();
-			ingredientes.lancado = 0;
-			console.log(ingredientes);
+			
 			for (var i = 0; i < ingredientes.length; i++) {
 				if ((ingredientes[i].codigo == codigo) && (un == "")) {
 					un = ingredientes[i].un;
@@ -46,8 +45,8 @@ $(document).ready(function(){
 				}
 			}
 			if (un != "") {
-				html =  "<tr>"
-						  + "<td>" + codigo + "</td>"
+				html =  "<tr class='ingredientes'>"
+						  + "<td >" + codigo + "</td>"
 						  + "<td>" + descricao + "</td>"
 						  + "<td>" + un + "</td>"
 						  + "<td>" + qtde + "</td>"
@@ -58,4 +57,59 @@ $(document).ready(function(){
 			}
 		}
 	};
+	
+	BRIGADERIA.fichaTecnica.adicionar = function() {
+		var newData = {
+			produto:{
+				tipoitem: $("#tipoItem").val(),
+				descricao: $("#descricao").val(),
+				qtdeEntrada: $("#qtdeEntrada").val(),
+				unEntrada: $("#unEntrada").val(),
+				valorCusto: $("#valorCusto").val(),
+				estoque: $("#estoque").val(),
+				unEstoque: $("#unEstoque").val(),
+				margem: $("#margem").val(),
+				valorVenda: $("#valorVenda").val(),
+				dataCadastro: $("#dataCadastro").val(),
+				ativo: $("#ativo").val(),	
+			}, 
+			fichaTecnica:{
+				custoTotal: $("#custoTotal").val(),
+				qtdeProduto: $("#qtdeProduto").val(),
+				procedimento: $("#procedimento").val(),
+				ingredientes: []
+			}
+		};
+		
+		$("#ingredientesFichaTecnica tbody .ingredientes").each(function(){
+			
+			var ingrediente = {
+					id: $("td",this).first().text(),
+					qtde: $("td",this).last().text()
+			};
+			newData.fichaTecnica.ingredientes.push(ingrediente);
+		});
+		console.log(newData);
+	};
+	
+	
+	
+	
 });//fecha ready
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

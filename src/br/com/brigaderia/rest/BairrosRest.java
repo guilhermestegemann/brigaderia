@@ -19,7 +19,6 @@ public class BairrosRest extends UtilRest{
 	@Path("/buscar")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	public Response buscar() throws BrigaderiaException{
-		
 		try {
 			BairroService service = new BairroService();
 			return this.buildResponse(service.buscar());

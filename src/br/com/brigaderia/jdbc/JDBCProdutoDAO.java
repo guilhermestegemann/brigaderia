@@ -21,7 +21,7 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 	}
 	
 	public List<IngredientesVO> buscarIngredientes () throws BrigaderiaException {
-		String comando = "SELECT CODIGO, DESCRICAO, UNMEDIDAESTOQUE FROM PRODUTO WHERE TIPOITEM = 2 ";
+		String comando = "SELECT CODIGO, DESCRICAO, UNESTOQUE FROM PRODUTO WHERE TIPOITEM = 2 ";
 		List<IngredientesVO> listIngredientes = new ArrayList<IngredientesVO>();
 		IngredientesVO ingredientes = null;
 		try {
@@ -31,7 +31,7 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 				ingredientes = new IngredientesVO();
 				ingredientes.setCodigo(rs.getInt("codigo"));
 				ingredientes.setDescricao(rs.getString("descricao"));
-				ingredientes.setUn(rs.getString("unmedidaestoque"));
+				ingredientes.setUn(rs.getString("unestoque"));
 				
 				listIngredientes.add(ingredientes);
 			}

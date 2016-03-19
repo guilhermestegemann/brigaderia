@@ -9,7 +9,7 @@
 	<div class="col-sm-12">
 		<hr>
 	</div>
-	<form method='POST' role='form' class='form-group' action=''>
+	<form id="formFichaTecnica" method='POST' role='form' class='form-group' action=''>
 		<div class="form-group col-sm-3">
 			<label for='custoTotal'>Custo Total</label>
 			<input type="text" class="form-control" id="custoTotal" name="custoTotal" readonly />
@@ -59,7 +59,7 @@
 	</div>
 	<div class="btn pull-right form-group col-sm-6">
 		
-		<button class="btn btn-primary btn-lg" type="button">Salvar</button>
+		<button class="btn btn-primary btn-lg" onclick= "BRIGADERIA.fichaTecnica.adicionar()" type="button">Salvar</button>
 		<button class="btn btn-danger btn-lg" onclick= "carregarConteudo('resources/gerenciar/fichaTecnica/gerenciarFichaTecnica.html')" type="button">Cancelar</button>
 	</div>
 </div>

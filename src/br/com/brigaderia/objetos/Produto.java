@@ -20,8 +20,15 @@ public class Produto implements Serializable{
 	private float margem;
 	private float valorVenda;
 	private Date dataCadastro;
+	private String ativo;
 	
 	
+	public String getAtivo() {
+		return ativo;
+	}
+	public void setAtivo(String ativo) {
+		this.ativo = ativo;
+	}
 	public int getTipoItem() {
 		return tipoItem;
 	}
@@ -82,7 +89,4 @@ public class Produto implements Serializable{
 	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
-	
-	
-	
 }

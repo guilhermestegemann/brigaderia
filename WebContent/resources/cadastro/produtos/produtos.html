@@ -11,18 +11,19 @@
 <div class='jumbotron'>
 	<h1>Cadastro de Produtos</h1>
 	<hr>
-	<form method='POST' role='form' class='form-group' action=''>
+	<form id="formProduto" method='POST' role='form' class='form-group' action=''>
 		<div class="form-group col-sm-2">
 			<label for="tipoItem">Tipo Item</label>
 			<select class="form-control" id="tipoItem" name="tipoItem">
-			<option value="">Selecione</option></select>
+				<option value="">Selecione</option>
+			</select>
 		</div>
-		<div class="form-group col-sm-6">
+		<div class="form-group col-sm-4">
 			<label for='descricao'>Descrição</label>
 			<input type="text" class="form-control" id="descricao" name="descricao" />
 		</div>
 		<div class="form-group col-sm-2">
-			<label for='txtQtdeEntrada'>Qtde Entrada</label>
+			<label for='qtdeEntrada'>Qtde Entrada</label>
 			<input type="text" class="form-control" id="qtdeEntrada" name="qtdeEntrada" />
 		</div>
 		<div class="form-group col-sm-2">
@@ -52,6 +53,13 @@
 		<div class="form-group col-sm-2">
 			<label for='dataCadastro'>Data Cadastro</label>
 			<input type="text" class="form-control" id="dataCadastro" name="dataCadastro" readonly />
+		</div>
+		<div class="form-group col-sm-2">
+			<label for="ativo">Ativo</label>
+			<select class="form-control" id="ativo" name="ativo">
+				<option value="S">Ativo</option>
+				<option value="N">Inativo</option>
+			</select>
 		</div>
 
 		<div class="btn pull-right form-group">

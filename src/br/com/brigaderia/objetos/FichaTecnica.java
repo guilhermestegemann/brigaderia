@@ -1,6 +1,7 @@
 package br.com.brigaderia.objetos;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class FichaTecnica implements Serializable{
 
@@ -12,8 +13,15 @@ public class FichaTecnica implements Serializable{
 	private float custoTotal;
 	private float qtdeProduto;
 	private String procedimento;
+	private List<itemFichaTecnicaVO> ingredientes;
 	
 	
+	public List<itemFichaTecnicaVO> getIngredientes() {
+		return ingredientes;
+	}
+	public void setIngredientes(List<itemFichaTecnicaVO> ingredientes) {
+		this.ingredientes = ingredientes;
+	}
 	public float getCustoTotal() {
 		return custoTotal;
 	}

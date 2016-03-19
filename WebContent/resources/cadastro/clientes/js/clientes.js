@@ -95,7 +95,7 @@ $(document).ready(function() {
 	BRIGADERIA.clientes.adicionar = function () {
 		
 		var newCliente = new Object();
-		$('form input, form select').each(function(){newCliente[this.name]=this.value;})
+		$('form input, form select').each(function(){newCliente[this.name]=this.value;});
 		newCliente.cep = $("#cep").val().replace(/[^\d]+/g,'');
 		newCliente.telefone = $("#telefone").val().replace(/[^\d]+/g,'');
 		newCliente.celular = $("#celular").val().replace(/[^\d]+/g,'');
