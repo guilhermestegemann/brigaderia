@@ -1,7 +1,8 @@
 package br.com.brigaderia.objetos;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
+
 
 public class Produto implements Serializable{
 
@@ -10,6 +11,7 @@ public class Produto implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	private int codigo;
 	private int tipoItem;
 	private String descricao;
 	private float qtdeEntrada;
@@ -23,6 +25,14 @@ public class Produto implements Serializable{
 	private String ativo;
 	
 	
+	
+	
+	public int getCodigo() {
+		return codigo;
+	}
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
 	public String getAtivo() {
 		return ativo;
 	}

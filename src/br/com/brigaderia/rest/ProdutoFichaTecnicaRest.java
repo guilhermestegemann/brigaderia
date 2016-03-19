@@ -10,6 +10,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.objetos.ProdutoFichaTecnicaVO;
+import br.com.brigaderia.service.ProdutoFichaTecnicaService;
 
 @Path("produtoFichaTecnica")
 
@@ -24,7 +25,8 @@ public class ProdutoFichaTecnicaRest extends UtilRest{
 	public Response adicionar(String param) throws BrigaderiaException {
 		try {
 			ProdutoFichaTecnicaVO prodFicha = new ObjectMapper().readValue(param, ProdutoFichaTecnicaVO.class);
-			
+			ProdutoFichaTecnicaService service = new ProdutoFichaTecnicaService();
+			service.adicionar(prodFicha);		
 			return buildResponse("Produto e Ficha Técnica cadastrados com sucesso!");
 		}catch (Exception e) {
 			return buildErrorResponse(e.getMessage());

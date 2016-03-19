@@ -61,7 +61,7 @@ $(document).ready(function(){
 	BRIGADERIA.fichaTecnica.adicionar = function() {
 		var newData = {
 			produto:{
-				tipoitem: $("#tipoItem").val(),
+				tipoItem: $("#tipoItem").val(),
 				descricao: $("#descricao").val(),
 				qtdeEntrada: $("#qtdeEntrada").val(),
 				unEntrada: $("#unEntrada").val(),
@@ -84,12 +84,12 @@ $(document).ready(function(){
 		$("#ingredientesFichaTecnica tbody .ingredientes").each(function(){
 			
 			var ingrediente = {
-					id: $("td",this).first().text(),
+					codigo: $("td",this).first().text(),
 					qtde: $("td",this).last().text()
 			};
 			newData.fichaTecnica.ingredientes.push(ingrediente);
 		});
-		console.log(newData);
+		BRIGADERIA.produtoFichaTecnicaService.adicionar(newData);
 	};
 	
 	

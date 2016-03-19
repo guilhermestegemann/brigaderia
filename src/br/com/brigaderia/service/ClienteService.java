@@ -31,8 +31,7 @@ public class ClienteService {
 				jdbcCliente.verificarCpfDuplicado(cliente.getCpf());
 			}
 			validaCliente.validarCliente(cliente);
-			Date dataCadastro = new Date();
-			cliente.setDataCadastro(dataCadastro);
+			cliente.setDataCadastro(new Date());
 			DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			if (cliente.getAniversario() != "") {
 				Date dataAniversario = (Date)formatter.parse(cliente.getAniversario());
