@@ -1,6 +1,6 @@
 package br.com.brigaderia.objetos;
 
-public class itemFichaTecnicaVO extends IngredientesVO{
+public class ItemFichaTecnicaVO extends IngredientesVO{
 
 	/**
 	 * 

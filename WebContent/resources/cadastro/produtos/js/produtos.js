@@ -38,6 +38,12 @@ $(document).ready(function() {
 		}
 	});
 	
+	BRIGADERIA.produtos.adicionar = function() {
+		var newProduto = new Object();
+		$('form input, form select').each(function(){newProduto[this.name]=this.value;});
+		BRIGADERIA.produtoService.adicionar(newProduto);
+	};
+	
 
 });// fecha ready
 

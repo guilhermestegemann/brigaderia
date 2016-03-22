@@ -28,7 +28,9 @@ public class ProdutoFichaTecnicaRest extends UtilRest{
 			ProdutoFichaTecnicaService service = new ProdutoFichaTecnicaService();
 			service.adicionar(prodFicha);		
 			return buildResponse("Produto e Ficha Técnica cadastrados com sucesso!");
-		}catch (Exception e) {
+		}catch (BrigaderiaException e) {
+			return buildErrorResponse(e.getMessage());
+		}catch(Exception e) {
 			return buildErrorResponse(e.getMessage());
 		}
 	}

@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 import br.com.brigaderia.exception.BrigaderiaException;
-import br.com.brigaderia.exception.ValidaClientesException;
+import br.com.brigaderia.exception.CamposObrigatoriosException;
 import br.com.brigaderia.objetos.Cliente;
 
 public class ValidaCliente {
@@ -28,7 +28,7 @@ public class ValidaCliente {
 			System.out.println(cliente.getEmail() + " nada");
 			System.out.println(email);
 			
-			throw new ValidaClientesException();
+			throw new CamposObrigatoriosException();
 		}
 		
 		ValidacoesGerais validacoes = new ValidacoesGerais();

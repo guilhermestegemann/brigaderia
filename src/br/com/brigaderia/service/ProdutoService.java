@@ -8,6 +8,7 @@ import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.jdbc.JDBCProdutoDAO;
 import br.com.brigaderia.jdbcinterface.ProdutoDAO;
 import br.com.brigaderia.objetos.Produto;
+import br.com.brigaderia.validacoes.ValidaProduto;
 
 public class ProdutoService {
 	
@@ -17,6 +18,8 @@ public class ProdutoService {
 		try {
 			Connection conexao = conec.abrirConexao();
 			produto.setDataCadastro(new Date());
+			ValidaProduto validaProduto = new ValidaProduto();
+			validaProduto.validarProduto(produto);
 			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
 			return jdbcProduto.adicionar(produto);
 		}catch (BrigaderiaException e) {

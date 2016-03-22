@@ -9,7 +9,7 @@ import java.sql.Statement;
 import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.jdbcinterface.FichaTecnicaDAO;
 import br.com.brigaderia.objetos.FichaTecnica;
-import br.com.brigaderia.objetos.Produto;
+
 
 public class JDBCFichaTecnicaDAO implements FichaTecnicaDAO{
 	
@@ -26,7 +26,7 @@ public class JDBCFichaTecnicaDAO implements FichaTecnicaDAO{
 		
 		try {
 			p = this.conexao.prepareStatement(comando, Statement.RETURN_GENERATED_KEYS);
-			p.setInt(1, fichaTecnica.getCodigo());
+			p.setInt(1, fichaTecnica.getProduto());
 			p.setFloat(2, fichaTecnica.getQtdeProduto());
 			p.setFloat(3, fichaTecnica.getCustoTotal());
 			p.setString(4, fichaTecnica.getProcedimento());
@@ -36,7 +36,7 @@ public class JDBCFichaTecnicaDAO implements FichaTecnicaDAO{
 	            	fichaTecnica.setCodigo(generatedKeys.getInt(1));
 	            }
 	            else {
-	                throw new SQLException("Erro ao criar pedido. ID failed.");
+	                throw new SQLException("Erro ao recuperar chave inserida! (Ficha Técnica)");
 	            }
 			} 
 			
@@ -45,5 +45,22 @@ public class JDBCFichaTecnicaDAO implements FichaTecnicaDAO{
 			e.printStackTrace();
 			throw new BrigaderiaException();
 		}
+	}
+	
+	public void adicionarIngredientes(int codFichaTecnica, int codIngrediente, float qtde) throws BrigaderiaException {
+		String comando = "INSERT INTO ITEMFICHATECNICA (FICHATECNICA, INGREDIENTE, QTDE) VALUES (?,?,?)";
+		PreparedStatement p;
+		
+		try {
+			p = this.conexao.prepareStatement(comando);
+			p.setInt(1, codFichaTecnica);
+			p.setInt(2, codIngrediente);
+			p.setFloat(3, qtde);
+			p.execute();
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new BrigaderiaException();
+		}
+		
 	}
 }

@@ -13,21 +13,21 @@
 	<hr>
 	<form id="formProduto" method='POST' role='form' class='form-group' action=''>
 		<div class="form-group col-sm-2">
-			<label for="tipoItem">Tipo Item</label>
+			<label for="tipoItem">*Tipo Item</label>
 			<select class="form-control" id="tipoItem" name="tipoItem">
 				<option value="">Selecione</option>
 			</select>
 		</div>
 		<div class="form-group col-sm-4">
-			<label for='descricao'>Descrição</label>
+			<label for='descricao'>*Descrição</label>
 			<input type="text" class="form-control" id="descricao" name="descricao" />
 		</div>
 		<div class="form-group col-sm-2">
-			<label for='qtdeEntrada'>Qtde Entrada</label>
+			<label for='qtdeEntrada'>*Qtde Entrada</label>
 			<input type="text" class="form-control" id="qtdeEntrada" name="qtdeEntrada" />
 		</div>
 		<div class="form-group col-sm-2">
-			<label for='unEntrada'>UN Entrada</label>
+			<label for='unEntrada'>*UN Entrada</label>
 			<input type="text" class="form-control" id="unEntrada" name="unEntrada" />
 		</div>
 		<div class="form-group col-sm-2">
@@ -35,19 +35,19 @@
 			<input type="text" class="form-control" id="valorCusto" name="valorCusto" readonly/>
 		</div>
 		<div class="form-group col-sm-2">
-			<label for='estoque'>Estoque</label>
+			<label for='estoque'>*Estoque</label>
 			<input type="text" class="form-control" id="estoque" name="estoque" />
 		</div>
 		<div class="form-group col-sm-2">
-			<label for='unEstoque'>UN Estoque</label>
+			<label for='unEstoque'>*UN Estoque</label>
 			<input type="text" class="form-control" id="unEstoque" name="unEstoque" />
 		</div>
 		<div class="form-group col-sm-2">
-			<label for='margem'>Margem</label>
+			<label for='margem'>*Margem</label>
 			<input type="text" class="form-control" id="margem" name="margem" />
 		</div>
 		<div class="form-group col-sm-2">
-			<label for='valorVenda'>Valor Venda</label>
+			<label for='valorVenda'>*Valor Venda</label>
 			<input type="text" class="form-control" id="valorVenda" name="valorVenda" />
 		</div>
 		<div class="form-group col-sm-2">
@@ -63,7 +63,7 @@
 		</div>
 
 		<div class="btn pull-right form-group">
-			<button id="btnSalvarProduto" class="btn btn-primary btn-lg" type="button">Salvar</button>
+			<button id="btnSalvarProduto" class="btn btn-primary btn-lg" onclick= "BRIGADERIA.produtos.adicionar()" type="button">Salvar</button>
 			<button id="btnCancelarProduto" class="btn btn-danger btn-lg" onclick= "carregarConteudo('resources/gerenciar/produtos/gerenciarProdutos.html')" type="button">Cancelar</button>
 		</div>
 	</form>

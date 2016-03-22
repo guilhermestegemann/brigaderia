@@ -67,7 +67,7 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 	                produto.setCodigo(generatedKeys.getInt(1));
 	            }
 	            else {
-	                throw new SQLException("Erro ao criar pedido. ID failed.");
+	                throw new SQLException("Erro ao recuperar chave inserida! (Produto)");
 	            }
 			} 
 			
