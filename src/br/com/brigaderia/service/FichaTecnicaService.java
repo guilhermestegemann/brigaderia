@@ -13,6 +13,7 @@ import br.com.brigaderia.jdbcinterface.ProdutoDAO;
 import br.com.brigaderia.objetos.FichaTecnica;
 import br.com.brigaderia.objetos.IngredientesVO;
 import br.com.brigaderia.objetos.ItemFichaTecnicaVO;
+import br.com.brigaderia.validacoes.ValidaFichaTecnica;
 
 
 public class FichaTecnicaService {
@@ -35,7 +36,10 @@ public class FichaTecnicaService {
 		
 		try {
 			Connection conexao = conec.abrirConexao();
+			System.out.println(fichaTecnica.getIngredientes());
 			FichaTecnicaDAO jdbcFichaTecnica = new JDBCFichaTecnicaDAO(conexao);
+			ValidaFichaTecnica validaFichatecnica = new ValidaFichaTecnica();
+			validaFichatecnica.validar(fichaTecnica);
 			int codFichaTecnica = jdbcFichaTecnica.adicionar(fichaTecnica);
 			List<ItemFichaTecnicaVO> listIngredientes = new ArrayList<>();
 			listIngredientes =	fichaTecnica.getIngredientes();

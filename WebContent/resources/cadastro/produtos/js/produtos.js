@@ -4,6 +4,11 @@ $(document).ready(function() {
 
 	$("#subConteudo").text(""); //inicia div vazia
 	
+	BRIGADERIA.produtos.aplicarMask = function () {
+		$(".money").mask('000000000000000,00', {reverse: true});
+		 $('#margem').mask('##0,00%', {reverse: true});
+	};
+	
 	BRIGADERIA.produtos.listarTipoItem = function (codTipo) { 
 		BRIGADERIA.tipoItem.listar({
 			success: function(data) {
@@ -41,14 +46,24 @@ $(document).ready(function() {
 	BRIGADERIA.produtos.adicionar = function() {
 		var newProduto = new Object();
 		$('form input, form select').each(function(){newProduto[this.name]=this.value;});
-		BRIGADERIA.produtoService.adicionar(newProduto);
+		var retornoValida = BRIGADERIA.validaProdutos.validar(newProduto);
+		
+		BRIGADERIA.produtoService.adicionar(BRIGADERIA.produtos.ajustarCampos(newProduto));
+	};
+	
+	BRIGADERIA.produtos.aplicarMask();
+	
+	BRIGADERIA.produtos.ajustarCampos = function(produto) {
+		produto.qtdeEntrada = $("#qtdeEntrada").val().replace(",",".");
+		produto.valorCusto = $("#valorCusto").val().replace(",",".");
+		produto.estoque = $("#estoque").val().replace(",",".");
+		produto.margem = $("#margem").val().replace(",",".").replace("%","");
+		produto.valorVenda = $("#valorVenda").val().replace(",",".");
+		return produto;
 	};
 	
 
 });// fecha ready
-
-
-
 
 
 

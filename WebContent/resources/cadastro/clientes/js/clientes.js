@@ -3,11 +3,10 @@ BRIGADERIA.clientes = new Object();
 $(document).ready(function() {
 	
 	BRIGADERIA.clientes.aplicarMask = function () {
-		$('#rg').mask("9.999.999");
-		$('#cpf').mask("999.999.999-99");
-		$('#cep').mask("99999-999");
-		$('#telefone').mask("(99) 9999-9999");
-		$('#celular').mask("(99) 9999-9999");
+		$('#rg').mask("0.000.000");
+		$('#cpf').mask("000.000.000-00");
+		$('#cep').mask("00000-000");
+		$('.fone').mask("(00) 0000-0000");
 	};
 	
 	
@@ -142,7 +141,7 @@ $(document).ready(function() {
 			}
 		}
 		if ((cliente.cpf == "") || (cpfValido)) {
-			retornoValida = BRIGADERIA.validaClientes.validar(cliente);
+			var retornoValida = BRIGADERIA.validaClientes.validar(cliente);
 			if (retornoValida == "") {
 				if (cliente.aniversario != "") {
 					cliente.aniversario = BRIGADERIA.convertData.strToDate(cliente.aniversario);

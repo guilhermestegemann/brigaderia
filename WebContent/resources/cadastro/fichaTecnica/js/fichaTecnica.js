@@ -89,6 +89,7 @@ $(document).ready(function(){
 			};
 			newData.fichaTecnica.ingredientes.push(ingrediente);
 		});
+		newData.produto = BRIGADERIA.produtos.ajustarCampos(newData.produto);
 		BRIGADERIA.produtoFichaTecnicaService.adicionar(newData);
 	};
 	
