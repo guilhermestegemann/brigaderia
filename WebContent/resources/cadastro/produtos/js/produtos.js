@@ -47,8 +47,12 @@ $(document).ready(function() {
 		var newProduto = new Object();
 		$('form input, form select').each(function(){newProduto[this.name]=this.value;});
 		var retornoValida = BRIGADERIA.validaProdutos.validar(newProduto);
+		if (retornoValida == "") {
+			BRIGADERIA.produtoService.adicionar(BRIGADERIA.produtos.ajustarCampos(newProduto));
+		}else{
+			bootbox.alert("Favor verificar os campos obrigatórios: " + retornoValida);
+		}
 		
-		BRIGADERIA.produtoService.adicionar(BRIGADERIA.produtos.ajustarCampos(newProduto));
 	};
 	
 	BRIGADERIA.produtos.aplicarMask();
