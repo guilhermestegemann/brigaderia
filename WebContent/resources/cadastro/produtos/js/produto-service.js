@@ -49,4 +49,24 @@ $(document).ready(function() {
 		cfg.url = "rest/produtos/buscarProdutos/" + cfg.valorBusca;
 		BRIGADERIA.ajax.get(BRIGADERIA.produtoService.defaultCfg(cfg));
 	};
+	
+	BRIGADERIA.produtoService.buscarProdutoPeloCodigo = function(cfg) {
+		cfg.url = "rest/produtos/buscarProdutoPeloCodigo/" + cfg.codigo;
+		BRIGADERIA.ajax.get(BRIGADERIA.produtoService.defaultCfg(cfg));
+	};
+	
+	BRIGADERIA.produtoService.atualizar = function (produto) {
+		cfg = {
+			url: "rest/produtos/atualizar",
+			data: produto,
+			success : function(sucesso) {
+				bootbox.alert(sucesso);
+				carregarConteudo ('resources/gerenciar/produtos/gerenciarProdutos.html');
+			},
+			error : function (err) {
+				bootbox.alert(err.responseText);
+			}
+		};
+		BRIGADERIA.ajax.put(BRIGADERIA.produtoService.defaultCfg(cfg));
+	}
 });

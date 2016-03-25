@@ -5,10 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.jdbcinterface.FichaTecnicaDAO;
 import br.com.brigaderia.objetos.FichaTecnica;
+import br.com.brigaderia.objetos.ItemFichaTecnicaVO;
 
 
 public class JDBCFichaTecnicaDAO implements FichaTecnicaDAO{
@@ -61,6 +64,50 @@ public class JDBCFichaTecnicaDAO implements FichaTecnicaDAO{
 			e.printStackTrace();
 			throw new BrigaderiaException();
 		}
-		
+	}
+	
+	public FichaTecnica buscarPeloCodigoProduto (int codigoProduto) throws BrigaderiaException{
+		String comando = "SELECT * FROM FICHATECNICA WHERE FICHATECNICA.PRODUTO = " + codigoProduto;
+		FichaTecnica fichaTecnica = new FichaTecnica();
+		try {
+			Statement stmt = conexao.createStatement();
+			ResultSet rs = stmt.executeQuery(comando);
+			while(rs.next()) {
+				fichaTecnica.setCodigo(rs.getInt("codigo"));
+				fichaTecnica.setQtdeProduto(rs.getFloat("qtde"));
+				fichaTecnica.setCustoTotal(rs.getFloat("totalcusto"));
+				fichaTecnica.setProcedimento(rs.getString("procedimento"));
+				fichaTecnica.setIngredientes(buscarIngredientesPeloCodigo(fichaTecnica.getCodigo()));
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new BrigaderiaException();
+		}
+		return fichaTecnica;
+	}
+	
+	private List<ItemFichaTecnicaVO> buscarIngredientesPeloCodigo(int codigo) throws BrigaderiaException {
+		List<ItemFichaTecnicaVO> listItemFichaTecnica = new ArrayList<ItemFichaTecnicaVO>();
+		String comando = "SELECT ITEMFICHATECNICA.INGREDIENTE, PRODUTO.DESCRICAO, PRODUTO.UNESTOQUE, ITEMFICHATECNICA.QTDE "
+				       + "FROM ITEMFICHATECNICA "
+				       + "INNER JOIN PRODUTO ON PRODUTO.CODIGO = ITEMFICHATECNICA.INGREDIENTE "
+				       + "WHERE ITEMFICHATECNICA.FICHATECNICA = " + codigo;
+		ItemFichaTecnicaVO itemFichaTecnicaVO = null;
+		try {
+			Statement stmt = conexao.createStatement();
+			ResultSet rs = stmt.executeQuery(comando);
+			while(rs.next()) {
+				itemFichaTecnicaVO = new ItemFichaTecnicaVO();
+				itemFichaTecnicaVO.setCodigo(rs.getInt("ingrediente"));
+				itemFichaTecnicaVO.setDescricao(rs.getString("descricao"));
+				itemFichaTecnicaVO.setUn(rs.getString("unestoque"));
+				itemFichaTecnicaVO.setQtde(rs.getFloat("qtde"));
+				listItemFichaTecnica.add(itemFichaTecnicaVO);
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new BrigaderiaException();
+		}
+		return listItemFichaTecnica;
 	}
 }

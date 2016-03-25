@@ -138,6 +138,7 @@ public class JDBCClienteDAO implements ClienteDAO{
 				cliente.setCelular(rs.getLong("celular"));
 			}
 		}catch (SQLException e) {
+			e.printStackTrace();
 			throw new BrigaderiaException();
 		}
 		return cliente;

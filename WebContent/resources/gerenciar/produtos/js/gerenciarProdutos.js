@@ -36,7 +36,7 @@ $(document).ready(function() {
 					  + "<td>" + listaDeProdutos[i].estoque 
 					  + "<td>" + "R$ " + listaDeProdutos[i].valorCusto + "</td>"
 					  + "<td>" + "R$ " +listaDeProdutos[i].valorVenda + "</td>"
-					  + "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.gerenciarProdutos.editarProduto(" + listaDeProdutos[i].codigo + ")' aria-hidden='true'></i></a>"
+					  + "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.gerenciarProdutos.editarProduto(" + listaDeProdutos[i].codigo + "," + listaDeProdutos.tipoItem + ")' aria-hidden='true'></i></a>"
 					  	 +	"<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.gerenciarProdutos.deletarProduto(" + listaDeProdutos[i].codigo + ")' aria-hidden='true'></i></a>  </td>"
 					  + "</tr>";
 				}
@@ -48,6 +48,12 @@ $(document).ready(function() {
 				console.log(err);
 			} 
 		});		   		
+	};
+	
+	BRIGADERIA.gerenciarProdutos.editarProduto = function (codigo, tipoItem) {
+		$("#conteudo").load("resources/cadastro/produtos/produtos.html", function (){
+			BRIGADERIA.produtos.exibirEdicao(codigo, tipoItem);
+		});	
 	};
 	
 	$("#buttonPesquisar").on('click', function(){

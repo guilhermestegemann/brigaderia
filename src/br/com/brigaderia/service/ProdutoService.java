@@ -33,6 +33,24 @@ public class ProdutoService {
 		}
 	}
 	
+	public Produto buscarProdutoPeloCodigo (int codigo) throws BrigaderiaException{
+		Conexao conec = new Conexao();
+		try {
+			Connection conexao = conec.abrirConexao();
+			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
+			Produto produto = jdbcProduto.buscarPeloCodigo(codigo);
+			return produto;
+		}catch (BrigaderiaException e) {
+			throw e;
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new BrigaderiaException();
+		}
+		finally{
+			conec.fecharConexao();
+		}	
+	}
+	
 	public void deletarProduto (int codigo) throws BrigaderiaException{
 		Conexao conec = new Conexao();
 		
@@ -56,6 +74,25 @@ public class ProdutoService {
 			return jdbcProduto.buscarProdutos(valorBusca);
 		}catch (Exception e) {
 			throw e;
+		}finally{
+			conec.fecharConexao();
+		}
+	}
+	
+	public void atualizarProduto (Produto produto) throws BrigaderiaException {
+		Conexao conec = new Conexao();
+		try {
+			Connection conexao = conec.abrirConexao();
+			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
+			ValidaProduto validaProduto = new ValidaProduto();
+			validaProduto.validarProduto(produto);
+			jdbcProduto.atualizar(produto);
+		}catch (BrigaderiaException e) {
+			e.printStackTrace();
+			throw e;
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new BrigaderiaException();
 		}finally{
 			conec.fecharConexao();
 		}

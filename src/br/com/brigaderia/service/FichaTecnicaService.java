@@ -58,6 +58,25 @@ public class FichaTecnicaService {
 			conec.fecharConexao();
 		}
 	}
+	
+	public FichaTecnica buscarFichaTecnicaPeloCodigoProduto (int codigoProduto) throws BrigaderiaException{
+		Conexao conec = new Conexao();
+		try {
+			Connection conexao = conec.abrirConexao();
+			FichaTecnicaDAO jdbcFichaTecnica = new JDBCFichaTecnicaDAO(conexao);
+			FichaTecnica fichaTecnica = jdbcFichaTecnica.buscarPeloCodigoProduto(codigoProduto);
+			
+			return fichaTecnica;
+		}catch (BrigaderiaException e) {
+			throw e;
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new BrigaderiaException();
+		}
+		finally{
+			conec.fecharConexao();
+		}	
+	}
 }
 
 

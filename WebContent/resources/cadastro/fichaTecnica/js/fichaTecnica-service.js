@@ -32,4 +32,9 @@ $(document).ready(function() {
 		cfg.url = "rest/fichaTecnica/listarIngredientes";
 		BRIGADERIA.ajax.get(BRIGADERIA.fichaTecnicaService.defaultCfg(cfg));
 	};
+	
+	BRIGADERIA.fichaTecnicaService.buscarFichaTecnicaPeloCodigoProduto = function(cfg) {
+		cfg.url = "rest/fichaTecnica/buscarFichaTecnicaPeloCodigoProduto/" + cfg.codigoProduto;
+		BRIGADERIA.ajax.get(BRIGADERIA.fichaTecnicaService.defaultCfg(cfg));
+	};
 });

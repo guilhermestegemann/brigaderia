@@ -3,6 +3,7 @@ package br.com.brigaderia.rest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -52,6 +53,36 @@ public class ProdutosRest extends UtilRest{
 		}catch (BrigaderiaException e) {
 			return buildErrorResponse(e.getMessage());
 		}catch(Exception e) {
+			return buildErrorResponse(ERROINESPERADO);
+		}
+	}
+	
+	@GET
+	@Path("/buscarProdutoPeloCodigo/{codigo}")
+	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	public Response buscarProdutoPeloCodigo(@PathParam("codigo")int codigo) throws BrigaderiaException{
+		try {
+			ProdutoService service = new ProdutoService(); 
+			return buildResponse(service.buscarProdutoPeloCodigo(codigo));
+		}catch (BrigaderiaException e) {
+			return buildErrorResponse(e.getMessage());
+		}catch (Exception e) {
+			return buildErrorResponse(ERROINESPERADO);
+		}
+	}
+	
+	@PUT
+	@Path("/atualizar")
+	@Consumes("application/*")
+	public Response atualizar (String produtoEditado) throws BrigaderiaException {
+		try {
+			Produto produto = new ObjectMapper().readValue(produtoEditado, Produto.class);
+			ProdutoService service = new ProdutoService();
+			service.atualizarProduto(produto);
+			return buildResponse("Produto editado com sucesso.");
+		}catch (BrigaderiaException e){
+			return buildErrorResponse(e.getMessage());
+		}catch (Exception e) {
 			return buildErrorResponse(ERROINESPERADO);
 		}
 	}

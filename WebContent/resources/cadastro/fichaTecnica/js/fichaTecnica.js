@@ -21,8 +21,11 @@ $(document).ready(function(){
 		});
 	};
 	
-	BRIGADERIA.fichaTecnica.exibirFormulario = function () {
+	BRIGADERIA.fichaTecnica.exibirFormulario = function (modo) {
 		BRIGADERIA.fichaTecnica.listarIngredientes();
+		if (modo == "Edição") {
+			BRIGADERIA.fichaTecnica.exibirEdicao();
+		}
 	};
 	
 	BRIGADERIA.fichaTecnica.incluirIngrediente = function () {
@@ -102,6 +105,36 @@ $(document).ready(function(){
 			}
 		}
 	};
+	
+	BRIGADERIA.fichaTecnica.exibirEdicao = function () {
+		var html = "<input type='text' class='form-control' id='codigoFichaTecnica' name='codigoFichaTecnica' style='display:none' />";
+		$("#subConteudo").append(html);
+		BRIGADERIA.fichaTecnicaService.buscarFichaTecnicaPeloCodigoProduto({
+			codigoProduto : $("#codigoProduto").val(),
+			async: false,
+			success : function (fichaTecnica) {
+				$("#custoTotal").val(fichaTecnica.custoTotal);
+				$("#qtdeProduto").val(fichaTecnica.qtdeProduto);
+				$("#procedimento").val(fichaTecnica.procedimento);
+				ingredientesVO = {};
+				ingredientesVO = fichaTecnica.ingredientes;
+				for (var i = 0; i < ingredientesVO.length; i++) {
+					html = "";
+					html =  "<tr class='ingredientes'>"
+						  + "<td >" + ingredientesVO[i].codigo + "</td>"
+						  + "<td>" + ingredientesVO[i].descricao + "</td>"
+						  + "<td>" + ingredientesVO[i].un + "</td>"
+						  + "<td>" + ingredientesVO[i].qtde + "</td>"
+					  + "</tr>";
+					$("#ingredientesFichaTecnica tbody").append(html);
+					$("#ingrediente option[value='"+ ingredientesVO[i].codigo +"']").remove();
+				}	
+				
+				$("#subConteudo h1").text("Edição de FichaTecnica");
+				$("#btnSalvarFichaTecnicaProduto").attr("onclick", "BRIGADERIA.fichaTecnica.salvarEdicao()");
+			}
+		});	
+	}
 	
 	
 	
