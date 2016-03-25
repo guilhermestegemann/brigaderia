@@ -1,8 +1,11 @@
 package br.com.brigaderia.rest;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -32,6 +35,23 @@ public class ProdutosRest extends UtilRest{
 			return buildErrorResponse(e.getMessage());
 		}catch(Exception e) {
 			e.printStackTrace();
+			return buildErrorResponse(ERROINESPERADO);
+		}
+	}
+	
+	@GET
+	@Path("/buscarProdutos/{valorBusca}")
+	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	
+	public Response buscarProdutos (@PathParam("valorBusca") String valorBusca) throws BrigaderiaException{
+		
+		try {
+			
+			ProdutoService service = new ProdutoService();
+			return buildResponse(service.buscarProdutos(valorBusca));
+		}catch (BrigaderiaException e) {
+			return buildErrorResponse(e.getMessage());
+		}catch(Exception e) {
 			return buildErrorResponse(ERROINESPERADO);
 		}
 	}

@@ -2,6 +2,7 @@ package br.com.brigaderia.service;
 
 import java.sql.Connection;
 import java.util.Date;
+import java.util.List;
 
 import br.com.brigaderia.bd.conexao.Conexao;
 import br.com.brigaderia.exception.BrigaderiaException;
@@ -27,6 +28,34 @@ public class ProdutoService {
 			throw e;
 		}catch (Exception e) {
 			throw new BrigaderiaException();
+		}finally{
+			conec.fecharConexao();
+		}
+	}
+	
+	public void deletarProduto (int codigo) throws BrigaderiaException{
+		Conexao conec = new Conexao();
+		
+		try {
+			Connection conexao = conec.abrirConexao();
+			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
+			jdbcProduto.deletar(codigo);
+		}catch(BrigaderiaException e) {
+			e.printStackTrace();
+			throw e;
+		}finally{
+			conec.fecharConexao();
+		}
+	}
+	
+	public List<Produto> buscarProdutos (String valorBusca) throws BrigaderiaException{
+		Conexao conec = new Conexao();
+		try {
+			Connection conexao = conec.abrirConexao();
+			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
+			return jdbcProduto.buscarProdutos(valorBusca);
+		}catch (Exception e) {
+			throw e;
 		}finally{
 			conec.fecharConexao();
 		}

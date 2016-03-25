@@ -90,7 +90,17 @@ $(document).ready(function(){
 			newData.fichaTecnica.ingredientes.push(ingrediente);
 		});
 		newData.produto = BRIGADERIA.produtos.ajustarCampos(newData.produto);
-		BRIGADERIA.produtoFichaTecnicaService.adicionar(newData);
+		retornoValida = BRIGADERIA.validaProdutos.validar(newData.produto);
+		if (retornoValida != "") {
+			bootbox.alert("Favor verificar os seguintes campos: " + retornoValida);
+		}else{
+			retornoValida = BRIGADERIA.validaFichaTecnica.validar(newData.fichaTecnica);
+			if (retornoValida == "") {
+				BRIGADERIA.produtoFichaTecnicaService.adicionar(newData);
+			}else{
+				bootbox.alert("Favor verificar os seguintes campos: " + retornoValida);
+			}
+		}
 	};
 	
 	

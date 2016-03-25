@@ -50,7 +50,7 @@ $(document).ready(function() {
 		if (retornoValida == "") {
 			BRIGADERIA.produtoService.adicionar(BRIGADERIA.produtos.ajustarCampos(newProduto));
 		}else{
-			bootbox.alert("Favor verificar os campos obrigatórios: " + retornoValida);
+			bootbox.alert("Favor verificar os seguintes campos: " + retornoValida);
 		}
 		
 	};

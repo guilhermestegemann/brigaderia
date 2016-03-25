@@ -15,7 +15,13 @@ public class ProdutoFichaTecnicaService {
 			ProdutoService serviceProduto = new ProdutoService();
 			FichaTecnicaService serviceFichaTecnica = new FichaTecnicaService();
 			fichaTecnica.setProduto(serviceProduto.adicionar(produto));
-			serviceFichaTecnica.adicionar(fichaTecnica);
+			try {
+				serviceFichaTecnica.adicionar(fichaTecnica);
+			}catch(BrigaderiaException e){
+				serviceProduto.deletarProduto(fichaTecnica.getProduto());
+				throw e;
+			}
+			
 		}catch(BrigaderiaException e) {
 			e.printStackTrace();
 			throw e;

@@ -44,4 +44,9 @@ $(document).ready(function() {
 		};
 		BRIGADERIA.ajax.post(BRIGADERIA.produtoService.defaultCfg(cfg));
 	};
+	
+	BRIGADERIA.produtoService.listar = function(cfg){
+		cfg.url = "rest/produtos/buscarProdutos/" + cfg.valorBusca;
+		BRIGADERIA.ajax.get(BRIGADERIA.produtoService.defaultCfg(cfg));
+	};
 });

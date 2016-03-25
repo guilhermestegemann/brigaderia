@@ -26,9 +26,9 @@ BRIGADERIA.validaProdutos = new Object();
 			}
 		}else {
 			if (retorno == "") {
-				retorno += "Quantidade de entrada";
+				retorno += "Quantidade de entrada não informada";
 			}else{
-				retorno += ", Quantidade de entrada";
+				retorno += ", Quantidade de entrada não informada";
 			}
 		}
 		
@@ -42,9 +42,9 @@ BRIGADERIA.validaProdutos = new Object();
 			}
 		}else {
 			if (retorno == "") {
-				retorno += "Unidade de entrada";
+				retorno += "Unidade de entrada não informada";
 			}else{
-				retorno += ", Unidade de entrada não";
+				retorno += ", Unidade de entrada não informada";
 			}
 		}
 		
@@ -66,35 +66,31 @@ BRIGADERIA.validaProdutos = new Object();
 			}
 		}else {
 			if (retorno == "") {
-				retorno += "Unidade de estoque";
+				retorno += "Unidade de estoque não informada";
 			}else{
-				retorno += ", Unidade de estoque";
+				retorno += ", Unidade de estoque não informada";
 			}
 		}
 		
-		if (newProduto.margem != "") {
-			if (!expNumeros.test(newProduto.margem)) {
-				if (retorno == "") {
-					retorno += "Margem inválida";
-				}else{
-					retorno += ", Margem inválida";
-				}
-			}
-		}
-		
-		if (newProduto.valorVenda != "") {
-			if (!expNumeros.test(newProduto.valorVenda)) {
-				if (retorno == "") {
-					retorno += "Valor venda inválido";
-				}else{
-					retorno += ", Valor venda inválido";
-				}
-			}
-		}else {
+		if (newProduto.margem == "") {
 			if (retorno == "") {
-				retorno += "Valor venda";
+				retorno += "Margem não informada";
 			}else{
-				retorno += ", Valor venda";
+				retorno += ", Margem não informada";
+			}
+		}
+		
+		if (newProduto.valorVenda < 0) {
+			if (retorno == "") {
+				retorno += "Valor venda menor que zero";
+			}else{
+				retorno += ", Valor venda menor que zero";
+			}
+		}else if (newProduto.valorVenda == ""){
+			if (retorno == "") {
+				retorno += "Valor venda não informado";
+			}else{
+				retorno += ", Valor venda não informado";
 			}
 		}
 		

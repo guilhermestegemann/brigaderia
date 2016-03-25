@@ -10,6 +10,7 @@ import java.util.List;
 
 import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.jdbcinterface.ProdutoDAO;
+import br.com.brigaderia.objetos.DadosClientesVO;
 import br.com.brigaderia.objetos.IngredientesVO;
 import br.com.brigaderia.objetos.Produto;
 
@@ -77,5 +78,61 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 			throw new BrigaderiaException();
 		}
 	}
+	
+	public void deletar(int codigo) throws BrigaderiaException {
+		String comando = "DELETE FROM PRODUTO WHERE PRODUTO.CODIGO = " + codigo;
+		Statement p;
+		
+		try {
+			p = this.conexao.createStatement();
+			p.execute(comando);	
+		}catch(SQLException e) {
+			e.printStackTrace();
+			throw new BrigaderiaException();
+		}
+	}
+	
+	public List<Produto> buscarProdutos (String valorBusca) throws BrigaderiaException {
+		
+		String comando = "SELECT PRODUTO.CODIGO, PRODUTO.DESCRICAO, PRODUTO.ESTOQUE, PRODUTO.VALORCUSTO, PRODUTO.VALORVENDA "
+					   + "FROM PRODUTO ";
+		
+		if (!valorBusca.equals("null") && !valorBusca.equals("")) {
+			comando += "WHERE PRODUTO.DESCRICAO LIKE '" + valorBusca + "%'";
+		}
+		
+		List<Produto> listProdutos = new ArrayList<Produto>();
+		Produto produto = null;
+		try {
+			Statement stmt = conexao.createStatement();
+			ResultSet rs = stmt.executeQuery(comando);
+			while(rs.next()) {
+				produto = new Produto();
+				produto.setCodigo(rs.getInt("CODIGO"));
+				produto.setDescricao(rs.getString("DESCRICAO"));
+				produto.setEstoque(rs.getFloat("ESTOQUE"));
+				produto.setValorCusto(rs.getFloat("VALORCUSTO"));
+				produto.setValorVenda(rs.getFloat("VALORVENDA"));
+				listProdutos.add(produto);
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+			throw new BrigaderiaException();
+		}
+		return listProdutos;
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

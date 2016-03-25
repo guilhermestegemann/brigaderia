@@ -68,12 +68,12 @@ public class JDBCClienteDAO implements ClienteDAO{
 	public List<DadosClientesVO> buscarClientes (String valorBusca) throws BrigaderiaException {
 		
 		String comando = "SELECT CLIENTE.CODIGO AS CODIGOCLIENTE, CLIENTE.NOME AS NOMECLIENTE, CIDADE.NOME AS NOMECIDADE, "
-					   + "ESTADO.UF AS UFESTADO, BAIRRO.NOME AS NOMEBAIRRO, PEDIDO.EMISSAO AS ULTIMAVENDA "
+					   + "ESTADO.UF AS UFESTADO, BAIRRO.NOME AS NOMEBAIRRO, "
+					   + "(SELECT MAX(PEDIDO.EMISSAO) FROM PEDIDO WHERE PEDIDO.CLIENTE = CLIENTE.CODIGO) AS ULTIMAVENDA "
 					   + "FROM CLIENTE "
 				       + "INNER JOIN CIDADE ON CIDADE.CODIGO = CLIENTE.CIDADE "
 					   + "INNER JOIN ESTADO ON ESTADO.CODIGO = CIDADE.ESTADO "
-					   + "INNER JOIN BAIRRO ON BAIRRO.CODIGO = CLIENTE.BAIRRO "
-				       + "LEFT JOIN PEDIDO ON PEDIDO.CLIENTE = CLIENTE.CODIGO AND PEDIDO.FATURADO = 'S' AND PEDIDO.CANCELADO = 'N' ";
+					   + "INNER JOIN BAIRRO ON BAIRRO.CODIGO = CLIENTE.BAIRRO ";
 		
 		if (!valorBusca.equals("null") && !valorBusca.equals("")) {
 			comando += "WHERE CLIENTE.NOME LIKE '" + valorBusca + "%'";
@@ -99,7 +99,6 @@ public class JDBCClienteDAO implements ClienteDAO{
 			throw new BrigaderiaException();
 		}
 		return listDadosClientes;
-		
 	}
 	
 	public void deletar (int codigo) throws BrigaderiaException{

@@ -41,7 +41,7 @@ $(document).ready(function() {
 					  + "</tr>";
 				}
 				
-				$("tbody").html(html);
+				$("#resultadoClientes tbody").html(html);
 			
 			},
 			error : function(err) {
