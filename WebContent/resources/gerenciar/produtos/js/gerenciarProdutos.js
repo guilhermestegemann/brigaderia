@@ -11,19 +11,19 @@ $(document).ready(function() {
 	};
 	
 	BRIGADERIA.gerenciarProdutos.buscar = function () {
-		
 		var valorBusca = $("#buscaProduto").val();
+		var ativo = $("#filtroAtivo").val();
 		if (valorBusca == "") {
 			valorBusca = "null";
 		}
 		
-		BRIGADERIA.gerenciarProdutos.exibirProdutos (undefined, valorBusca);
+		BRIGADERIA.gerenciarProdutos.exibirProdutos (undefined, valorBusca, ativo);
 	};
 	
-	BRIGADERIA.gerenciarProdutos.exibirProdutos = function(listaDeProdutos, valorBusca) {
-		
+	BRIGADERIA.gerenciarProdutos.exibirProdutos = function(listaDeProdutos, valorBusca, ativo) {
 		BRIGADERIA.produtoService.listar({
 			valorBusca : valorBusca,
+			ativo: ativo,
 			success : function (listaDeProdutos) {
 				
 				var html = "";
@@ -31,12 +31,12 @@ $(document).ready(function() {
 				for (var i = 0; i < listaDeProdutos.length; i++) {
 					
 					html += "<tr>"
-					  + "<td>" + listaDeProdutos[i].codigo + "</td>"
+					  + "<td>" + listaDeProdutos[i].codigoProduto + "</td>"
 					  + "<td>" + listaDeProdutos[i].descricao + "</td>"
 					  + "<td>" + listaDeProdutos[i].estoque 
 					  + "<td>" + "R$ " + listaDeProdutos[i].valorCusto + "</td>"
 					  + "<td>" + "R$ " +listaDeProdutos[i].valorVenda + "</td>"
-					  + "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.gerenciarProdutos.editarProduto(" + listaDeProdutos[i].codigo + "," + listaDeProdutos.tipoItem + ")' aria-hidden='true'></i></a>"
+					  + "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.gerenciarProdutos.editarProduto(" + listaDeProdutos[i].codigoProduto + "," + listaDeProdutos.tipoItem + ")' aria-hidden='true'></i></a>"
 					  	 +	"<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.gerenciarProdutos.deletarProduto(" + listaDeProdutos[i].codigo + ")' aria-hidden='true'></i></a>  </td>"
 					  + "</tr>";
 				}
@@ -50,9 +50,9 @@ $(document).ready(function() {
 		});		   		
 	};
 	
-	BRIGADERIA.gerenciarProdutos.editarProduto = function (codigo, tipoItem) {
+	BRIGADERIA.gerenciarProdutos.editarProduto = function (codigoProduto, tipoItem) {
 		$("#conteudo").load("resources/cadastro/produtos/produtos.html", function (){
-			BRIGADERIA.produtos.exibirEdicao(codigo, tipoItem);
+			BRIGADERIA.produtos.exibirEdicao(codigoProduto, tipoItem);
 		});	
 	};
 	

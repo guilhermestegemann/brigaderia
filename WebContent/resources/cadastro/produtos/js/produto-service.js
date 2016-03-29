@@ -46,7 +46,7 @@ $(document).ready(function() {
 	};
 	
 	BRIGADERIA.produtoService.listar = function(cfg){
-		cfg.url = "rest/produtos/buscarProdutos/" + cfg.valorBusca;
+		cfg.url = "rest/produtos/buscarProdutos/" + cfg.valorBusca + "/" + cfg.ativo;
 		BRIGADERIA.ajax.get(BRIGADERIA.produtoService.defaultCfg(cfg));
 	};
 	

@@ -11,7 +11,7 @@ public class Produto implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private int codigo;
+	private int codigoProduto;
 	private int tipoItem;
 	private String descricao;
 	private float qtdeEntrada;
@@ -27,11 +27,11 @@ public class Produto implements Serializable{
 	
 	
 	
-	public int getCodigo() {
-		return codigo;
+	public int getCodigoProduto() {
+		return codigoProduto;
 	}
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
+	public void setCodigoProduto(int codigoProduto) {
+		this.codigoProduto = codigoProduto;
 	}
 	public String getAtivo() {
 		return ativo;

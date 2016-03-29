@@ -64,28 +64,30 @@ $(document).ready(function() {
 			async: false,
 			success : function (produto) {
 				
-					$("#codigoProduto").val(produto.codigo);
-					$("#descricao").val(produto.descricao);
-					$("#qtdeEntrada").val(produto.qtdeEntrada);
-					$("#unEntrada").val(produto.unEntrada);
-					$("#valorCusto").val(produto.valorCusto);
-					$("#estoque").val(produto.estoque);
-					$("#unEstoque").val(produto.unEstoque);
-					$("#margem").val(produto.margem);
-					$("#valorVenda").val(produto.valorVenda);
-					$("#dataCadastro").val(BRIGADERIA.convertData.dateToStr(produto.dataCadastro));
-					$("#ativo").val(produto.ativo);
-					BRIGADERIA.produtos.listarTipoItem(produto.tipoItem)
-					BRIGADERIA.produtos.aplicarMask();
-					$("#btnSalvarProduto").attr("onclick", "BRIGADERIA.produtos.salvarEdicao()");
-					$("#conteudo h1").text("Edição de Produtos");
-					
-					if (produto.tipoItem == "1") {
+				$("#codigoProduto").val(produto.codigoProduto);
+				$("#descricao").val(produto.descricao);
+				$("#qtdeEntrada").val(produto.qtdeEntrada);
+				$("#unEntrada").val(produto.unEntrada);
+				$("#valorCusto").val(produto.valorCusto);
+				$("#estoque").val(produto.estoque);
+				$("#unEstoque").val(produto.unEstoque);
+				$("#margem").val(produto.margem);
+				$("#valorVenda").val(produto.valorVenda);
+				$("#dataCadastro").val(BRIGADERIA.convertData.dateToStr(produto.dataCadastro));
+				$("#ativo").val(produto.ativo);
+				
+				BRIGADERIA.produtos.aplicarMask();
+				$("#btnSalvarProduto").attr("onclick", "BRIGADERIA.produtos.salvarEdicao()");
+				$("#conteudo h1").text("Edição de Produtos");
+				
+				if (produto.tipoItem == "1") {
 					$("#btnSalvarProduto").hide();
 					$("#btnCancelarProduto").hide();
 					$("#subConteudo").load("resources/cadastro/fichaTecnica/fichaTecnica.html", function (){
 						BRIGADERIA.fichaTecnica.exibirFormulario("Edição");
 					});
+				}else{// Só lista tipoItem se for Ingrediente ou Embalagem
+					BRIGADERIA.produtos.listarTipoItem(produto.tipoItem)
 				}
 			}
 		});	
@@ -98,7 +100,7 @@ $(document).ready(function() {
 		var retornoValida = BRIGADERIA.validaProdutos.validar(produto);
 		if (retornoValida == "") {
 			produto.dataCadastro = BRIGADERIA.convertData.strToDate(produto.dataCadastro);
-			produto.codigo = $("#codigoProduto").val();
+			produto.codigoProduto = $("#codigoProduto").val();
 			BRIGADERIA.produtoService.atualizar(BRIGADERIA.produtos.ajustarCampos(produto));
 		}else{
 			bootbox.alert("Favor verificar os seguintes campos: " + retornoValida);

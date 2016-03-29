@@ -36,7 +36,6 @@ public class FichaTecnicaService {
 		
 		try {
 			Connection conexao = conec.abrirConexao();
-			System.out.println(fichaTecnica.getIngredientes());
 			FichaTecnicaDAO jdbcFichaTecnica = new JDBCFichaTecnicaDAO(conexao);
 			ValidaFichaTecnica validaFichatecnica = new ValidaFichaTecnica();
 			validaFichatecnica.validar(fichaTecnica);
@@ -76,6 +75,32 @@ public class FichaTecnicaService {
 		finally{
 			conec.fecharConexao();
 		}	
+	}
+	
+	public void atualizarFichaTecnica (FichaTecnica fichaTecnica) throws BrigaderiaException {
+		Conexao conec = new Conexao();
+		try {
+			Connection conexao = conec.abrirConexao();
+			FichaTecnicaDAO jdbcFichaTecnica = new JDBCFichaTecnicaDAO(conexao);
+			ValidaFichaTecnica validaFichatecnica = new ValidaFichaTecnica();
+			validaFichatecnica.validar(fichaTecnica);
+			jdbcFichaTecnica.atualizar(fichaTecnica);
+			jdbcFichaTecnica.deletarIngredientes(fichaTecnica.getCodigoFichaTecnica());
+			List<ItemFichaTecnicaVO> listIngredientes = new ArrayList<>();
+			listIngredientes =	fichaTecnica.getIngredientes();
+			
+			for(int i = 0; i < listIngredientes.size(); i++) {
+				jdbcFichaTecnica.adicionarIngredientes(fichaTecnica.getCodigoFichaTecnica(), listIngredientes.get(i).getCodigo(), listIngredientes.get(i).getQtde());
+			}
+		}catch (BrigaderiaException e) {
+			e.printStackTrace();
+			throw e;
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new BrigaderiaException();
+		}finally{
+			conec.fecharConexao();
+		}
 	}
 }
 

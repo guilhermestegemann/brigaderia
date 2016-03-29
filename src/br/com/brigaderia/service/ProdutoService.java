@@ -66,12 +66,12 @@ public class ProdutoService {
 		}
 	}
 	
-	public List<Produto> buscarProdutos (String valorBusca) throws BrigaderiaException{
+	public List<Produto> buscarProdutos (String valorBusca, String ativo) throws BrigaderiaException{
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
 			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
-			return jdbcProduto.buscarProdutos(valorBusca);
+			return jdbcProduto.buscarProdutos(valorBusca, ativo);
 		}catch (Exception e) {
 			throw e;
 		}finally{

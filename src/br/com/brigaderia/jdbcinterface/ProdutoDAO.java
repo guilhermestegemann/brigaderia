@@ -10,7 +10,7 @@ import br.com.brigaderia.objetos.Produto;
 public interface ProdutoDAO {
 	
 	public List<IngredientesVO> buscarIngredientes () throws BrigaderiaException;
-	public List<Produto> buscarProdutos (String valorBusca) throws BrigaderiaException;
+	public List<Produto> buscarProdutos (String valorBusca, String ativo) throws BrigaderiaException;
 	public int adicionar(Produto produto) throws BrigaderiaException;
 	public void atualizar (Produto produto) throws BrigaderiaException;
 	public Produto buscarPeloCodigo(int codigo) throws BrigaderiaException;

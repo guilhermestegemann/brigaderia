@@ -13,7 +13,7 @@
 	<h1>Cadastro de Produtos</h1>
 	<hr>
 	<form id="formProduto" method='POST' role='form' class='form-group' action=''>
-		<div class="form-group col-sm-2">
+		<div id="tipoItemField" class="form-group col-sm-2">
 			<label for="tipoItem">*Tipo Item</label>
 			<select class="form-control" id="tipoItem" name="tipoItem">
 				<option value="">Selecione</option>
@@ -65,7 +65,7 @@
 
 		<div class="btn pull-right form-group">
 			<button id="btnSalvarProduto" class="btn btn-primary btn-lg" onclick= "BRIGADERIA.produtos.adicionar()" type="button">Salvar</button>
-			<button id="btnCancelarProduto" class="btn btn-danger btn-lg" onclick= "carregarConteudo('resources/gerenciar/produtos/gerenciarProdutos.html')" type="button">Cancelar</button>
+			<button id="btnCancelarProduto" class="btn btn-danger btn-lg" onclick= "carregarConteudoCancel('resources/gerenciar/produtos/gerenciarProdutos.html')" type="button">Cancelar</button>
 		</div>
 	</form>
 </div>

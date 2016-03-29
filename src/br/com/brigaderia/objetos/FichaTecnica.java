@@ -10,7 +10,7 @@ public class FichaTecnica implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private int codigo;
+	private int codigoFichaTecnica;
 	private int produto;
 	private float custoTotal;
 	private float qtdeProduto;
@@ -19,11 +19,11 @@ public class FichaTecnica implements Serializable{
 	
 	
 	
-	public int getCodigo() {
-		return codigo;
+	public int getCodigoFichaTecnica() {
+		return codigoFichaTecnica;
 	}
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
+	public void setCodigoFichaTecnica(int codigoFichaTecnica) {
+		this.codigoFichaTecnica = codigoFichaTecnica;
 	}
 	public int getProduto() {
 		return produto;

@@ -36,14 +36,14 @@ public class JDBCFichaTecnicaDAO implements FichaTecnicaDAO{
 			p.execute();
 			try (ResultSet generatedKeys = p.getGeneratedKeys()) {
 	            if (generatedKeys.next()) {
-	            	fichaTecnica.setCodigo(generatedKeys.getInt(1));
+	            	fichaTecnica.setCodigoFichaTecnica(generatedKeys.getInt(1));
 	            }
 	            else {
 	                throw new SQLException("Erro ao recuperar chave inserida! (Ficha Técnica)");
 	            }
 			} 
 			
-			return fichaTecnica.getCodigo();
+			return fichaTecnica.getCodigoFichaTecnica();
 		}catch (SQLException e) {
 			e.printStackTrace();
 			throw new BrigaderiaException();
@@ -73,11 +73,11 @@ public class JDBCFichaTecnicaDAO implements FichaTecnicaDAO{
 			Statement stmt = conexao.createStatement();
 			ResultSet rs = stmt.executeQuery(comando);
 			while(rs.next()) {
-				fichaTecnica.setCodigo(rs.getInt("codigo"));
+				fichaTecnica.setCodigoFichaTecnica(rs.getInt("codigo"));
 				fichaTecnica.setQtdeProduto(rs.getFloat("qtde"));
 				fichaTecnica.setCustoTotal(rs.getFloat("totalcusto"));
 				fichaTecnica.setProcedimento(rs.getString("procedimento"));
-				fichaTecnica.setIngredientes(buscarIngredientesPeloCodigo(fichaTecnica.getCodigo()));
+				fichaTecnica.setIngredientes(buscarIngredientesPeloCodigo(fichaTecnica.getCodigoFichaTecnica()));
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -109,5 +109,35 @@ public class JDBCFichaTecnicaDAO implements FichaTecnicaDAO{
 			throw new BrigaderiaException();
 		}
 		return listItemFichaTecnica;
+	}
+	
+	public void atualizar (FichaTecnica fichaTecnica) throws BrigaderiaException {
+		String comando = "UPDATE FICHATECNICA SET " 
+							+ "FICHATECNICA.QTDE = ?, "
+							+ "FICHATECNICA.PROCEDIMENTO = ? "
+					   + "WHERE FICHATECNICA.CODIGO = " + fichaTecnica.getCodigoFichaTecnica();
+	    PreparedStatement p;
+	    try {
+	    	p = this.conexao.prepareStatement(comando);
+	    	p.setFloat(1, fichaTecnica.getQtdeProduto());
+	    	p.setString(2, fichaTecnica.getProcedimento());
+	    	p.executeUpdate();
+	    }catch (SQLException e) {
+	    	e.printStackTrace();
+	    	throw new BrigaderiaException();
+	    }
+	}
+	
+	public void deletarIngredientes(int codFicha) throws BrigaderiaException {
+		String comando = "DELETE FROM ITEMFICHATECNICA WHERE ITEMFICHATECNICA.FICHATECNICA = " + codFicha;
+		Statement p;
+
+		try {
+			p = this.conexao.createStatement();
+			p.execute(comando);	
+		}catch(SQLException e) {
+			e.printStackTrace();
+			throw new BrigaderiaException();
+		}
 	}
 }

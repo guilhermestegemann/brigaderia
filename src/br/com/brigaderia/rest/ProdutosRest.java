@@ -41,15 +41,16 @@ public class ProdutosRest extends UtilRest{
 	}
 	
 	@GET
-	@Path("/buscarProdutos/{valorBusca}")
+	@Path("/buscarProdutos/{valorBusca}/{ativo}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	
-	public Response buscarProdutos (@PathParam("valorBusca") String valorBusca) throws BrigaderiaException{
+	public Response buscarProdutos (@PathParam("valorBusca") String valorBusca,
+									@PathParam("ativo") String ativo) throws BrigaderiaException{
 		
 		try {
 			
 			ProdutoService service = new ProdutoService();
-			return buildResponse(service.buscarProdutos(valorBusca));
+			return buildResponse(service.buscarProdutos(valorBusca, ativo));
 		}catch (BrigaderiaException e) {
 			return buildErrorResponse(e.getMessage());
 		}catch(Exception e) {

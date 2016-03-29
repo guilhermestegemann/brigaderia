@@ -53,6 +53,7 @@ $(document).ready(function(){
 						  + "<td>" + descricao + "</td>"
 						  + "<td>" + un + "</td>"
 						  + "<td>" + qtde + "</td>"
+						  + "<td><a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.fichaTecnica.deletarIngrediente(this"+ "," + codigo + "," + "\"" + descricao + "\"" +")' aria-hidden='true'></i></a>"
 					  + "</tr>";
 				$("#ingredientesFichaTecnica tbody").append(html);
 				$("#ingrediente option:selected").remove();
@@ -113,6 +114,7 @@ $(document).ready(function(){
 			codigoProduto : $("#codigoProduto").val(),
 			async: false,
 			success : function (fichaTecnica) {
+				$("#codigoFichaTecnica").val(fichaTecnica.codigoFichaTecnica);
 				$("#custoTotal").val(fichaTecnica.custoTotal);
 				$("#qtdeProduto").val(fichaTecnica.qtdeProduto);
 				$("#procedimento").val(fichaTecnica.procedimento);
@@ -121,21 +123,81 @@ $(document).ready(function(){
 				for (var i = 0; i < ingredientesVO.length; i++) {
 					html = "";
 					html =  "<tr class='ingredientes'>"
-						  + "<td >" + ingredientesVO[i].codigo + "</td>"
+						  + "<td>" + ingredientesVO[i].codigo + "</td>"
 						  + "<td>" + ingredientesVO[i].descricao + "</td>"
 						  + "<td>" + ingredientesVO[i].un + "</td>"
 						  + "<td>" + ingredientesVO[i].qtde + "</td>"
+						  + "<td><a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.fichaTecnica.deletarIngrediente(this"+ "," + ingredientesVO[i].codigo + "," + "\"" + ingredientesVO[i].descricao + "\"" +")' aria-hidden='true'></i></a>"
 					  + "</tr>";
 					$("#ingredientesFichaTecnica tbody").append(html);
 					$("#ingrediente option[value='"+ ingredientesVO[i].codigo +"']").remove();
-				}	
-				
+				}
+				$("#tipoItemField").text("");
+				$("#tipoItemField").html('<label for="tipoItemInput">*Tipo Item</label><input type="text" class="form-control float" id="tipoItemInput" name="tipoItemInput" readonly/>');
+				$("#tipoItemInput").val("Produto");
 				$("#subConteudo h1").text("Edição de FichaTecnica");
 				$("#btnSalvarFichaTecnicaProduto").attr("onclick", "BRIGADERIA.fichaTecnica.salvarEdicao()");
 			}
 		});	
 	}
 	
+
+	BRIGADERIA.fichaTecnica.deletarIngrediente = function (handler, codigo, descricao) {
+		var tr = $(handler).closest('tr');
+		tr.remove();  
+		window.event.preventDefault();
+		$('#ingrediente').append('<option value="' + codigo + '" selected="selected">' + descricao + '</option>');
+	};
+	
+	BRIGADERIA.fichaTecnica.salvarEdicao = function() {
+		var dataEdit = {
+				produto:{
+					codigoProduto: $("#codigoProduto").val(),
+					tipoItem: $("#tipoItem").val(),
+					descricao: $("#descricao").val(),
+					qtdeEntrada: $("#qtdeEntrada").val(),
+					unEntrada: $("#unEntrada").val(),
+					valorCusto: $("#valorCusto").val(),
+					estoque: $("#estoque").val(),
+					unEstoque: $("#unEstoque").val(),
+					margem: $("#margem").val(),
+					valorVenda: $("#valorVenda").val(),
+					dataCadastro: $("#dataCadastro").val(),
+					ativo: $("#ativo").val(),	
+				}, 
+				fichaTecnica:{
+					codigoFichaTecnica: $("#codigoFichaTecnica").val(),
+					custoTotal: $("#custoTotal").val(),
+					qtdeProduto: $("#qtdeProduto").val(),
+					procedimento: $("#procedimento").val(),
+					ingredientes: []
+				}
+			};
+		
+		$("#ingredientesFichaTecnica tbody .ingredientes").each(function(){
+			
+			var ingrediente = {
+					codigo: $("td",this).first().text(),
+					qtde: $("td",this).last().text()
+			};
+			dataEdit.fichaTecnica.ingredientes.push(ingrediente);
+		});
+		
+		dataEdit.produto = BRIGADERIA.produtos.ajustarCampos(dataEdit.produto);
+		retornoValida = BRIGADERIA.validaProdutos.validar(dataEdit.produto);
+		if (retornoValida != "") {
+			bootbox.alert("Favor verificar os seguintes campos: " + retornoValida);
+		}else{
+			retornoValida = BRIGADERIA.validaFichaTecnica.validar(dataEdit.fichaTecnica);
+			if (retornoValida == "") {
+				dataEdit.produto.dataCadastro = BRIGADERIA.convertData.strToDate(dataEdit.produto.dataCadastro);
+				BRIGADERIA.produtoFichaTecnicaService.atualizar(dataEdit);
+			}else{
+				bootbox.alert("Favor verificar os seguintes campos: " + retornoValida);
+			}
+		}
+	};
+
 	
 	
 	

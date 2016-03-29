@@ -7,5 +7,7 @@ public interface FichaTecnicaDAO {
 	
 	public int adicionar(FichaTecnica fichaTecnica) throws BrigaderiaException;
 	public void adicionarIngredientes(int codFichaTecnica, int codIngrediente, float qtde) throws BrigaderiaException;
+	public void atualizar (FichaTecnica fichaTecnica) throws BrigaderiaException;
 	public FichaTecnica buscarPeloCodigoProduto(int codigoProduto) throws BrigaderiaException;
+	public void deletarIngredientes(int codFicha) throws BrigaderiaException;
 }

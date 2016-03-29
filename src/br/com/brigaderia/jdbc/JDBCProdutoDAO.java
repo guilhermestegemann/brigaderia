@@ -64,14 +64,14 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 			p.execute();
 			try (ResultSet generatedKeys = p.getGeneratedKeys()) {
 	            if (generatedKeys.next()) {
-	                produto.setCodigo(generatedKeys.getInt(1));
+	                produto.setCodigoProduto(generatedKeys.getInt(1));
 	            }
 	            else {
 	                throw new SQLException("Erro ao recuperar chave inserida! (Produto)");
 	            }
 			} 
 			
-			return produto.getCodigo();
+			return produto.getCodigoProduto();
 		}catch (SQLException e) {
 			e.printStackTrace();
 			throw new BrigaderiaException();
@@ -85,7 +85,7 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 			Statement stmt = conexao.createStatement();
 			ResultSet rs = stmt.executeQuery(comando);
 			while(rs.next()) {
-				produto.setCodigo(rs.getInt("codigo"));
+				produto.setCodigoProduto(rs.getInt("codigo"));
 				produto.setDescricao(rs.getString("descricao"));
 				produto.setEstoque(rs.getFloat("estoque"));
 				produto.setUnEstoque(rs.getString("unestoque"));
@@ -118,13 +118,15 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 		}
 	}
 	
-	public List<Produto> buscarProdutos (String valorBusca) throws BrigaderiaException {
+	public List<Produto> buscarProdutos (String valorBusca, String ativo) throws BrigaderiaException {
 		
 		String comando = "SELECT PRODUTO.CODIGO, PRODUTO.DESCRICAO, PRODUTO.ESTOQUE, PRODUTO.VALORCUSTO, PRODUTO.VALORVENDA, PRODUTO.TIPOITEM "
 					   + "FROM PRODUTO ";
 		
 		if (!valorBusca.equals("null") && !valorBusca.equals("")) {
 			comando += "WHERE PRODUTO.DESCRICAO LIKE '" + valorBusca + "%'";
+		}else if (!ativo.equals("null") && !valorBusca.equals("")) {
+			comando += "AND PRODUTO.ATIVO = '" + ativo + "'";
 		}
 		
 		List<Produto> listProdutos = new ArrayList<Produto>();
@@ -134,7 +136,7 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 			ResultSet rs = stmt.executeQuery(comando);
 			while(rs.next()) {
 				produto = new Produto();
-				produto.setCodigo(rs.getInt("CODIGO"));
+				produto.setCodigoProduto(rs.getInt("CODIGO"));
 				produto.setDescricao(rs.getString("DESCRICAO"));
 				produto.setEstoque(rs.getFloat("ESTOQUE"));
 				produto.setValorCusto(rs.getFloat("VALORCUSTO"));
@@ -159,7 +161,7 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 							+ "PRODUTO.ATIVO = ?, "
 							+ "PRODUTO.QTDEENTRADA = ?, "
 							+ "PRODUTO.UNENTRADA = ? "
-					   + "WHERE PRODUTO.CODIGO = " + produto.getCodigo();
+					   + "WHERE PRODUTO.CODIGO = " + produto.getCodigoProduto();
 	    PreparedStatement p;
 	    try {
 	    	p = this.conexao.prepareStatement(comando);

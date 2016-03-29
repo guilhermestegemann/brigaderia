@@ -2,6 +2,7 @@ package br.com.brigaderia.rest;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -32,6 +33,23 @@ public class ProdutoFichaTecnicaRest extends UtilRest{
 			return buildErrorResponse(e.getMessage());
 		}catch(Exception e) {
 			return buildErrorResponse(e.getMessage());
+		}
+	}
+	
+	@PUT
+	@Path("/atualizar")
+	@Consumes("application/*")
+	public Response atualizar (String prodFichaEditado) throws BrigaderiaException {
+		try {
+			ProdutoFichaTecnicaVO prodFicha = new ObjectMapper().readValue(prodFichaEditado, ProdutoFichaTecnicaVO.class);
+			ProdutoFichaTecnicaService service = new ProdutoFichaTecnicaService();
+			service.atualizarProdutoFichaTecnica(prodFicha);
+			return buildResponse("Produto e Ficha Técnica editados com sucesso.");
+		}catch (BrigaderiaException e){
+			return buildErrorResponse(e.getMessage());
+		}catch (Exception e) {
+			e.printStackTrace();
+			return buildErrorResponse(ERROINESPERADO);
 		}
 	}
 	

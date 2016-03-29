@@ -30,4 +30,22 @@ public class ProdutoFichaTecnicaService {
 			throw new BrigaderiaException();
 		}
 	}
+	
+	public void atualizarProdutoFichaTecnica (ProdutoFichaTecnicaVO prodFicha) throws BrigaderiaException {
+		
+		try {
+			Produto produto = prodFicha.getProduto();
+			FichaTecnica fichaTecnica = prodFicha.getFichaTecnica();
+			ProdutoService serviceProduto = new ProdutoService();
+			FichaTecnicaService serviceFichaTecnica = new FichaTecnicaService();
+			serviceProduto.atualizarProduto(produto);
+			serviceFichaTecnica.atualizarFichaTecnica(fichaTecnica);
+		}catch (BrigaderiaException e) {
+			e.printStackTrace();
+			throw e;
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new BrigaderiaException();
+		}
+	}
 }

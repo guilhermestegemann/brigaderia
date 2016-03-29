@@ -42,4 +42,19 @@ $(document).ready(function() {
 		};
 		BRIGADERIA.ajax.post(BRIGADERIA.produtoFichaTecnicaService.defaultCfg(cfg));
 	};
+	
+	BRIGADERIA.produtoFichaTecnicaService.atualizar = function (dataEdit) {
+		cfg = {
+			url: "rest/produtoFichaTecnica/atualizar",
+			data: dataEdit,
+			success : function(sucesso) {
+				bootbox.alert(sucesso);
+				carregarConteudo ('resources/gerenciar/produtos/gerenciarProdutos.html');
+			},
+			error : function (err) {
+				bootbox.alert(err.responseText);
+			}
+		};
+		BRIGADERIA.ajax.put(BRIGADERIA.produtoFichaTecnicaService.defaultCfg(cfg));
+	}
 });
