@@ -45,7 +45,7 @@ $(document).ready(function() {
 			
 			},
 			error : function(err) {
-				console.log(err);
+				bootbox.alert(err.responseText);
 			} 
 		});		   		
 	};
@@ -62,27 +62,7 @@ $(document).ready(function() {
 	
 	BRIGADERIA.gerenciarProdutos.buscar();
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	$("#filtroAtivo").on('change',function(){
+		BRIGADERIA.gerenciarProdutos.buscar();
+	});
 });// fecha ready

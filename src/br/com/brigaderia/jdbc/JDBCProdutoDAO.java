@@ -123,10 +123,12 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 		String comando = "SELECT PRODUTO.CODIGO, PRODUTO.DESCRICAO, PRODUTO.ESTOQUE, PRODUTO.VALORCUSTO, PRODUTO.VALORVENDA, PRODUTO.TIPOITEM "
 					   + "FROM PRODUTO ";
 		
-		if (!valorBusca.equals("null") && !valorBusca.equals("")) {
-			comando += "WHERE PRODUTO.DESCRICAO LIKE '" + valorBusca + "%'";
-		}else if (!ativo.equals("null") && !valorBusca.equals("")) {
-			comando += "AND PRODUTO.ATIVO = '" + ativo + "'";
+		
+		if (!ativo.equals("null") && (!valorBusca.equals("")) && (!valorBusca.equals("null") && !valorBusca.equals(""))) {
+			comando += "WHERE PRODUTO.ATIVO = '" + ativo + "'"
+					+ "AND PRODUTO.DESCRICAO LIKE '" + valorBusca + "%'";
+		}else{
+			comando += "WHERE PRODUTO.ATIVO = '" + ativo + "'";
 		}
 		
 		List<Produto> listProdutos = new ArrayList<Produto>();

@@ -3,6 +3,7 @@ BRIGADERIA.fichaTecnica = new Object();
 $(document).ready(function(){
 	
 	var ingredientes;
+	var ingredienteArray = []; //utilizado ao inserir ingrediente no formulário
 	
 	BRIGADERIA.fichaTecnica.listarIngredientes = function () { 
 		BRIGADERIA.fichaTecnicaService.listarIngredientes({
@@ -42,6 +43,7 @@ $(document).ready(function(){
 			var qtde = $("#qtdeIngrediente").val();
 			
 			for (var i = 0; i < ingredientes.length; i++) {
+		
 				if ((ingredientes[i].codigo == codigo) && (un == "")) {
 					un = ingredientes[i].un;
 					descricao = ingredientes[i].descricao;
@@ -55,6 +57,12 @@ $(document).ready(function(){
 						  + "<td>" + qtde + "</td>"
 						  + "<td><a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.fichaTecnica.deletarIngrediente(this"+ "," + codigo + "," + "\"" + descricao + "\"" +")' aria-hidden='true'></i></a>"
 					  + "</tr>";
+				
+				var ing = {
+						codigo: codigo,
+						qtde: qtde
+				} ;
+				ingredienteArray.push(ing);
 				$("#ingredientesFichaTecnica tbody").append(html);
 				$("#ingrediente option:selected").remove();
 				$("#qtdeIngrediente").val("");
@@ -81,18 +89,9 @@ $(document).ready(function(){
 				custoTotal: $("#custoTotal").val(),
 				qtdeProduto: $("#qtdeProduto").val(),
 				procedimento: $("#procedimento").val(),
-				ingredientes: []
+				ingredientes: ingredienteArray
 			}
 		};
-		
-		$("#ingredientesFichaTecnica tbody .ingredientes").each(function(){
-			
-			var ingrediente = {
-					codigo: $("td",this).first().text(),
-					qtde: $("td",this).last().text()
-			};
-			newData.fichaTecnica.ingredientes.push(ingrediente);
-		});
 		newData.produto = BRIGADERIA.produtos.ajustarCampos(newData.produto);
 		retornoValida = BRIGADERIA.validaProdutos.validar(newData.produto);
 		if (retornoValida != "") {
@@ -108,6 +107,7 @@ $(document).ready(function(){
 	};
 	
 	BRIGADERIA.fichaTecnica.exibirEdicao = function () {
+		
 		var html = "<input type='text' class='form-control' id='codigoFichaTecnica' name='codigoFichaTecnica' style='display:none' />";
 		$("#subConteudo").append(html);
 		BRIGADERIA.fichaTecnicaService.buscarFichaTecnicaPeloCodigoProduto({
@@ -126,9 +126,14 @@ $(document).ready(function(){
 						  + "<td>" + ingredientesVO[i].codigo + "</td>"
 						  + "<td>" + ingredientesVO[i].descricao + "</td>"
 						  + "<td>" + ingredientesVO[i].un + "</td>"
-						  + "<td>" + ingredientesVO[i].qtde + "</td>"
-						  + "<td><a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.fichaTecnica.deletarIngrediente(this"+ "," + ingredientesVO[i].codigo + "," + "\"" + ingredientesVO[i].descricao + "\"" +")' aria-hidden='true'></i></a>"
+						  + "<td id='qtde'>" + ingredientesVO[i].qtde + "</td>"
+						  + "<td><a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.fichaTecnica.deletarIngrediente(this"+ "," + ingredientesVO[i].codigo + "," + "\"" + ingredientesVO[i].descricao + "\"" + ")' aria-hidden='true'></i></a>"
 					  + "</tr>";
+					var ing = {
+							codigo: ingredientesVO[i].codigo,
+							qtde: ingredientesVO[i].qtde
+					};
+					ingredienteArray.push(ing);
 					$("#ingredientesFichaTecnica tbody").append(html);
 					$("#ingrediente option[value='"+ ingredientesVO[i].codigo +"']").remove();
 				}
@@ -143,17 +148,23 @@ $(document).ready(function(){
 	
 
 	BRIGADERIA.fichaTecnica.deletarIngrediente = function (handler, codigo, descricao) {
+		for (var i = 0; i < ingredienteArray.length; i++) {
+			if (ingredienteArray[i].codigo == codigo) {
+				ingredienteArray.splice(i, 1);
+			}
+		}
 		var tr = $(handler).closest('tr');
 		tr.remove();  
 		window.event.preventDefault();
 		$('#ingrediente').append('<option value="' + codigo + '" selected="selected">' + descricao + '</option>');
+		
 	};
 	
 	BRIGADERIA.fichaTecnica.salvarEdicao = function() {
 		var dataEdit = {
 				produto:{
 					codigoProduto: $("#codigoProduto").val(),
-					tipoItem: $("#tipoItem").val(),
+					tipoItem: "1",
 					descricao: $("#descricao").val(),
 					qtdeEntrada: $("#qtdeEntrada").val(),
 					unEntrada: $("#unEntrada").val(),
@@ -170,18 +181,9 @@ $(document).ready(function(){
 					custoTotal: $("#custoTotal").val(),
 					qtdeProduto: $("#qtdeProduto").val(),
 					procedimento: $("#procedimento").val(),
-					ingredientes: []
+					ingredientes: ingredienteArray
 				}
 			};
-		
-		$("#ingredientesFichaTecnica tbody .ingredientes").each(function(){
-			
-			var ingrediente = {
-					codigo: $("td",this).first().text(),
-					qtde: $("td",this).last().text()
-			};
-			dataEdit.fichaTecnica.ingredientes.push(ingrediente);
-		});
 		
 		dataEdit.produto = BRIGADERIA.produtos.ajustarCampos(dataEdit.produto);
 		retornoValida = BRIGADERIA.validaProdutos.validar(dataEdit.produto);
@@ -197,10 +199,6 @@ $(document).ready(function(){
 			}
 		}
 	};
-
-	
-	
-	
 });//fecha ready
 
 
