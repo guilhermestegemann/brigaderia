@@ -19,6 +19,12 @@ public class FichaTecnica implements Serializable{
 	
 	
 	
+	public float getCustoTotal() {
+		return custoTotal;
+	}
+	public void setCustoTotal(float custoTotal) {
+		this.custoTotal = custoTotal;
+	}
 	public int getCodigoFichaTecnica() {
 		return codigoFichaTecnica;
 	}
@@ -37,12 +43,7 @@ public class FichaTecnica implements Serializable{
 	public void setIngredientes(List<ItemFichaTecnicaVO> ingredientes) {
 		this.ingredientes = ingredientes;
 	}
-	public float getCustoTotal() {
-		return custoTotal;
-	}
-	public void setCustoTotal(float custoTotal) {
-		this.custoTotal = custoTotal;
-	}
+	
 	public float getQtdeProduto() {
 		return qtdeProduto;
 	}

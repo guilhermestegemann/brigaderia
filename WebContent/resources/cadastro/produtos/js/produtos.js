@@ -6,7 +6,7 @@ $(document).ready(function() {
 	
 	BRIGADERIA.produtos.aplicarMask = function () {
 		$(".money").mask('000000000000000,00', {reverse: true});
-		 $('#margem').mask('##0,00%', {reverse: true});
+		$('#margem').mask('##0,00%', {reverse: true});
 	};
 	
 	BRIGADERIA.produtos.listarTipoItem = function (codTipo) { 
