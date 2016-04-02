@@ -11,19 +11,22 @@ $(document).ready(function() {
 	};
 	
 	BRIGADERIA.gerenciarProdutos.buscar = function () {
-		var valorBusca = $("#buscaProduto").val();
+		var tipoItem = $("#tipoItemFiltro").val();
 		var ativo = $("#filtroAtivo").val();
+		var valorBusca = $("#buscaProduto").val();
+		
 		if (valorBusca == "") {
 			valorBusca = "null";
 		}
 		
-		BRIGADERIA.gerenciarProdutos.exibirProdutos (undefined, valorBusca, ativo);
+		BRIGADERIA.gerenciarProdutos.exibirProdutos (undefined, valorBusca, ativo, tipoItem);
 	};
 	
-	BRIGADERIA.gerenciarProdutos.exibirProdutos = function(listaDeProdutos, valorBusca, ativo) {
+	BRIGADERIA.gerenciarProdutos.exibirProdutos = function(listaDeProdutos, valorBusca, ativo, tipoItem) {
 		BRIGADERIA.produtoService.listar({
 			valorBusca : valorBusca,
 			ativo: ativo,
+			tipoItem: tipoItem,
 			success : function (listaDeProdutos) {
 				
 				var html = "";
@@ -36,8 +39,8 @@ $(document).ready(function() {
 					  + "<td>" + listaDeProdutos[i].estoque 
 					  + "<td>" + "R$ " + listaDeProdutos[i].valorCusto + "</td>"
 					  + "<td>" + "R$ " +listaDeProdutos[i].valorVenda + "</td>"
-					  + "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.gerenciarProdutos.editarProduto(" + listaDeProdutos[i].codigoProduto + "," + listaDeProdutos.tipoItem + ")' aria-hidden='true'></i></a>"
-					  	 +	"<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.gerenciarProdutos.deletarProduto(" + listaDeProdutos[i].codigo + ")' aria-hidden='true'></i></a>  </td>"
+					  + "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.gerenciarProdutos.editarProduto(" + listaDeProdutos[i].codigoProduto + "," + listaDeProdutos[i].tipoItem + ")' aria-hidden='true'></i></a>"
+					  	 +	"<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.gerenciarProdutos.deletarProduto(" + listaDeProdutos[i].codigoProduto + "," + listaDeProdutos[i].tipoItem + ")' aria-hidden='true'></i></a>  </td>"
 					  + "</tr>";
 				}
 				
@@ -49,6 +52,29 @@ $(document).ready(function() {
 			} 
 		});		   		
 	};
+	
+	BRIGADERIA.gerenciarProdutos.deletarProduto = function (codigo, tipoItem) {
+		
+		bootbox.confirm({ 
+			size: 'small',
+			message: "Deseja deletar o Produto?", 
+			callback: function(confirma){
+				if (confirma == true) {
+					BRIGADERIA.produtoService.deletar({
+						codigo : codigo,
+						tipoItem : tipoItem,
+						success: function (successo) {
+							bootbox.alert(successo);
+							BRIGADERIA.gerenciarProdutos.buscar();
+						},
+						error: function(err) {
+							bootbox.alert(err.responseText);
+						}
+					})
+				}
+			}
+		});
+	}
 	
 	BRIGADERIA.gerenciarProdutos.editarProduto = function (codigoProduto, tipoItem) {
 		$("#conteudo").load("resources/cadastro/produtos/produtos.html", function (){
@@ -62,7 +88,17 @@ $(document).ready(function() {
 	
 	BRIGADERIA.gerenciarProdutos.buscar();
 	
+	
 	$("#filtroAtivo").on('change',function(){
 		BRIGADERIA.gerenciarProdutos.buscar();
 	});
+	
+	$("#tipoItemFiltro").on('change',function(){
+		BRIGADERIA.gerenciarProdutos.buscar();
+	});
+	
+	BRIGADERIA.produtos.listarTipoItem("#tipoItemFiltro");
+	
+	
+	
 });// fecha ready

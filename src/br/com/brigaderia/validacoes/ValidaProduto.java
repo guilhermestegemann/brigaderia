@@ -19,7 +19,7 @@ public class ValidaProduto {
 		try {
 		
 			
-			if ((produto.getTipoItem() == 0) || (produto.getDescricao().equals(""))) {
+			if (produto.getDescricao().equals("")) {
 				throw new CamposObrigatoriosException();
 			}
 			

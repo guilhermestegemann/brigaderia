@@ -6,29 +6,29 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import br.com.brigaderia.exception.BrigaderiaException;
-import br.com.brigaderia.exception.ClienteComPedidoException;
-import br.com.brigaderia.jdbcinterface.PedidoDAO;
+import br.com.brigaderia.exception.ProdutoVinculadoEmPedidoCompraException;
+import br.com.brigaderia.jdbcinterface.PedidoCompraDAO;
 
-public class JDBCPedidoDAO implements PedidoDAO{
+public class JDBCPedidoCompraDAO implements PedidoCompraDAO {
 	
 	private Connection conexao;
 
-	public JDBCPedidoDAO(Connection conexao) {
+	public JDBCPedidoCompraDAO(Connection conexao) {
 		super();
 		this.conexao = conexao;
 	}
 	
-	public void verificaPedidoCliente (int codigo) throws BrigaderiaException {
-		String comando = "SELECT COUNT(*) AS QTDEPEDIDOS FROM PEDIDO  WHERE PEDIDO.CLIENTE = " + codigo;
-		int qtdeClientes = 0;
+	public void countProdutos(int codigo) throws BrigaderiaException {
+		String comando = "SELECT COUNT(*) AS QTDEPRODUTO FROM ITEMCOMPRA  WHERE ITEMCOMPRA.PRODUTO = " + codigo;
+		int qtdeProduto = 0;
 		try {
 			Statement stmt = conexao.createStatement();
 			ResultSet rs = stmt.executeQuery(comando);
 			while(rs.next()) {
-				qtdeClientes = rs.getInt("QTDEPEDIDOS");
+				qtdeProduto = rs.getInt("QTDEPRODUTO");
 			}
-			if (qtdeClientes > 0) {
-				throw new ClienteComPedidoException();
+			if (qtdeProduto > 0) {
+				throw new ProdutoVinculadoEmPedidoCompraException();
 			}
 		}catch (BrigaderiaException e) {
 			e.printStackTrace();
@@ -38,5 +38,4 @@ public class JDBCPedidoDAO implements PedidoDAO{
 			throw new BrigaderiaException();
 		}
 	}
-
 }

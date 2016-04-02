@@ -12,4 +12,5 @@ public interface FichaTecnicaDAO {
 	public void atualizar (FichaTecnica fichaTecnica) throws BrigaderiaException;
 	public FichaTecnica buscarPeloCodigoProduto(int codigoProduto) throws BrigaderiaException;
 	public void deletarIngredientes(int codFicha) throws BrigaderiaException;
+	public void countIngredientes(int codigo) throws BrigaderiaException;
 }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.brigaderia.exception.BrigaderiaException;
+import br.com.brigaderia.exception.IngredienteVinculadoEmFichaTecnicaException;
 import br.com.brigaderia.exception.SomarCustoFichaTecnicaException;
 import br.com.brigaderia.jdbcinterface.FichaTecnicaDAO;
 import br.com.brigaderia.objetos.FichaTecnica;
@@ -165,6 +166,27 @@ public class JDBCFichaTecnicaDAO implements FichaTecnicaDAO{
 			p = this.conexao.createStatement();
 			p.execute(comando);	
 		}catch(SQLException e) {
+			e.printStackTrace();
+			throw new BrigaderiaException();
+		}
+	}
+	
+	public void countIngredientes(int codigo) throws BrigaderiaException {
+		String comando = "SELECT COUNT(*) AS QTDEINGREDIENTE FROM ITEMFICHATECNICA  WHERE ITEMFICHATECNICA.INGREDIENTE = " + codigo;
+		int qtdeProduto = 0;
+		try {
+			Statement stmt = conexao.createStatement();
+			ResultSet rs = stmt.executeQuery(comando);
+			while(rs.next()) {
+				qtdeProduto = rs.getInt("QTDEINGREDIENTE");
+			}
+			if (qtdeProduto > 0) {
+				throw new IngredienteVinculadoEmFichaTecnicaException();
+			}
+		}catch (BrigaderiaException e) {
+			e.printStackTrace();
+			throw e;
+		}catch (SQLException e) {
 			e.printStackTrace();
 			throw new BrigaderiaException();
 		}

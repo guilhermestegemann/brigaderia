@@ -6,7 +6,17 @@ import java.util.List;
 
 import br.com.brigaderia.bd.conexao.Conexao;
 import br.com.brigaderia.exception.BrigaderiaException;
+import br.com.brigaderia.jdbc.JDBCFichaTecnicaDAO;
+import br.com.brigaderia.jdbc.JDBCOrdemProducaoDAO;
+import br.com.brigaderia.jdbc.JDBCPedidoCompraDAO;
+import br.com.brigaderia.jdbc.JDBCPedidoVendaDAO;
+import br.com.brigaderia.jdbc.JDBCPerdaDAO;
 import br.com.brigaderia.jdbc.JDBCProdutoDAO;
+import br.com.brigaderia.jdbcinterface.FichaTecnicaDAO;
+import br.com.brigaderia.jdbcinterface.OrdemProducaoDAO;
+import br.com.brigaderia.jdbcinterface.PedidoCompraDAO;
+import br.com.brigaderia.jdbcinterface.PedidoVendaDAO;
+import br.com.brigaderia.jdbcinterface.PerdaDAO;
 import br.com.brigaderia.jdbcinterface.ProdutoDAO;
 import br.com.brigaderia.objetos.Produto;
 import br.com.brigaderia.validacoes.ValidaProduto;
@@ -66,12 +76,12 @@ public class ProdutoService {
 		}
 	}
 	
-	public List<Produto> buscarProdutos (String valorBusca, String ativo) throws BrigaderiaException{
+	public List<Produto> buscarProdutos (String valorBusca, String ativo, int tipoItem) throws BrigaderiaException{
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
 			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
-			return jdbcProduto.buscarProdutos(valorBusca, ativo);
+			return jdbcProduto.buscarProdutos(valorBusca, ativo, tipoItem);
 		}catch (Exception e) {
 			throw e;
 		}finally{
@@ -94,6 +104,35 @@ public class ProdutoService {
 			e.printStackTrace();
 			throw new BrigaderiaException();
 		}finally{
+			conec.fecharConexao();
+		}
+	}
+	
+	public void deletarProduto (int codigo, int tipoItem) throws BrigaderiaException{
+		Conexao conec = new Conexao();
+		try {
+			Connection conexao = conec.abrirConexao();
+			PedidoVendaDAO jdbcPedidoVenda = new JDBCPedidoVendaDAO(conexao);
+			PedidoCompraDAO jdbcPedidoCompra = new JDBCPedidoCompraDAO(conexao);
+			PerdaDAO jdbcPerda = new JDBCPerdaDAO(conexao);
+			jdbcPerda.countProdutos(codigo);
+			if (tipoItem == 1) {
+				jdbcPedidoVenda.countProdutos(codigo);
+				OrdemProducaoDAO jdbcOrdemProducao = new JDBCOrdemProducaoDAO(conexao);
+				jdbcOrdemProducao.countProdutos(codigo);
+			}else if (tipoItem == 2) {
+				jdbcPedidoCompra.countProdutos(codigo);
+				FichaTecnicaDAO jdbcFichaTecnica = new JDBCFichaTecnicaDAO(conexao);
+				jdbcFichaTecnica.countIngredientes(codigo);
+			}else{
+				jdbcPedidoVenda.countProdutos(codigo);
+				jdbcPedidoCompra.countProdutos(codigo);
+			}
+			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
+			jdbcProduto.deletar(codigo);
+		}catch (BrigaderiaException e) {
+			throw e;
+		}finally {
 			conec.fecharConexao();
 		}
 	}

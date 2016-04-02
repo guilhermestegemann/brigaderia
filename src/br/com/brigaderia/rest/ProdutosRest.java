@@ -1,6 +1,7 @@
 package br.com.brigaderia.rest;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -41,16 +42,17 @@ public class ProdutosRest extends UtilRest{
 	}
 	
 	@GET
-	@Path("/buscarProdutos/{valorBusca}/{ativo}")
+	@Path("/buscarProdutos/{valorBusca}/{ativo}/{tipoItem}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	
 	public Response buscarProdutos (@PathParam("valorBusca") String valorBusca,
-									@PathParam("ativo") String ativo) throws BrigaderiaException{
+									@PathParam("ativo") String ativo,
+									@PathParam("tipoItem") int tipoItem) throws BrigaderiaException{
 		
 		try {
 			
 			ProdutoService service = new ProdutoService();
-			return buildResponse(service.buscarProdutos(valorBusca, ativo));
+			return buildResponse(service.buscarProdutos(valorBusca, ativo, tipoItem));
 		}catch (BrigaderiaException e) {
 			return buildErrorResponse(e.getMessage());
 		}catch(Exception e) {
@@ -82,6 +84,23 @@ public class ProdutosRest extends UtilRest{
 			service.atualizarProduto(produto);
 			return buildResponse("Produto editado com sucesso.");
 		}catch (BrigaderiaException e){
+			return buildErrorResponse(e.getMessage());
+		}catch (Exception e) {
+			e.printStackTrace();
+			return buildErrorResponse(ERROINESPERADO);
+		}
+	}
+	
+	@DELETE
+	@Path("/deletar/{codigo}/{tipoItem}")
+	@Consumes("application/*")
+	
+	public Response deletar (@PathParam("codigo") int codigo, @PathParam("tipoItem") int tipoItem) throws BrigaderiaException{
+		try {
+			ProdutoService service = new ProdutoService();
+			service.deletarProduto(codigo, tipoItem);
+			return this.buildResponse("Produto deletado!");
+		}catch (BrigaderiaException e) {
 			return buildErrorResponse(e.getMessage());
 		}catch (Exception e) {
 			return buildErrorResponse(ERROINESPERADO);

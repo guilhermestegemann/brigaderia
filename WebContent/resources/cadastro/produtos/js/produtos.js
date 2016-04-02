@@ -4,33 +4,13 @@ $(document).ready(function() {
 
 	$("#subConteudo").text(""); //inicia div vazia
 	
-	BRIGADERIA.produtos.aplicarMask = function () {
-		$(".money").mask('000000000000000,00', {reverse: true});
-		$('#margem').mask('##0,00%', {reverse: true});
-	};
-	
-	BRIGADERIA.produtos.listarTipoItem = function (codTipo) { 
-		BRIGADERIA.tipoItem.listar({
-			success: function(data) {
-				var html = "";
-				
-				for (var i = 0; i < data.length; i++) {
-					html += "<option value='" + data[i].codigo + "'>" + data[i].tipo + "</option>";
-				}
-				$("#tipoItem").append(html);
-				if (codTipo != null) {
-					$("#tipoItem").val(codTipo);
-				}
-			}
-		});
-	};
-	
 	BRIGADERIA.produtos.exibirFormulario = function () {
-		BRIGADERIA.produtos.listarTipoItem();
+		BRIGADERIA.produtos.listarTipoItem("#tipoItem");
 	};
 	
 	$("#tipoItem").on('change',function(){
 		if ($("#tipoItem").val() == 1) {
+			$("#dataCadastro").val("");
 			$("#btnSalvarProduto").hide();
 			$("#btnCancelarProduto").hide();
 			$("#subConteudo").load("resources/cadastro/fichaTecnica/fichaTecnica.html", function (){
@@ -43,9 +23,63 @@ $(document).ready(function() {
 		}
 	});
 	
+	$("#margem").on('blur', function(){
+		if ($("#valorCusto").val() > 0) {
+			$("#valorVenda").val($("#valorCusto").val() * (1+($("#margem").val().replace(",","."))/100));
+		}
+		if ($("#valorVenda").val() > 0) {
+			$("#valorVenda").val(parseFloat($("#valorVenda").val()).toFixed(2));
+		}
+	});
+	
+	$("#valorVenda").on('blur', function(){
+		if ($("#valorCusto").val() > 0) {
+			$("#margem").val((($("#valorVenda").val().replace(",",".") / $("#valorCusto").val())-1)*100);
+		}else if ($("#valorCusto").val() == 0) {
+			$("#margem").val(0);
+		}	
+		$("#margem").val(parseFloat($("#margem").val()).toFixed(2));
+	});
+	
+	
+	BRIGADERIA.produtos.aplicarMask = function () {
+		$("#valorCusto").mask('000000000000000,00', {reverse: true});
+	};
+	
+	
+	
+	BRIGADERIA.produtos.listarTipoItem = function (idHtml) { 
+		BRIGADERIA.tipoItem.listar({
+			success: function(data) {
+				var html = "";
+				
+				for (var i = 0; i < data.length; i++) {
+					html += "<option value='" + data[i].codigo + "'>" + data[i].tipo + "</option>";
+				}
+				$(idHtml).append(html);
+			}
+		});
+	};
+	
+	BRIGADERIA.produtos.montarProduto = function() {
+		return produto = {
+				tipoItem: $("#tipoItem").val(),
+				descricao: $("#descricao").val(),
+				unEntrada: $("#unEntrada").val(),
+				qtdeEntrada: $("#qtdeEntrada").val(),
+				estoque: $("#estoque").val(),
+				unEstoque: $("#unEstoque").val(),
+				valorCusto: $("#valorCusto").val(),
+				margem: $("#margem").val(),
+				valorVenda: $("#valorVenda").val(),
+				dataCadastro: $("#dataCadastro").val(),
+				ativo: $("#ativo").val(),
+		};
+	};
+	
 	BRIGADERIA.produtos.adicionar = function() {
 		var newProduto = new Object();
-		$('form input, form select').each(function(){newProduto[this.name]=this.value;});
+		newProduto = BRIGADERIA.produtos.montarProduto();
 		var retornoValida = BRIGADERIA.validaProdutos.validar(newProduto);
 		if (retornoValida == "") {
 			BRIGADERIA.produtoService.adicionar(BRIGADERIA.produtos.ajustarCampos(newProduto));
@@ -75,19 +109,22 @@ $(document).ready(function() {
 				$("#valorVenda").val(produto.valorVenda);
 				$("#dataCadastro").val(BRIGADERIA.convertData.dateToStr(produto.dataCadastro));
 				$("#ativo").val(produto.ativo);
-				
+				$("#tipoItemField").text("");
 				BRIGADERIA.produtos.aplicarMask();
 				$("#btnSalvarProduto").attr("onclick", "BRIGADERIA.produtos.salvarEdicao()");
 				$("#conteudo h1").text("Edição de Produtos");
-				
+				$("#tipoItemField").text("");
+				$("#tipoItemField").html('<label for="tipoItemInput">*Tipo Item</label><input type="text" class="form-control float" id="tipoItemInput" name="tipoItemInput" readonly/>');
 				if (produto.tipoItem == "1") {
 					$("#btnSalvarProduto").hide();
 					$("#btnCancelarProduto").hide();
 					$("#subConteudo").load("resources/cadastro/fichaTecnica/fichaTecnica.html", function (){
 						BRIGADERIA.fichaTecnica.exibirFormulario("Edição");
 					});
-				}else{// Só lista tipoItem se for Ingrediente ou Embalagem
-					BRIGADERIA.produtos.listarTipoItem(produto.tipoItem)
+				}else if (produto.tipoItem == "2"){
+					$("#tipoItemInput").val("Ingrediente");
+				}else{
+					$("#tipoItemInput").val("Embalagem");
 				}
 			}
 		});	
@@ -96,7 +133,8 @@ $(document).ready(function() {
 	
 	BRIGADERIA.produtos.salvarEdicao = function() {
 		var produto = new Object();
-		$('form input, form select').each(function(){produto[this.name]=this.value;});
+		produto = BRIGADERIA.produtos.montarProduto();
+		//$('form input, form select .produto').each(function(){produto[this.name]=this.value;});
 		var retornoValida = BRIGADERIA.validaProdutos.validar(produto);
 		if (retornoValida == "") {
 			produto.dataCadastro = BRIGADERIA.convertData.strToDate(produto.dataCadastro);

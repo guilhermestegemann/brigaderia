@@ -46,13 +46,19 @@ $(document).ready(function() {
 	};
 	
 	BRIGADERIA.produtoService.listar = function(cfg){
-		cfg.url = "rest/produtos/buscarProdutos/" + cfg.valorBusca + "/" + cfg.ativo;
+		cfg.url = "rest/produtos/buscarProdutos/" + cfg.valorBusca + "/" + cfg.ativo + "/" + cfg.tipoItem;
 		BRIGADERIA.ajax.get(BRIGADERIA.produtoService.defaultCfg(cfg));
 	};
 	
 	BRIGADERIA.produtoService.buscarProdutoPeloCodigo = function(cfg) {
 		cfg.url = "rest/produtos/buscarProdutoPeloCodigo/" + cfg.codigo;
 		BRIGADERIA.ajax.get(BRIGADERIA.produtoService.defaultCfg(cfg));
+	};
+	
+	BRIGADERIA.produtoService.deletar = function(cfg) {
+		cfg.url = "rest/produtos/deletar/" + cfg.codigo + "/" + cfg.tipoItem;
+		
+		BRIGADERIA.ajax.del(BRIGADERIA.produtoService.defaultCfg(cfg));
 	};
 	
 	BRIGADERIA.produtoService.atualizar = function (produto) {

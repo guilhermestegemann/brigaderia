@@ -11,9 +11,9 @@ import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.exception.ClienteComPedidoException;
 import br.com.brigaderia.exception.DataNascimentoInvalidaException;
 import br.com.brigaderia.jdbc.JDBCClienteDAO;
-import br.com.brigaderia.jdbc.JDBCPedidoDAO;
+import br.com.brigaderia.jdbc.JDBCPedidoVendaDAO;
 import br.com.brigaderia.jdbcinterface.ClienteDAO;
-import br.com.brigaderia.jdbcinterface.PedidoDAO;
+import br.com.brigaderia.jdbcinterface.PedidoVendaDAO;
 import br.com.brigaderia.objetos.Cliente;
 import br.com.brigaderia.objetos.DadosClientesVO;
 import br.com.brigaderia.validacoes.ValidaCliente;
@@ -112,8 +112,8 @@ public class ClienteService {
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
-			PedidoDAO jdbcPedido = new JDBCPedidoDAO(conexao);
-			jdbcPedido.verificaPedidoCliente(codigo);
+			PedidoVendaDAO jdbcPedidoVenda = new JDBCPedidoVendaDAO(conexao);
+			jdbcPedidoVenda.verificaPedidoCliente(codigo);
 			ClienteDAO jdbcCliente = new JDBCClienteDAO(conexao);
 			jdbcCliente.deletar(codigo);
 		}catch (ClienteComPedidoException e) {

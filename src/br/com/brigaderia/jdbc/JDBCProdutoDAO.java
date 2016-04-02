@@ -23,7 +23,7 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 	}
 	
 	public List<IngredientesVO> buscarIngredientes () throws BrigaderiaException {
-		String comando = "SELECT CODIGO, DESCRICAO, UNESTOQUE FROM PRODUTO WHERE TIPOITEM = 2 ";
+		String comando = "SELECT CODIGO, DESCRICAO, UNESTOQUE FROM PRODUTO WHERE PRODUTO.TIPOITEM = 2 AND PRODUTO.ATIVO = 'S' ";
 		List<IngredientesVO> listIngredientes = new ArrayList<IngredientesVO>();
 		IngredientesVO ingredientes = null;
 		try {
@@ -118,18 +118,22 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 		}
 	}
 	
-	public List<Produto> buscarProdutos (String valorBusca, String ativo) throws BrigaderiaException {
+	public List<Produto> buscarProdutos (String valorBusca, String ativo, int tipoItem) throws BrigaderiaException {
 		
 		String comando = "SELECT PRODUTO.CODIGO, PRODUTO.DESCRICAO, PRODUTO.ESTOQUE, PRODUTO.VALORCUSTO, PRODUTO.VALORVENDA, PRODUTO.TIPOITEM "
 					   + "FROM PRODUTO ";
 		
 		
-		if (!ativo.equals("null") && (!valorBusca.equals("")) && (!valorBusca.equals("null") && !valorBusca.equals(""))) {
+		if ((!valorBusca.equals("")) && (!valorBusca.equals("null") && !valorBusca.equals(""))) {
 			comando += "WHERE PRODUTO.ATIVO = '" + ativo + "'"
 					+ "AND PRODUTO.DESCRICAO LIKE '" + valorBusca + "%'";
 		}else{
 			comando += "WHERE PRODUTO.ATIVO = '" + ativo + "'";
 		}
+		if (tipoItem != 0) {
+			comando += " AND PRODUTO.TIPOITEM = " + tipoItem;
+		}
+		
 		
 		List<Produto> listProdutos = new ArrayList<Produto>();
 		Produto produto = null;
@@ -159,7 +163,6 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 							+ "PRODUTO.UNESTOQUE = ?, "
 							+ "PRODUTO.MARGEM = ?, "
 							+ "PRODUTO.VALORVENDA = ?, "
-							+ "PRODUTO.TIPOITEM = ?, "
 							+ "PRODUTO.ATIVO = ?, "
 							+ "PRODUTO.QTDEENTRADA = ?, "
 							+ "PRODUTO.UNENTRADA = ? "
@@ -171,10 +174,9 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 	    	p.setString(2, produto.getUnEstoque());
 	    	p.setFloat(3, produto.getMargem());
 	    	p.setFloat(4, produto.getValorVenda());
-	    	p.setInt(5, produto.getTipoItem());
-	    	p.setString(6, produto.getAtivo());
-	    	p.setFloat(7, produto.getQtdeEntrada());
-	    	p.setString(8, produto.getUnEntrada());
+	    	p.setString(5, produto.getAtivo());
+	    	p.setFloat(6, produto.getQtdeEntrada());
+	    	p.setString(7, produto.getUnEntrada());
 	    	p.executeUpdate();
 	    }catch (SQLException e) {
 	    	e.printStackTrace();
