@@ -1,13 +1,5 @@
-<script type="text/javascript">
-	$(".deletaRegistro").on( "click", function() {
-		bootbox.confirm({ 
-		    size: 'small',
-		    message: "Deseja deletar o Pedido de Compra?", 
-		    callback: function(result){
-		    }
-		})
-	})
-</script>
+<script type="text/javascript" src="resources/faturamento/pedidoCompra/js/pedidoCompra-service.js"></script>
+<script type="text/javascript" src="resources/gerenciar/pedidoCompra/js/gerenciarPedidoCompra.js"></script>
 <div class='jumbotron container-fluid'>
 	<h1>Pedido de Compra</h1>
 	<hr>
@@ -17,10 +9,10 @@
 			<span class="input-group-btn">
 				<button class="btn btn-success" type="button">Pesquisar</button>
 			</span>
-			<button class='btn btn-primary btn pull-right' onclick="carregarConteudo('resources/faturamento/pedidoCompra/pedidoCompra.html')">Lançar Compra</button>
+			<button class='btn btn-primary btn pull-right' onclick="BRIGADERIA.gerenciarPedidoCompra.lancarPedido()">Lançar Compra</button>
 		</div>
 	</div>
-	<table class='table col-sm-12'>
+	<table id='resultadoPedidoCompra' class='table col-sm-12'>
 		<thead>
 			<tr>
 				<th><strong>Numero</strong></th>
@@ -31,97 +23,6 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>1</td>
-				<td>11/10/2015</td>
-				<td>77.89</td>
-				<td>S</td>
-				<td><a href='#' onclick="carregarConteudo('resources/faturamento/pedidoCompra/pedidoCompra.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>11/10/2015</td>
-				<td>77.89</td>
-				<td>S</td>
-				<td><a href='#' onclick="carregarConteudo('resources/faturamento/pedidoCompra/pedidoCompra.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>11/10/2015</td>
-				<td>77.89</td>
-				<td>S</td>
-				<td><a href='#' onclick="carregarConteudo('resources/faturamento/pedidoCompra/pedidoCompra.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>11/10/2015</td>
-				<td>77.89</td>
-				<td>S</td>
-				<td><a href='#' onclick="carregarConteudo('resources/faturamento/pedidoCompra/pedidoCompra.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>11/10/2015</td>
-				<td>77.89</td>
-				<td>S</td>
-				<td><a href='#' onclick="carregarConteudo('resources/faturamento/pedidoCompra/pedidoCompra.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>11/10/2015</td>
-				<td>77.89</td>
-				<td>S</td>
-				<td><a href='#' onclick="carregarConteudo('resources/faturamento/pedidoCompra/pedidoCompra.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>11/10/2015</td>
-				<td>77.89</td>
-				<td>S</td>
-				<td><a href='#' onclick="carregarConteudo('resources/faturamento/pedidoCompra/pedidoCompra.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>11/10/2015</td>
-				<td>77.89</td>
-				<td>S</td>
-				<td><a href='#' onclick="carregarConteudo('resources/faturamento/pedidoCompra/pedidoCompra.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>11/10/2015</td>
-				<td>77.89</td>
-				<td>S</td>
-				<td><a href='#' onclick="carregarConteudo('resources/faturamento/pedidoCompra/pedidoCompra.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>11/10/2015</td>
-				<td>77.89</td>
-				<td>S</td>
-				<td><a href='#' onclick="carregarConteudo('resources/faturamento/pedidoCompra/pedidoCompra.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>11/10/2015</td>
-				<td>77.89</td>
-				<td>S</td>
-				<td><a href='#' onclick="carregarConteudo('resources/faturamento/pedidoCompra/pedidoCompra.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>11/10/2015</td>
-				<td>77.89</td>
-				<td>S</td>
-				<td><a href='#' onclick="carregarConteudo('resources/faturamento/pedidoCompra/pedidoCompra.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>11/10/2015</td>
-				<td>77.89</td>
-				<td>S</td>
-				<td><a href='#' onclick="carregarConteudo('resources/faturamento/pedidoCompra/pedidoCompra.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
 			
 		</tbody>
 	</table>

@@ -76,7 +76,7 @@ public class ProdutoService {
 		}
 	}
 	
-	public List<Produto> buscarProdutos (String valorBusca, String ativo, int tipoItem) throws BrigaderiaException{
+	public List<Produto> buscarProdutos (String valorBusca, String ativo, String tipoItem) throws BrigaderiaException{
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();

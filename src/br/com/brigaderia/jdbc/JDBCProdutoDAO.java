@@ -118,10 +118,9 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 		}
 	}
 	
-	public List<Produto> buscarProdutos (String valorBusca, String ativo, int tipoItem) throws BrigaderiaException {
+	public List<Produto> buscarProdutos (String valorBusca, String ativo, String tipoItem) throws BrigaderiaException {
 		
-		String comando = "SELECT PRODUTO.CODIGO, PRODUTO.DESCRICAO, PRODUTO.ESTOQUE, PRODUTO.VALORCUSTO, PRODUTO.VALORVENDA, PRODUTO.TIPOITEM "
-					   + "FROM PRODUTO ";
+		String comando = "SELECT * FROM PRODUTO ";
 		
 		
 		if ((!valorBusca.equals("")) && (!valorBusca.equals("null") && !valorBusca.equals(""))) {
@@ -130,8 +129,8 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 		}else{
 			comando += "WHERE PRODUTO.ATIVO = '" + ativo + "'";
 		}
-		if (tipoItem != 0) {
-			comando += " AND PRODUTO.TIPOITEM = " + tipoItem;
+		if (!tipoItem.equals("0")) {
+			comando += " AND PRODUTO.TIPOITEM IN ( " + tipoItem + ")";
 		}
 		
 		
@@ -145,9 +144,13 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 				produto.setCodigoProduto(rs.getInt("CODIGO"));
 				produto.setDescricao(rs.getString("DESCRICAO"));
 				produto.setEstoque(rs.getFloat("ESTOQUE"));
+				produto.setUnEstoque(rs.getString("UNESTOQUE"));
 				produto.setValorCusto(rs.getFloat("VALORCUSTO"));
+				produto.setMargem(rs.getFloat("MARGEM"));
 				produto.setValorVenda(rs.getFloat("VALORVENDA"));
 				produto.setTipoItem(rs.getInt("TIPOITEM"));
+				produto.setQtdeEntrada(rs.getFloat("QTDEENTRADA"));
+				produto.setUnEntrada(rs.getString("UNENTRADA"));
 				listProdutos.add(produto);
 			}
 		}catch(SQLException e){

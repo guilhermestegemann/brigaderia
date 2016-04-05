@@ -47,7 +47,7 @@ public class ProdutosRest extends UtilRest{
 	
 	public Response buscarProdutos (@PathParam("valorBusca") String valorBusca,
 									@PathParam("ativo") String ativo,
-									@PathParam("tipoItem") int tipoItem) throws BrigaderiaException{
+									@PathParam("tipoItem") String tipoItem) throws BrigaderiaException{
 		
 		try {
 			
