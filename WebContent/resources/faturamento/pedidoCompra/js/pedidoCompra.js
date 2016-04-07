@@ -90,7 +90,7 @@ $(document).ready( function () {
 					  + "</tr>";
 				$("#totalPedidoCompra").val(parseFloat(parseFloat($("#totalItemPedidoCompra").val()) + parseFloat($("#totalPedidoCompra").val())).toFixed(2)) // soma o total do pedido.
 				var prod = {
-						codigo: $("#produtos").val(),
+						codigoProduto: $("#produtos").val(),
 						qtde: $("#qtdeProduto").val(),
 						unitario: $("#unitario").val(),
 						total: $("#totalItemPedidoCompra").val()
@@ -113,7 +113,7 @@ $(document).ready( function () {
 		$("#unitario").val(parseFloat(unitario));
 		$("#totalItemPedidoCompra").val(totalItem);
 		for (var i = 0; i < produtoArray.length; i++) {
-			if (produtoArray[i].codigo == codigo) {
+			if (produtoArray[i].codigoProduto == codigo) {
 				produtoArray.splice(i, 1);
 			}
 		}
@@ -127,19 +127,12 @@ $(document).ready( function () {
 	BRIGADERIA.pedidoCompra.adicionar = function() {
 		var newPedido = {
 			total : $("#totalPedidoCompra").val(),
-			produtos: produtoArray
+			itemPedidoCompra: produtoArray
 		};
-		
-		retornoValida = BRIGADERIA.validaProdutos.validar(newData.produto);
-		if (retornoValida != "") {
-			bootbox.alert("Favor verificar os seguintes campos: " + retornoValida);
+		if (newPedido.itemPedidoCompra == "") {
+			bootbox.alert("Produtos não inseridos");
 		}else{
-			retornoValida = BRIGADERIA.validaFichaTecnica.validar(newData.fichaTecnica);
-			if (retornoValida == "") {
-				BRIGADERIA.produtoFichaTecnicaService.adicionar(newData);
-			}else{
-				bootbox.alert("Favor verificar os seguintes campos: " + retornoValida);
-			}
+			BRIGADERIA.pedidoCompraService.adicionar(newPedido);
 		}
 	};
 });

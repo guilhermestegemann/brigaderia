@@ -33,4 +33,19 @@ $(document).ready(function() {
 		cfg.url = "rest/pedidoCompra/listarProdutos";
 		BRIGADERIA.ajax.get(BRIGADERIA.pedidoCompraService.defaultCfg(cfg));
 	};
+	
+	BRIGADERIA.pedidoCompraService.adicionar = function(newPedido) {
+		cfg = {
+			url: "rest/pedidoCompra/adicionar",
+			data: newPedido,
+			success : function (sucesso) {
+				bootbox.alert(sucesso);
+				carregarConteudo ('resources/gerenciar/pedidoCompra/gerenciarPedidoCompra.html');
+			},
+			error : function (err) {
+				bootbox.alert(err.responseText);
+			}
+		};
+		BRIGADERIA.ajax.post(BRIGADERIA.pedidoCompraService.defaultCfg(cfg));
+	};
 });

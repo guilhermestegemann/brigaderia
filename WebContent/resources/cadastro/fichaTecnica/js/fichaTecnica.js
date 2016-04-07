@@ -30,10 +30,10 @@ $(document).ready(function(){
 	};
 	
 	BRIGADERIA.fichaTecnica.incluirIngrediente = function () {
-		
+		var expNumeros = /^[0-9]+$/;
 		if ($("#ingrediente").val() == "") {
 			bootbox.alert("Selecione o Ingrediente!");
-		}else if (($("#qtdeIngrediente").val() == "") || ($("#qtdeIngrediente").val() <= 0)) {
+		}else if (!expNumeros.test($("#qtdeIngrediente").val().replace(",","").replace(".",""))) {
 			bootbox.alert("Quantida inválida.");
 		}else{
 			var html = "";

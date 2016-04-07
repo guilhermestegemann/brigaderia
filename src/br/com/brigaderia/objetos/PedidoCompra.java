@@ -1,7 +1,7 @@
 package br.com.brigaderia.objetos;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 public class PedidoCompra implements Serializable{
@@ -17,6 +17,12 @@ public class PedidoCompra implements Serializable{
 	private String atualizado;
 	private List<ItemPedidoCompra> itemPedidoCompra;
 	
+	public Date getData() {
+		return data;
+	}
+	public void setData(Date data) {
+		this.data = data;
+	}
 	public List<ItemPedidoCompra> getItemPedidoCompra() {
 		return itemPedidoCompra;
 	}
@@ -28,12 +34,6 @@ public class PedidoCompra implements Serializable{
 	}
 	public void setNumero(int numero) {
 		this.numero = numero;
-	}
-	public Date getData() {
-		return data;
-	}
-	public void setData(Date data) {
-		this.data = data;
 	}
 	public float getTotal() {
 		return total;
