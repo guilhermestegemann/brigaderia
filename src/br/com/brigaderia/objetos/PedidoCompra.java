@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+
+
 public class PedidoCompra implements Serializable{
 
 	/**
@@ -11,9 +13,10 @@ public class PedidoCompra implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	
 	private int numero;
 	private Date data;
-	private float total;
+	private double total;
 	private String atualizado;
 	private List<ItemPedidoCompra> itemPedidoCompra;
 	
@@ -35,10 +38,10 @@ public class PedidoCompra implements Serializable{
 	public void setNumero(int numero) {
 		this.numero = numero;
 	}
-	public float getTotal() {
+	public double getTotal() {
 		return total;
 	}
-	public void setTotal(float total) {
+	public void setTotal(double total) {
 		this.total = total;
 	}
 	public String getAtualizado() {

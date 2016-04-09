@@ -48,4 +48,9 @@ $(document).ready(function() {
 		};
 		BRIGADERIA.ajax.post(BRIGADERIA.pedidoCompraService.defaultCfg(cfg));
 	};
+	
+	BRIGADERIA.pedidoCompraService.listar = function(cfg){
+		cfg.url = "rest/pedidoCompra/buscarPedidoCompra/" + cfg.dataInicio + "/" + cfg.dataFim;
+		BRIGADERIA.ajax.get(BRIGADERIA.pedidoCompraService.defaultCfg(cfg));
+	};
 });
