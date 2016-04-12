@@ -17,7 +17,6 @@ public class PedidoCompra implements Serializable{
 	private int numero;
 	private Date data;
 	private double total;
-	private String atualizado;
 	private List<ItemPedidoCompra> itemPedidoCompra;
 	
 	public Date getData() {
@@ -44,12 +43,7 @@ public class PedidoCompra implements Serializable{
 	public void setTotal(double total) {
 		this.total = total;
 	}
-	public String getAtualizado() {
-		return atualizado;
-	}
-	public void setAtualizado(String atualizado) {
-		this.atualizado = atualizado;
-	}
+
 	
 	
 

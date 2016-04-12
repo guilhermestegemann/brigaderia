@@ -9,13 +9,17 @@ $(document).ready( function () {
 	});
 	
 	BRIGADERIA.gerenciarPedidoCompra.buscar = function () {
-		var dataInicio = BRIGADERIA.convertData.strToDate($("#dataInicio").val());
-		var dataFim = BRIGADERIA.convertData.strToDate($("#dataFim").val());
-		if (dataInicio == "undefined-undefined-") {
+		var dataInicio = $("#dataInicio").val();
+		var dataFim = $("#dataFim").val();
+		if (dataInicio == "") {
 			dataInicio = "null";
+		}else{
+			dataInicio = BRIGADERIA.convertData.strToDate(dataInicio);
 		}
-		if (dataFim == "undefined-undefined-") {
+		if (dataFim == "") {
 			dataFim = "null";
+		}else{
+			dataFim = BRIGADERIA.convertData.strToDate(dataFim);
 		}
 		
 		BRIGADERIA.gerenciarPedidoCompra.exibirPedidos (undefined, dataInicio, dataFim);
@@ -33,16 +37,16 @@ $(document).ready( function () {
 				for (var i = 0; i < listaDePedidos.length; i++) {
 					
 					if (listaDePedidos[i].data != null) {
-						listaDePedidos[i].data = BRIGADERIA.convertData.dateToStr(listaDePedidos[i].ultimaVenda);
+						listaDePedidos[i].data = BRIGADERIA.convertData.dateToStr(listaDePedidos[i].data);
 					}
+					
 					
 					html += "<tr>"
 					  + "<td>" + listaDePedidos[i].numero + "</td>"
 					  + "<td>" + listaDePedidos[i].data + "</td>"
-					  + "<td>" + listaDePedidos[i].total + "</td>"
-					  + "<td>" + listaDePedidos[i].atualizado + "</td>"
-					  + "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.gerenciarPedidoCompra.editarPedido(" + listaDePedidos[i].codigo + ")' aria-hidden='true'></i></a>"
-					  	 +	"<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.gerenciarPedidoCompra.deletarPedido(" + listaDePedidos[i].codigo + ")' aria-hidden='true'></i></a>  </td>"
+					  + "<td>" + "R$ " + parseFloat(listaDePedidos[i].total).toFixed(2) + "</td>"
+					  + "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.gerenciarPedidoCompra.visualizarPedido(" + listaDePedidos[i].numero + ")' aria-hidden='true'></i></a>"
+					  	 +	"<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.gerenciarPedidoCompra.deletarPedido(" + listaDePedidos[i].numero + ")' aria-hidden='true'></i></a>  </td>"
 					  + "</tr>";
 				}
 				
@@ -67,4 +71,9 @@ $(document).ready( function () {
 		});
 	};
 	
+	BRIGADERIA.gerenciarPedidoCompra.visualizarPedido = function(numero) {
+		$("#conteudo").load("resources/faturamento/pedidoCompra/pedidoCompraView.html", function (){
+			BRIGADERIA.pedidoCompra.exibirEdicao(numero);
+		});	
+	};
 });

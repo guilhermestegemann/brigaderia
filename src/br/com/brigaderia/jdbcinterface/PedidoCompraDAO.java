@@ -13,5 +13,6 @@ public interface PedidoCompraDAO {
 	public void adicionarProdutos(int numeroPedido, int codProduto, float qtde, float unitario, float total) throws BrigaderiaException, SQLException;
 	public void countProdutos(int codigo) throws BrigaderiaException;
 	public List<PedidoCompra> buscarPedidos(String dataIni, String dataFim) throws BrigaderiaException;
+	public PedidoCompra buscarPeloNumero(int numero) throws BrigaderiaException;
 
 }

@@ -53,4 +53,9 @@ $(document).ready(function() {
 		cfg.url = "rest/pedidoCompra/buscarPedidoCompra/" + cfg.dataInicio + "/" + cfg.dataFim;
 		BRIGADERIA.ajax.get(BRIGADERIA.pedidoCompraService.defaultCfg(cfg));
 	};
+	
+	BRIGADERIA.pedidoCompraService.buscarPedidoPeloNumero = function(cfg) {
+		cfg.url = "rest/pedidoCompra/buscarPedidoPeloNumero/" + cfg.numero;
+		BRIGADERIA.ajax.get(BRIGADERIA.pedidoCompraService.defaultCfg(cfg));
+	};
 });

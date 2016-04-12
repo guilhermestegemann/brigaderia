@@ -13,6 +13,7 @@ import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.exception.ProdutoVinculadoEmPedidoCompraException;
 import br.com.brigaderia.ferramentas.ConversorDecimal;
 import br.com.brigaderia.jdbcinterface.PedidoCompraDAO;
+import br.com.brigaderia.objetos.ItemPedidoCompra;
 import br.com.brigaderia.objetos.PedidoCompra;
 
 public class JDBCPedidoCompraDAO implements PedidoCompraDAO {
@@ -32,7 +33,6 @@ public class JDBCPedidoCompraDAO implements PedidoCompraDAO {
 			p = this.conexao.prepareStatement(comando, Statement.RETURN_GENERATED_KEYS);
 			p.setDate(1, new java.sql.Date(pedidoCompra.getData().getTime()));
 			p.setString(2, cd.convertDoubleString(pedidoCompra.getTotal()));
-			System.out.println(cd.convertDoubleString(pedidoCompra.getTotal()));
 			p.execute();
 			try (ResultSet generatedKeys = p.getGeneratedKeys()) {
 	            if (generatedKeys.next()) {
@@ -135,6 +135,8 @@ public class JDBCPedidoCompraDAO implements PedidoCompraDAO {
 			comando += "WHERE COMPRA.DATA BETWEEN '" + dataInicio + "' AND '" + dataFim + "'";
 		}
 		
+		comando += " ORDER BY DATA DESC";
+		
 		List<PedidoCompra> listPedidoCompra = new ArrayList<PedidoCompra>();
 		PedidoCompra pedidoCompra = null;
 		try {
@@ -145,7 +147,6 @@ public class JDBCPedidoCompraDAO implements PedidoCompraDAO {
 				pedidoCompra.setNumero(rs.getInt("NUMERO"));
 				pedidoCompra.setData(rs.getDate("DATA"));
 				pedidoCompra.setTotal(rs.getDouble("TOTAL"));
-				pedidoCompra.setAtualizado(rs.getString("ATUALIZADO"));
 				listPedidoCompra.add(pedidoCompra);
 			}
 		}catch(SQLException e){
@@ -153,5 +154,51 @@ public class JDBCPedidoCompraDAO implements PedidoCompraDAO {
 			throw new BrigaderiaException();
 		}
 		return listPedidoCompra;
+	}
+	
+	public PedidoCompra buscarPeloNumero (int numero) throws BrigaderiaException{
+		String comando = "SELECT * FROM COMPRA WHERE COMPRA.NUMERO = " + numero;
+		PedidoCompra pedidoCompra = new PedidoCompra();
+		try {
+			Statement stmt = conexao.createStatement();
+			ResultSet rs = stmt.executeQuery(comando);
+			while(rs.next()) {
+				pedidoCompra.setNumero(rs.getInt("NUMERO"));
+				pedidoCompra.setData(rs.getDate("DATA"));
+				pedidoCompra.setTotal(rs.getDouble("TOTAL"));
+				pedidoCompra.setItemPedidoCompra(buscarItensPedido(pedidoCompra.getNumero()));
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new BrigaderiaException();
+		}
+		return pedidoCompra;
+	}
+	
+	private List<ItemPedidoCompra> buscarItensPedido(int numero) throws BrigaderiaException {
+		List<ItemPedidoCompra> listItemPedidoCompra = new ArrayList<ItemPedidoCompra>();
+		String comando = "SELECT ITEMCOMPRA.PRODUTO, PRODUTO.DESCRICAO, PRODUTO.UNENTRADA, ITEMCOMPRA.QTDE, ITEMCOMPRA.UNITARIO, ITEMCOMPRA.TOTAL "
+				       + "FROM ITEMCOMPRA "
+				       + "INNER JOIN PRODUTO ON PRODUTO.CODIGO = ITEMCOMPRA.PRODUTO "
+				       + "WHERE ITEMCOMPRA.NUMERO = " + numero;
+		ItemPedidoCompra itemPedidoCompra = null;
+		try {
+			Statement stmt = conexao.createStatement();
+			ResultSet rs = stmt.executeQuery(comando);
+			while(rs.next()) {
+				itemPedidoCompra = new ItemPedidoCompra();
+				itemPedidoCompra.setCodigoProduto(rs.getInt("PRODUTO"));
+				itemPedidoCompra.setDescricao(rs.getString("DESCRICAO"));
+				itemPedidoCompra.setUnEntrada(rs.getString("UNENTRADA"));
+				itemPedidoCompra.setQtde(rs.getFloat("QTDE"));
+				itemPedidoCompra.setUnitario(rs.getFloat("UNITARIO"));
+				itemPedidoCompra.setTotal(rs.getFloat("TOTAL"));
+				listItemPedidoCompra.add(itemPedidoCompra);
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new BrigaderiaException();
+		}
+		return listItemPedidoCompra;
 	}
 }

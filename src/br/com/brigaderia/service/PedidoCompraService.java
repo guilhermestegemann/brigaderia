@@ -76,5 +76,24 @@ public class PedidoCompraService {
 			conec.fecharConexao();
 		}
 	}
+	
+	public PedidoCompra buscarPedidoPeloNumero (int numero) throws BrigaderiaException{
+		Conexao conec = new Conexao();
+		try {
+			Connection conexao = conec.abrirConexao();
+			PedidoCompraDAO jdbcPedidoCompra = new JDBCPedidoCompraDAO(conexao);
+			PedidoCompra pedidoCompra = jdbcPedidoCompra.buscarPeloNumero(numero);
+			return pedidoCompra;
+		}catch (BrigaderiaException e) {
+			throw e;
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new BrigaderiaException();
+		}
+		finally{
+			conec.fecharConexao();
+		}	
+	}
+	
 
 }

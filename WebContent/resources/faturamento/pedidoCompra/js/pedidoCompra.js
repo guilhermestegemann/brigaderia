@@ -135,4 +135,40 @@ $(document).ready( function () {
 			BRIGADERIA.pedidoCompraService.adicionar(newPedido);
 		}
 	};
+	
+	BRIGADERIA.pedidoCompra.exibirEdicao = function(numero) {
+		BRIGADERIA.pedidoCompraService.buscarPedidoPeloNumero({
+			numero : numero,
+			async: false,
+			success : function (pedido) {
+				$("#numero").val(pedido.numero);
+				$("#data").val(BRIGADERIA.convertData.dateToStr(pedido.data));
+				$("#totalPedidoCompra").val(parseFloat(pedido.total).toFixed(2));
+				itemPedido = {};
+				itemPedido = pedido.itemPedidoCompra;
+				
+				for (var i = 0; i < itemPedido.length; i++ ) {
+					var html = ""
+						html =  "<tr class='itemPedidoCompra'>"
+							  + "<td >" + itemPedido[i].codigoProduto + "</td>"
+							  + "<td>" + itemPedido[i].descricao + "</td>"
+							  + "<td>" + itemPedido[i].unEntrada + "</td>"
+							  + "<td>" + itemPedido[i].qtde + "</td>"
+							  + "<td>" + parseFloat(itemPedido[i].unitario).toFixed(2) + "</td>"
+							  + "<td>" + itemPedido[i].total + "</td>"
+						  + "</tr>";		
+						
+						$("#itensPedidoCompra tbody").append(html);
+				}
+			}
+		});	
+	};
+	
 });
+
+
+
+
+
+
+

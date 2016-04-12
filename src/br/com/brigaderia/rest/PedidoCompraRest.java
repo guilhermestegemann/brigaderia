@@ -58,7 +58,7 @@ public class PedidoCompraRest extends UtilRest{
 	}
 	
 	@GET
-	@Path("/buscarClientes/{dataInicio}/{dataFim}")
+	@Path("/buscarPedidoCompra/{dataInicio}/{dataFim}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	
 	public Response buscarPedidos (@PathParam("dataInicio") String dataInicio, @PathParam("dataFim") String dataFim) throws BrigaderiaException{
@@ -70,6 +70,20 @@ public class PedidoCompraRest extends UtilRest{
 		}catch (BrigaderiaException e) {
 			return buildErrorResponse(e.getMessage());
 		}catch(Exception e) {
+			return buildErrorResponse(ERROINESPERADO);
+		}
+	}
+	
+	@GET
+	@Path("/buscarPedidoPeloNumero/{numero}")
+	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	public Response buscarPedidoPeloNumero(@PathParam("numero")int numero) throws BrigaderiaException{
+		try {
+			PedidoCompraService service = new PedidoCompraService(); 
+			return buildResponse(service.buscarPedidoPeloNumero(numero));
+		}catch (BrigaderiaException e) {
+			return buildErrorResponse(e.getMessage());
+		}catch (Exception e) {
 			return buildErrorResponse(ERROINESPERADO);
 		}
 	}
