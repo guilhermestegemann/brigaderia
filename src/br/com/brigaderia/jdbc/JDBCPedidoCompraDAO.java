@@ -70,42 +70,6 @@ public class JDBCPedidoCompraDAO implements PedidoCompraDAO {
 		}
 	}
 	
-	public void atualizarEstoque(int codProduto, float qtde, float unitario) throws SQLException {
-		String sqlProduto = "SELECT PRODUTO.VALORCUSTO, PRODUTO.ESTOQUE "
-						  + "FROM PRODUTO "
-						  + "WHERE PRODUTO.CODIGO = " + codProduto;
-		
-		float valorCusto = 0;
-		float estoque = 0;
-		String updateProduto = "";
-		try {
-			Statement stmt = conexao.createStatement();
-			ResultSet rs = stmt.executeQuery(sqlProduto);
-			while(rs.next()) {
-				valorCusto = rs.getFloat("VALORCUSTO");
-				estoque = rs.getFloat("ESTOQUE");
-			}
-			//Custo
-			if (estoque <= 0) {
-				if(unitario > 0) {
-					updateProduto = "UPDATE PRODUTO SET PRODUTO.VALORCUSTO = " + unitario
-								  + ", PRODUTO.ESTOQUE = ESTOQUE + " + qtde
-								  + " WHERE PRODUTO.CODIGO = " + codProduto;
-				}
-			}else{
-				float custoMedio =((valorCusto * estoque) + (unitario * qtde))/(estoque + qtde);
-				updateProduto = "UPDATE PRODUTO SET PRODUTO.VALORCUSTO = " + custoMedio
-				              + ", PRODUTO.ESTOQUE = ESTOQUE + " + qtde
-				              + " WHERE PRODUTO.CODIGO = " + codProduto;
-			}//Fim Custo
-			
-			PreparedStatement p = this.conexao.prepareStatement(updateProduto);
-			p.execute();
-		}catch (SQLException e) {
-			throw e;
-		}
-	}
-	
 	public void countProdutos(int codigo) throws BrigaderiaException {
 		String comando = "SELECT COUNT(*) AS QTDEPRODUTO FROM ITEMCOMPRA  WHERE ITEMCOMPRA.PRODUTO = " + codigo;
 		int qtdeProduto = 0;
@@ -127,6 +91,8 @@ public class JDBCPedidoCompraDAO implements PedidoCompraDAO {
 		}
 	}
 	
+		
+
 	public List<PedidoCompra> buscarPedidos (String dataInicio, String dataFim) throws BrigaderiaException {
 		
 		String comando = "SELECT * FROM COMPRA ";
@@ -166,7 +132,6 @@ public class JDBCPedidoCompraDAO implements PedidoCompraDAO {
 				pedidoCompra.setNumero(rs.getInt("NUMERO"));
 				pedidoCompra.setData(rs.getDate("DATA"));
 				pedidoCompra.setTotal(rs.getDouble("TOTAL"));
-				pedidoCompra.setItemPedidoCompra(buscarItensPedido(pedidoCompra.getNumero()));
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -175,9 +140,9 @@ public class JDBCPedidoCompraDAO implements PedidoCompraDAO {
 		return pedidoCompra;
 	}
 	
-	private List<ItemPedidoCompra> buscarItensPedido(int numero) throws BrigaderiaException {
+	public List<ItemPedidoCompra> buscarItensPedido(int numero) throws BrigaderiaException {
 		List<ItemPedidoCompra> listItemPedidoCompra = new ArrayList<ItemPedidoCompra>();
-		String comando = "SELECT ITEMCOMPRA.PRODUTO, PRODUTO.DESCRICAO, PRODUTO.UNENTRADA, ITEMCOMPRA.QTDE, ITEMCOMPRA.UNITARIO, ITEMCOMPRA.TOTAL "
+		String comando = "SELECT ITEMCOMPRA.PRODUTO, PRODUTO.DESCRICAO, PRODUTO.ESTOQUE, PRODUTO.UNENTRADA, ITEMCOMPRA.QTDE, ITEMCOMPRA.UNITARIO, ITEMCOMPRA.TOTAL "
 				       + "FROM ITEMCOMPRA "
 				       + "INNER JOIN PRODUTO ON PRODUTO.CODIGO = ITEMCOMPRA.PRODUTO "
 				       + "WHERE ITEMCOMPRA.NUMERO = " + numero;
@@ -189,6 +154,7 @@ public class JDBCPedidoCompraDAO implements PedidoCompraDAO {
 				itemPedidoCompra = new ItemPedidoCompra();
 				itemPedidoCompra.setCodigoProduto(rs.getInt("PRODUTO"));
 				itemPedidoCompra.setDescricao(rs.getString("DESCRICAO"));
+				itemPedidoCompra.setEstoque(rs.getFloat("ESTOQUE"));
 				itemPedidoCompra.setUnEntrada(rs.getString("UNENTRADA"));
 				itemPedidoCompra.setQtde(rs.getFloat("QTDE"));
 				itemPedidoCompra.setUnitario(rs.getFloat("UNITARIO"));
@@ -201,4 +167,18 @@ public class JDBCPedidoCompraDAO implements PedidoCompraDAO {
 		}
 		return listItemPedidoCompra;
 	}
+	
+	public void deletarPedido(int numero) throws BrigaderiaException {
+		String comando = "DELETE FROM COMPRA WHERE COMPRA.NUMERO = " + numero;
+		Statement p;
+		
+		try {
+			p = this.conexao.createStatement();
+			p.execute(comando);	
+		}catch(SQLException e) {
+			e.printStackTrace();
+			throw new BrigaderiaException();
+		}
+	}
+	
 }

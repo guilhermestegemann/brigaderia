@@ -125,6 +125,7 @@ $(document).ready( function () {
 	};
 	
 	BRIGADERIA.pedidoCompra.adicionar = function() {
+		
 		var newPedido = {
 			total : $("#totalPedidoCompra").val(),
 			itemPedidoCompra: produtoArray

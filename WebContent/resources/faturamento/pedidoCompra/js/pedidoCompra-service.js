@@ -54,6 +54,12 @@ $(document).ready(function() {
 		BRIGADERIA.ajax.get(BRIGADERIA.pedidoCompraService.defaultCfg(cfg));
 	};
 	
+	BRIGADERIA.pedidoCompraService.deletar = function(cfg) {
+		cfg.url = "rest/pedidoCompra/deletar/" + cfg.numero;
+		
+		BRIGADERIA.ajax.del(BRIGADERIA.pedidoCompraService.defaultCfg(cfg));
+	};
+	
 	BRIGADERIA.pedidoCompraService.buscarPedidoPeloNumero = function(cfg) {
 		cfg.url = "rest/pedidoCompra/buscarPedidoPeloNumero/" + cfg.numero;
 		BRIGADERIA.ajax.get(BRIGADERIA.pedidoCompraService.defaultCfg(cfg));

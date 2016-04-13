@@ -30,13 +30,41 @@ public class PedidoCompraService {
 			validaPedidoCompra.validar(pedidoCompra);
 			pedidoCompra.setData(new Date());
 			PedidoCompraDAO jdbcPedidoCompra = new JDBCPedidoCompraDAO(conexao);
+			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
 			pedidoCompra.setNumero(jdbcPedidoCompra.adicionarPedido(pedidoCompra));
 			List<ItemPedidoCompra> listProdutos = new ArrayList<>();
 			listProdutos = pedidoCompra.getItemPedidoCompra();
+			
+			int codProduto;
+			float qtde, unitario, total, custo, estoque, valorVenda, novoCusto, margem;
+		
 			for(int i = 0; i < listProdutos.size(); i++) {
-				jdbcPedidoCompra.adicionarProdutos(pedidoCompra.getNumero(), listProdutos.get(i).getCodigoProduto(), listProdutos.get(i).getQtde(), 
-												   listProdutos.get(i).getUnitario(), listProdutos.get(i).getTotal());
-				jdbcPedidoCompra.atualizarEstoque(listProdutos.get(i).getCodigoProduto(), listProdutos.get(i).getQtde(), listProdutos.get(i).getUnitario());
+				
+				codProduto = listProdutos.get(i).getCodigoProduto();
+				qtde = listProdutos.get(i).getQtde();
+				unitario = listProdutos.get(i).getUnitario();
+				total = listProdutos.get(i).getTotal();
+				custo = jdbcProduto.retornaCusto(codProduto);
+				estoque = jdbcProduto.retornaEstoque(codProduto);
+				valorVenda = jdbcProduto.retornaValorVenda(codProduto);
+				novoCusto = 0;
+				margem = 0;
+				jdbcPedidoCompra.adicionarProdutos(pedidoCompra.getNumero(), codProduto, qtde, unitario, total);
+				
+				if (estoque <= 0) {
+					if(unitario > 0) {
+						novoCusto = unitario;	
+					}
+				}else{
+					novoCusto =((custo * estoque) + (unitario * qtde))/(estoque + qtde);
+					
+				}
+				
+				if (novoCusto > 0) {
+					margem = ((valorVenda / novoCusto)-1)*100;
+				}
+				
+				jdbcProduto.atualizarEstoque(codProduto, qtde, novoCusto, margem);
 			}
 			conexao.commit();
 		}catch (BrigaderiaException e) {
@@ -83,6 +111,7 @@ public class PedidoCompraService {
 			Connection conexao = conec.abrirConexao();
 			PedidoCompraDAO jdbcPedidoCompra = new JDBCPedidoCompraDAO(conexao);
 			PedidoCompra pedidoCompra = jdbcPedidoCompra.buscarPeloNumero(numero);
+			pedidoCompra.setItemPedidoCompra(jdbcPedidoCompra.buscarItensPedido(pedidoCompra.getNumero()));
 			return pedidoCompra;
 		}catch (BrigaderiaException e) {
 			throw e;
@@ -93,6 +122,48 @@ public class PedidoCompraService {
 		finally{
 			conec.fecharConexao();
 		}	
+	}
+	
+	
+	public String deletarPedido (int numero) throws BrigaderiaException{
+		Conexao conec = new Conexao();
+		String msg = "";
+		try {
+			Connection conexao = conec.abrirConexao();
+			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
+			PedidoCompraDAO jdbcPedidoCompra = new JDBCPedidoCompraDAO(conexao);
+			List<ItemPedidoCompra> listItemPedido = new ArrayList<ItemPedidoCompra>();
+			listItemPedido = jdbcPedidoCompra.buscarItensPedido(numero);
+			float estoque, qtde;
+			
+			for (int i = 0; i < listItemPedido.size(); i++) {
+				estoque = listItemPedido.get(i).getEstoque();
+				qtde = listItemPedido.get(i).getQtde();
+				if (estoque < qtde) {
+					if (msg.equals("")){
+						msg = "<h>Produtos com inconsistência ao excluir Pedido de Compra.</h></br>";
+					}
+					msg += "Código: " + listItemPedido.get(i).getCodigoProduto() + " Descrição: " + listItemPedido.get(i).getDescricao()
+						 + " Estoque: " + estoque + " Quantidade: " + qtde + "<br>";	
+				}
+			}
+			if (msg.equals("")) {
+				jdbcPedidoCompra.deletarPedido(numero);
+				for (int i = 0; i < listItemPedido.size(); i++) {
+					jdbcProduto.retiraEstoque(listItemPedido.get(i).getCodigoProduto(), listItemPedido.get(i).getQtde());
+				}
+				
+				msg = "Pedido deletado com sucesso";
+			}
+			
+		}catch (BrigaderiaException e) {
+			throw e;
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			conec.fecharConexao();
+		}
+		return msg;
 	}
 	
 

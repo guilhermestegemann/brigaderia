@@ -76,4 +76,33 @@ $(document).ready( function () {
 			BRIGADERIA.pedidoCompra.exibirEdicao(numero);
 		});	
 	};
+	
+	BRIGADERIA.gerenciarPedidoCompra.deletarPedido = function (numero) {
+		
+		bootbox.confirm({ 
+			size: 'medium',
+			message: "A exclusão de Pedido de Compra faz a saída dos itens no estoque. A quantidade de cada produto será verificada antes da exclusão. Deseja continuar?", 
+			callback: function(confirma){
+				if (confirma == true) {
+					BRIGADERIA.pedidoCompraService.deletar({
+						numero : numero,
+						success: function (successo) {
+							bootbox.alert(successo);
+							BRIGADERIA.gerenciarPedidoCompra.buscar();
+						},
+						error: function(err) {
+							bootbox.alert(err.responseText);
+						}
+					})
+				}
+			}
+		});
+	}
 });
+
+
+
+
+
+
+
