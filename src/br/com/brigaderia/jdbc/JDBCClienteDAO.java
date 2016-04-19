@@ -27,8 +27,6 @@ public class JDBCClienteDAO implements ClienteDAO{
 		String comando = "INSERT INTO CLIENTE (NOME, RG, CPF, ENDERECO, NUMERO, COMPLEMENTO, CEP, CIDADE, BAIRRO, ANIVERSARIO, "
 				+ "EMAIL, TELEFONE, CELULAR, DATACADASTRO) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement p;
-		
-		
 		p = this.conexao.prepareStatement(comando);
 		p.setString(1, cliente.getNome());
 		p.setString(2, cliente.getRg());
@@ -57,7 +55,6 @@ public class JDBCClienteDAO implements ClienteDAO{
 		}
 		p.setDate(14, new java.sql.Date(cliente.getDataCadastro().getTime()));
 		p.execute();
-
 	}
 	
 	public List<DadosClientesVO> buscarClientes (String valorBusca) throws SQLException {
@@ -76,7 +73,6 @@ public class JDBCClienteDAO implements ClienteDAO{
 		
 		List<DadosClientesVO> listDadosClientes = new ArrayList<DadosClientesVO>();
 		DadosClientesVO dadosClientesVO = null;
-		
 		Statement stmt = conexao.createStatement();
 		ResultSet rs = stmt.executeQuery(comando);
 		while(rs.next()) {
@@ -93,14 +89,15 @@ public class JDBCClienteDAO implements ClienteDAO{
 	}
 	
 	public void deletar (int codigo) throws SQLException {
+		
 		String comando = "DELETE FROM CLIENTE WHERE CLIENTE.CODIGO = " + codigo;
 		Statement p;
 		p = this.conexao.createStatement();
-		p.execute(comando);
-		
+		p.execute(comando);	
 	}
 	
 	public Cliente buscarPeloCodigo (int codigo) throws SQLException {
+		
 		String comando = "SELECT * FROM CLIENTE WHERE CLIENTE.CODIGO = " + codigo;
 		Cliente cliente = new Cliente();
 		Statement stmt = conexao.createStatement();
@@ -126,6 +123,7 @@ public class JDBCClienteDAO implements ClienteDAO{
 	}
 	
 	public void atualizar (Cliente cliente) throws SQLException  {
+		
 		String comando = "UPDATE CLIENTE SET " 
 							+ "CLIENTE.NOME = ?, "
 							+ "CLIENTE.RG = ?, "
@@ -141,7 +139,8 @@ public class JDBCClienteDAO implements ClienteDAO{
 							+ "CLIENTE.TELEFONE = ?, "
 							+ "CLIENTE.CELULAR = ? "
 					   + "WHERE CLIENTE.CODIGO = " + cliente.getCodigo();
-	    PreparedStatement p;
+	    
+		PreparedStatement p;
     	p = this.conexao.prepareStatement(comando);
     	p.setString(1, cliente.getNome());
     	p.setString(2, cliente.getRg());
@@ -169,10 +168,10 @@ public class JDBCClienteDAO implements ClienteDAO{
 			p.setLong(13, cliente.getCelular());
 		}
     	p.executeUpdate();
-	  
 	}
 	
 	public void verificarCpfDuplicado (String cpf) throws SQLException, CpfDuplicadoException{
+		
 		String comando = "SELECT COUNT(*) AS QTDECLIENTE FROM CLIENTE WHERE CLIENTE.CPF = '" + cpf + "'";
 		int qtdeClientes = 0;
 	
@@ -187,6 +186,7 @@ public class JDBCClienteDAO implements ClienteDAO{
 	}
 	
 	public void verificarCpfDuplicadoEdicao (String cpf, int codigo) throws SQLException, CpfDuplicadoException {
+		
 		String comando = "SELECT COUNT(*) AS QTDECLIENTE FROM CLIENTE WHERE CLIENTE.CPF = '" + cpf + "' AND CLIENTE.CODIGO <> " + codigo;
 		int qtdeClientes = 0;
 		
@@ -199,16 +199,4 @@ public class JDBCClienteDAO implements ClienteDAO{
 			throw new CpfDuplicadoException();
 		}
 	}
-
 }
-
-
-
-
-
-
-
-
-
-
-

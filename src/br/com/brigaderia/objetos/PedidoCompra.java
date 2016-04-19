@@ -4,15 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-
-
 public class PedidoCompra implements Serializable{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
 	
 	private int numero;
 	private Date data;
@@ -43,8 +40,4 @@ public class PedidoCompra implements Serializable{
 	public void setTotal(double total) {
 		this.total = total;
 	}
-
-	
-	
-
 }

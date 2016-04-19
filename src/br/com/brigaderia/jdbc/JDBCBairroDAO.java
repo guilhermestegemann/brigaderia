@@ -7,7 +7,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.jdbcinterface.BairroDAO;
 import br.com.brigaderia.objetos.Bairro;
 
@@ -35,7 +34,5 @@ public class JDBCBairroDAO implements BairroDAO{
 		}
 	
 	return listBairro;
-		
 	}
-
 }

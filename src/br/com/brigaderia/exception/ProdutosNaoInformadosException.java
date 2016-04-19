@@ -16,6 +16,4 @@ public class ProdutosNaoInformadosException extends BrigaderiaException{
 	public ProdutosNaoInformadosException(Throwable t){
 		super(t);
 	}
-	
-
 }

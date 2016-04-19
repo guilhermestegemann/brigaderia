@@ -1,6 +1,7 @@
 package br.com.brigaderia.exception;
 
 public class QtdeEntradaInvalidaException extends BrigaderiaException{
+	
 	/**
 	 * 
 	 */
@@ -14,6 +15,4 @@ public class QtdeEntradaInvalidaException extends BrigaderiaException{
 	public QtdeEntradaInvalidaException(Throwable t){
 		super(t);
 	}
-	
-
 }

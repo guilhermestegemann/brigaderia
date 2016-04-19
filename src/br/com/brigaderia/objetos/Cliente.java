@@ -11,7 +11,6 @@ public class Cliente implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	
 	private int codigo;
 	private String nome;
 	private String rg;
@@ -28,7 +27,6 @@ public class Cliente implements Serializable{
 	private String email;
 	private Long telefone;
 	private Long celular;
-	
 	
 	public Date getAniversarioDate() {
 		return aniversarioDate;
@@ -126,9 +124,4 @@ public class Cliente implements Serializable{
 	public void setCelular(Long celular) {
 		this.celular = celular;
 	}
-
-	
-	
-	
-
 }

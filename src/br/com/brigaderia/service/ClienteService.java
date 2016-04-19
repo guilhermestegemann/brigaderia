@@ -25,8 +25,8 @@ import br.com.brigaderia.validacoes.ValidaCliente;
 public class ClienteService {
 	
 	public void adicionarCliente (Cliente cliente) throws ParseException, BrigaderiaException, SQLException{
-		Conexao conec = new Conexao();
 		
+		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
 			ValidaCliente validaCliente = new ValidaCliente();
@@ -52,6 +52,7 @@ public class ClienteService {
 	}
 	
 	public Cliente buscarClientePeloCodigo (int codigo) throws SQLException{
+		
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
@@ -61,7 +62,6 @@ public class ClienteService {
 				DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 				cliente.setAniversario((String)formatter.format(cliente.getAniversarioDate()));
 			}
-			
 			return cliente;
 		}finally{
 			conec.fecharConexao();
@@ -69,6 +69,7 @@ public class ClienteService {
 	}
 	
 	public void atualizarCliente (Cliente cliente) throws BrigaderiaException, SQLException, ParseException  {
+		
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
@@ -94,6 +95,7 @@ public class ClienteService {
 	}
 	
 	public void deletarCliente (int codigo) throws ClienteComPedidoException, SQLException {
+		
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
@@ -107,6 +109,7 @@ public class ClienteService {
 	}
 	
 	public List<DadosClientesVO> buscarClientesVO (String valorBusca) throws SQLException {
+		
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();

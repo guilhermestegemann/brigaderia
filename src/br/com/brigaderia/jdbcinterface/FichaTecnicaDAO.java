@@ -2,7 +2,6 @@ package br.com.brigaderia.jdbcinterface;
 
 import java.sql.SQLException;
 
-import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.exception.IngredienteVinculadoEmFichaTecnicaException;
 import br.com.brigaderia.exception.SomarCustoFichaTecnicaException;
 import br.com.brigaderia.objetos.FichaTecnica;

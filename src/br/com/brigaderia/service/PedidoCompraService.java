@@ -20,6 +20,7 @@ import br.com.brigaderia.validacoes.ValidaPedidoCompra;
 public class PedidoCompraService {
 	
 	public void adicionarPedido (PedidoCompra pedidoCompra) throws BrigaderiaException, SQLException {
+		
 		Conexao conec = new Conexao();
 		Connection conexao = conec.abrirConexao();
 		try {
@@ -59,11 +60,9 @@ public class PedidoCompraService {
 					novoCusto =((custo * estoque) + (unitario * qtde))/(estoque + qtde);
 					
 				}
-				
 				if (novoCusto > 0) {
 					margem = ((valorVenda / novoCusto)-1)*100;
 				}
-				
 				jdbcProduto.atualizarEstoque(codProduto, qtde, novoCusto, margem);
 			}
 			conexao.commit();
@@ -80,6 +79,7 @@ public class PedidoCompraService {
 	}
 	
 	public List<Produto> buscarProdutos() throws SQLException {
+		
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
@@ -91,6 +91,7 @@ public class PedidoCompraService {
 	}
 	
 	public List<PedidoCompra> buscarPedidoCompra (String dataIni, String dataFim) throws SQLException {
+		
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
@@ -102,6 +103,7 @@ public class PedidoCompraService {
 	}
 	
 	public PedidoCompra buscarPedidoPeloNumero (int numero) throws SQLException {
+		
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
@@ -116,6 +118,7 @@ public class PedidoCompraService {
 	
 	
 	public String deletarPedido (int numero) throws SQLException {
+		
 		Conexao conec = new Conexao();
 		String msg = "";
 		try {
@@ -144,13 +147,10 @@ public class PedidoCompraService {
 				}
 				
 				msg = "Pedido deletado com sucesso";
-			}
-			
+			}	
 		}finally {
 			conec.fecharConexao();
 		}
 		return msg;
 	}
-	
-
 }

@@ -43,7 +43,6 @@ public class PedidoCompraRest extends UtilRest{
 		}
 	}
 	
-	
 	@GET
 	@Path("/listarProdutos")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -68,10 +67,9 @@ public class PedidoCompraRest extends UtilRest{
 			
 			PedidoCompraService service = new PedidoCompraService();
 			return buildResponse(service.buscarPedidoCompra(dataInicio, dataFim));
-		}catch (BrigaderiaException e) {
-			return buildErrorResponse(e.getMessage());
-		}catch(Exception e) {
-			return buildErrorResponse(ERROINESPERADO);
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return buildErrorResponse("Ocorreu um erro ao buscar pedidos de compra. Entre em contato com o administrador do sistema.");
 		}
 	}
 	
@@ -82,10 +80,9 @@ public class PedidoCompraRest extends UtilRest{
 		try {
 			PedidoCompraService service = new PedidoCompraService(); 
 			return buildResponse(service.buscarPedidoPeloNumero(numero));
-		}catch (BrigaderiaException e) {
-			return buildErrorResponse(e.getMessage());
-		}catch (Exception e) {
-			return buildErrorResponse(ERROINESPERADO);
+		}catch (SQLException e) {
+			e.printStackTrace();
+			return buildErrorResponse("Ocorreu um erro ao buscar pedidos de compra. Entre em contato com o administrador do sistema.");
 		}
 	}
 	
@@ -97,9 +94,8 @@ public class PedidoCompraRest extends UtilRest{
 		try {
 			PedidoCompraService service = new PedidoCompraService();
 			return this.buildResponse(service.deletarPedido(numero));
-		}catch (BrigaderiaException e) {
-			return buildErrorResponse(e.getMessage());
-		}catch (Exception e) {
+		}catch (SQLException e) {
+			e.printStackTrace();
 			return buildErrorResponse(ERROINESPERADO);
 		}
 	}

@@ -1,6 +1,5 @@
 package br.com.brigaderia.validacoes;
 
-
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 

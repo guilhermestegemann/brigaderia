@@ -1,6 +1,7 @@
 package br.com.brigaderia.exception;
 
 public class CamposObrigatoriosException extends BrigaderiaException{
+	
 	/**
 	 * 
 	 */
@@ -14,6 +15,4 @@ public class CamposObrigatoriosException extends BrigaderiaException{
 	public CamposObrigatoriosException(Throwable t){
 		super(t);
 	}
-	
-
 }

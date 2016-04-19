@@ -14,6 +14,4 @@ public class SomarCustoFichaTecnicaException extends BrigaderiaException{
 	public SomarCustoFichaTecnicaException(Throwable t){
 		super(t);
 	}
-	
-
 }

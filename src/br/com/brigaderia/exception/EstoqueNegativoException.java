@@ -1,6 +1,7 @@
 package br.com.brigaderia.exception;
 
 public class EstoqueNegativoException extends BrigaderiaException{
+	
 	/**
 	 * 
 	 */
@@ -14,6 +15,4 @@ public class EstoqueNegativoException extends BrigaderiaException{
 	public EstoqueNegativoException(Throwable t){
 		super(t);
 	}
-	
-
 }

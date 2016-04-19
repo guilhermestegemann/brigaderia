@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.brigaderia.exception.AtualizarEstoqueException;
-import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.exception.ProdutoVinculadoEmPedidoCompraException;
 import br.com.brigaderia.ferramentas.ConversorDecimal;
 import br.com.brigaderia.jdbcinterface.PedidoCompraDAO;
@@ -26,6 +25,7 @@ public class JDBCPedidoCompraDAO implements PedidoCompraDAO {
 	}
 	
 	public int adicionarPedido(PedidoCompra pedidoCompra) throws SQLException {
+		
 		String comando = "INSERT INTO COMPRA (DATA, TOTAL) VALUES (?,?)";
 		PreparedStatement p;
 		ConversorDecimal cd = new ConversorDecimal();
@@ -45,6 +45,7 @@ public class JDBCPedidoCompraDAO implements PedidoCompraDAO {
 	}
 	
 	public void adicionarProdutos(int numeroPedido, int codProduto, float qtde, float unitario, float total) throws AtualizarEstoqueException {
+		
 		String comando = "INSERT INTO ITEMCOMPRA (NUMERO, PRODUTO, QTDE, UNITARIO, TOTAL) VALUES (?,?,?,?,?)";
 		PreparedStatement p;
 		try {
@@ -62,6 +63,7 @@ public class JDBCPedidoCompraDAO implements PedidoCompraDAO {
 	}
 	
 	public void countProdutos(int codigo) throws SQLException, ProdutoVinculadoEmPedidoCompraException {
+		
 		String comando = "SELECT COUNT(*) AS QTDEPRODUTO FROM ITEMCOMPRA  WHERE ITEMCOMPRA.PRODUTO = " + codigo;
 		int qtdeProduto = 0;
 		Statement stmt = conexao.createStatement();
@@ -72,24 +74,18 @@ public class JDBCPedidoCompraDAO implements PedidoCompraDAO {
 		if (qtdeProduto > 0) {
 			throw new ProdutoVinculadoEmPedidoCompraException();
 		}
-		
 	}
-	
-		
 
 	public List<PedidoCompra> buscarPedidos (String dataInicio, String dataFim) throws SQLException {
 		
 		String comando = "SELECT * FROM COMPRA ";
-		
 		if ((!dataInicio.equals("null") && !dataInicio.equals("")) && (!dataFim.equals("null") && !dataFim.equals(""))) {
 			comando += "WHERE COMPRA.DATA BETWEEN '" + dataInicio + "' AND '" + dataFim + "'";
 		}
-		
 		comando += " ORDER BY DATA DESC";
 		
 		List<PedidoCompra> listPedidoCompra = new ArrayList<PedidoCompra>();
 		PedidoCompra pedidoCompra = null;
-	
 		Statement stmt = conexao.createStatement();
 		ResultSet rs = stmt.executeQuery(comando);
 		while(rs.next()) {
@@ -103,6 +99,7 @@ public class JDBCPedidoCompraDAO implements PedidoCompraDAO {
 	}
 	
 	public PedidoCompra buscarPeloNumero (int numero) throws SQLException {
+		
 		String comando = "SELECT * FROM COMPRA WHERE COMPRA.NUMERO = " + numero;
 		PedidoCompra pedidoCompra = new PedidoCompra();
 		Statement stmt = conexao.createStatement();
@@ -116,6 +113,7 @@ public class JDBCPedidoCompraDAO implements PedidoCompraDAO {
 	}
 	
 	public List<ItemPedidoCompra> buscarItensPedido(int numero) throws SQLException  {
+		
 		List<ItemPedidoCompra> listItemPedidoCompra = new ArrayList<ItemPedidoCompra>();
 		String comando = "SELECT ITEMCOMPRA.PRODUTO, PRODUTO.DESCRICAO, PRODUTO.ESTOQUE, PRODUTO.UNENTRADA, ITEMCOMPRA.QTDE, ITEMCOMPRA.UNITARIO, ITEMCOMPRA.TOTAL "
 				       + "FROM ITEMCOMPRA "
@@ -139,10 +137,10 @@ public class JDBCPedidoCompraDAO implements PedidoCompraDAO {
 	}
 	
 	public void deletarPedido(int numero) throws SQLException {
+		
 		String comando = "DELETE FROM COMPRA WHERE COMPRA.NUMERO = " + numero;
 		Statement p;
 		p = this.conexao.createStatement();
 		p.execute(comando);	
 	}
-	
 }

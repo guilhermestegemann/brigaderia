@@ -13,8 +13,6 @@ public class Bairro implements Serializable{
 	private int codigo;
 	private String nome;
 	
-	
-	
 	public int getCodigo() {
 		return codigo;
 	}
@@ -27,7 +25,4 @@ public class Bairro implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	
-	
 }

@@ -3,7 +3,7 @@ package br.com.brigaderia.objetos;
 import java.io.Serializable;
 
 public class TipoItem implements Serializable{
-
+	
 	/**
 	 * 
 	 */
@@ -24,6 +24,4 @@ public class TipoItem implements Serializable{
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	
-	
 }

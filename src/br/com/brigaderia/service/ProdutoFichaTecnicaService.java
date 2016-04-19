@@ -23,8 +23,6 @@ public class ProdutoFichaTecnicaService {
 			serviceProduto.deletarProduto(fichaTecnica.getProduto());
 			throw e;
 		}
-			
-		
 	}
 	
 	public void atualizarProdutoFichaTecnica (ProdutoFichaTecnicaVO prodFicha) throws BrigaderiaException, SQLException {
@@ -35,6 +33,5 @@ public class ProdutoFichaTecnicaService {
 		FichaTecnicaService serviceFichaTecnica = new FichaTecnicaService();
 		serviceProduto.atualizarProduto(produto);
 		serviceFichaTecnica.atualizarFichaTecnica(fichaTecnica);
-		
 	}
 }

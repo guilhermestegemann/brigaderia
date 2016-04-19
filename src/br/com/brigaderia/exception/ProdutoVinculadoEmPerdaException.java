@@ -16,6 +16,4 @@ public class ProdutoVinculadoEmPerdaException extends BrigaderiaException{
 	public ProdutoVinculadoEmPerdaException(Throwable t){
 		super(t);
 	}
-	
-
 }

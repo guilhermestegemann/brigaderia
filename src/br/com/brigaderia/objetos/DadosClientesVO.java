@@ -53,8 +53,4 @@ public class DadosClientesVO implements Serializable{
 	public void setUltimaVenda(Date ultimaVenda) {
 		this.ultimaVenda = ultimaVenda;
 	}
-	
-	
-	
-
 }

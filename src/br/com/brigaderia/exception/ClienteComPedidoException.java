@@ -16,6 +16,4 @@ public class ClienteComPedidoException extends BrigaderiaException{
 	public ClienteComPedidoException(Throwable t){
 		super(t);
 	}
-	
-
 }

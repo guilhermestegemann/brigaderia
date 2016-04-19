@@ -16,6 +16,4 @@ public class ProdutoVinculadoEmPedidoVendaException extends BrigaderiaException{
 	public ProdutoVinculadoEmPedidoVendaException(Throwable t){
 		super(t);
 	}
-	
-
 }

@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import br.com.brigaderia.bd.conexao.Conexao;
-import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.jdbc.JDBCCidadeDAO;
 import br.com.brigaderia.jdbcinterface.CidadeDAO;
 import br.com.brigaderia.objetos.Cidade;
@@ -22,5 +21,4 @@ public class CidadeService {
 			conec.fecharConexao();
 		}
 	}
-
 }

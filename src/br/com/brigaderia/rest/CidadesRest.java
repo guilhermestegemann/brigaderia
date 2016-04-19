@@ -11,12 +11,9 @@ import javax.ws.rs.core.Response;
 import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.service.CidadeService;
 
-
 @Path("cidades")
 
 public class CidadesRest extends UtilRest{
-	
-	static final String ERROINESPERADO = "Ocorreu um erro inesperado. Entre em contato com o administrador do sistema.";
 	
 	@GET
 	@Path("/buscar")
@@ -28,9 +25,7 @@ public class CidadesRest extends UtilRest{
 			return buildResponse(service.buscar());
 		}catch (SQLException e) {
 			e.printStackTrace();
-			return this.buildErrorResponse(ERROINESPERADO);
+			return this.buildErrorResponse("Ocorreu um erro inesperado. Entre em contato com o administrador do sistema.");
 		}
-		
 	}
-
 }

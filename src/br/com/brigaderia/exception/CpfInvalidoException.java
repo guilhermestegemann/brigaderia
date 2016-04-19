@@ -2,8 +2,6 @@ package br.com.brigaderia.exception;
 
 public class CpfInvalidoException extends BrigaderiaException{
 
-	
-	
 	/**
 	 * 
 	 */
@@ -17,6 +15,4 @@ public class CpfInvalidoException extends BrigaderiaException{
 	public CpfInvalidoException(Throwable t){
 		super(t);
 	}
-	
-
 }

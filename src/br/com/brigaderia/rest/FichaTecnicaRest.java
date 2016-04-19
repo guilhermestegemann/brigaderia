@@ -9,14 +9,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.service.FichaTecnicaService;
 
 @Path("fichaTecnica")
 
 public class FichaTecnicaRest extends UtilRest{
-	
-	static final String ERROINESPERADO = "Ocorreu um erro inesperado. Entre em contato com o administrador do sistema.";
 	
 	@GET
 	@Path("/listarIngredientes")

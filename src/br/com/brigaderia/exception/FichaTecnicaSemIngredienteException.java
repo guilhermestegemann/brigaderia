@@ -1,7 +1,5 @@
 package br.com.brigaderia.exception;
 
-
-
 public class FichaTecnicaSemIngredienteException extends BrigaderiaException{
 	/**
 	 * 
@@ -16,6 +14,4 @@ public class FichaTecnicaSemIngredienteException extends BrigaderiaException{
 	public FichaTecnicaSemIngredienteException(Throwable t){
 		super(t);
 	}
-	
-
 }

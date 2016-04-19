@@ -7,7 +7,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.jdbcinterface.CidadeDAO;
 import br.com.brigaderia.objetos.Cidade;
 import br.com.brigaderia.objetos.Estado;
@@ -38,8 +37,6 @@ public class JDBCCidadeDAO implements CidadeDAO{
 			cidade.setEstado(new Estado(rs.getInt("CODIGOESTADO"), rs.getString("NOMEESTADO"), rs.getString("UFESTADO")));
 			listCidade.add(cidade);
 		}
-	
 	return listCidade;
 	}
-
 }

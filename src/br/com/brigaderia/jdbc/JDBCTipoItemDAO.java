@@ -7,7 +7,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.jdbcinterface.TipoItemDAO;
 import br.com.brigaderia.objetos.TipoItem;
 
@@ -34,7 +33,5 @@ public class JDBCTipoItemDAO implements TipoItemDAO{
 			listTipoItem.add(tipoItem);
 		}
 		return listTipoItem;
-		
 	}
-
 }

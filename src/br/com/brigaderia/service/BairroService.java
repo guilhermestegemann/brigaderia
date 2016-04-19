@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import br.com.brigaderia.bd.conexao.Conexao;
-import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.jdbc.JDBCBairroDAO;
 import br.com.brigaderia.jdbcinterface.BairroDAO;
 import br.com.brigaderia.objetos.Bairro;

@@ -14,28 +14,21 @@ public class ValidaProduto {
 	
 	public void validarProduto (Produto produto)  throws BrigaderiaException{
 		
-			if (produto.getDescricao().equals("")) {
-				throw new CamposObrigatoriosException();
-			}
-			
-			
-			if (produto.getQtdeEntrada() <= 0) {
-				throw new QtdeEntradaInvalidaException();
-			}
-			if (produto.getEstoque() < 0) {
-				throw new EstoqueNegativoException();
-			}
-			
-			String regExUnMedida = "[a-zA-Z]{2}";
-			Pattern pattern = Pattern.compile(regExUnMedida, Pattern.CASE_INSENSITIVE);
-	        Matcher unEntrada = pattern.matcher(produto.getUnEntrada());
-	        Matcher unEStoque = pattern.matcher(produto.getUnEstoque());
-	        if ((!unEntrada.matches()) ||(!unEStoque.matches())) {
-	        	throw new UnMedidaInvalidaException();
-	        }
-	        
-		
-		
-        
+		if (produto.getDescricao().equals("")) {
+			throw new CamposObrigatoriosException();
+		}
+		if (produto.getQtdeEntrada() <= 0) {
+			throw new QtdeEntradaInvalidaException();
+		}
+		if (produto.getEstoque() < 0) {
+			throw new EstoqueNegativoException();
+		}
+		String regExUnMedida = "[a-zA-Z]{2}";
+		Pattern pattern = Pattern.compile(regExUnMedida, Pattern.CASE_INSENSITIVE);
+        Matcher unEntrada = pattern.matcher(produto.getUnEntrada());
+        Matcher unEStoque = pattern.matcher(produto.getUnEstoque());
+        if ((!unEntrada.matches()) ||(!unEStoque.matches())) {
+        	throw new UnMedidaInvalidaException();
+        }
 	}
 }

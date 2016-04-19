@@ -2,8 +2,6 @@ package br.com.brigaderia.exception;
 
 public class AtualizarEstoqueException extends BrigaderiaException{
 
-	
-	
 	/**
 	 * 
 	 */
@@ -17,6 +15,4 @@ public class AtualizarEstoqueException extends BrigaderiaException{
 	public AtualizarEstoqueException(Throwable t){
 		super(t);
 	}
-	
-
 }

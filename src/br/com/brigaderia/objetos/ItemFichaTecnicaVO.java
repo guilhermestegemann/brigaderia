@@ -16,7 +16,4 @@ public class ItemFichaTecnicaVO extends IngredientesVO{
 	public void setQtde(float qtde) {
 		this.qtde = qtde;
 	}
-	
-	
-
 }

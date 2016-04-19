@@ -15,8 +15,6 @@ import br.com.brigaderia.service.TipoItemService;
 
 public class TipoItemRest extends UtilRest{
 	
-	static final String ERROINESPERADO = "Ocorreu um erro inesperado. Entre em contato com o administrador do sistema.";
-	
 	@GET
 	@Path("/buscar")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})

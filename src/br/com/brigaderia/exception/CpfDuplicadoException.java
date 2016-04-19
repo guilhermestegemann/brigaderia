@@ -1,8 +1,6 @@
 package br.com.brigaderia.exception;
 
 public class CpfDuplicadoException extends BrigaderiaException{
-
-	
 	
 	/**
 	 * 
@@ -17,6 +15,4 @@ public class CpfDuplicadoException extends BrigaderiaException{
 	public CpfDuplicadoException(Throwable t){
 		super(t);
 	}
-	
-
 }

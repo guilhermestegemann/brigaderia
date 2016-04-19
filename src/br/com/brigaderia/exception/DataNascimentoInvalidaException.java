@@ -16,6 +16,4 @@ public class DataNascimentoInvalidaException extends BrigaderiaException{
 	public DataNascimentoInvalidaException(Throwable t){
 		super(t);
 	}
-	
-
 }

@@ -11,5 +11,4 @@ public class ConversorDecimal {
 		String totalAjustado = part[0] + "." + part[1];
 		return totalAjustado;
 	}
-
 }

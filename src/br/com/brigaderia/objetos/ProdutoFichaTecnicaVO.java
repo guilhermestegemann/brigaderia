@@ -26,8 +26,4 @@ public class ProdutoFichaTecnicaVO implements Serializable{
 	public void setFichaTecnica(FichaTecnica fichaTecnica) {
 		this.fichaTecnica = fichaTecnica;
 	}
-	
-	
-	
-
 }

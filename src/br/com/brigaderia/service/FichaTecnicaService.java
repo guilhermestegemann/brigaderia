@@ -16,10 +16,10 @@ import br.com.brigaderia.objetos.IngredientesVO;
 import br.com.brigaderia.objetos.ItemFichaTecnicaVO;
 import br.com.brigaderia.validacoes.ValidaFichaTecnica;
 
-
 public class FichaTecnicaService {
 	
 	public List<IngredientesVO> buscarIngredientes() throws SQLException  {
+		
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
@@ -31,6 +31,7 @@ public class FichaTecnicaService {
 	}
 	
 	public void adicionar(FichaTecnica fichaTecnica) throws SQLException, BrigaderiaException {
+		
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
@@ -43,20 +44,19 @@ public class FichaTecnicaService {
 			
 			for(int i = 0; i < listIngredientes.size(); i++) {
 				jdbcFichaTecnica.adicionarIngredientes(codFichaTecnica, listIngredientes.get(i).getCodigo(), listIngredientes.get(i).getQtde());
-			}
-			
+			}	
 		}finally{
 			conec.fecharConexao();
 		}
 	}
 	
 	public FichaTecnica buscarFichaTecnicaPeloCodigoProduto (int codigoProduto) throws SQLException{
+		
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
 			FichaTecnicaDAO jdbcFichaTecnica = new JDBCFichaTecnicaDAO(conexao);
 			FichaTecnica fichaTecnica = jdbcFichaTecnica.buscarPeloCodigoProduto(codigoProduto);
-			
 			return fichaTecnica;
 		}finally{
 			conec.fecharConexao();
@@ -64,6 +64,7 @@ public class FichaTecnicaService {
 	}
 	
 	public void atualizarFichaTecnica (FichaTecnica fichaTecnica) throws SQLException, BrigaderiaException {
+		
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
@@ -83,5 +84,3 @@ public class FichaTecnicaService {
 		}
 	}
 }
-
-

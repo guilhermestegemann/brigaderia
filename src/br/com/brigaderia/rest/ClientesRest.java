@@ -19,7 +19,6 @@ import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.objetos.Cliente;
 import br.com.brigaderia.service.ClienteService;
 
-
 @Path("clientes")
 
 public class ClientesRest extends UtilRest{
@@ -74,7 +73,7 @@ public class ClientesRest extends UtilRest{
 		}catch (BrigaderiaException e) {
 			e.printStackTrace();
 			return buildErrorResponse(e.getMessage());
-		}catch (Exception e) {
+		}catch (SQLException e) {
 			e.printStackTrace();
 			return buildErrorResponse(ERROINESPERADO);
 		}
@@ -110,15 +109,4 @@ public class ClientesRest extends UtilRest{
 			return buildErrorResponse(ERROINESPERADO);
 		}
 	}
-
 }
-
-
-
-
-
-
-
-
-
-

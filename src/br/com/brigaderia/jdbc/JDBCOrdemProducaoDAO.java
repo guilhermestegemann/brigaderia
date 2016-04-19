@@ -5,12 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.exception.ProdutoVinculadoEmOrdemProducaoException;
 import br.com.brigaderia.jdbcinterface.OrdemProducaoDAO;
 
 public class JDBCOrdemProducaoDAO implements OrdemProducaoDAO {
-	
 	
 	private Connection conexao;
 

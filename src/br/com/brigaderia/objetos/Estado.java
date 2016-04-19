@@ -14,17 +14,8 @@ public class Estado implements Serializable{
 	private String uf;
 	
 	
-	
-	public Estado(int codigo, String nome, String uf) {
-		super();
-		this.codigo = codigo;
-		this.nome = nome;
-		this.uf = uf;
-	}
-	
-	
-	public Estado() {
-		super();
+	public Estado(int int1, String string, String string2) {
+		// TODO Auto-generated constructor stub
 	}
 	public int getCodigo() {
 		return codigo;
@@ -38,16 +29,10 @@ public class Estado implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-
 	public String getUf() {
 		return uf;
 	}
-
-
 	public void setUf(String uf) {
 		this.uf = uf;
 	}
-	
-	
 }

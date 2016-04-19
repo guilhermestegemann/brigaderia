@@ -16,6 +16,4 @@ public class ProdutoVinculadoEmOrdemProducaoException extends BrigaderiaExceptio
 	public ProdutoVinculadoEmOrdemProducaoException(Throwable t){
 		super(t);
 	}
-	
-
 }

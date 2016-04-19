@@ -32,7 +32,4 @@ public class Cidade implements Serializable{
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
-	
-	
-
 }

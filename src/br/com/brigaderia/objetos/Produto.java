@@ -24,9 +24,6 @@ public class Produto implements Serializable{
 	private Date dataCadastro;
 	private String ativo;
 	
-	
-	
-	
 	public int getCodigoProduto() {
 		return codigoProduto;
 	}

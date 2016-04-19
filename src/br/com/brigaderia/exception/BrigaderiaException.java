@@ -7,7 +7,6 @@ public class BrigaderiaException extends Exception{
 	 */
 	private static final long serialVersionUID = -40726636170956732L;
 	
-	
 	public BrigaderiaException(){
 		super("Ocorreu um erro inesperado. Entre em contato com o administrador do sistema.");
 	}

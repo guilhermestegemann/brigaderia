@@ -13,8 +13,6 @@ import br.com.brigaderia.service.BairroService;
 
 public class BairrosRest extends UtilRest{
 	
-	static final String ERROINESPERADO = "Ocorreu um erro inesperado. Entre em contato com o administrador do sistema.";
-	
 	@GET
 	@Path("/buscar")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -24,9 +22,7 @@ public class BairrosRest extends UtilRest{
 			return this.buildResponse(service.buscar());
 		}catch (Exception e) {
 			e.printStackTrace();
-			return this.buildErrorResponse(ERROINESPERADO);
+			return this.buildErrorResponse("Ocorreu um erro inesperado. Entre em contato com o administrador do sistema.");
 		}
-		
 	}
-
 }

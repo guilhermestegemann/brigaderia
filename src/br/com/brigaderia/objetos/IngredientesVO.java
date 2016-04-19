@@ -32,7 +32,4 @@ public class IngredientesVO implements Serializable{
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
-	
-
 }

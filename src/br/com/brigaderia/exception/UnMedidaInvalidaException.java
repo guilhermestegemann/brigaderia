@@ -16,6 +16,4 @@ public class UnMedidaInvalidaException extends BrigaderiaException{
 	public UnMedidaInvalidaException(Throwable t){
 		super(t);
 	}
-	
-
 }

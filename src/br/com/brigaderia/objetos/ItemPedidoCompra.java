@@ -29,5 +29,4 @@ public class ItemPedidoCompra extends Produto{
 	public void setQtde(float qtde) {
 		this.qtde = qtde;
 	}
-
 }

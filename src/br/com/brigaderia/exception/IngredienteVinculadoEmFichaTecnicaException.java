@@ -16,6 +16,4 @@ public class IngredienteVinculadoEmFichaTecnicaException extends BrigaderiaExcep
 	public IngredienteVinculadoEmFichaTecnicaException(Throwable t){
 		super(t);
 	}
-	
-
 }

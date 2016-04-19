@@ -26,34 +26,4 @@ public class UtilRest {
 		rb = rb.type("text/plain");
 		return rb.build();
 	}
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

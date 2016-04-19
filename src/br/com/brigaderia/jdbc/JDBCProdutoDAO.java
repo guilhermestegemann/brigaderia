@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.jdbcinterface.ProdutoDAO;
 import br.com.brigaderia.objetos.IngredientesVO;
 import br.com.brigaderia.objetos.Produto;
@@ -23,6 +22,7 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 	}
 	
 	public List<IngredientesVO> buscarIngredientes () throws  SQLException {
+		
 		String comando = "SELECT CODIGO, DESCRICAO, UNESTOQUE FROM PRODUTO WHERE PRODUTO.TIPOITEM = 2 AND PRODUTO.ATIVO = 'S' ";
 		List<IngredientesVO> listIngredientes = new ArrayList<IngredientesVO>();
 		IngredientesVO ingredientes = null;
@@ -40,10 +40,10 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 	}
 	
 	public int adicionar(Produto produto) throws SQLException  {
+		
 		String comando = "INSERT INTO PRODUTO (DESCRICAO, ESTOQUE, UNESTOQUE, VALORCUSTO, MARGEM, VALORVENDA, TIPOITEM, "
 				       + "DATACADASTRO, ATIVO, QTDEENTRADA, UNENTRADA) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement p;
-		
 	
 		p = this.conexao.prepareStatement(comando, Statement.RETURN_GENERATED_KEYS);
 		p.setString(1, produto.getDescricao());
@@ -66,10 +66,10 @@ public class JDBCProdutoDAO implements ProdutoDAO{
             throw new SQLException("Erro ao recuperar chave inserida! (Produto)");
         }
 		return produto.getCodigoProduto();
-		
 	}
 	
 	public Produto buscarPeloCodigo (int codigo) throws SQLException {
+		
 		String comando = "SELECT * FROM PRODUTO WHERE PRODUTO.CODIGO = " + codigo;
 		Produto produto = new Produto();
 		Statement stmt = conexao.createStatement();
@@ -92,18 +92,16 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 	}
 	
 	public void deletar(int codigo) throws SQLException {
+		
 		String comando = "DELETE FROM PRODUTO WHERE PRODUTO.CODIGO = " + codigo;
 		Statement p;
 		p = this.conexao.createStatement();
 		p.execute(comando);	
-		
 	}
 	
 	public List<Produto> buscarProdutos (String valorBusca, String ativo, String tipoItem) throws SQLException {
 		
 		String comando = "SELECT * FROM PRODUTO ";
-		
-		
 		if ((!valorBusca.equals("")) && (!valorBusca.equals("null") && !valorBusca.equals(""))) {
 			comando += "WHERE PRODUTO.ATIVO = '" + ativo + "'"
 					+ "AND PRODUTO.DESCRICAO LIKE '" + valorBusca + "%'";
@@ -113,7 +111,6 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 		if (!tipoItem.equals("0")) {
 			comando += " AND PRODUTO.TIPOITEM IN ( " + tipoItem + ")";
 		}
-		
 		
 		List<Produto> listProdutos = new ArrayList<Produto>();
 		Produto produto = null;
@@ -137,6 +134,7 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 	}
 	
 	public void atualizar (Produto produto) throws SQLException {
+		
 		String comando = "UPDATE PRODUTO SET " 
 							+ "PRODUTO.DESCRICAO = ?, "
 							+ "PRODUTO.UNESTOQUE = ?, "
@@ -146,7 +144,8 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 							+ "PRODUTO.QTDEENTRADA = ?, "
 							+ "PRODUTO.UNENTRADA = ? "
 					   + "WHERE PRODUTO.CODIGO = " + produto.getCodigoProduto();
-	    PreparedStatement p;
+	    
+		PreparedStatement p;
     	p = this.conexao.prepareStatement(comando);
     	p.setString(1, produto.getDescricao());
     	p.setString(2, produto.getUnEstoque());
@@ -160,6 +159,7 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 	}
 	
 	public float retornaCusto (int codProduto) throws SQLException  {
+		
 		String sqlProduto = "SELECT PRODUTO.VALORCUSTO FROM PRODUTO WHERE PRODUTO.CODIGO = " + codProduto;
 
 		float valorCusto = 0;
@@ -172,10 +172,9 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 	}
 	
 	public float retornaEstoque (int codProduto) throws SQLException  {
-		String sqlProduto = "SELECT PRODUTO.ESTOQUE FROM PRODUTO WHERE PRODUTO.CODIGO = " + codProduto;
-
-		float estoque = 0;
 		
+		String sqlProduto = "SELECT PRODUTO.ESTOQUE FROM PRODUTO WHERE PRODUTO.CODIGO = " + codProduto;
+		float estoque = 0;
 		Statement stmt = conexao.createStatement();
 		ResultSet rs = stmt.executeQuery(sqlProduto);
 		while(rs.next()) {
@@ -185,8 +184,8 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 	}
 	
 	public float retornaValorVenda (int codProduto) throws SQLException  {
+		
 		String sqlProduto = "SELECT PRODUTO.VALORVENDA FROM PRODUTO WHERE PRODUTO.CODIGO = " + codProduto;
-
 		float valorVenda = 0;
 		Statement stmt = conexao.createStatement();
 		ResultSet rs = stmt.executeQuery(sqlProduto);
@@ -202,6 +201,7 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 					  + ", PRODUTO.MARGEM = + " + margem
 					  + ", PRODUTO.ESTOQUE = ESTOQUE + " + qtde
 					  + " WHERE PRODUTO.CODIGO = " + codProduto;		
+		
 		PreparedStatement p = this.conexao.prepareStatement(update);
 		p.execute();
 	}
@@ -213,16 +213,3 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 		p.execute();
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
