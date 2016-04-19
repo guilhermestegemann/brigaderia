@@ -20,24 +20,21 @@ public class JDBCBairroDAO implements BairroDAO{
 		this.conexao = conexao;
 	}
 
-	public List<Bairro> buscar() throws BrigaderiaException{
+	public List<Bairro> buscar() throws SQLException {
 		
 		String comando = "SELECT * FROM BAIRRO ";
 		List<Bairro> listBairro = new ArrayList<Bairro>();
 		Bairro bairro = null;
-		try {
-			Statement stmt = conexao.createStatement();
-			ResultSet rs = stmt.executeQuery(comando);
-			while(rs.next()) {
-				bairro = new Bairro();
-				bairro.setCodigo(rs.getInt("codigo"));
-				bairro.setNome(rs.getString("nome"));
-				listBairro.add(bairro);
-			}
-		}catch (SQLException e) {
-			e.printStackTrace();
-			throw new BrigaderiaException();
-		}return listBairro;
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(comando);
+		while(rs.next()) {
+			bairro = new Bairro();
+			bairro.setCodigo(rs.getInt("codigo"));
+			bairro.setNome(rs.getString("nome"));
+			listBairro.add(bairro);
+		}
+	
+	return listBairro;
 		
 	}
 

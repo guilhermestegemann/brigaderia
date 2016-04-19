@@ -22,103 +22,84 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 		this.conexao = conexao;
 	}
 	
-	public List<IngredientesVO> buscarIngredientes () throws BrigaderiaException {
+	public List<IngredientesVO> buscarIngredientes () throws  SQLException {
 		String comando = "SELECT CODIGO, DESCRICAO, UNESTOQUE FROM PRODUTO WHERE PRODUTO.TIPOITEM = 2 AND PRODUTO.ATIVO = 'S' ";
 		List<IngredientesVO> listIngredientes = new ArrayList<IngredientesVO>();
 		IngredientesVO ingredientes = null;
-		try {
-			Statement stmt = conexao.createStatement();
-			ResultSet rs = stmt.executeQuery(comando);
-			while(rs.next()) {
-				ingredientes = new IngredientesVO();
-				ingredientes.setCodigo(rs.getInt("codigo"));
-				ingredientes.setDescricao(rs.getString("descricao"));
-				ingredientes.setUn(rs.getString("unestoque"));
-				
-				listIngredientes.add(ingredientes);
-			}
-		}catch (SQLException e) {
-			e.printStackTrace();
-			throw new BrigaderiaException();
-		}return listIngredientes;
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(comando);
+		while(rs.next()) {
+			ingredientes = new IngredientesVO();
+			ingredientes.setCodigo(rs.getInt("codigo"));
+			ingredientes.setDescricao(rs.getString("descricao"));
+			ingredientes.setUn(rs.getString("unestoque"));
+			
+			listIngredientes.add(ingredientes);
+		}
+		return listIngredientes;
 	}
 	
-	public int adicionar(Produto produto) throws BrigaderiaException {
+	public int adicionar(Produto produto) throws SQLException  {
 		String comando = "INSERT INTO PRODUTO (DESCRICAO, ESTOQUE, UNESTOQUE, VALORCUSTO, MARGEM, VALORVENDA, TIPOITEM, "
 				       + "DATACADASTRO, ATIVO, QTDEENTRADA, UNENTRADA) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement p;
 		
-		try {
-			p = this.conexao.prepareStatement(comando, Statement.RETURN_GENERATED_KEYS);
-			p.setString(1, produto.getDescricao());
-			p.setFloat(2, produto.getEstoque());
-			p.setString(3, produto.getUnEstoque());
-			p.setFloat(4, produto.getValorCusto());
-			p.setFloat(5, produto.getMargem());
-			p.setFloat(6, produto.getValorVenda());
-			p.setInt(7, produto.getTipoItem());
-			p.setDate(8, new java.sql.Date(produto.getDataCadastro().getTime()));
-			p.setString(9, produto.getAtivo());
-			p.setFloat(10, produto.getQtdeEntrada());
-			p.setString(11, produto.getUnEntrada());
-			p.execute();
-			try (ResultSet generatedKeys = p.getGeneratedKeys()) {
-	            if (generatedKeys.next()) {
-	                produto.setCodigoProduto(generatedKeys.getInt(1));
-	            }
-	            else {
-	                throw new SQLException("Erro ao recuperar chave inserida! (Produto)");
-	            }
-			} 
-			
-			return produto.getCodigoProduto();
-		}catch (SQLException e) {
-			e.printStackTrace();
-			throw new BrigaderiaException();
-		}
+	
+		p = this.conexao.prepareStatement(comando, Statement.RETURN_GENERATED_KEYS);
+		p.setString(1, produto.getDescricao());
+		p.setFloat(2, produto.getEstoque());
+		p.setString(3, produto.getUnEstoque());
+		p.setFloat(4, produto.getValorCusto());
+		p.setFloat(5, produto.getMargem());
+		p.setFloat(6, produto.getValorVenda());
+		p.setInt(7, produto.getTipoItem());
+		p.setDate(8, new java.sql.Date(produto.getDataCadastro().getTime()));
+		p.setString(9, produto.getAtivo());
+		p.setFloat(10, produto.getQtdeEntrada());
+		p.setString(11, produto.getUnEntrada());
+		p.execute();
+		ResultSet generatedKeys = p.getGeneratedKeys();
+        if (generatedKeys.next()) {
+            produto.setCodigoProduto(generatedKeys.getInt(1));
+        }
+        else {
+            throw new SQLException("Erro ao recuperar chave inserida! (Produto)");
+        }
+		return produto.getCodigoProduto();
+		
 	}
 	
-	public Produto buscarPeloCodigo (int codigo) throws BrigaderiaException{
+	public Produto buscarPeloCodigo (int codigo) throws SQLException {
 		String comando = "SELECT * FROM PRODUTO WHERE PRODUTO.CODIGO = " + codigo;
 		Produto produto = new Produto();
-		try {
-			Statement stmt = conexao.createStatement();
-			ResultSet rs = stmt.executeQuery(comando);
-			while(rs.next()) {
-				produto.setCodigoProduto(rs.getInt("codigo"));
-				produto.setDescricao(rs.getString("descricao"));
-				produto.setEstoque(rs.getFloat("estoque"));
-				produto.setUnEstoque(rs.getString("unestoque"));
-				produto.setValorCusto(rs.getFloat("valorcusto"));
-				produto.setMargem(rs.getFloat("margem"));
-				produto.setValorVenda(rs.getFloat("valorVenda"));
-				produto.setTipoItem(rs.getInt("tipoitem"));
-				produto.setDataCadastro(rs.getDate("datacadastro"));
-				produto.setAtivo(rs.getString("ativo"));
-				produto.setQtdeEntrada(rs.getFloat("qtdeentrada"));
-				produto.setUnEntrada(rs.getString("unentrada"));
-			}
-		}catch (SQLException e) {
-			e.printStackTrace();
-			throw new BrigaderiaException();
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(comando);
+		while(rs.next()) {
+			produto.setCodigoProduto(rs.getInt("codigo"));
+			produto.setDescricao(rs.getString("descricao"));
+			produto.setEstoque(rs.getFloat("estoque"));
+			produto.setUnEstoque(rs.getString("unestoque"));
+			produto.setValorCusto(rs.getFloat("valorcusto"));
+			produto.setMargem(rs.getFloat("margem"));
+			produto.setValorVenda(rs.getFloat("valorVenda"));
+			produto.setTipoItem(rs.getInt("tipoitem"));
+			produto.setDataCadastro(rs.getDate("datacadastro"));
+			produto.setAtivo(rs.getString("ativo"));
+			produto.setQtdeEntrada(rs.getFloat("qtdeentrada"));
+			produto.setUnEntrada(rs.getString("unentrada"));
 		}
 		return produto;
 	}
 	
-	public void deletar(int codigo) throws BrigaderiaException {
+	public void deletar(int codigo) throws SQLException {
 		String comando = "DELETE FROM PRODUTO WHERE PRODUTO.CODIGO = " + codigo;
 		Statement p;
+		p = this.conexao.createStatement();
+		p.execute(comando);	
 		
-		try {
-			p = this.conexao.createStatement();
-			p.execute(comando);	
-		}catch(SQLException e) {
-			e.printStackTrace();
-			throw new BrigaderiaException();
-		}
 	}
 	
-	public List<Produto> buscarProdutos (String valorBusca, String ativo, String tipoItem) throws BrigaderiaException {
+	public List<Produto> buscarProdutos (String valorBusca, String ativo, String tipoItem) throws SQLException {
 		
 		String comando = "SELECT * FROM PRODUTO ";
 		
@@ -136,31 +117,26 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 		
 		List<Produto> listProdutos = new ArrayList<Produto>();
 		Produto produto = null;
-		try {
-			Statement stmt = conexao.createStatement();
-			ResultSet rs = stmt.executeQuery(comando);
-			while(rs.next()) {
-				produto = new Produto();
-				produto.setCodigoProduto(rs.getInt("CODIGO"));
-				produto.setDescricao(rs.getString("DESCRICAO"));
-				produto.setEstoque(rs.getFloat("ESTOQUE"));
-				produto.setUnEstoque(rs.getString("UNESTOQUE"));
-				produto.setValorCusto(rs.getFloat("VALORCUSTO"));
-				produto.setMargem(rs.getFloat("MARGEM"));
-				produto.setValorVenda(rs.getFloat("VALORVENDA"));
-				produto.setTipoItem(rs.getInt("TIPOITEM"));
-				produto.setQtdeEntrada(rs.getFloat("QTDEENTRADA"));
-				produto.setUnEntrada(rs.getString("UNENTRADA"));
-				listProdutos.add(produto);
-			}
-		}catch(SQLException e){
-			e.printStackTrace();
-			throw new BrigaderiaException();
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(comando);
+		while(rs.next()) {
+			produto = new Produto();
+			produto.setCodigoProduto(rs.getInt("CODIGO"));
+			produto.setDescricao(rs.getString("DESCRICAO"));
+			produto.setEstoque(rs.getFloat("ESTOQUE"));
+			produto.setUnEstoque(rs.getString("UNESTOQUE"));
+			produto.setValorCusto(rs.getFloat("VALORCUSTO"));
+			produto.setMargem(rs.getFloat("MARGEM"));
+			produto.setValorVenda(rs.getFloat("VALORVENDA"));
+			produto.setTipoItem(rs.getInt("TIPOITEM"));
+			produto.setQtdeEntrada(rs.getFloat("QTDEENTRADA"));
+			produto.setUnEntrada(rs.getString("UNENTRADA"));
+			listProdutos.add(produto);
 		}
 		return listProdutos;
 	}
 	
-	public void atualizar (Produto produto) throws BrigaderiaException {
+	public void atualizar (Produto produto) throws SQLException {
 		String comando = "UPDATE PRODUTO SET " 
 							+ "PRODUTO.DESCRICAO = ?, "
 							+ "PRODUTO.UNESTOQUE = ?, "
@@ -171,71 +147,56 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 							+ "PRODUTO.UNENTRADA = ? "
 					   + "WHERE PRODUTO.CODIGO = " + produto.getCodigoProduto();
 	    PreparedStatement p;
-	    try {
-	    	p = this.conexao.prepareStatement(comando);
-	    	p.setString(1, produto.getDescricao());
-	    	p.setString(2, produto.getUnEstoque());
-	    	p.setFloat(3, produto.getMargem());
-	    	p.setFloat(4, produto.getValorVenda());
-	    	p.setString(5, produto.getAtivo());
-	    	p.setFloat(6, produto.getQtdeEntrada());
-	    	p.setString(7, produto.getUnEntrada());
-	    	p.executeUpdate();
-	    }catch (SQLException e) {
-	    	e.printStackTrace();
-	    	throw new BrigaderiaException();
-	    }
+    	p = this.conexao.prepareStatement(comando);
+    	p.setString(1, produto.getDescricao());
+    	p.setString(2, produto.getUnEstoque());
+    	p.setFloat(3, produto.getMargem());
+    	p.setFloat(4, produto.getValorVenda());
+    	p.setString(5, produto.getAtivo());
+    	p.setFloat(6, produto.getQtdeEntrada());
+    	p.setString(7, produto.getUnEntrada());
+    	p.executeUpdate();
+	    
 	}
 	
-	public float retornaCusto (int codProduto) throws SQLException {
+	public float retornaCusto (int codProduto) throws SQLException  {
 		String sqlProduto = "SELECT PRODUTO.VALORCUSTO FROM PRODUTO WHERE PRODUTO.CODIGO = " + codProduto;
 
 		float valorCusto = 0;
-		try {
-			Statement stmt = conexao.createStatement();
-			ResultSet rs = stmt.executeQuery(sqlProduto);
-			while(rs.next()) {
-				valorCusto = rs.getFloat("VALORCUSTO");
-			}
-		}catch (SQLException e) {
-			throw e;
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(sqlProduto);
+		while(rs.next()) {
+			valorCusto = rs.getFloat("VALORCUSTO");
 		}
 		return valorCusto;
 	}
 	
-	public float retornaEstoque (int codProduto) throws SQLException {
+	public float retornaEstoque (int codProduto) throws SQLException  {
 		String sqlProduto = "SELECT PRODUTO.ESTOQUE FROM PRODUTO WHERE PRODUTO.CODIGO = " + codProduto;
 
 		float estoque = 0;
-		try {
-			Statement stmt = conexao.createStatement();
-			ResultSet rs = stmt.executeQuery(sqlProduto);
-			while(rs.next()) {
-				estoque = rs.getFloat("ESTOQUE");
-			}
-		}catch (SQLException e) {
-			throw e;
+		
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(sqlProduto);
+		while(rs.next()) {
+			estoque = rs.getFloat("ESTOQUE");
 		}
 		return estoque;
 	}
 	
-	public float retornaValorVenda (int codProduto) throws SQLException {
+	public float retornaValorVenda (int codProduto) throws SQLException  {
 		String sqlProduto = "SELECT PRODUTO.VALORVENDA FROM PRODUTO WHERE PRODUTO.CODIGO = " + codProduto;
 
 		float valorVenda = 0;
-		try {
-			Statement stmt = conexao.createStatement();
-			ResultSet rs = stmt.executeQuery(sqlProduto);
-			while(rs.next()) {
-				valorVenda = rs.getFloat("VALORVENDA");
-			}
-		}catch (SQLException e) {
-			throw e;
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(sqlProduto);
+		while(rs.next()) {
+			valorVenda = rs.getFloat("VALORVENDA");
 		}
 		return valorVenda;
 	}
 	
-	public void atualizarEstoque(int codProduto, float qtde, float custo, float margem) throws SQLException {
+	public void atualizarEstoque(int codProduto, float qtde, float custo, float margem) throws SQLException  {
 		
 		String update = "UPDATE PRODUTO SET PRODUTO.VALORCUSTO = " + custo
 					  + ", PRODUTO.MARGEM = + " + margem
@@ -245,7 +206,7 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 		p.execute();
 	}
 	
-	public void retiraEstoque (int codProduto, float qtde) throws SQLException {
+	public void retiraEstoque (int codProduto, float qtde) throws SQLException  {
 		String update = "UPDATE PRODUTO SET PRODUTO.ESTOQUE = ESTOQUE - " + qtde + " WHERE PRODUTO.CODIGO = " + codProduto;
 
 		PreparedStatement p = this.conexao.prepareStatement(update);

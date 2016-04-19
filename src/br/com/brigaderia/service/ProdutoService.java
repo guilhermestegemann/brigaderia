@@ -1,11 +1,13 @@
 package br.com.brigaderia.service;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
 import br.com.brigaderia.bd.conexao.Conexao;
 import br.com.brigaderia.exception.BrigaderiaException;
+import br.com.brigaderia.exception.ProdutoVinculadoEmPerdaException;
 import br.com.brigaderia.jdbc.JDBCFichaTecnicaDAO;
 import br.com.brigaderia.jdbc.JDBCOrdemProducaoDAO;
 import br.com.brigaderia.jdbc.JDBCPedidoCompraDAO;
@@ -23,7 +25,7 @@ import br.com.brigaderia.validacoes.ValidaProduto;
 
 public class ProdutoService {
 	
-	public int adicionar(Produto produto) throws BrigaderiaException{
+	public int adicionar(Produto produto) throws SQLException, BrigaderiaException{
 		Conexao conec = new Conexao();
 		
 		try {
@@ -33,63 +35,46 @@ public class ProdutoService {
 			validaProduto.validarProduto(produto);
 			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
 			return jdbcProduto.adicionar(produto);
-		}catch (BrigaderiaException e) {
-			e.printStackTrace();
-			throw e;
-		}catch (Exception e) {
-			throw new BrigaderiaException();
 		}finally{
 			conec.fecharConexao();
 		}
 	}
 	
-	public Produto buscarProdutoPeloCodigo (int codigo) throws BrigaderiaException{
+	public Produto buscarProdutoPeloCodigo (int codigo) throws SQLException {
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
 			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
 			Produto produto = jdbcProduto.buscarPeloCodigo(codigo);
 			return produto;
-		}catch (BrigaderiaException e) {
-			throw e;
-		}catch (Exception e) {
-			e.printStackTrace();
-			throw new BrigaderiaException();
-		}
-		finally{
+		}finally{
 			conec.fecharConexao();
 		}	
 	}
 	
-	public void deletarProduto (int codigo) throws BrigaderiaException{
+	public void deletarProduto (int codigo) throws SQLException {
 		Conexao conec = new Conexao();
-		
 		try {
 			Connection conexao = conec.abrirConexao();
 			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
 			jdbcProduto.deletar(codigo);
-		}catch(BrigaderiaException e) {
-			e.printStackTrace();
-			throw e;
 		}finally{
 			conec.fecharConexao();
 		}
 	}
 	
-	public List<Produto> buscarProdutos (String valorBusca, String ativo, String tipoItem) throws BrigaderiaException{
+	public List<Produto> buscarProdutos (String valorBusca, String ativo, String tipoItem) throws SQLException {
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
 			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
 			return jdbcProduto.buscarProdutos(valorBusca, ativo, tipoItem);
-		}catch (Exception e) {
-			throw e;
 		}finally{
 			conec.fecharConexao();
 		}
 	}
 	
-	public void atualizarProduto (Produto produto) throws BrigaderiaException {
+	public void atualizarProduto (Produto produto) throws BrigaderiaException, SQLException  {
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
@@ -97,18 +82,12 @@ public class ProdutoService {
 			ValidaProduto validaProduto = new ValidaProduto();
 			validaProduto.validarProduto(produto);
 			jdbcProduto.atualizar(produto);
-		}catch (BrigaderiaException e) {
-			e.printStackTrace();
-			throw e;
-		}catch (Exception e) {
-			e.printStackTrace();
-			throw new BrigaderiaException();
 		}finally{
 			conec.fecharConexao();
 		}
 	}
 	
-	public void deletarProduto (int codigo, int tipoItem) throws BrigaderiaException{
+	public void deletarProduto (int codigo, int tipoItem) throws BrigaderiaException, SQLException {
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
@@ -130,8 +109,6 @@ public class ProdutoService {
 			}
 			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
 			jdbcProduto.deletar(codigo);
-		}catch (BrigaderiaException e) {
-			throw e;
 		}finally {
 			conec.fecharConexao();
 		}

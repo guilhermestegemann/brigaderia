@@ -1,10 +1,14 @@
 package br.com.brigaderia.service;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+
 
 import br.com.brigaderia.bd.conexao.Conexao;
 import br.com.brigaderia.exception.BrigaderiaException;
@@ -20,7 +24,7 @@ import br.com.brigaderia.validacoes.ValidaCliente;
 
 public class ClienteService {
 	
-	public void adicionarCliente (Cliente cliente) throws BrigaderiaException {
+	public void adicionarCliente (Cliente cliente) throws ParseException, BrigaderiaException, SQLException{
 		Conexao conec = new Conexao();
 		
 		try {
@@ -42,18 +46,12 @@ public class ClienteService {
 				}
 			}
 			jdbcCliente.cadastrar(cliente);
-		}catch (BrigaderiaException e) {
-			e.printStackTrace();
-			throw e;
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new BrigaderiaException();
 		}finally {
 			conec.fecharConexao();
 		}
 	}
 	
-	public Cliente buscarClientePeloCodigo (int codigo) throws BrigaderiaException{
+	public Cliente buscarClientePeloCodigo (int codigo) throws SQLException{
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
@@ -65,19 +63,12 @@ public class ClienteService {
 			}
 			
 			return cliente;
-			
-		}catch (BrigaderiaException e) {
-			throw e;
-		}catch (Exception e) {
-			e.printStackTrace();
-			throw new BrigaderiaException();
-		}
-		finally{
+		}finally{
 			conec.fecharConexao();
 		}	
 	}
 	
-	public void atualizarCliente (Cliente cliente) throws BrigaderiaException {
+	public void atualizarCliente (Cliente cliente) throws BrigaderiaException, SQLException, ParseException  {
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
@@ -97,18 +88,12 @@ public class ClienteService {
 				}
 			}
 			jdbcCliente.atualizar(cliente);
-		}catch (BrigaderiaException e) {
-			e.printStackTrace();
-			throw e;
-		}catch (Exception e) {
-			e.printStackTrace();
-			throw new BrigaderiaException();
 		}finally{
 			conec.fecharConexao();
 		}
 	}
 	
-	public void deletarCliente (int codigo) throws BrigaderiaException{
+	public void deletarCliente (int codigo) throws ClienteComPedidoException, SQLException {
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
@@ -116,21 +101,17 @@ public class ClienteService {
 			jdbcPedidoVenda.verificaPedidoCliente(codigo);
 			ClienteDAO jdbcCliente = new JDBCClienteDAO(conexao);
 			jdbcCliente.deletar(codigo);
-		}catch (ClienteComPedidoException e) {
-			throw e;
 		}finally {
 			conec.fecharConexao();
 		}
 	}
 	
-	public List<DadosClientesVO> buscarClientesVO (String valorBusca) throws BrigaderiaException{
+	public List<DadosClientesVO> buscarClientesVO (String valorBusca) throws SQLException {
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
 			ClienteDAO jdbcCliente = new JDBCClienteDAO(conexao);
 			return jdbcCliente.buscarClientes(valorBusca);
-		}catch (Exception e) {
-			throw e;
 		}finally{
 			conec.fecharConexao();
 		}

@@ -1,5 +1,7 @@
 package br.com.brigaderia.rest;
 
+import java.sql.SQLException;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -26,7 +28,7 @@ public class PedidoCompraRest extends UtilRest{
 	@Path ("/adicionar")
 	@Consumes(MediaType.APPLICATION_JSON)
 	
-	public Response adicionar(String param) throws BrigaderiaException {
+	public Response adicionar(String param) {
 		
 		try {
 			PedidoCompra pedidoCompra = new ObjectMapper().readValue(param, PedidoCompra.class);
@@ -45,16 +47,14 @@ public class PedidoCompraRest extends UtilRest{
 	@GET
 	@Path("/listarProdutos")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public Response listarProdutos() throws BrigaderiaException{
+	public Response listarProdutos(){
 		
 		try {
 			PedidoCompraService service = new PedidoCompraService();
 			return this.buildResponse(service.buscarProdutos());
-		}catch (BrigaderiaException e) {
-			return buildErrorResponse(e.getMessage());
-		}catch (Exception e) {
+		}catch (SQLException e) {
 			e.printStackTrace();
-			return this.buildErrorResponse(ERROINESPERADO);
+			return buildErrorResponse("Ocorreu um erro ao buscar produtos. Entre em contato com o administrador do sistema.");
 		}
 	}
 	

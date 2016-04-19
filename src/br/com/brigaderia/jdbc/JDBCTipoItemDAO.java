@@ -20,24 +20,20 @@ public class JDBCTipoItemDAO implements TipoItemDAO{
 		this.conexao = conexao;
 	}
 
-	public List<TipoItem> buscar() throws BrigaderiaException{
+	public List<TipoItem> buscar() throws SQLException {
 		
 		String comando = "SELECT * FROM TIPOITEM ";
 		List<TipoItem> listTipoItem = new ArrayList<TipoItem>();
 		TipoItem tipoItem = null;
-		try {
-			Statement stmt = conexao.createStatement();
-			ResultSet rs = stmt.executeQuery(comando);
-			while(rs.next()) {
-				tipoItem = new TipoItem();
-				tipoItem.setCodigo(rs.getInt("codigo"));
-				tipoItem.setTipo(rs.getString("tipo"));
-				listTipoItem.add(tipoItem);
-			}
-		}catch (SQLException e) {
-			e.printStackTrace();
-			throw new BrigaderiaException();
-		}return listTipoItem;
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(comando);
+		while(rs.next()) {
+			tipoItem = new TipoItem();
+			tipoItem.setCodigo(rs.getInt("codigo"));
+			tipoItem.setTipo(rs.getString("tipo"));
+			listTipoItem.add(tipoItem);
+		}
+		return listTipoItem;
 		
 	}
 

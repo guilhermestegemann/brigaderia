@@ -1,6 +1,7 @@
 package br.com.brigaderia.service;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,22 +19,19 @@ import br.com.brigaderia.validacoes.ValidaFichaTecnica;
 
 public class FichaTecnicaService {
 	
-	public List<IngredientesVO> buscarIngredientes() throws BrigaderiaException {
+	public List<IngredientesVO> buscarIngredientes() throws SQLException  {
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
 			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
 			return jdbcProduto.buscarIngredientes();
-		}catch (BrigaderiaException e) {
-			throw e;
 		}finally {
 			conec.fecharConexao();
 		}
 	}
 	
-	public void adicionar(FichaTecnica fichaTecnica) throws BrigaderiaException{
+	public void adicionar(FichaTecnica fichaTecnica) throws SQLException, BrigaderiaException {
 		Conexao conec = new Conexao();
-		
 		try {
 			Connection conexao = conec.abrirConexao();
 			FichaTecnicaDAO jdbcFichaTecnica = new JDBCFichaTecnicaDAO(conexao);
@@ -47,18 +45,12 @@ public class FichaTecnicaService {
 				jdbcFichaTecnica.adicionarIngredientes(codFichaTecnica, listIngredientes.get(i).getCodigo(), listIngredientes.get(i).getQtde());
 			}
 			
-		}catch (BrigaderiaException e) {
-			e.printStackTrace();
-			throw e;
-		}catch (Exception e) {
-			e.printStackTrace();
-			throw new BrigaderiaException();
 		}finally{
 			conec.fecharConexao();
 		}
 	}
 	
-	public FichaTecnica buscarFichaTecnicaPeloCodigoProduto (int codigoProduto) throws BrigaderiaException{
+	public FichaTecnica buscarFichaTecnicaPeloCodigoProduto (int codigoProduto) throws SQLException{
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
@@ -66,18 +58,12 @@ public class FichaTecnicaService {
 			FichaTecnica fichaTecnica = jdbcFichaTecnica.buscarPeloCodigoProduto(codigoProduto);
 			
 			return fichaTecnica;
-		}catch (BrigaderiaException e) {
-			throw e;
-		}catch (Exception e) {
-			e.printStackTrace();
-			throw new BrigaderiaException();
-		}
-		finally{
+		}finally{
 			conec.fecharConexao();
 		}	
 	}
 	
-	public void atualizarFichaTecnica (FichaTecnica fichaTecnica) throws BrigaderiaException {
+	public void atualizarFichaTecnica (FichaTecnica fichaTecnica) throws SQLException, BrigaderiaException {
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
@@ -92,12 +78,6 @@ public class FichaTecnicaService {
 			for(int i = 0; i < listIngredientes.size(); i++) {
 				jdbcFichaTecnica.adicionarIngredientes(fichaTecnica.getCodigoFichaTecnica(), listIngredientes.get(i).getCodigo(), listIngredientes.get(i).getQtde());
 			}
-		}catch (BrigaderiaException e) {
-			e.printStackTrace();
-			throw e;
-		}catch (Exception e) {
-			e.printStackTrace();
-			throw new BrigaderiaException();
 		}finally{
 			conec.fecharConexao();
 		}

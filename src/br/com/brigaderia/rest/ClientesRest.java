@@ -1,5 +1,7 @@
 package br.com.brigaderia.rest;
 
+import java.sql.SQLException;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -36,8 +38,10 @@ public class ClientesRest extends UtilRest{
 			service.adicionarCliente(cliente);
 			return buildResponse("Cliente cadastrado com sucesso");
 		}catch (BrigaderiaException e){
+			e.printStackTrace();
 			return buildErrorResponse(e.getMessage());
 		}catch (Exception e) {
+			e.printStackTrace();
 			return buildErrorResponse(ERROINESPERADO);
 		}
 	}
@@ -46,16 +50,15 @@ public class ClientesRest extends UtilRest{
 	@Path("/buscarClientes/{valorBusca}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	
-	public Response buscarClientes (@PathParam("valorBusca") String valorBusca) throws BrigaderiaException{
+	public Response buscarClientes (@PathParam("valorBusca") String valorBusca) {
 		
 		try {
 			
 			ClienteService service = new ClienteService();
 			return buildResponse(service.buscarClientesVO(valorBusca));
-		}catch (BrigaderiaException e) {
-			return buildErrorResponse(e.getMessage());
-		}catch(Exception e) {
-			return buildErrorResponse(ERROINESPERADO);
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return buildErrorResponse("Ocorreu um erro ao buscar clientes. Entre em contato com o administrador do sistema.");
 		}
 	}
 	
@@ -63,14 +66,16 @@ public class ClientesRest extends UtilRest{
 	@Path("/deletar/{codigo}")
 	@Consumes("application/*")
 	
-	public Response deletar (@PathParam("codigo") int codigo) throws BrigaderiaException{
+	public Response deletar (@PathParam("codigo") int codigo) {
 		try {
 			ClienteService service = new ClienteService();
 			service.deletarCliente(codigo);
 			return this.buildResponse("Cliente deletado!");
 		}catch (BrigaderiaException e) {
+			e.printStackTrace();
 			return buildErrorResponse(e.getMessage());
 		}catch (Exception e) {
+			e.printStackTrace();
 			return buildErrorResponse(ERROINESPERADO);
 		}
 	}
@@ -78,29 +83,30 @@ public class ClientesRest extends UtilRest{
 	@GET
 	@Path("/buscarClientePeloCodigo/{codigo}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public Response buscarClientePeloCodigo(@PathParam("codigo")int codigo) throws BrigaderiaException{
+	public Response buscarClientePeloCodigo(@PathParam("codigo")int codigo) {
 		try {
 			ClienteService service = new ClienteService(); 
 			return buildResponse(service.buscarClientePeloCodigo(codigo));
-		}catch (BrigaderiaException e) {
-			return buildErrorResponse(e.getMessage());
-		}catch (Exception e) {
-			return buildErrorResponse(ERROINESPERADO);
+		}catch (SQLException e) {
+			e.printStackTrace();
+			return buildErrorResponse("Ocorreu um erro ao buscar clientes. Entre em contato com o administrador do sistema.");
 		}
 	}
 	
 	@PUT
 	@Path("/atualizar")
 	@Consumes("application/*")
-	public Response atualizar (String clienteEditado) throws BrigaderiaException {
+	public Response atualizar (String clienteEditado) {
 		try {
 			Cliente cliente = new ObjectMapper().readValue(clienteEditado, Cliente.class);
 			ClienteService service = new ClienteService();
 			service.atualizarCliente(cliente);
 			return buildResponse("Cliente editado com sucesso.");
 		}catch (BrigaderiaException e){
+			e.printStackTrace();
 			return buildErrorResponse(e.getMessage());
 		}catch (Exception e) {
+			e.printStackTrace();
 			return buildErrorResponse(ERROINESPERADO);
 		}
 	}

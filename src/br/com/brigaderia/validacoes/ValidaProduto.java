@@ -12,13 +12,8 @@ import br.com.brigaderia.objetos.Produto;
 
 public class ValidaProduto {
 	
-	public void validarProduto (Produto produto) throws BrigaderiaException {
+	public void validarProduto (Produto produto)  throws BrigaderiaException{
 		
-		
-		
-		try {
-		
-			
 			if (produto.getDescricao().equals("")) {
 				throw new CamposObrigatoriosException();
 			}
@@ -39,10 +34,7 @@ public class ValidaProduto {
 	        	throw new UnMedidaInvalidaException();
 	        }
 	        
-		}catch(BrigaderiaException e) {
-			e.printStackTrace();
-			throw e;
-		}
+		
 		
         
 	}

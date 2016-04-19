@@ -1,5 +1,7 @@
 package br.com.brigaderia.rest;
 
+import java.sql.SQLException;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -27,7 +29,7 @@ public class ProdutosRest extends UtilRest{
 	@Path ("/adicionar")
 	@Consumes(MediaType.APPLICATION_JSON)
 	
-	public Response adicionar(String param) throws BrigaderiaException {
+	public Response adicionar(String param) {
 		try {
 			Produto produto = new ObjectMapper().readValue(param, Produto.class);
 			ProdutoService service = new ProdutoService();
@@ -47,37 +49,33 @@ public class ProdutosRest extends UtilRest{
 	
 	public Response buscarProdutos (@PathParam("valorBusca") String valorBusca,
 									@PathParam("ativo") String ativo,
-									@PathParam("tipoItem") String tipoItem) throws BrigaderiaException{
-		
+									@PathParam("tipoItem") String tipoItem){
 		try {
-			
 			ProdutoService service = new ProdutoService();
 			return buildResponse(service.buscarProdutos(valorBusca, ativo, tipoItem));
-		}catch (BrigaderiaException e) {
-			return buildErrorResponse(e.getMessage());
-		}catch(Exception e) {
-			return buildErrorResponse(ERROINESPERADO);
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return buildErrorResponse("Ocorreu um erro ao buscar produtos. Entre em contato com o administrador do sistema.");
 		}
 	}
 	
 	@GET
 	@Path("/buscarProdutoPeloCodigo/{codigo}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public Response buscarProdutoPeloCodigo(@PathParam("codigo")int codigo) throws BrigaderiaException{
+	public Response buscarProdutoPeloCodigo(@PathParam("codigo")int codigo){
 		try {
 			ProdutoService service = new ProdutoService(); 
 			return buildResponse(service.buscarProdutoPeloCodigo(codigo));
-		}catch (BrigaderiaException e) {
-			return buildErrorResponse(e.getMessage());
-		}catch (Exception e) {
-			return buildErrorResponse(ERROINESPERADO);
+		}catch (SQLException e) {
+			e.printStackTrace();
+			return buildErrorResponse("Ocorreu um erro ao buscar clientes. Entre em contato com o administrador do sistema.");
 		}
 	}
 	
 	@PUT
 	@Path("/atualizar")
 	@Consumes("application/*")
-	public Response atualizar (String produtoEditado) throws BrigaderiaException {
+	public Response atualizar (String produtoEditado) {
 		try {
 			Produto produto = new ObjectMapper().readValue(produtoEditado, Produto.class);
 			ProdutoService service = new ProdutoService();
@@ -95,7 +93,7 @@ public class ProdutosRest extends UtilRest{
 	@Path("/deletar/{codigo}/{tipoItem}")
 	@Consumes("application/*")
 	
-	public Response deletar (@PathParam("codigo") int codigo, @PathParam("tipoItem") int tipoItem) throws BrigaderiaException{
+	public Response deletar (@PathParam("codigo") int codigo, @PathParam("tipoItem") int tipoItem) {
 		try {
 			ProdutoService service = new ProdutoService();
 			service.deletarProduto(codigo, tipoItem);

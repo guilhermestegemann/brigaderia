@@ -1,5 +1,7 @@
 package br.com.brigaderia.rest;
 
+import java.sql.SQLException;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -24,9 +26,8 @@ public class CidadesRest extends UtilRest{
 		try {
 			CidadeService service = new CidadeService();
 			return buildResponse(service.buscar());
-		}catch (BrigaderiaException e) {
-			return buildErrorResponse(e.getMessage());
-		}catch (Exception e) {
+		}catch (SQLException e) {
+			e.printStackTrace();
 			return this.buildErrorResponse(ERROINESPERADO);
 		}
 		

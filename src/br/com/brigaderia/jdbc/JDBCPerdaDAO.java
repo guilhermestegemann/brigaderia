@@ -18,24 +18,17 @@ public class JDBCPerdaDAO implements PerdaDAO{
 		this.conexao = conexao;
 	}
 	
-	public void countProdutos(int codigo) throws BrigaderiaException {
+	public void countProdutos(int codigo) throws SQLException, ProdutoVinculadoEmPerdaException  {
 		String comando = "SELECT COUNT(*) AS QTDEPRODUTO FROM ITEMPERDA  WHERE ITEMPERDA.PRODUTO = " + codigo;
 		int qtdeProduto = 0;
-		try {
-			Statement stmt = conexao.createStatement();
-			ResultSet rs = stmt.executeQuery(comando);
-			while(rs.next()) {
-				qtdeProduto = rs.getInt("QTDEPRODUTO");
-			}
-			if (qtdeProduto > 0) {
-				throw new ProdutoVinculadoEmPerdaException();
-			}
-		}catch (BrigaderiaException e) {
-			e.printStackTrace();
-			throw e;
-		}catch (SQLException e) {
-			e.printStackTrace();
-			throw new BrigaderiaException();
+		
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(comando);
+		while(rs.next()) {
+			qtdeProduto = rs.getInt("QTDEPRODUTO");
+		}
+		if (qtdeProduto > 0) {
+			throw new ProdutoVinculadoEmPerdaException();
 		}
 	}
 }

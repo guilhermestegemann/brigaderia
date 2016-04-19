@@ -1,5 +1,7 @@
 package br.com.brigaderia.rest;
 
+import java.sql.SQLException;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -23,11 +25,9 @@ public class TipoItemRest extends UtilRest{
 		try {
 			TipoItemService service = new TipoItemService();
 			return this.buildResponse(service.buscar());
-		}catch (BrigaderiaException e) {
-			return buildErrorResponse(e.getMessage());
-		}catch (Exception e) {
+		}catch (SQLException e) {
 			e.printStackTrace();
-			return this.buildErrorResponse(ERROINESPERADO);
+			return buildErrorResponse("Ocorreu um erro ao buscar tipo item. Entre em contato com o administrador do sistema.");
 		}
 	}
 }

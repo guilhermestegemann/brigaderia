@@ -1,5 +1,7 @@
 package br.com.brigaderia.rest;
 
+import java.sql.SQLException;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -19,30 +21,26 @@ public class FichaTecnicaRest extends UtilRest{
 	@GET
 	@Path("/listarIngredientes")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public Response listarIngredientes() throws BrigaderiaException{
+	public Response listarIngredientes() {
 		
 		try {
 			FichaTecnicaService service = new FichaTecnicaService();
 			return this.buildResponse(service.buscarIngredientes());
-		}catch (BrigaderiaException e) {
-			return buildErrorResponse(e.getMessage());
-		}catch (Exception e) {
+		}catch (SQLException e) {
 			e.printStackTrace();
-			return this.buildErrorResponse(ERROINESPERADO);
+			return buildErrorResponse("Ocorreu um erro ao buscar ingredientes. Entre em contato com o administrador do sistema.");
 		}
 	}
 	
 	@GET
 	@Path("/buscarFichaTecnicaPeloCodigoProduto/{codigoProduto}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public Response buscarFichaTecnicaPeloCodigoProduto(@PathParam("codigoProduto")int codigoProduto) throws BrigaderiaException{
+	public Response buscarFichaTecnicaPeloCodigoProduto(@PathParam("codigoProduto")int codigoProduto) {
 		try {
 			FichaTecnicaService service = new FichaTecnicaService(); 
 			return buildResponse(service.buscarFichaTecnicaPeloCodigoProduto(codigoProduto));
-		}catch (BrigaderiaException e) {
-			return buildErrorResponse(e.getMessage());
-		}catch (Exception e) {
-			return buildErrorResponse(ERROINESPERADO);
+		}catch (SQLException e) {
+			return buildErrorResponse("Ocorreu um erro ao buscar ficha técnica. Entre em contato com o administrador do sistema.");
 		}
 	}
 }

@@ -19,24 +19,16 @@ public class JDBCOrdemProducaoDAO implements OrdemProducaoDAO {
 		this.conexao = conexao;
 	}
 	
-	public void countProdutos(int codigo) throws BrigaderiaException {
+	public void countProdutos(int codigo) throws SQLException, ProdutoVinculadoEmOrdemProducaoException {
 		String comando = "SELECT COUNT(*) AS QTDEPRODUTO FROM ITEMORDEMPRODUCAO  WHERE ITEMORDEMPRODUCAO.PRODUTO = " + codigo;
 		int qtdeProduto = 0;
-		try {
-			Statement stmt = conexao.createStatement();
-			ResultSet rs = stmt.executeQuery(comando);
-			while(rs.next()) {
-				qtdeProduto = rs.getInt("QTDEPRODUTO");
-			}
-			if (qtdeProduto > 0) {
-				throw new ProdutoVinculadoEmOrdemProducaoException();
-			}
-		}catch (BrigaderiaException e) {
-			e.printStackTrace();
-			throw e;
-		}catch (SQLException e) {
-			e.printStackTrace();
-			throw new BrigaderiaException();
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(comando);
+		while(rs.next()) {
+			qtdeProduto = rs.getInt("QTDEPRODUTO");
+		}
+		if (qtdeProduto > 0) {
+			throw new ProdutoVinculadoEmOrdemProducaoException();
 		}
 	}
 }

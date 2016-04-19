@@ -1,6 +1,7 @@
 package br.com.brigaderia.service;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import br.com.brigaderia.bd.conexao.Conexao;
@@ -12,14 +13,12 @@ import br.com.brigaderia.objetos.TipoItem;
 public class TipoItemService {
 	
 	
-	public List<TipoItem> buscar() throws BrigaderiaException {
+	public List<TipoItem> buscar() throws SQLException {
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
 			TipoItemDAO jdbcTipoItem = new JDBCTipoItemDAO(conexao);
 			return jdbcTipoItem.buscar();
-		}catch (BrigaderiaException e) {
-			throw e;
 		}finally {
 			conec.fecharConexao();
 		}

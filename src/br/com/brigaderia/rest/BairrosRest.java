@@ -22,8 +22,6 @@ public class BairrosRest extends UtilRest{
 		try {
 			BairroService service = new BairroService();
 			return this.buildResponse(service.buscar());
-		}catch (BrigaderiaException e) {
-			return buildErrorResponse(e.getMessage());
 		}catch (Exception e) {
 			e.printStackTrace();
 			return this.buildErrorResponse(ERROINESPERADO);

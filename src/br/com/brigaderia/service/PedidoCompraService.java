@@ -79,33 +79,29 @@ public class PedidoCompraService {
 		}
 	}
 	
-	public List<Produto> buscarProdutos() throws BrigaderiaException {
+	public List<Produto> buscarProdutos() throws SQLException {
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
 			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
 			return jdbcProduto.buscarProdutos("null", "S", "2,3");
-		}catch (BrigaderiaException e) {
-			throw e;
 		}finally {
 			conec.fecharConexao();
 		}
 	}
 	
-	public List<PedidoCompra> buscarPedidoCompra (String dataIni, String dataFim) throws BrigaderiaException{
+	public List<PedidoCompra> buscarPedidoCompra (String dataIni, String dataFim) throws SQLException {
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
 			PedidoCompraDAO jdbcPedidoCompra = new JDBCPedidoCompraDAO(conexao);
 			return jdbcPedidoCompra.buscarPedidos(dataIni, dataFim);
-		}catch (Exception e) {
-			throw e;
 		}finally{
 			conec.fecharConexao();
 		}
 	}
 	
-	public PedidoCompra buscarPedidoPeloNumero (int numero) throws BrigaderiaException{
+	public PedidoCompra buscarPedidoPeloNumero (int numero) throws SQLException {
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
@@ -113,19 +109,13 @@ public class PedidoCompraService {
 			PedidoCompra pedidoCompra = jdbcPedidoCompra.buscarPeloNumero(numero);
 			pedidoCompra.setItemPedidoCompra(jdbcPedidoCompra.buscarItensPedido(pedidoCompra.getNumero()));
 			return pedidoCompra;
-		}catch (BrigaderiaException e) {
-			throw e;
-		}catch (Exception e) {
-			e.printStackTrace();
-			throw new BrigaderiaException();
-		}
-		finally{
+		}finally{
 			conec.fecharConexao();
 		}	
 	}
 	
 	
-	public String deletarPedido (int numero) throws BrigaderiaException{
+	public String deletarPedido (int numero) throws SQLException {
 		Conexao conec = new Conexao();
 		String msg = "";
 		try {
@@ -156,10 +146,6 @@ public class PedidoCompraService {
 				msg = "Pedido deletado com sucesso";
 			}
 			
-		}catch (BrigaderiaException e) {
-			throw e;
-		}catch (SQLException e) {
-			e.printStackTrace();
 		}finally {
 			conec.fecharConexao();
 		}

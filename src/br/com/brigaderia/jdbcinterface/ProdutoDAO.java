@@ -10,12 +10,12 @@ import br.com.brigaderia.objetos.Produto;
 
 public interface ProdutoDAO {
 	
-	public List<IngredientesVO> buscarIngredientes () throws BrigaderiaException;
-	public List<Produto> buscarProdutos (String valorBusca, String ativo, String tipoItem) throws BrigaderiaException;
-	public int adicionar(Produto produto) throws BrigaderiaException;
-	public void atualizar (Produto produto) throws BrigaderiaException;
-	public Produto buscarPeloCodigo(int codigo) throws BrigaderiaException;
-	public void deletar(int codigo) throws BrigaderiaException;
+	public List<IngredientesVO> buscarIngredientes () throws SQLException;
+	public List<Produto> buscarProdutos (String valorBusca, String ativo, String tipoItem) throws SQLException;
+	public int adicionar(Produto produto) throws SQLException;
+	public void atualizar (Produto produto) throws SQLException;
+	public Produto buscarPeloCodigo(int codigo) throws SQLException;
+	public void deletar(int codigo) throws SQLException;
 	public float retornaCusto (int codProduto) throws SQLException;
 	public float retornaEstoque (int codProduto) throws SQLException;
 	public float retornaValorVenda (int codProduto) throws SQLException;
