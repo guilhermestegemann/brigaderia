@@ -118,8 +118,8 @@ $(document).ready(function() {
 				if (produto.tipoItem == "1") {
 					$("#btnSalvarProduto").hide();
 					$("#btnCancelarProduto").hide();
-					$("#subConteudo").load("resources/cadastro/fichaTecnica/fichaTecnica.html", function (){
-						BRIGADERIA.fichaTecnica.exibirFormulario("Edição");
+					$("#subConteudo").load("resources/cadastro/fichaTecnica/fichaTecnica.html", function (){//passar id da div como parametro
+						BRIGADERIA.fichaTecnica.exibirFormulario("Edição");//passar funcao de callback como parametro;
 					});
 				}else if (produto.tipoItem == "2"){
 					$("#tipoItemInput").val("Ingrediente");
@@ -134,7 +134,6 @@ $(document).ready(function() {
 	BRIGADERIA.produtos.salvarEdicao = function() {
 		var produto = new Object();
 		produto = BRIGADERIA.produtos.montarProduto();
-		//$('form input, form select .produto').each(function(){produto[this.name]=this.value;});
 		var retornoValida = BRIGADERIA.validaProdutos.validar(produto);
 		if (retornoValida == "") {
 			produto.dataCadastro = BRIGADERIA.convertData.strToDate(produto.dataCadastro);

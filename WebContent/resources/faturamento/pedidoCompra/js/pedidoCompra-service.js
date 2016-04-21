@@ -28,7 +28,6 @@ $(document).ready(function() {
 		};
 	};
 	
-	
 	BRIGADERIA.pedidoCompraService.listarProdutos = function(cfg) {
 		cfg.url = "rest/pedidoCompra/listarProdutos";
 		BRIGADERIA.ajax.get(BRIGADERIA.pedidoCompraService.defaultCfg(cfg));

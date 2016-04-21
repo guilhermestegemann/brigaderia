@@ -86,7 +86,8 @@ $(document).ready( function () {
 						  + "<td>" + $("#qtdeProduto").val().replace(",",".") + "</td>"
 						  + "<td>" + parseFloat($("#unitario").val().replace(",",".")).toFixed(2) + "</td>"
 						  + "<td>" + $("#totalItemPedidoCompra").val() + "</td>"
-						  + "<td><a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.pedidoCompra.deletarProduto(this"+ "," + $("#produtos").val() + "," + "\"" + descricao + "\"" + "," + parseFloat($("#qtdeProduto").val().replace(",",".")) + "," + "\"" + unEntrada + "\"" + "," + parseFloat($("#unitario").val()) + "," + parseFloat($("#totalItemPedidoCompra").val()) +")' aria-hidden='true'></i></a>"
+						  + "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.pedidoCompra.editarProduto(this"+ "," + $("#produtos").val() + "," + "\"" + descricao + "\"" + "," + parseFloat($("#qtdeProduto").val().replace(",",".")) + "," + "\"" + unEntrada + "\"" + "," + parseFloat($("#unitario").val()) + "," + parseFloat($("#totalItemPedidoCompra").val()) +")' aria-hidden='true'></i></a>"
+						  	  + "<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.pedidoCompra.deletarProduto(this"+ "," + $("#produtos").val() + "," + "\"" + descricao + "\"" + "," + parseFloat($("#totalItemPedidoCompra").val()) +")' aria-hidden='true'></i></a></td>"
 					  + "</tr>";
 				$("#totalPedidoCompra").val(parseFloat(parseFloat($("#totalItemPedidoCompra").val()) + parseFloat($("#totalPedidoCompra").val())).toFixed(2)) // soma o total do pedido.
 				var prod = {
@@ -107,20 +108,36 @@ $(document).ready( function () {
 		}
 	};
 	
-	BRIGADERIA.pedidoCompra.deletarProduto = function (handler, codigo, descricao, qtde, unEntrada, unitario, totalItem) {
+	BRIGADERIA.pedidoCompra.editarProduto = function (handler, codigo, descricao, qtde, unEntrada, unitario, totalItem) {
+		debugger;
 		$("#qtdeProduto").val(parseFloat(qtde));
 		$("#unEntrada").val(unEntrada);
 		$("#unitario").val(parseFloat(unitario));
 		$("#totalItemPedidoCompra").val(totalItem);
+		
 		for (var i = 0; i < produtoArray.length; i++) {
 			if (produtoArray[i].codigoProduto == codigo) {
 				produtoArray.splice(i, 1);
 			}
 		}
-		var tr = $(handler).closest('tr');
-		tr.remove();  
+		
+		$(handler).closest('tr').remove();//exclui o tr mais proximo.
 		window.event.preventDefault();
-		$('#produtos').append('<option value="' + codigo + '" selected="selected">' + descricao + '</option>');
+		$('#produtos').append('<option value="' + codigo + '" selected="unselected">' + descricao + '</option>');
+		$("#totalPedidoCompra").val(parseFloat(parseFloat($("#totalPedidoCompra").val()) - parseFloat(totalItem)).toFixed(2)) //diminui do total do pedido.
+	};
+	
+	BRIGADERIA.pedidoCompra.deletarProduto = function (handler, codigo, descricao, totalItem) {
+		
+		for (var i = 0; i < produtoArray.length; i++) {
+			if (produtoArray[i].codigoProduto == codigo) {
+				produtoArray.splice(i, 1);
+			}
+		}
+		
+		$(handler).closest('tr').remove();//exclui o tr mais proximo.
+		window.event.preventDefault();
+		$('#produtos').append('<option value="' + codigo + '">' + descricao + '</option>');
 		$("#totalPedidoCompra").val(parseFloat(parseFloat($("#totalPedidoCompra").val()) - parseFloat(totalItem)).toFixed(2)) //diminui do total do pedido.
 	};
 	
@@ -164,12 +181,4 @@ $(document).ready( function () {
 			}
 		});	
 	};
-	
 });
-
-
-
-
-
-
-

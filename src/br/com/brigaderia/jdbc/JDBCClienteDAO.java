@@ -172,30 +172,22 @@ public class JDBCClienteDAO implements ClienteDAO{
 	
 	public void verificarCpfDuplicado (String cpf) throws SQLException, CpfDuplicadoException{
 		
-		String comando = "SELECT COUNT(*) AS QTDECLIENTE FROM CLIENTE WHERE CLIENTE.CPF = '" + cpf + "'";
-		int qtdeClientes = 0;
+		String comando = "SELECT CODIGO FROM CLIENTE WHERE CLIENTE.CPF = '" + cpf + "' LIMIT 1";
 	
 		Statement stmt = conexao.createStatement();
 		ResultSet rs = stmt.executeQuery(comando);
-		while(rs.next()) {
-			qtdeClientes = rs.getInt("QTDECLIENTE");
-		}
-		if (qtdeClientes > 0) {
+		if (rs.next()) {
 			throw new CpfDuplicadoException();
 		}
 	}
 	
 	public void verificarCpfDuplicadoEdicao (String cpf, int codigo) throws SQLException, CpfDuplicadoException {
 		
-		String comando = "SELECT COUNT(*) AS QTDECLIENTE FROM CLIENTE WHERE CLIENTE.CPF = '" + cpf + "' AND CLIENTE.CODIGO <> " + codigo;
-		int qtdeClientes = 0;
-		
+		String comando = "SELECT CODIGO FROM CLIENTE WHERE CLIENTE.CPF = '" + cpf + "' AND CLIENTE.CODIGO <> " + codigo + " LIMIT 1";
+			
 		Statement stmt = conexao.createStatement();
 		ResultSet rs = stmt.executeQuery(comando);
-		while(rs.next()) {
-			qtdeClientes = rs.getInt("QTDECLIENTE");
-		}
-		if (qtdeClientes > 0) {
+		if (rs.next()) {
 			throw new CpfDuplicadoException();
 		}
 	}

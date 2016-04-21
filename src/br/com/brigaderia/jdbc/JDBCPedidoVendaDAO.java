@@ -19,27 +19,21 @@ public class JDBCPedidoVendaDAO implements PedidoVendaDAO{
 	}
 	
 	public void verificaPedidoCliente (int codigo) throws SQLException, ClienteComPedidoException  {
-		String comando = "SELECT COUNT(*) AS QTDEPEDIDOS FROM PEDIDO  WHERE PEDIDO.CLIENTE = " + codigo;
-		int qtdeClientes = 0;
+		String comando = "SELECT CLIENTE FROM PEDIDO  WHERE PEDIDO.CLIENTE = " + codigo + " LIMIT 1";
+		
 		Statement stmt = conexao.createStatement();
 		ResultSet rs = stmt.executeQuery(comando);
-		while(rs.next()) {
-			qtdeClientes = rs.getInt("QTDEPEDIDOS");
-		}
-		if (qtdeClientes > 0) {
+		if (rs.next()) {
 			throw new ClienteComPedidoException();
 		}
 	}
 	
 	public void countProdutos(int codigo) throws SQLException, ProdutoVinculadoEmPedidoVendaException  {
-		String comando = "SELECT COUNT(*) AS QTDEPRODUTO FROM ITEMPEDIDO  WHERE ITEMPEDIDO.PRODUTO = " + codigo;
-		int qtdeProduto = 0;
+		String comando = "SELECT PRODUTO FROM ITEMPEDIDO  WHERE ITEMPEDIDO.PRODUTO = " + codigo + " LIMIT 1";
+		
 		Statement stmt = conexao.createStatement();
 		ResultSet rs = stmt.executeQuery(comando);
-		while(rs.next()) {
-			qtdeProduto = rs.getInt("QTDEPRODUTO");
-		}
-		if (qtdeProduto > 0) {
+		if (rs.next()) {
 			throw new ProdutoVinculadoEmPedidoVendaException();
 		}
 	}

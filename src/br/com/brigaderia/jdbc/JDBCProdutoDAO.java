@@ -158,43 +158,6 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 	    
 	}
 	
-	public float retornaCusto (int codProduto) throws SQLException  {
-		
-		String sqlProduto = "SELECT PRODUTO.VALORCUSTO FROM PRODUTO WHERE PRODUTO.CODIGO = " + codProduto;
-
-		float valorCusto = 0;
-		Statement stmt = conexao.createStatement();
-		ResultSet rs = stmt.executeQuery(sqlProduto);
-		while(rs.next()) {
-			valorCusto = rs.getFloat("VALORCUSTO");
-		}
-		return valorCusto;
-	}
-	
-	public float retornaEstoque (int codProduto) throws SQLException  {
-		
-		String sqlProduto = "SELECT PRODUTO.ESTOQUE FROM PRODUTO WHERE PRODUTO.CODIGO = " + codProduto;
-		float estoque = 0;
-		Statement stmt = conexao.createStatement();
-		ResultSet rs = stmt.executeQuery(sqlProduto);
-		while(rs.next()) {
-			estoque = rs.getFloat("ESTOQUE");
-		}
-		return estoque;
-	}
-	
-	public float retornaValorVenda (int codProduto) throws SQLException  {
-		
-		String sqlProduto = "SELECT PRODUTO.VALORVENDA FROM PRODUTO WHERE PRODUTO.CODIGO = " + codProduto;
-		float valorVenda = 0;
-		Statement stmt = conexao.createStatement();
-		ResultSet rs = stmt.executeQuery(sqlProduto);
-		while(rs.next()) {
-			valorVenda = rs.getFloat("VALORVENDA");
-		}
-		return valorVenda;
-	}
-	
 	public void atualizarEstoque(int codProduto, float qtde, float custo, float margem) throws SQLException  {
 		
 		String update = "UPDATE PRODUTO SET PRODUTO.VALORCUSTO = " + custo

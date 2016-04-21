@@ -8,8 +8,10 @@ import java.util.List;
 
 import br.com.brigaderia.bd.conexao.Conexao;
 import br.com.brigaderia.exception.BrigaderiaException;
+import br.com.brigaderia.jdbc.JDBCFichaTecnicaDAO;
 import br.com.brigaderia.jdbc.JDBCPedidoCompraDAO;
 import br.com.brigaderia.jdbc.JDBCProdutoDAO;
+import br.com.brigaderia.jdbcinterface.FichaTecnicaDAO;
 import br.com.brigaderia.jdbcinterface.PedidoCompraDAO;
 import br.com.brigaderia.jdbcinterface.ProdutoDAO;
 import br.com.brigaderia.objetos.ItemPedidoCompra;
@@ -32,38 +34,54 @@ public class PedidoCompraService {
 			pedidoCompra.setData(new Date());
 			PedidoCompraDAO jdbcPedidoCompra = new JDBCPedidoCompraDAO(conexao);
 			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
+			FichaTecnicaDAO jdbcFichaTecnica = new JDBCFichaTecnicaDAO(conexao);
 			pedidoCompra.setNumero(jdbcPedidoCompra.adicionarPedido(pedidoCompra));
 			List<ItemPedidoCompra> listProdutos = new ArrayList<>();
 			listProdutos = pedidoCompra.getItemPedidoCompra();
 			
-			int codProduto;
-			float qtde, unitario, total, custo, estoque, valorVenda, novoCusto, margem;
-		
-			for(int i = 0; i < listProdutos.size(); i++) {
+			int codProduto, tipoItem;
+			float qtde, unitario, total, custo, qtdeEntrada, estoque, valorVenda, novoCusto, margem;
+			
+			for (ItemPedidoCompra itemPedidoCompra : listProdutos) {
+				codProduto = itemPedidoCompra.getCodigoProduto();
+				qtde = itemPedidoCompra.getQtde();
+				unitario = itemPedidoCompra.getUnitario();
+				total = itemPedidoCompra.getTotal();
+				Produto produto = null;
+				produto = new Produto();
+				produto = jdbcProduto.buscarPeloCodigo(codProduto);
+				tipoItem = produto.getTipoItem();
+				custo = produto.getValorCusto();
+				qtdeEntrada = produto.getQtdeEntrada();
+				estoque = produto.getEstoque();
+				valorVenda = produto.getValorVenda();
 				
-				codProduto = listProdutos.get(i).getCodigoProduto();
-				qtde = listProdutos.get(i).getQtde();
-				unitario = listProdutos.get(i).getUnitario();
-				total = listProdutos.get(i).getTotal();
-				custo = jdbcProduto.retornaCusto(codProduto);
-				estoque = jdbcProduto.retornaEstoque(codProduto);
-				valorVenda = jdbcProduto.retornaValorVenda(codProduto);
 				novoCusto = 0;
 				margem = 0;
 				jdbcPedidoCompra.adicionarProdutos(pedidoCompra.getNumero(), codProduto, qtde, unitario, total);
 				
+				//Calculo de Custo Medio
 				if (estoque <= 0) {
 					if(unitario > 0) {
-						novoCusto = unitario;	
+						novoCusto = unitario / qtdeEntrada;	
 					}
 				}else{
 					novoCusto =((custo * estoque) + (unitario * qtde))/(estoque + qtde);
 					
 				}
 				if (novoCusto > 0) {
-					margem = ((valorVenda / novoCusto)-1)*100;
+					if (valorVenda > 0) {
+						margem = ((valorVenda / novoCusto)-1)*100;
+					}
 				}
-				jdbcProduto.atualizarEstoque(codProduto, qtde, novoCusto, margem);
+				
+				jdbcProduto.atualizarEstoque(codProduto, (qtde * qtdeEntrada), novoCusto, margem);
+				
+				if (tipoItem == 2){
+					if (novoCusto != custo) {
+						jdbcFichaTecnica.atualizarCustoFichaTecnica(codProduto);
+					}
+				}
 			}
 			conexao.commit();
 		}catch (BrigaderiaException e) {
@@ -128,22 +146,25 @@ public class PedidoCompraService {
 			List<ItemPedidoCompra> listItemPedido = new ArrayList<ItemPedidoCompra>();
 			listItemPedido = jdbcPedidoCompra.buscarItensPedido(numero);
 			float estoque, qtde;
-			
-			for (int i = 0; i < listItemPedido.size(); i++) {
-				estoque = listItemPedido.get(i).getEstoque();
-				qtde = listItemPedido.get(i).getQtde();
+			float qtdeEntrada = 0;
+			for (ItemPedidoCompra itemPedidoCompra : listItemPedido) {
+				estoque = itemPedidoCompra.getEstoque();
+				qtde = itemPedidoCompra.getQtde();
+				Produto produto = new Produto();
+				produto = jdbcProduto.buscarPeloCodigo(itemPedidoCompra.getCodigoProduto());
+				qtdeEntrada = produto.getQtdeEntrada();
 				if (estoque < qtde) {
 					if (msg.equals("")){
 						msg = "<h>Produtos com inconsistência ao excluir Pedido de Compra.</h></br>";
 					}
-					msg += "Código: " + listItemPedido.get(i).getCodigoProduto() + " Descrição: " + listItemPedido.get(i).getDescricao()
+					msg += "Código: " + itemPedidoCompra.getCodigoProduto() + " Descrição: " + itemPedidoCompra.getDescricao()
 						 + " Estoque: " + estoque + " Quantidade: " + qtde + "<br>";	
 				}
 			}
 			if (msg.equals("")) {
 				jdbcPedidoCompra.deletarPedido(numero);
 				for (int i = 0; i < listItemPedido.size(); i++) {
-					jdbcProduto.retiraEstoque(listItemPedido.get(i).getCodigoProduto(), listItemPedido.get(i).getQtde());
+					jdbcProduto.retiraEstoque(listItemPedido.get(i).getCodigoProduto(), (listItemPedido.get(i).getQtde() * qtdeEntrada));
 				}
 				
 				msg = "Pedido deletado com sucesso";

@@ -18,15 +18,11 @@ public class JDBCPerdaDAO implements PerdaDAO{
 	}
 	
 	public void countProdutos(int codigo) throws SQLException, ProdutoVinculadoEmPerdaException  {
-		String comando = "SELECT COUNT(*) AS QTDEPRODUTO FROM ITEMPERDA  WHERE ITEMPERDA.PRODUTO = " + codigo;
-		int qtdeProduto = 0;
+		String comando = "SELECT PRODUTO FROM ITEMPERDA  WHERE ITEMPERDA.PRODUTO = " + codigo + " LIMIT 1";
 		
 		Statement stmt = conexao.createStatement();
 		ResultSet rs = stmt.executeQuery(comando);
-		while(rs.next()) {
-			qtdeProduto = rs.getInt("QTDEPRODUTO");
-		}
-		if (qtdeProduto > 0) {
+		if (rs.next()) {
 			throw new ProdutoVinculadoEmPerdaException();
 		}
 	}

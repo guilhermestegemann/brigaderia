@@ -64,14 +64,11 @@ public class JDBCPedidoCompraDAO implements PedidoCompraDAO {
 	
 	public void countProdutos(int codigo) throws SQLException, ProdutoVinculadoEmPedidoCompraException {
 		
-		String comando = "SELECT COUNT(*) AS QTDEPRODUTO FROM ITEMCOMPRA  WHERE ITEMCOMPRA.PRODUTO = " + codigo;
-		int qtdeProduto = 0;
+		String comando = "SELECT PRODUTO FROM ITEMCOMPRA  WHERE ITEMCOMPRA.PRODUTO = " + codigo + " LIMIT 1";
+		
 		Statement stmt = conexao.createStatement();
 		ResultSet rs = stmt.executeQuery(comando);
-		while(rs.next()) {
-			qtdeProduto = rs.getInt("QTDEPRODUTO");
-		}
-		if (qtdeProduto > 0) {
+		if (rs.next()) {
 			throw new ProdutoVinculadoEmPedidoCompraException();
 		}
 	}

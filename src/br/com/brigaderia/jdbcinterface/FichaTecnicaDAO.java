@@ -14,4 +14,5 @@ public interface FichaTecnicaDAO {
 	public FichaTecnica buscarPeloCodigoProduto(int codigoProduto) throws SQLException;
 	public void deletarIngredientes(int codFicha) throws SQLException;
 	public void countIngredientes(int codigo) throws SQLException, IngredienteVinculadoEmFichaTecnicaException;
+	public void atualizarCustoFichaTecnica(int codIngrediente) throws SQLException;
 }

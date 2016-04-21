@@ -8,15 +8,21 @@ public class Estado implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	
 	
 	private int codigo;
 	private String nome;
 	private String uf;
 	
-	
-	public Estado(int int1, String string, String string2) {
-		// TODO Auto-generated constructor stub
+	public Estado(int codigo, String nome, String uf) {
+		this.codigo = codigo;
+		this.nome = nome;
+		this.uf = uf;
 	}
+
 	public int getCodigo() {
 		return codigo;
 	}

@@ -85,6 +85,17 @@ public class JDBCFichaTecnicaDAO implements FichaTecnicaDAO{
 		p.execute();			
 	}
 	
+	public void atualizarCustoFichaTecnica(int codIngrediente) throws SQLException {
+		
+		String comando = "SELECT FICHATECNICA FROM ITEMFICHATECNICA WHERE INGREDIENTE = " + codIngrediente;
+		
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(comando);
+		while(rs.next()) {
+			somarFichaTecnica(rs.getInt("FICHATECNICA"));
+		}
+	}
+	
 	public FichaTecnica buscarPeloCodigoProduto (int codigoProduto) throws SQLException {
 		
 		String comando = "SELECT * FROM FICHATECNICA WHERE FICHATECNICA.PRODUTO = " + codigoProduto;
@@ -145,14 +156,11 @@ public class JDBCFichaTecnicaDAO implements FichaTecnicaDAO{
 	
 	public void countIngredientes(int codigo) throws SQLException, IngredienteVinculadoEmFichaTecnicaException {
 		
-		String comando = "SELECT COUNT(*) AS QTDEINGREDIENTE FROM ITEMFICHATECNICA  WHERE ITEMFICHATECNICA.INGREDIENTE = " + codigo;
-		int qtdeProduto = 0;
+		String comando = "SELECT INGREDIENTE FROM ITEMFICHATECNICA  WHERE ITEMFICHATECNICA.INGREDIENTE = " + codigo + " LIMIT 1";
+		
 		Statement stmt = conexao.createStatement();
 		ResultSet rs = stmt.executeQuery(comando);
-		while(rs.next()) {
-			qtdeProduto = rs.getInt("QTDEINGREDIENTE");
-		}
-		if (qtdeProduto > 0) {
+		if (rs.next()) {
 			throw new IngredienteVinculadoEmFichaTecnicaException();
 		}
 	}
