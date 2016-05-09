@@ -8,80 +8,40 @@ import java.util.List;
 
 import br.com.brigaderia.bd.conexao.Conexao;
 import br.com.brigaderia.exception.BrigaderiaException;
-import br.com.brigaderia.jdbc.JDBCFichaTecnicaDAO;
-import br.com.brigaderia.jdbc.JDBCPedidoCompraDAO;
+import br.com.brigaderia.jdbc.JDBCClienteDAO;
+import br.com.brigaderia.jdbc.JDBCPedidoVendaDAO;
 import br.com.brigaderia.jdbc.JDBCProdutoDAO;
-import br.com.brigaderia.jdbcinterface.FichaTecnicaDAO;
-import br.com.brigaderia.jdbcinterface.PedidoCompraDAO;
+import br.com.brigaderia.jdbcinterface.ClienteDAO;
+import br.com.brigaderia.jdbcinterface.PedidoVendaDAO;
 import br.com.brigaderia.jdbcinterface.ProdutoDAO;
-import br.com.brigaderia.objetos.ItemPedidoCompra;
-import br.com.brigaderia.objetos.PedidoCompra;
+import br.com.brigaderia.objetos.DadosClientesVO;
+import br.com.brigaderia.objetos.ItemPedidoVenda;
+import br.com.brigaderia.objetos.PedidoVenda;
 import br.com.brigaderia.objetos.Produto;
-import br.com.brigaderia.validacoes.ValidaPedidoCompra;
+import br.com.brigaderia.validacoes.ValidaPedidoVenda;
 
-public class PedidoCompraService {
+public class PedidoVendaService {
 	
-	public void adicionarPedido (PedidoCompra pedidoCompra) throws BrigaderiaException, SQLException {
+	public void adicionarPedido (PedidoVenda pedidoVenda) throws BrigaderiaException, SQLException {
 		
 		Conexao conec = new Conexao();
 		Connection conexao = conec.abrirConexao();
 		try {
 			
 			conexao.setAutoCommit(false);
-			pedidoCompra.setTotal(pedidoCompra.getTotal());
-			ValidaPedidoCompra validaPedidoCompra = new ValidaPedidoCompra();
-			validaPedidoCompra.validar(pedidoCompra);
-			pedidoCompra.setData(new Date());
-			PedidoCompraDAO jdbcPedidoCompra = new JDBCPedidoCompraDAO(conexao);
-			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
-			FichaTecnicaDAO jdbcFichaTecnica = new JDBCFichaTecnicaDAO(conexao);
-			pedidoCompra.setNumero(jdbcPedidoCompra.adicionarPedido(pedidoCompra));
-			List<ItemPedidoCompra> listProdutos = new ArrayList<>();
-			listProdutos = pedidoCompra.getItemPedidoCompra();
+			//pedidoVenda.setTotal(pedidoVenda.getTotal()); ?????
+			ValidaPedidoVenda validaPedidoVenda = new ValidaPedidoVenda();
+			validaPedidoVenda.validar(pedidoVenda);
+			pedidoVenda.setDataEmissao(new Date());
+			PedidoVendaDAO jdbcPedidoVenda = new JDBCPedidoVendaDAO(conexao);
+			pedidoVenda.setNumero(jdbcPedidoVenda.adicionarPedido(pedidoVenda));
+			List<ItemPedidoVenda> listProdutos = new ArrayList<>();
+			listProdutos = pedidoVenda.getItemPedidoVenda();
 			
-			int codProduto, tipoItem;
-			float qtde, unitario, total, custo, qtdeEntrada, estoque, valorVenda, novoCusto, margem;
-			
-			for (ItemPedidoCompra itemPedidoCompra : listProdutos) {
-				codProduto = itemPedidoCompra.getCodigoProduto();
-				qtde = itemPedidoCompra.getQtde();
-				unitario = itemPedidoCompra.getUnitario();
-				total = itemPedidoCompra.getTotal();
-				Produto produto = null;
-				produto = new Produto();
-				produto = jdbcProduto.buscarPeloCodigo(codProduto);
-				tipoItem = produto.getTipoItem();
-				custo = produto.getValorCusto();
-				qtdeEntrada = produto.getQtdeEntrada();
-				estoque = produto.getEstoque();
-				valorVenda = produto.getValorVenda();
-				
-				novoCusto = 0;
-				margem = 0;
-				jdbcPedidoCompra.adicionarProdutos(pedidoCompra.getNumero(), codProduto, qtde, unitario, total);
-				
-				//Calculo de Custo Medio
-				if (estoque <= 0) {
-					if(unitario > 0) {
-						novoCusto = unitario / qtdeEntrada;	
-					}
-				}else{
-					novoCusto =((custo * estoque) + (unitario * qtde))/(estoque + qtde);
-					
-				}
-				if (novoCusto > 0) {
-					if (valorVenda > 0) {
-						margem = ((valorVenda / novoCusto)-1)*100;
-					}
-				}
-				
-				jdbcProduto.atualizarEstoque(codProduto, (qtde * qtdeEntrada), novoCusto, margem);
-				
-				if (tipoItem == 2){
-					if (novoCusto != custo) {
-						jdbcFichaTecnica.atualizarCustoFichaTecnica(codProduto);
-					}
-				}
+			for (ItemPedidoVenda itemPedidoVenda : listProdutos) {
+
+				jdbcPedidoVenda.adicionarProdutos(pedidoVenda.getNumero(), itemPedidoVenda.getCodigoProduto(), itemPedidoVenda.getQtde(),
+						                          itemPedidoVenda.getUnitario(), itemPedidoVenda.getTotal());
 			}
 			conexao.commit();
 		}catch (BrigaderiaException e) {
@@ -102,13 +62,25 @@ public class PedidoCompraService {
 		try {
 			Connection conexao = conec.abrirConexao();
 			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
-			return jdbcProduto.buscarProdutos("null", "S", "2,3");
+			return jdbcProduto.buscarProdutos("null", "S", "1,3");
 		}finally {
 			conec.fecharConexao();
 		}
 	}
 	
-	public List<PedidoCompra> buscarPedidoCompra (String dataIni, String dataFim) throws SQLException {
+	public List<DadosClientesVO> buscarClientes() throws SQLException {
+		
+		Conexao conec = new Conexao();
+		try {
+			Connection conexao = conec.abrirConexao();
+			ClienteDAO jdbcCliente = new JDBCClienteDAO(conexao);
+			return jdbcCliente.buscarClientes("null");
+		}finally {
+			conec.fecharConexao();
+		}
+	}
+	
+	/*public List<PedidoCompra> buscarPedidoCompra (String dataIni, String dataFim) throws SQLException {
 		
 		Conexao conec = new Conexao();
 		try {
@@ -173,5 +145,5 @@ public class PedidoCompraService {
 			conec.fecharConexao();
 		}
 		return msg;
-	}
+	}*/
 }

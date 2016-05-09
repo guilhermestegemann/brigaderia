@@ -1,13 +1,5 @@
-<script type="text/javascript">
-	$(".deletaRegistro").on( "click", function() {
-		bootbox.confirm({ 
-		    size: 'small',
-		    message: "Deseja deletar o Pedido de Venda?", 
-		    callback: function(result){
-		    }
-		})
-	})
-</script>
+<script type="text/javascript" src="resources/faturamento/pedidoVenda/js/pedidoVenda-service.js"></script>
+<script type="text/javascript" src="resources/gerenciar/pedidoVenda/js/gerenciarPedidoVenda.js"></script>
 <div class='jumbotron container-fluid'>
 	<h1>Pedido de Venda</h1>
 	<hr>
@@ -17,7 +9,7 @@
 			<span class="input-group-btn">
 				<button class="btn btn-success" type="button">Pesquisar</button>
 			</span>
-			<button class='btn btn-primary btn pull-right' onclick="carregarConteudo('resources/faturamento/pedidoVenda/pedidoVenda.html')">Lançar Venda</button>
+			<button class='btn btn-primary btn pull-right' onclick="BRIGADERIA.gerenciarPedidoVenda.lancarPedido()">Lançar Venda</button>
 		</div>
 	</div>
 	<table class='table col-sm-12'>

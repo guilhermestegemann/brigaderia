@@ -1,24 +1,33 @@
+<script type="text/javascript" src="resources/faturamento/pedidoVenda/js/pedidoVenda-service.js"></script>
+<script type="text/javascript" src="resources/faturamento/pedidoVenda/js/pedidoVenda.js"></script>
 <div class='jumbotron'>
 	<h1>Pedido de Venda</h1>
 	<div class="col-sm-12">
 		<hr>
 	</div>
 	<form method='POST' role='form' class='form-group' action=''>
+		
+		<div class="form-group col-sm-4">
+				<label for='clientes'>Cliente</label>
+				<select class="form-control" id="clientes" name="clientes">
+					<option value="">Selecione</option>
+				</select>
+			</div>
 		<div class="form-group col-sm-2">
-			<label for='txtNumero'>Numero</label>
-			<input type="text" class="form-control" id="txtNumero" name="txtNumero" readonly />
-		</div>
-		<div class="form-group col-sm-6">
-			<label for='cbxCliente'>Cliente</label>
-			<select class="form-control" id="cbxCliente" name="cbxCliente"></select>
+			<label for='dataEmissao'>Data Emissão</label>
+			<input type="text" class="form-control" id="dataEmissao" name="dataEmissao" readonly />
 		</div>
 		<div class="form-group col-sm-2">
-			<label for='txtDataEmissao'>Data Emissão</label>
-			<input type="text" class="form-control" id="txtDataEmissao" name="txtDataEmissao" readonly />
+			<label for='dataFaturado'>Data Faturado</label>
+			<input type="text" class="form-control" id="dataFaturado" name="dataFaturado" readonly />
 		</div>
 		<div class="form-group col-sm-2">
-			<label for='txtDataFaturado'>Data Faturado</label>
-			<input type="text" class="form-control" id="txtDataFaturado" name="txtDataFaturado" readonly />
+			<label for='ordemProducao'>Ordem Produção</label>
+			<input type="text" class="form-control" id="ordemProducao" name="ordemProducao" readonly />
+		</div>
+		<div class="form-group col-sm-2">
+			<label for='totalPedidoVenda'>Total</label>
+			<input type="text" class="form-control" id="totalPedidoVenda" name="totalPedidoVenda" readonly />
 		</div>
 		<div class="checkbox form-group col-sm-2">
 			<label><input type="checkbox" id='faturado' name='faturado'><strong> Faturado</strong></label>
@@ -29,42 +38,41 @@
 		<div class="checkbox form-group col-sm-2">
 			<label><input type="checkbox" id='cancelado' name='cancelado'><strong> Cancelado</strong></label>
 		</div>
-		<div class="form-group col-sm-2">
-			<label for='txtTotal'>Total</label>
-			<input type="text" class="form-control" id="txtTotal" name="txtTotal" readonly />
-		</div>
-		<div class="form-group col-sm-2">
-			<label for='txtOrdemProducao'>Ordem Produção</label>
-			<input type="text" class="form-control" id="txtOrdemProducao" name="txtOrdemProducao" readonly />
-		</div>
+		
 		<div class="col-sm-12">
 			<hr>
 		</div>
 		<div class="col-sm-12">
-			<div class="form-group col-sm-5">
-				<label for='cbxProduto'>Produto</label>
-				<select class="form-control" id="cbxProduto" name="cbxProduto"></select>
+			<div class="form-group col-sm-4">
+				<label for='produtos'>Produto</label>
+				<select class="form-control" id="produtos" name="produtos">
+					<option value="">Selecione</option>
+				</select>
 			</div>
 			<div class="form-group col-sm-2">
-				<label for='txtQtdeIngrediente'>Quantidade</label>
-				<input type="text" class="form-control" id="txtQtdeIngrediente" name="txtQtdeIngrediente" />
+				<label for='qtdeProduto'>Quantidade</label>
+				<input type="text" class="form-control" id="qtdeProduto" name="qtdeProduto" />
+			</div>
+			<div class="form-group col-sm-1">
+				<label for='unEstoque'>UN</label>
+				<input type="text" class="form-control" id="unEstoque" name="unEstoque" readonly />
 			</div>
 			<div class="form-group col-sm-2">
-				<label for='txtUnitario'>Unitário</label>
-				<input type="text" class="form-control" id="txtUnitario" name="txtUnitario" />
+				<label for='unitario'>Unitário</label>
+				<input type="text" class="form-control" id="unitario" name="unitario" />
 			</div>
 			<div class="form-group col-sm-2">
-				<label for='txtTotal'>Total</label>
-				<input type="text" class="form-control" id="txtTotal" name="txtTotal" readonly />
+				<label for='totalItemPedidoVenda'>Total</label>
+				<input type="text" class="form-control" id="totalItemPedidoVenda" name="totalItemPedidoVenda" readonly />
 			</div>
 			<div class="btn pull-right form-group">
-				<button class="btn btn-primary btn-lg" type="button">Incluir</button>
+				<button class="btn btn-primary btn-lg" onclick= "BRIGADERIA.pedidoVenda.incluirProduto()" type="button">Incluir</button>
 			</div>
 		</div>
 
 	</form>
 	<div class="col-sm-12">
-		<table class='table col-sm-12'>
+		<table class='table col-sm-12' id='itensPedidoVenda'>
 			<thead>
 				<tr>
 					<th>Cód. Produto</th>
@@ -77,83 +85,12 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>35</td>
-					<td>Brigadeiro</td>
-					<td>GR</td>
-					<td>10</td>
-					<td>1.80</td>
-					<td>18.00</td>
-					<td>
-						<i class="glyphicon glyphicon-edit editProduto" aria-hidden="true"></i>
-						<i class="glyphicon glyphicon-remove-sign deletProduto" aria-hidden="true"></i>
-					</td>
-				</tr>
-				<tr>
-					<td>35</td>
-					<td>Brigadeiro</td>
-					<td>GR</td>
-					<td>10</td>
-					<td>1.80</td>
-					<td>18.00</td>
-					<td>
-						<i class="glyphicon glyphicon-edit editProduto" aria-hidden="true"></i>
-						<i class="glyphicon glyphicon-remove-sign deletProduto" aria-hidden="true"></i>
-					</td>
-				</tr>
-				<tr>
-					<td>35</td>
-					<td>Brigadeiro</td>
-					<td>GR</td>
-					<td>10</td>
-					<td>1.80</td>
-					<td>18.00</td>
-					<td>
-						<i class="glyphicon glyphicon-edit editProduto" aria-hidden="true"></i>
-						<i class="glyphicon glyphicon-remove-sign deletProduto" aria-hidden="true"></i>
-					</td>
-				</tr>
-				<tr>
-					<td>35</td>
-					<td>Brigadeiro</td>
-					<td>GR</td>
-					<td>10</td>
-					<td>1.80</td>
-					<td>18.00</td>
-					<td>
-						<i class="glyphicon glyphicon-edit editProduto" aria-hidden="true"></i>
-						<i class="glyphicon glyphicon-remove-sign deletProduto" aria-hidden="true"></i>
-					</td>
-				</tr>
-				<tr>
-					<td>35</td>
-					<td>Brigadeiro</td>
-					<td>GR</td>
-					<td>10</td>
-					<td>1.80</td>
-					<td>18.00</td>
-					<td>
-						<i class="glyphicon glyphicon-edit editProduto" aria-hidden="true"></i>
-						<i class="glyphicon glyphicon-remove-sign deletProduto" aria-hidden="true"></i>
-					</td>
-				</tr>
-				<tr>
-					<td>35</td>
-					<td>Brigadeiro</td>
-					<td>GR</td>
-					<td>10</td>
-					<td>1.80</td>
-					<td>18.00</td>
-					<td>
-						<i class="glyphicon glyphicon-edit editProduto" aria-hidden="true"></i>
-						<i class="glyphicon glyphicon-remove-sign deletProduto" aria-hidden="true"></i>
-					</td>
-				</tr>
+				
 			</tbody>
 		</table>
 	</div>
 	<div class="btn pull-right form-group">
-		<button class="btn btn-primary btn-lg" type="button">Salvar</button>
+		<button class="btn btn-primary btn-lg" onclick= "BRIGADERIA.pedidoVenda.adicionar()" type="button">Salvar</button>
 		<button class="btn btn-danger btn-lg" onclick= "carregarConteudoCancel('resources/gerenciar/pedidoVenda/gerenciarPedidoVenda.html')" type="button">Cancelar</button>
 	</div>
 </div>

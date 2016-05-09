@@ -1,8 +1,8 @@
-BRIGADERIA.gerenciarPedidoCompra = new Object();
+BRIGADERIA.gerenciarPedidoVenda = new Object();
 
 $(document).ready( function () {
 	
-	$("#subConteudo").text(""); //inicia div vazia
+/*	$("#subConteudo").text(""); //inicia div vazia
 	
 	$('.dataFiltro').datepicker({
 		format: 'dd/mm/yyyy'
@@ -64,14 +64,14 @@ $(document).ready( function () {
 	});
 	
 	BRIGADERIA.gerenciarPedidoCompra.buscar();
-	
-	BRIGADERIA.gerenciarPedidoCompra.lancarPedido = function() {
-		$("#conteudo").load("resources/faturamento/pedidoCompra/pedidoCompra.html", function (){
-		BRIGADERIA.pedidoCompra.exibirFormulario();
+*/	
+	BRIGADERIA.gerenciarPedidoVenda.lancarPedido = function() {
+		$("#conteudo").load("resources/faturamento/pedidoVenda/pedidoVenda.html", function (){
+		BRIGADERIA.pedidoVenda.exibirFormulario();
 		});
 	};
 	
-	BRIGADERIA.gerenciarPedidoCompra.visualizarPedido = function(numero) {
+/*	BRIGADERIA.gerenciarPedidoCompra.visualizarPedido = function(numero) {
 		$("#conteudo").load("resources/faturamento/pedidoCompra/pedidoCompraView.html", function (){
 			BRIGADERIA.pedidoCompra.exibirEdicao(numero);
 		});	
@@ -97,7 +97,7 @@ $(document).ready( function () {
 				}
 			}
 		});
-	}
+	}*/
 });
 
 
