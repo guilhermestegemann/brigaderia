@@ -183,7 +183,7 @@ $(document).ready( function () {
 			cancelado : "N",
 			itemPedidoVenda: produtoArray
 		};
-		if (newPedido.itemPedidoCompra == "") {
+		if (newPedido.itemPedidoVenda == "") {
 			bootbox.alert("Produtos não inseridos");
 		}else{
 			BRIGADERIA.pedidoVendaService.adicionar(newPedido);

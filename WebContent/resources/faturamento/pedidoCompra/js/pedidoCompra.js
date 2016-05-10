@@ -107,7 +107,7 @@ $(document).ready( function () {
 	};
 	
 	BRIGADERIA.pedidoCompra.editarProduto = function (handler, codigo, descricao, qtde, unEntrada, unitario, totalItem) {
-		debugger;
+		
 		$("#qtdeProduto").val(parseFloat(qtde));
 		$("#unEntrada").val(unEntrada);
 		$("#unitario").val(parseFloat(unitario));
