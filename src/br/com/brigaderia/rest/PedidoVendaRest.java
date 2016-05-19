@@ -71,22 +71,27 @@ public class PedidoVendaRest extends UtilRest{
 		}
 	}
 	
-/*	@GET
-	@Path("/buscarPedidoCompra/{dataInicio}/{dataFim}")
+	@GET
+	@Path("/buscarPedidoVenda/{dataInicio}/{dataFim}/{faturado}/{cancelado}/{produzido}/{codCliente}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	
-	public Response buscarPedidos (@PathParam("dataInicio") String dataInicio, @PathParam("dataFim") String dataFim) throws BrigaderiaException{
+	public Response buscarPedidos (@PathParam("dataInicio") String dataInicio, 
+			                       @PathParam("dataFim") String dataFim,
+			                       @PathParam("faturado") String faturado,
+			                       @PathParam("cancelado") String cancelado,
+			                       @PathParam("produzido") String produzido,
+			                       @PathParam("codCliente") int codCliente) throws BrigaderiaException{
 		
 		try {
 			
-			PedidoCompraService service = new PedidoCompraService();
-			return buildResponse(service.buscarPedidoCompra(dataInicio, dataFim));
+			PedidoVendaService service = new PedidoVendaService();
+			return buildResponse(service.buscarPedidoVenda(dataInicio, dataFim, faturado, cancelado, produzido, codCliente));
 		}catch(SQLException e) {
 			e.printStackTrace();
 			return buildErrorResponse("Ocorreu um erro ao buscar pedidos de compra. Entre em contato com o administrador do sistema.");
 		}
 	}
-	
+/*	
 	@GET
 	@Path("/buscarPedidoPeloNumero/{numero}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})

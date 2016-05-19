@@ -2,15 +2,19 @@ BRIGADERIA.gerenciarPedidoVenda = new Object();
 
 $(document).ready( function () {
 	
-/*	$("#subConteudo").text(""); //inicia div vazia
+	$("#subConteudo").text(""); //inicia div vazia
 	
 	$('.dataFiltro').datepicker({
 		format: 'dd/mm/yyyy'
 	});
 	
-	BRIGADERIA.gerenciarPedidoCompra.buscar = function () {
+	BRIGADERIA.gerenciarPedidoVenda.buscar = function () {
 		var dataInicio = $("#dataInicio").val();
 		var dataFim = $("#dataFim").val();
+		var faturado = $("#faturadoFiltro").val();
+		var cancelado = $("#canceladoFiltro").val();
+		var produzido = $("#produzidoFiltro").val();
+		var codCliente = $("#clienteFiltro").val();
 		if (dataInicio == "") {
 			dataInicio = "null";
 		}else{
@@ -22,35 +26,63 @@ $(document).ready( function () {
 			dataFim = BRIGADERIA.convertData.strToDate(dataFim);
 		}
 		
-		BRIGADERIA.gerenciarPedidoCompra.exibirPedidos (undefined, dataInicio, dataFim);
+		
+		BRIGADERIA.gerenciarPedidoVenda.exibirPedidos (undefined, dataInicio, dataFim, faturado, cancelado, produzido, codCliente);
 	};
 	
-	BRIGADERIA.gerenciarPedidoCompra.exibirPedidos = function(listaDePedidos, dataInicio, dataFim) {
+	BRIGADERIA.gerenciarPedidoVenda.exibirPedidos = function(listaDePedidos, dataInicio, dataFim, faturado, cancelado, produzido, codCliente) {
 		
-		BRIGADERIA.pedidoCompraService.listar({
+		BRIGADERIA.pedidoVendaService.listar({
 			dataInicio: dataInicio,
 			dataFim: dataFim,
+			faturado: faturado,
+			cancelado: cancelado,
+			produzido: produzido,
+			codCliente: codCliente,
 			success : function (listaDePedidos) {
 				
 				var html = "";
-				
+				var faturado = "";
+				var produzido = "";
+				var cancelado = "";
 				for (var i = 0; i < listaDePedidos.length; i++) {
 					
-					if (listaDePedidos[i].data != null) {
-						listaDePedidos[i].data = BRIGADERIA.convertData.dateToStr(listaDePedidos[i].data);
+					if (listaDePedidos[i].emissao != null) {
+						listaDePedidos[i].emissao = BRIGADERIA.convertData.dateToStr(listaDePedidos[i].emissao);
 					}
 					
+					if (listaDePedidos[i].faturado == "N") {
+						faturado = "<input type='checkbox' name='faturado'>";
+					}else{
+						faturado = "<input type='checkbox' name='faturado' checked>";
+					}
+					
+					if (listaDePedidos[i].cancelado == "N") {
+						cancelado = "<input type='checkbox' name='cancelado'>";
+					}else{
+						cancelado = "<input type='checkbox' name='cancelado' checked>";
+					}
+					
+					if (listaDePedidos[i].produzido == "N") {
+						produzido = "<input type='checkbox' name='produzido'>";
+					}else{
+						produzido = "<input type='checkbox' name='produzido' checked>";
+					}
 					
 					html += "<tr>"
 					  + "<td>" + listaDePedidos[i].numero + "</td>"
-					  + "<td>" + listaDePedidos[i].data + "</td>"
+					  + "<td>" + listaDePedidos[i].cliente + "</td>"
+					  + "<td>" + listaDePedidos[i].emissao + "</td>"
 					  + "<td>" + "R$ " + parseFloat(listaDePedidos[i].total).toFixed(2) + "</td>"
+					  + "<td>" + faturado + "</td>"
+					  + "<td>" + cancelado + "</td>"
+					  + "<td>" + produzido + "</td>"
 					  + "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.gerenciarPedidoCompra.visualizarPedido(" + listaDePedidos[i].numero + ")' aria-hidden='true'></i></a>"
 					  	 +	"<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.gerenciarPedidoCompra.deletarPedido(" + listaDePedidos[i].numero + ")' aria-hidden='true'></i></a>  </td>"
 					  + "</tr>";
 				}
 				
-				$("#resultadoPedidoCompra tbody").html(html);
+				$("#resultadoPedidoVenda tbody").html(html);
 			
 			},
 			error : function(err) {
@@ -60,11 +92,11 @@ $(document).ready( function () {
 	};
 	
 	$("#buttonPesquisar").on('click', function(){
-		BRIGADERIA.gerenciarPedidoCompra.buscar();
+		BRIGADERIA.gerenciarPedidoVenda.buscar();
 	});
 	
-	BRIGADERIA.gerenciarPedidoCompra.buscar();
-*/	
+	BRIGADERIA.gerenciarPedidoVenda.buscar();
+	
 	BRIGADERIA.gerenciarPedidoVenda.lancarPedido = function() {
 		$("#conteudo").load("resources/faturamento/pedidoVenda/pedidoVenda.html", function (){
 		BRIGADERIA.pedidoVenda.exibirFormulario();
@@ -98,11 +130,10 @@ $(document).ready( function () {
 			}
 		});
 	}*/
+	
+	$(".filtro").on('change',function(){
+		BRIGADERIA.gerenciarPedidoVenda.buscar();
+	});
+	
+	BRIGADERIA.pedidoVenda.listarClientes("#clienteFiltro");
 });
-
-
-
-
-
-
-

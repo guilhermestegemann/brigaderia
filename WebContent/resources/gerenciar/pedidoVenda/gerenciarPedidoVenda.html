@@ -1,69 +1,60 @@
 <script type="text/javascript" src="resources/faturamento/pedidoVenda/js/pedidoVenda-service.js"></script>
+<script type="text/javascript" src="resources/faturamento/pedidoVenda/js/pedidoVenda.js"></script>
 <script type="text/javascript" src="resources/gerenciar/pedidoVenda/js/gerenciarPedidoVenda.js"></script>
 <div class='jumbotron container-fluid'>
 	<h1>Pedido de Venda</h1>
 	<hr>
 	<div class="">
-		<div class="input-group col-sm-9">
-			<input type="text" class="form-control col-sm-6" placeholder="Procure pelo Pedido de Venda...">
-			<span class="input-group-btn">
-				<button class="btn btn-success" type="button">Pesquisar</button>
-			</span>
-			<button class='btn btn-primary btn pull-right' onclick="BRIGADERIA.gerenciarPedidoVenda.lancarPedido()">Lançar Venda</button>
+		
+		<div class="form-group col-sm-2">
+			<input type="text" class="form-control dataFiltro filtro" id="dataInicio" name="dataInicio" placeholder="Data Inicio"/>
+		</div>
+		<div class="form-group col-sm-2">
+			<input type="text" class="form-control dataFiltro filtro" id="dataFim" name="dataFim" placeholder="Data Fim"/>
+		</div>
+		<div class="form-group col-sm-2">
+			<select class="form-control filtro" id="faturadoFiltro" name="faturadoFiltro">
+				<option value="N">Pendentes</option>
+				<option value="S">Faturados</option>
+			</select>
+		</div>
+		<div class="form-group col-sm-2">
+			<select class="form-control filtro" id="canceladoFiltro" name="canceladoFiltro">
+				<option value="N">Não Cancelados</option>
+				<option value="S">Cancelados</option>
+			</select>
+		</div>
+		<div class="form-group col-sm-2">
+			<select class="form-control filtro" id="produzidoFiltro" name="produzidoFiltro">
+				<option value="N">Não Produzidos</option>
+				<option value="S">Produzidos</option>
+			</select>
+		</div>
+		<div class="form-group col-sm-6">
+			<select class="form-control filtro" id="clienteFiltro" name="clienteFiltro">
+				<option value="0">Selecione o Cliente</option>
+			</select>
+		</div>
+		<div class="input-group col-sm-3">
+				<button class="btn btn-success" id="buttonPesquisar" type="button">Pesquisar</button>
+			
+			<button class='btn btn-primary btn pull-right' onclick="BRIGADERIA.gerenciarPedidoVenda.lancarPedido()">Lançar Pedido de Venda</button>
 		</div>
 	</div>
-	<table class='table col-sm-12'>
+	<table id='resultadoPedidoVenda' class='table col-sm-12'>
 		<thead>
 			<tr>
-				<th><strong>Número</strong></th>
-				<th>Cliene</th>
-				<th>Data</th>
+				<th><strong>Numero</strong></th>
+				<th>Cliente</th>
+				<th>Emissão</th>
 				<th>Total</th>
-				<th>Status</th>
+				<th>Faturado</th>
+				<th>Cancelado</th>
+				<th>Produzido</th>
 				<th></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>1</td>
-				<td>Guilherme Stegemann</td>
-				<td>11/10/2015</td>
-				<td>999.99</td>
-				<td>Faturado</td>
-				<td><a href='#' onclick="carregarConteudo('resources/faturamento/pedidoVenda/pedidoVenda.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>Guilherme Stegemann</td>
-				<td>11/10/2015</td>
-				<td>999.99</td>
-				<td>Pendente</td>
-				<td><a href='#' onclick="carregarConteudo('resources/faturamento/pedidoVenda/pedidoVenda.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>Guilherme Stegemann</td>
-				<td>11/10/2015</td>
-				<td>999.99</td>
-				<td>Cancelado</td>
-				<td><a href='#' onclick="carregarConteudo('resources/faturamento/pedidoVenda/pedidoVenda.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>Guilherme Stegemann</td>
-				<td>11/10/2015</td>
-				<td>999.99</td>
-				<td>Produzido</td>
-				<td><a href='#' onclick="carregarConteudo('resources/faturamento/pedidoVenda/pedidoVenda.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>Guilherme Stegemann</td>
-				<td>11/10/2015</td>
-				<td>999.99</td>
-				<td>Faturado</td>
-				<td><a href='#' onclick="carregarConteudo('resources/faturamento/pedidoVenda/pedidoVenda.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
 			
 		</tbody>
 	</table>

@@ -52,12 +52,12 @@ $(document).ready(function() {
 		};
 		BRIGADERIA.ajax.post(BRIGADERIA.pedidoVendaService.defaultCfg(cfg));
 	};
-	/*
+	
 	BRIGADERIA.pedidoVendaService.listar = function(cfg){
-		cfg.url = "rest/pedidoVenda/buscarPedidoCompra/" + cfg.dataInicio + "/" + cfg.dataFim;
+		cfg.url = "rest/pedidoVenda/buscarPedidoVenda/"+cfg.dataInicio+"/"+cfg.dataFim+"/"+cfg.faturado+"/"+cfg.cancelado+"/"+cfg.produzido+"/"+cfg.codCliente;
 		BRIGADERIA.ajax.get(BRIGADERIA.pedidoVendaService.defaultCfg(cfg));
 	};
-	
+	/*
 	BRIGADERIA.pedidoVendaService.deletar = function(cfg) {
 		cfg.url = "rest/pedidoVenda/deletar/" + cfg.numero;
 		

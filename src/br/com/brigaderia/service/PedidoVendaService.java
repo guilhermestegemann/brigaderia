@@ -17,6 +17,7 @@ import br.com.brigaderia.jdbcinterface.ProdutoDAO;
 import br.com.brigaderia.objetos.DadosClientesVO;
 import br.com.brigaderia.objetos.ItemPedidoVenda;
 import br.com.brigaderia.objetos.PedidoVenda;
+import br.com.brigaderia.objetos.PedidoVendaVO;
 import br.com.brigaderia.objetos.Produto;
 import br.com.brigaderia.validacoes.ValidaPedidoVenda;
 
@@ -80,18 +81,19 @@ public class PedidoVendaService {
 		}
 	}
 	
-	/*public List<PedidoCompra> buscarPedidoCompra (String dataIni, String dataFim) throws SQLException {
+	public List<PedidoVendaVO> buscarPedidoVenda (String dataIni, String dataFim, String faturado, String cancelado,
+			                                      String produzido, int codCliente) throws SQLException {
 		
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
-			PedidoCompraDAO jdbcPedidoCompra = new JDBCPedidoCompraDAO(conexao);
-			return jdbcPedidoCompra.buscarPedidos(dataIni, dataFim);
+			PedidoVendaDAO jdbcPedidoVenda = new JDBCPedidoVendaDAO(conexao);
+			return jdbcPedidoVenda.buscarPedidos(dataIni, dataFim, faturado, cancelado, produzido, codCliente);
 		}finally{
 			conec.fecharConexao();
 		}
 	}
-	
+	/*
 	public PedidoCompra buscarPedidoPeloNumero (int numero) throws SQLException {
 		
 		Conexao conec = new Conexao();

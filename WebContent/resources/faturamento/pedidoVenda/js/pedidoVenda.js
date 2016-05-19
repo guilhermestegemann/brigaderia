@@ -58,14 +58,14 @@ $(document).ready( function () {
 		});
 	};
 	
-	BRIGADERIA.pedidoVenda.listarClientes = function () { 
+	BRIGADERIA.pedidoVenda.listarClientes = function (idHtml) { 
 		BRIGADERIA.pedidoVendaService.listarClientes({
 			success: function(data) {
 				var html = "";
 				for (var i = 0; i < data.length; i++) {
 					html += "<option value='" + data[i].codigo + "'>" + data[i].nome + "</option>";
 				}
-				$("#clientes").append(html);
+				$(idHtml).append(html);
 			},
 			error : function (err) {
 				bootbox.alert(err.responseText);
@@ -75,7 +75,7 @@ $(document).ready( function () {
 	
 	BRIGADERIA.pedidoVenda.exibirFormulario = function () {
 		BRIGADERIA.pedidoVenda.listarProdutos();
-		BRIGADERIA.pedidoVenda.listarClientes();
+		BRIGADERIA.pedidoVenda.listarClientes("#clientes");
 		$("#totalPedidoVenda").val("0.00");
 	};
 	

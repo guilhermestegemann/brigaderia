@@ -5,12 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.brigaderia.exception.ClienteComPedidoException;
 import br.com.brigaderia.exception.ProdutoVinculadoEmPedidoVendaException;
 import br.com.brigaderia.ferramentas.ConversorDecimal;
 import br.com.brigaderia.jdbcinterface.PedidoVendaDAO;
 import br.com.brigaderia.objetos.PedidoVenda;
+import br.com.brigaderia.objetos.PedidoVendaVO;
 
 public class JDBCPedidoVendaDAO implements PedidoVendaDAO{
 	
@@ -81,5 +84,45 @@ public class JDBCPedidoVendaDAO implements PedidoVendaDAO{
 		if (rs.next()) {
 			throw new ProdutoVinculadoEmPedidoVendaException();
 		}
+	}
+	
+	public List<PedidoVendaVO> buscarPedidos (String dataInicio, String dataFim, String faturado, String cancelado,
+			                                  String produzido, int codCliente) throws SQLException {
+		String condicao = "";
+		String comando = "SELECT PEDIDO.NUMERO, CLIENTE.NOME AS NOMECLIENTE, PEDIDO.EMISSAO, PEDIDO.TOTAL, "
+				       + "PEDIDO.FATURADO, PEDIDO.CANCELADO, PEDIDO.PRODUZIDO "
+				       + "FROM PEDIDO "
+				       + "INNER JOIN CLIENTE ON CLIENTE.CODIGO = PEDIDO.CLIENTE ";
+		if ((!dataInicio.equals("null") && !dataInicio.equals("")) && (!dataFim.equals("null") && !dataFim.equals(""))) {
+			condicao += "WHERE PEDIDO.EMISSAO BETWEEN '" + dataInicio + "' AND '" + dataFim + "' ";
+		}
+		if (condicao.equals("")) {
+			condicao = "WHERE PEDIDO.FATURADO = '" + faturado + "' AND PEDIDO.CANCELADO = '" + cancelado + "' "
+					  + "AND PEDIDO.PRODUZIDO = '" + produzido + "' ";
+		}else{
+			condicao += "AND PEDIDO.FATURADO = '" + faturado + "' AND PEDIDO.CANCELADO = '" + cancelado + "' "
+					  + "AND PEDIDO.PRODUZIDO = '" + produzido + "' ";
+		}
+		if(codCliente != 0) {
+			condicao += "AND PEDIDO.CLIENTE = " + codCliente;
+		}
+		comando += condicao +" ORDER BY PEDIDO.NUMERO DESC";
+		
+		List<PedidoVendaVO> listPedidoVendaVO = new ArrayList<PedidoVendaVO>();
+		PedidoVendaVO pedidoVendaVO = null;
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(comando);
+		while(rs.next()) {
+			pedidoVendaVO = new PedidoVendaVO();
+			pedidoVendaVO.setNumero(rs.getInt("NUMERO"));
+			pedidoVendaVO.setCliente(rs.getString("NOMECLIENTE"));
+			pedidoVendaVO.setEmissao(rs.getDate("EMISSAO"));
+			pedidoVendaVO.setTotal(rs.getDouble("TOTAL"));
+			pedidoVendaVO.setFaturado(rs.getString("FATURADO"));
+			pedidoVendaVO.setCancelado(rs.getString("CANCELADO"));
+			pedidoVendaVO.setProduzido(rs.getString("PRODUZIDO"));
+			listPedidoVendaVO.add(pedidoVendaVO);
+		}
+		return listPedidoVendaVO;
 	}
 }
