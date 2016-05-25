@@ -93,22 +93,22 @@ public class PedidoVendaService {
 			conec.fecharConexao();
 		}
 	}
-	/*
-	public PedidoCompra buscarPedidoPeloNumero (int numero) throws SQLException {
+	
+	public PedidoVenda buscarPedidoPeloNumero (int numero) throws SQLException {
 		
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
-			PedidoCompraDAO jdbcPedidoCompra = new JDBCPedidoCompraDAO(conexao);
-			PedidoCompra pedidoCompra = jdbcPedidoCompra.buscarPeloNumero(numero);
-			pedidoCompra.setItemPedidoCompra(jdbcPedidoCompra.buscarItensPedido(pedidoCompra.getNumero()));
-			return pedidoCompra;
+			PedidoVendaDAO jdbcPedidoVenda = new JDBCPedidoVendaDAO(conexao);
+			PedidoVenda pedidoVenda = jdbcPedidoVenda.buscarPeloNumero(numero);
+			pedidoVenda.setItemPedidoVenda(jdbcPedidoVenda.buscarItensPedido(pedidoVenda.getNumero()));
+			return pedidoVenda;
 		}finally{
 			conec.fecharConexao();
 		}	
 	}
 	
-	
+/*	
 	public String deletarPedido (int numero) throws SQLException {
 		
 		Conexao conec = new Conexao();

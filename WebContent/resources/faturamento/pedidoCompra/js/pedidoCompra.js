@@ -131,7 +131,7 @@ $(document).ready( function () {
 			size: 'small',
 			message: "Deseja deletar o Ingrediente?", 
 			callback: function(confirma){
-				if (confirma == true) {
+				if (confirma) {
 					for (var i = 0; i < produtoArray.length; i++) {
 						if (produtoArray[i].codigoProduto == codigo) {
 							produtoArray.splice(i, 1);
@@ -139,7 +139,7 @@ $(document).ready( function () {
 					}
 					
 					$(handler).closest('tr').remove();//exclui o tr mais proximo.
-					window.event.preventDefault();
+					//window.event.preventDefault();
 					$('#produtos').append('<option value="' + codigo + '">' + descricao + '</option>');
 					$("#totalPedidoCompra").val(parseFloat(parseFloat($("#totalPedidoCompra").val()) - parseFloat(totalItem)).toFixed(2)) //diminui do total do pedido.
 				}

@@ -63,9 +63,9 @@ $(document).ready(function() {
 		
 		BRIGADERIA.ajax.del(BRIGADERIA.pedidoVendaService.defaultCfg(cfg));
 	};
-	
+*/	
 	BRIGADERIA.pedidoVendaService.buscarPedidoPeloNumero = function(cfg) {
 		cfg.url = "rest/pedidoVenda/buscarPedidoPeloNumero/" + cfg.numero;
 		BRIGADERIA.ajax.get(BRIGADERIA.pedidoVendaService.defaultCfg(cfg));
-	};*/
+	};
 });

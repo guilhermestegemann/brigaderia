@@ -153,9 +153,10 @@ $(document).ready(function(){
 				ingredienteArray.splice(i, 1);
 			}
 		}
+		
 		$(handler).closest('tr').remove();
 		window.event.preventDefault();
-		$('#ingrediente').append('<option value="' + codigo + '" selected="selected">' + descricao + '</option>');
+		$("#ingrediente").append('<option value="' + codigo + '" selected="selected">' + descricao + '</option>');
 		
 	};
 	

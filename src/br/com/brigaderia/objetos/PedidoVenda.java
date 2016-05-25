@@ -13,6 +13,7 @@ public class PedidoVenda implements Serializable{
 	
 	private int numero;
 	private int cliente;
+	private String nomeCliente;
 	private Date dataEmissao;
 	private Date dataFaturado;
 	private String faturado;
@@ -22,6 +23,12 @@ public class PedidoVenda implements Serializable{
 	private int ordemProducao;
 	private List<ItemPedidoVenda> itemPedidoVenda;
 	
+	public String getNomeCliente() {
+		return nomeCliente;
+	}
+	public void setNomeCliente(String nomeCliente) {
+		this.nomeCliente = nomeCliente;
+	}
 	public int getOrdemProducao() {
 		return ordemProducao;
 	}

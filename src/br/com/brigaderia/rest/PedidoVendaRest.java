@@ -91,20 +91,20 @@ public class PedidoVendaRest extends UtilRest{
 			return buildErrorResponse("Ocorreu um erro ao buscar pedidos de compra. Entre em contato com o administrador do sistema.");
 		}
 	}
-/*	
+
 	@GET
 	@Path("/buscarPedidoPeloNumero/{numero}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	public Response buscarPedidoPeloNumero(@PathParam("numero")int numero) throws BrigaderiaException{
 		try {
-			PedidoCompraService service = new PedidoCompraService(); 
+			PedidoVendaService service = new PedidoVendaService(); 
 			return buildResponse(service.buscarPedidoPeloNumero(numero));
 		}catch (SQLException e) {
 			e.printStackTrace();
-			return buildErrorResponse("Ocorreu um erro ao buscar pedidos de compra. Entre em contato com o administrador do sistema.");
+			return buildErrorResponse("Ocorreu um erro ao buscar pedidos de venda. Entre em contato com o administrador do sistema.");
 		}
 	}
-	
+/*	
 	@DELETE
 	@Path("/deletar/{numero}")
 	@Consumes("application/*")

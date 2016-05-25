@@ -12,6 +12,7 @@ import br.com.brigaderia.exception.ClienteComPedidoException;
 import br.com.brigaderia.exception.ProdutoVinculadoEmPedidoVendaException;
 import br.com.brigaderia.ferramentas.ConversorDecimal;
 import br.com.brigaderia.jdbcinterface.PedidoVendaDAO;
+import br.com.brigaderia.objetos.ItemPedidoVenda;
 import br.com.brigaderia.objetos.PedidoVenda;
 import br.com.brigaderia.objetos.PedidoVendaVO;
 
@@ -124,5 +125,54 @@ public class JDBCPedidoVendaDAO implements PedidoVendaDAO{
 			listPedidoVendaVO.add(pedidoVendaVO);
 		}
 		return listPedidoVendaVO;
+	}
+	
+	public PedidoVenda buscarPeloNumero (int numero) throws SQLException {
+		
+		String comando = "SELECT P.NUMERO, P.CLIENTE, C.NOME AS NOMECLIENTE, P.EMISSAO, P.DATAFATURADO, P.FATURADO, P.PRODUZIDO, "
+				       + "P.CANCELADO, P.TOTAL, P.ORDEMPRODUCAO "
+				       + "FROM PEDIDO P "
+				       + "INNER JOIN CLIENTE C ON C.CODIGO = P.CLIENTE "
+				       + "WHERE P.NUMERO = " + numero;
+		PedidoVenda pedidoVenda = new PedidoVenda();
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(comando);
+		while(rs.next()) {
+			pedidoVenda.setNumero(rs.getInt("NUMERO"));
+			pedidoVenda.setCliente(rs.getInt("CLIENTE"));
+			pedidoVenda.setNomeCliente(rs.getString("NOMECLIENTE"));
+			pedidoVenda.setDataEmissao(rs.getDate("EMISSAO"));
+			pedidoVenda.setDataFaturado(rs.getDate("DATAFATURADO"));
+			pedidoVenda.setFaturado(rs.getString("FATURADO"));
+			pedidoVenda.setProduzido(rs.getString("PRODUZIDO"));
+			pedidoVenda.setCancelado(rs.getString("CANCELADO"));
+			pedidoVenda.setTotal(rs.getDouble("TOTAL"));
+			pedidoVenda.setOrdemProducao(rs.getInt("ORDEMPRODUCAO"));
+		}
+		return pedidoVenda;
+	}
+	
+	public List<ItemPedidoVenda> buscarItensPedido(int numero) throws SQLException  {
+		
+		List<ItemPedidoVenda> listItemPedidoVenda = new ArrayList<ItemPedidoVenda>();
+		String comando = "SELECT IP.PRODUTO, P.DESCRICAO, P.UNESTOQUE, IP.QTDE, IP.UNITARIO, P.VALORVENDA, IP.TOTAL "
+				       + "FROM ITEMPEDIDO IP "
+				       + "INNER JOIN PRODUTO P ON P.CODIGO = IP.PRODUTO "
+				       + "WHERE IP.NUMERO = " + numero;
+		ItemPedidoVenda itemPedidoVenda = null;
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(comando);
+		while(rs.next()) {
+			itemPedidoVenda = new ItemPedidoVenda();
+			itemPedidoVenda.setCodigoProduto(rs.getInt("PRODUTO"));
+			itemPedidoVenda.setDescricao(rs.getString("DESCRICAO"));
+			itemPedidoVenda.setUnEstoque(rs.getString("UNESTOQUE"));
+			itemPedidoVenda.setQtde(rs.getFloat("QTDE"));
+			itemPedidoVenda.setUnitario(rs.getFloat("UNITARIO"));
+			itemPedidoVenda.setValorVenda(rs.getFloat("VALORVENDA"));
+			itemPedidoVenda.setTotal(rs.getFloat("TOTAL"));
+			listItemPedidoVenda.add(itemPedidoVenda);
+		}
+		return listItemPedidoVenda;
 	}
 }

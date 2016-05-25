@@ -1,7 +1,7 @@
 <script type="text/javascript" src="resources/faturamento/pedidoVenda/js/pedidoVenda-service.js"></script>
 <script type="text/javascript" src="resources/faturamento/pedidoVenda/js/pedidoVenda.js"></script>
 <div class='jumbotron'>
-	<h1>Pedido de Venda</h1>
+	<h1>Visualização de Pedido de Venda</h1>
 	<div class="col-sm-12">
 		<hr>
 	</div>
@@ -11,11 +11,9 @@
 			<input type="text" class="form-control" id="numero" name="numero" readonly />
 		</div>
 		<div class="form-group col-sm-4">
-				<label for='clientes'>Cliente</label>
-				<select class="form-control" id="clientes" name="clientes">
-					<option value="">Selecione</option>
-				</select>
-			</div>
+			<label for='cliente'>Cliente</label>
+			<input type="text" class="form-control" id="cliente" name="cliente" readonly />
+		</div>
 		<div class="form-group col-sm-2">
 			<label for='dataEmissao'>Data Emissão</label>
 			<input type="text" class="form-control" id="dataEmissao" name="dataEmissao" readonly />
@@ -45,34 +43,6 @@
 		<div class="col-sm-12">
 			<hr>
 		</div>
-		<div class="col-sm-12">
-			<div class="form-group col-sm-4">
-				<label for='produtos'>Produto</label>
-				<select class="form-control" id="produtos" name="produtos">
-					<option value="">Selecione</option>
-				</select>
-			</div>
-			<div class="form-group col-sm-2">
-				<label for='qtdeProduto'>Quantidade</label>
-				<input type="text" class="form-control" id="qtdeProduto" name="qtdeProduto" />
-			</div>
-			<div class="form-group col-sm-1">
-				<label for='unEstoque'>UN</label>
-				<input type="text" class="form-control" id="unEstoque" name="unEstoque" readonly />
-			</div>
-			<div class="form-group col-sm-2">
-				<label for='unitario'>Unitário</label>
-				<input type="text" class="form-control" id="unitario" name="unitario" />
-			</div>
-			<div class="form-group col-sm-2">
-				<label for='totalItemPedidoVenda'>Total</label>
-				<input type="text" class="form-control" id="totalItemPedidoVenda" name="totalItemPedidoVenda" readonly />
-			</div>
-			<div class="btn pull-right form-group">
-				<button class="btn btn-primary btn-lg" onclick= "BRIGADERIA.pedidoVenda.incluirProduto()" type="button">Incluir</button>
-			</div>
-		</div>
-
 	</form>
 	<div class="col-sm-12">
 		<table class='table col-sm-12' id='itensPedidoVenda'>
@@ -93,7 +63,6 @@
 		</table>
 	</div>
 	<div class="btn pull-right form-group">
-		<button class="btn btn-primary btn-lg" onclick= "BRIGADERIA.pedidoVenda.adicionar()" type="button">Salvar</button>
-		<button class="btn btn-danger btn-lg" onclick= "carregarConteudoCancel('resources/gerenciar/pedidoVenda/gerenciarPedidoVenda.html')" type="button">Cancelar</button>
+		<button class="btn btn-danger btn-lg" onclick= "carregarConteudo('resources/gerenciar/pedidoVenda/gerenciarPedidoVenda.html')" type="button">Sair</button>
 	</div>
 </div>

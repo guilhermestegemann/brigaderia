@@ -8,6 +8,7 @@ $(document).ready( function () {
 	$("#subConteudo").text(""); //inicia div vazia
 	
 	$("#produtos").on('change',function(){
+		debugger;
 		for (var i = 0; i < produtos.length; i++) {
 			if (produtos[i].codigoProduto == $("#produtos").val()) {
 				$("#unEstoque").val(produtos[i].unEstoque);
@@ -58,7 +59,7 @@ $(document).ready( function () {
 		});
 	};
 	
-	BRIGADERIA.pedidoVenda.listarClientes = function (idHtml) { 
+	BRIGADERIA.pedidoVenda.listarClientes = function (idHtml, codCliente) { 
 		BRIGADERIA.pedidoVendaService.listarClientes({
 			success: function(data) {
 				var html = "";
@@ -66,6 +67,9 @@ $(document).ready( function () {
 					html += "<option value='" + data[i].codigo + "'>" + data[i].nome + "</option>";
 				}
 				$(idHtml).append(html);
+				if (codCliente != null) {
+					$(idHtml).val(codCliente);
+				}
 			},
 			error : function (err) {
 				bootbox.alert(err.responseText);
@@ -80,6 +84,7 @@ $(document).ready( function () {
 	};
 	
 	BRIGADERIA.pedidoVenda.incluirProduto = function () {
+		debugger;
 		var expNumeros = /^[0-9]+$/;
 		if ($("#produtos").val() == "") {
 			bootbox.alert("Selecione o Produto!");
@@ -131,7 +136,7 @@ $(document).ready( function () {
 	};
 	
 	BRIGADERIA.pedidoVenda.editarProduto = function (handler, codigo, descricao, qtde, unEstoque, unitario, totalItem) {
-		debugger;
+		
 		$("#qtdeProduto").val(parseFloat(qtde));
 		$("#unEstoque").val(unEstoque);
 		$("#unitario").val(parseFloat(unitario));
@@ -166,6 +171,7 @@ $(document).ready( function () {
 					window.event.preventDefault();
 					$('#produtos').append('<option value="' + codigo + '">' + descricao + '</option>');
 					$("#totalPedidoVenda").val(parseFloat(parseFloat($("#totalPedidoVenda").val()) - parseFloat(totalItem)).toFixed(2)) //diminui do total do pedido.
+					
 				}
 			}
 		});
@@ -189,32 +195,48 @@ $(document).ready( function () {
 			BRIGADERIA.pedidoVendaService.adicionar(newPedido);
 		}
 	};
-	/*
-	BRIGADERIA.pedidoCompra.exibirEdicao = function(numero) {
-		BRIGADERIA.pedidoCompraService.buscarPedidoPeloNumero({
+	
+	BRIGADERIA.pedidoVenda.exibirEdicao = function(numero, faturado) {
+		BRIGADERIA.pedidoVendaService.buscarPedidoPeloNumero({
 			numero : numero,
 			async: false,
 			success : function (pedido) {
 				$("#numero").val(pedido.numero);
-				$("#data").val(BRIGADERIA.convertData.dateToStr(pedido.data));
-				$("#totalPedidoCompra").val(parseFloat(pedido.total).toFixed(2));
+				if (faturado == "S"){
+					$("#cliente").val(pedido.cliente + " - " + pedido.nomeCliente);
+					$("#dataFaturado").val(BRIGADERIA.convertData.dateToStr(pedido.dataFaturado));
+					$("#faturado").attr("checked", true);
+				}else{
+					BRIGADERIA.pedidoVenda.listarClientes("#clientes", pedido.cliente);
+				}
+				$("#dataEmissao").val(BRIGADERIA.convertData.dateToStr(pedido.dataEmissao));
+				if (pedido.produzido == "S") {
+					$("#produzido").attr("checked", true);
+				}
+				if (pedido.cancelado == "S") {
+					$("#cancelado").attr("checked", true);
+				}
+				$("#totalPedidoVenda").val(parseFloat(pedido.total).toFixed(2));
+				debugger;
 				itemPedido = {};
-				itemPedido = pedido.itemPedidoCompra;
-				
+				itemPedido = pedido.itemPedidoVenda;
+				produtos = itemPedido;
 				for (var i = 0; i < itemPedido.length; i++ ) {
 					var html = ""
-						html =  "<tr class='itemPedidoCompra'>"
+						html =  "<tr class='itemPedidoVenda'>"
 							  + "<td >" + itemPedido[i].codigoProduto + "</td>"
 							  + "<td>" + itemPedido[i].descricao + "</td>"
-							  + "<td>" + itemPedido[i].unEntrada + "</td>"
+							  + "<td>" + itemPedido[i].unEstoque + "</td>"
 							  + "<td>" + itemPedido[i].qtde + "</td>"
 							  + "<td>" + parseFloat(itemPedido[i].unitario).toFixed(2) + "</td>"
 							  + "<td>" + itemPedido[i].total + "</td>"
+							  + "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.pedidoVenda.editarProduto(this"+ "," + itemPedido[i].codigoProduto + "," + "\"" + itemPedido[i].descricao + "\"" + "," + itemPedido[i].qtde + "," + "\"" + itemPedido[i].unEstoque + "\"" + "," + parseFloat(itemPedido[i].unitario).toFixed(2) + "," + itemPedido[i].total +")' aria-hidden='true'></i></a>"
+						  	  + "<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.pedidoVenda.deletarProduto(this"+ "," + itemPedido[i].codigoProduto + "," + "\"" + itemPedido[i].descricao + "\"" + "," + itemPedido[i].total +")' aria-hidden='true'></i></a></td>"
 						  + "</tr>";		
 						
-						$("#itensPedidoCompra tbody").append(html);
+						$("#itensPedidoVenda tbody").append(html);
 				}
 			}
 		});	
-	};*/
+	};
 });

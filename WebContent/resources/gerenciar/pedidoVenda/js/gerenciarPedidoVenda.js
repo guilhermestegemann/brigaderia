@@ -77,7 +77,7 @@ $(document).ready( function () {
 					  + "<td>" + faturado + "</td>"
 					  + "<td>" + cancelado + "</td>"
 					  + "<td>" + produzido + "</td>"
-					  + "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.gerenciarPedidoCompra.visualizarPedido(" + listaDePedidos[i].numero + ")' aria-hidden='true'></i></a>"
+					  + "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.gerenciarPedidoVenda.visualizarPedido(" + listaDePedidos[i].numero + "," + "\"" + listaDePedidos[i].faturado + "\"" +")' aria-hidden='true'></i></a>"
 					  	 +	"<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.gerenciarPedidoCompra.deletarPedido(" + listaDePedidos[i].numero + ")' aria-hidden='true'></i></a>  </td>"
 					  + "</tr>";
 				}
@@ -103,12 +103,18 @@ $(document).ready( function () {
 		});
 	};
 	
-/*	BRIGADERIA.gerenciarPedidoCompra.visualizarPedido = function(numero) {
-		$("#conteudo").load("resources/faturamento/pedidoCompra/pedidoCompraView.html", function (){
-			BRIGADERIA.pedidoCompra.exibirEdicao(numero);
+	BRIGADERIA.gerenciarPedidoVenda.visualizarPedido = function(numero, faturado) {
+		var url = "";
+		if (faturado == "S") {
+			url = "resources/faturamento/pedidoVenda/pedidoVendaView.html";
+		}else{
+			url = "resources/faturamento/pedidoVenda/pedidoVenda.html"
+		}
+		$("#conteudo").load(url, function (){
+			BRIGADERIA.pedidoVenda.exibirEdicao(numero, faturado);
 		});	
 	};
-	
+/*	
 	BRIGADERIA.gerenciarPedidoCompra.deletarPedido = function (numero) {
 		
 		bootbox.confirm({ 
