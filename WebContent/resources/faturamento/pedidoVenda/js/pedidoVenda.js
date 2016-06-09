@@ -84,7 +84,7 @@ $(document).ready( function () {
 	};
 	
 	BRIGADERIA.pedidoVenda.incluirProduto = function () {
-		debugger;
+		
 		var expNumeros = /^[0-9]+$/;
 		if ($("#produtos").val() == "") {
 			bootbox.alert("Selecione o Produto!");

@@ -169,8 +169,8 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 		p.execute();
 	}
 	
-	public void retiraEstoque (int codProduto, float qtde) throws SQLException  {
-		String update = "UPDATE PRODUTO SET PRODUTO.ESTOQUE = ESTOQUE - " + qtde + " WHERE PRODUTO.CODIGO = " + codProduto;
+	public void movimentaEstoque (int codProduto, float qtde) throws SQLException  {
+		String update = "UPDATE PRODUTO SET PRODUTO.ESTOQUE = ESTOQUE + " + qtde + " WHERE PRODUTO.CODIGO = " + codProduto;
 
 		PreparedStatement p = this.conexao.prepareStatement(update);
 		p.execute();

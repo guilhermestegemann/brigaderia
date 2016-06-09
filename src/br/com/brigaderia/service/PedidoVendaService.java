@@ -8,6 +8,7 @@ import java.util.List;
 
 import br.com.brigaderia.bd.conexao.Conexao;
 import br.com.brigaderia.exception.BrigaderiaException;
+import br.com.brigaderia.exception.PedidoFaturadoException;
 import br.com.brigaderia.jdbc.JDBCClienteDAO;
 import br.com.brigaderia.jdbc.JDBCPedidoVendaDAO;
 import br.com.brigaderia.jdbc.JDBCProdutoDAO;
@@ -106,6 +107,42 @@ public class PedidoVendaService {
 		}finally{
 			conec.fecharConexao();
 		}	
+	}
+	
+	public String faturarPedido (int numero) throws SQLException, PedidoFaturadoException {
+		Conexao conec = new Conexao();
+		String msg = "";
+		try {
+			Connection conexao = conec.abrirConexao();
+			PedidoVendaDAO jdbcPedidoVenda = new JDBCPedidoVendaDAO(conexao);
+			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
+			if (jdbcPedidoVenda.pedidoFaturado(numero)) {
+				throw new PedidoFaturadoException();
+			}
+			List<ItemPedidoVenda> listItemPedido = new ArrayList<ItemPedidoVenda>();
+			listItemPedido = jdbcPedidoVenda.buscarItensPedido(numero);
+			
+			for (ItemPedidoVenda itemPedidoVenda : listItemPedido) {
+				
+				if (itemPedidoVenda.getEstoque() < itemPedidoVenda.getQtde()) {
+					if (msg.equals("")){
+						msg = "Estoque insuficiente para os seguinte produtos:.\n";
+					}
+					msg += "Código: " + itemPedidoVenda.getCodigoProduto() + " | Descrição: " + itemPedidoVenda.getDescricao()
+						 + " | Estoque: " + itemPedidoVenda.getEstoque() + " | Quantidade: " + itemPedidoVenda.getQtde() + "<br>";	
+				}
+			}
+			if (msg.equals("")) {
+				for (ItemPedidoVenda itemPedidoVenda : listItemPedido) {
+					jdbcProduto.movimentaEstoque(itemPedidoVenda.getCodigoProduto(), (itemPedidoVenda.getQtde() *-1));
+				}
+				jdbcPedidoVenda.faturarPedido(numero);
+				msg = "Pedido faturado com sucesso!";
+			}
+		}finally{
+			conec.fecharConexao();
+		}
+		return msg;
 	}
 	
 /*	

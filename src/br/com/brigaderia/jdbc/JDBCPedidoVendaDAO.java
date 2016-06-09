@@ -155,7 +155,7 @@ public class JDBCPedidoVendaDAO implements PedidoVendaDAO{
 	public List<ItemPedidoVenda> buscarItensPedido(int numero) throws SQLException  {
 		
 		List<ItemPedidoVenda> listItemPedidoVenda = new ArrayList<ItemPedidoVenda>();
-		String comando = "SELECT IP.PRODUTO, P.DESCRICAO, P.UNESTOQUE, IP.QTDE, IP.UNITARIO, P.VALORVENDA, IP.TOTAL "
+		String comando = "SELECT IP.PRODUTO, P.DESCRICAO, P.UNESTOQUE, P.ESTOQUE, IP.QTDE, IP.UNITARIO, P.VALORVENDA, IP.TOTAL "
 				       + "FROM ITEMPEDIDO IP "
 				       + "INNER JOIN PRODUTO P ON P.CODIGO = IP.PRODUTO "
 				       + "WHERE IP.NUMERO = " + numero;
@@ -167,6 +167,7 @@ public class JDBCPedidoVendaDAO implements PedidoVendaDAO{
 			itemPedidoVenda.setCodigoProduto(rs.getInt("PRODUTO"));
 			itemPedidoVenda.setDescricao(rs.getString("DESCRICAO"));
 			itemPedidoVenda.setUnEstoque(rs.getString("UNESTOQUE"));
+			itemPedidoVenda.setEstoque(rs.getFloat("ESTOQUE"));
 			itemPedidoVenda.setQtde(rs.getFloat("QTDE"));
 			itemPedidoVenda.setUnitario(rs.getFloat("UNITARIO"));
 			itemPedidoVenda.setValorVenda(rs.getFloat("VALORVENDA"));
@@ -175,4 +176,29 @@ public class JDBCPedidoVendaDAO implements PedidoVendaDAO{
 		}
 		return listItemPedidoVenda;
 	}
+	
+	public boolean pedidoFaturado (int numero) throws SQLException {
+		String comando = "SELECT PEDIDO.FATURADO FROM PEDIDO WHERE PEDIDO.NUMERO = " + numero + " AND PEDIDO.FATURADO = 'S' LIMIT 1";
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(comando);
+		if (rs.next()) {
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public void faturarPedido (int numero) throws SQLException {
+		String comando = "UPDATE PEDIDO SET PEDIDO.FATURADO = 'S' WHERE PEDIDO.NUMERO = " + numero;
+		PreparedStatement p;
+		p = this.conexao.prepareStatement(comando);
+		p.executeUpdate();
+	}
 }
+
+
+
+
+
+
+

@@ -6,6 +6,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -102,6 +103,19 @@ public class PedidoVendaRest extends UtilRest{
 		}catch (SQLException e) {
 			e.printStackTrace();
 			return buildErrorResponse("Ocorreu um erro ao buscar pedidos de venda. Entre em contato com o administrador do sistema.");
+		}
+	}
+	
+	@PUT
+	@Path("/faturarPedido/{numero}")
+	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	public Response faturarPedido(@PathParam("numero")int numero) throws BrigaderiaException {
+		try {
+			PedidoVendaService service = new PedidoVendaService();
+			return buildResponse(service.faturarPedido(numero));
+		}catch(SQLException e){
+			e.printStackTrace();
+			return buildErrorResponse("Ocorreu um erro ao faturar o pedido. Entre em contato com o administrador do sistema.");
 		}
 	}
 /*	

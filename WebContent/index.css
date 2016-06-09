@@ -55,7 +55,8 @@ body {
 	margin-top: 15px !important;
 }
 
-.table {
+.table th, .table td {
 	color: white;
+	text-align: center;
 }
 

@@ -164,7 +164,7 @@ public class PedidoCompraService {
 			if (msg.equals("")) {
 				jdbcPedidoCompra.deletarPedido(numero);
 				for (int i = 0; i < listItemPedido.size(); i++) {
-					jdbcProduto.retiraEstoque(listItemPedido.get(i).getCodigoProduto(), (listItemPedido.get(i).getQtde() * qtdeEntrada));
+					jdbcProduto.movimentaEstoque(listItemPedido.get(i).getCodigoProduto(), ((listItemPedido.get(i).getQtde() * qtdeEntrada)*-1));
 				}
 				
 				msg = "Pedido deletado com sucesso";

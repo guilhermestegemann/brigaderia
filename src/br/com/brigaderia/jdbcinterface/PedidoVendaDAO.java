@@ -19,4 +19,6 @@ public interface PedidoVendaDAO {
 	public void countProdutos(int codigo) throws SQLException, ProdutoVinculadoEmPedidoVendaException;
 	public List<PedidoVendaVO> buscarPedidos(String dataIni, String dataFim, String faturado, String cancelado,
 				                             String produzido, int codCliente) throws SQLException;
+	public boolean pedidoFaturado (int numero) throws SQLException;
+	public void faturarPedido (int numero) throws SQLException;
 }

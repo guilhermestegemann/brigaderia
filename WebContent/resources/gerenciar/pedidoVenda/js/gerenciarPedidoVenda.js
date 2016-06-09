@@ -42,9 +42,10 @@ $(document).ready( function () {
 			success : function (listaDePedidos) {
 				
 				var html = "";
-				var faturado = "";
-				var produzido = "";
-				var cancelado = "";
+				var status = "";
+				var btnFaturar = "";
+				var btnEditar = "";
+				var btnCancelar = "";
 				for (var i = 0; i < listaDePedidos.length; i++) {
 					
 					if (listaDePedidos[i].emissao != null) {
@@ -52,21 +53,22 @@ $(document).ready( function () {
 					}
 					
 					if (listaDePedidos[i].faturado == "N") {
-						faturado = "<input type='checkbox' name='faturado'>";
+						status = "Pendente";
 					}else{
-						faturado = "<input type='checkbox' name='faturado' checked>";
+						status = "Faturado";
+						btnFaturar = "disabled='disabled'";
+						btnEditar = "disabled='disabled'";
 					}
 					
-					if (listaDePedidos[i].cancelado == "N") {
-						cancelado = "<input type='checkbox' name='cancelado'>";
-					}else{
-						cancelado = "<input type='checkbox' name='cancelado' checked>";
+					if (listaDePedidos[i].cancelado == "S") { // era N a condicao
+						status = "Cancelado";
+						btnCancelar = "disabled='disabled'";
 					}
 					
-					if (listaDePedidos[i].produzido == "N") {
-						produzido = "<input type='checkbox' name='produzido'>";
-					}else{
-						produzido = "<input type='checkbox' name='produzido' checked>";
+					if (listaDePedidos[i].produzido == "S") {
+						if (status == "Pendente") {
+							status = "Produzido";
+						}
 					}
 					
 					html += "<tr>"
@@ -74,11 +76,11 @@ $(document).ready( function () {
 					  + "<td>" + listaDePedidos[i].cliente + "</td>"
 					  + "<td>" + listaDePedidos[i].emissao + "</td>"
 					  + "<td>" + "R$ " + parseFloat(listaDePedidos[i].total).toFixed(2) + "</td>"
-					  + "<td>" + faturado + "</td>"
-					  + "<td>" + cancelado + "</td>"
-					  + "<td>" + produzido + "</td>"
-					  + "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.gerenciarPedidoVenda.visualizarPedido(" + listaDePedidos[i].numero + "," + "\"" + listaDePedidos[i].faturado + "\"" +")' aria-hidden='true'></i></a>"
-					  	 +	"<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.gerenciarPedidoCompra.deletarPedido(" + listaDePedidos[i].numero + ")' aria-hidden='true'></i></a>  </td>"
+					  + "<td>" + status + "</td>"
+					  + "<td><button class='btn btn-primary btn-sm' type='button' onclick='BRIGADERIA.gerenciarPedidoVenda.visualizarPedido(" + listaDePedidos[i].numero + "," + "\"" + listaDePedidos[i].faturado + "\"" +")' aria-hidden='true'>Visualizar</button>"
+					  + "<button class='btn btn-warning btn-sm'" + btnEditar + "type='button' onclick='BRIGADERIA.gerenciarPedidoVenda.visualizarPedido(" + listaDePedidos[i].numero + "," + "\"" + listaDePedidos[i].faturado + "\"" +")' aria-hidden='true'>Editar</button>"
+					  + "<button class='btn btn-success btn-sm'" + btnFaturar + "type='button' onclick='BRIGADERIA.gerenciarPedidoVenda.faturarPedido(" + listaDePedidos[i].numero + ")' aria-hidden='true'>Faturar</button>"
+					  + "<button class='btn btn-danger btn-sm'" + btnCancelar + "type='button' onclick='BRIGADERIA.gerenciarPedidoVenda.visualizarPedido(" + listaDePedidos[i].numero + "," + "\"" + listaDePedidos[i].faturado + "\"" +")' aria-hidden='true'>Cancelar</button></td>"
 					  + "</tr>";
 				}
 				
@@ -114,6 +116,28 @@ $(document).ready( function () {
 			BRIGADERIA.pedidoVenda.exibirEdicao(numero, faturado);
 		});	
 	};
+	
+	BRIGADERIA.gerenciarPedidoVenda.faturarPedido = function (numero) {
+		
+		bootbox.confirm({ 
+			size: 'medium',
+			message: "Deseja realmente faturar o pedido selecionado?", 
+			callback: function(confirma){
+				if (confirma) {
+					BRIGADERIA.pedidoVendaService.faturarPedido({
+						numero : numero,
+						success: function (successo) {
+							bootbox.alert(successo.replace("\n","<br>"));
+							BRIGADERIA.gerenciarPedidoVenda.buscar();
+						},
+						error: function(err) {
+							bootbox.alert(err.responseText);
+						}
+					})
+				}
+			}
+		});
+	}
 /*	
 	BRIGADERIA.gerenciarPedidoCompra.deletarPedido = function (numero) {
 		

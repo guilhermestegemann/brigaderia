@@ -57,6 +57,13 @@ $(document).ready(function() {
 		cfg.url = "rest/pedidoVenda/buscarPedidoVenda/"+cfg.dataInicio+"/"+cfg.dataFim+"/"+cfg.faturado+"/"+cfg.cancelado+"/"+cfg.produzido+"/"+cfg.codCliente;
 		BRIGADERIA.ajax.get(BRIGADERIA.pedidoVendaService.defaultCfg(cfg));
 	};
+	
+	BRIGADERIA.pedidoVendaService.faturarPedido = function(cfg) {
+		cfg.url = "rest/pedidoVenda/faturarPedido/"+ cfg.numero;
+		BRIGADERIA.ajax.put(BRIGADERIA.pedidoVendaService.defaultCfg(cfg));
+	};
+	
+	
 	/*
 	BRIGADERIA.pedidoVendaService.deletar = function(cfg) {
 		cfg.url = "rest/pedidoVenda/deletar/" + cfg.numero;
