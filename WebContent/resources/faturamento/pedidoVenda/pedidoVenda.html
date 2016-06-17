@@ -31,17 +31,7 @@
 		<div class="form-group col-sm-1">
 			<label for='totalPedidoVenda'>Total</label>
 			<input type="text" class="form-control" id="totalPedidoVenda" name="totalPedidoVenda" readonly />
-		</div>
-		<div class="checkbox form-group col-sm-2">
-			<label><input type="checkbox" id='faturado' name='faturado'><strong> Faturado</strong></label>
-		</div>
-		<div class="checkbox form-group col-sm-2">
-			<label><input type="checkbox" id='produzido' name='produzido'><strong> Produzido</strong></label>
-		</div>
-		<div class="checkbox form-group col-sm-2">
-			<label><input type="checkbox" id='cancelado' name='cancelado'><strong> Cancelado</strong></label>
-		</div>
-		
+		</div>	
 		<div class="col-sm-12">
 			<hr>
 		</div>
@@ -93,7 +83,7 @@
 		</table>
 	</div>
 	<div class="btn pull-right form-group">
-		<button class="btn btn-primary btn-lg" onclick= "BRIGADERIA.pedidoVenda.adicionar()" type="button">Salvar</button>
+		<button class="btn btn-primary btn-lg" id="btnSalvar" onclick= "BRIGADERIA.pedidoVenda.adicionar()" type="button">Salvar</button>
 		<button class="btn btn-danger btn-lg" onclick= "carregarConteudoCancel('resources/gerenciar/pedidoVenda/gerenciarPedidoVenda.html')" type="button">Cancelar</button>
 	</div>
 </div>

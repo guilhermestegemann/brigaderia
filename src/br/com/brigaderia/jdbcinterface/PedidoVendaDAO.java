@@ -21,4 +21,6 @@ public interface PedidoVendaDAO {
 				                             String produzido, int codCliente) throws SQLException;
 	public boolean pedidoFaturado (int numero) throws SQLException;
 	public void faturarPedido (int numero) throws SQLException;
+	public void deletarProdutos(int numero) throws SQLException;
+	public void editarPedido (PedidoVenda pedidoVenda) throws SQLException;
 }

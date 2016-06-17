@@ -118,6 +118,24 @@ public class PedidoVendaRest extends UtilRest{
 			return buildErrorResponse("Ocorreu um erro ao faturar o pedido. Entre em contato com o administrador do sistema.");
 		}
 	}
+	
+	@PUT
+	@Path("/editarPedido")
+	@Consumes("application/*")
+	public Response editarPedido(String pedidoEditado) throws BrigaderiaException {
+		try {
+			PedidoVenda pedido = new ObjectMapper().readValue(pedidoEditado, PedidoVenda.class);
+			PedidoVendaService service = new PedidoVendaService();
+			service.editarPedido(pedido);
+			return buildResponse("Pedido de Venda editado com sucesso");
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return buildErrorResponse("Ocorreu um erro ao editar o pedido. Entre em contato com o administrador do sistema.");
+		}catch (Exception e) {
+			e.printStackTrace();
+			return buildErrorResponse(ERROINESPERADO);
+		}
+	}
 /*	
 	@DELETE
 	@Path("/deletar/{numero}")

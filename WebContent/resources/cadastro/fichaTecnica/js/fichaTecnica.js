@@ -2,7 +2,7 @@ BRIGADERIA.fichaTecnica = new Object();
 
 $(document).ready(function(){
 	
-	var ingredientes;
+	var ingredientes; // recebe o retorno do método listarIngredientes
 	var ingredienteArray = []; //utilizado ao inserir ingrediente no formulário
 	
 	BRIGADERIA.fichaTecnica.listarIngredientes = function () { 

@@ -75,4 +75,19 @@ $(document).ready(function() {
 		cfg.url = "rest/pedidoVenda/buscarPedidoPeloNumero/" + cfg.numero;
 		BRIGADERIA.ajax.get(BRIGADERIA.pedidoVendaService.defaultCfg(cfg));
 	};
+	
+	BRIGADERIA.pediddoVendaService.editarPedido = function (pedido) {
+		cfg = {
+			url: "rest/pedidoVenda/editarPedido",
+			data: pedido,
+			success : function(sucesso) {
+				bootbox.alert(sucesso);
+				carregarConteudo ('resources/gerenciar/pedidoVenda/gerenciarPedidoVenda.html');
+			},
+			error : function (err) {
+				bootbox.alert(err.responseText);
+			}
+		};
+		BRIGADERIA.ajax.put(BRIGADERIA.pedidoVendaService.defaultCfg(cfg));
+	}
 });

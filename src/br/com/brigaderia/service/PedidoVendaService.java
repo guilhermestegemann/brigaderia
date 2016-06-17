@@ -58,6 +58,36 @@ public class PedidoVendaService {
 		}
 	}
 	
+	public void editarPedido(PedidoVenda pedidoVenda) throws SQLException, BrigaderiaException {
+		Conexao conec = new Conexao();
+		Connection conexao = conec.abrirConexao();
+		try {
+			conexao.setAutoCommit(false);
+			ValidaPedidoVenda validaPedidoVenda = new ValidaPedidoVenda();
+			validaPedidoVenda.validar(pedidoVenda);
+			PedidoVendaDAO jdbcPedidoVenda = new JDBCPedidoVendaDAO(conexao);
+			jdbcPedidoVenda.deletarProdutos(pedidoVenda.getNumero());
+			jdbcPedidoVenda.editarPedido(pedidoVenda);
+			List<ItemPedidoVenda> listProdutos = new ArrayList<>();
+			listProdutos = pedidoVenda.getItemPedidoVenda();
+			
+			for (ItemPedidoVenda itemPedidoVenda : listProdutos) {
+				jdbcPedidoVenda.adicionarProdutos(pedidoVenda.getNumero(), itemPedidoVenda.getCodigoProduto(), itemPedidoVenda.getQtde(),
+									              itemPedidoVenda.getUnitario(), itemPedidoVenda.getTotal());
+			}
+			conexao.commit();
+		}catch (BrigaderiaException e) {
+			e.printStackTrace();
+			throw e;
+		} catch (SQLException e) {
+			conexao.rollback();
+			e.printStackTrace();
+			throw new BrigaderiaException();
+		}finally {
+			conec.fecharConexao();
+		}
+	}
+	
 	public List<Produto> buscarProdutos() throws SQLException {
 		
 		Conexao conec = new Conexao();

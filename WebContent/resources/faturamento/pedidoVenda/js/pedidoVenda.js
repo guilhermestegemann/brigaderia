@@ -236,7 +236,28 @@ $(document).ready( function () {
 						
 						$("#itensPedidoVenda tbody").append(html);
 				}
+				$("#btnSalvar").attr("onclick", "BRIGADERIA.pedidoVenda.salvarEdicao()");
 			}
 		});	
 	};
+	
+	BRIGADERIA.pedidoVenda.salvarEdicao = function(){
+		var pedido = {
+				cliente : $("#clientes").val(),
+				total : $("#totalPedidoVenda").val(),
+				itemPedidoVenda: produtoArray
+			};
+		if (pedido.itemPedidoVenda == "") {
+			bootbox.alert("Produtos não inseridos");
+		}else{
+			BRIGADERIA.pedidoVendaService.editarPedido(pedido);
+		}
+	};
 });
+
+
+
+
+
+
+

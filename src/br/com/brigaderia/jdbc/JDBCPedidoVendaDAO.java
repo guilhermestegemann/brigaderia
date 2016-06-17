@@ -50,6 +50,19 @@ public class JDBCPedidoVendaDAO implements PedidoVendaDAO{
 		return pedidoVenda.getNumero();
 	}
 	
+	public void editarPedido (PedidoVenda pedidoVenda) throws SQLException {
+		
+		String comando = "UPDATE PEDIDO SET " 
+							+ "PEDIDO.CLIENTE = ?, "
+							+ "PEDIDO.TOTAL = ? "
+					   + "WHERE PEDIDO.NUMERO = " + pedidoVenda.getNumero();
+	    PreparedStatement p;
+    	p = this.conexao.prepareStatement(comando);
+    	p.setInt(1, pedidoVenda.getCliente());
+    	p.setDouble(2, pedidoVenda.getTotal());
+    	p.executeUpdate();
+	}
+	
 	public void adicionarProdutos(int numeroPedido, int codProduto, float qtde, float unitario, float total) {
 		
 		String comando = "INSERT INTO ITEMPEDIDO (NUMERO, PRODUTO, QTDE, UNITARIO, TOTAL) VALUES (?,?,?,?,?)";
@@ -193,6 +206,14 @@ public class JDBCPedidoVendaDAO implements PedidoVendaDAO{
 		PreparedStatement p;
 		p = this.conexao.prepareStatement(comando);
 		p.executeUpdate();
+	}
+	
+	public void deletarProdutos(int numero) throws SQLException {
+		
+		String comando = "DELETE FROM ITEMPEDIDO WHERE ITEMPEDIDO.NUMERO = " + numero;
+		Statement p;
+		p = this.conexao.createStatement();
+		p.execute(comando);	
 	}
 }
 
