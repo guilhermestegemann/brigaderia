@@ -1,6 +1,7 @@
 package br.com.brigaderia.jdbcinterface;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import br.com.brigaderia.exception.ClienteComPedidoException;
@@ -20,7 +21,8 @@ public interface PedidoVendaDAO {
 	public List<PedidoVendaVO> buscarPedidos(String dataIni, String dataFim, String faturado, String cancelado,
 				                             String produzido, int codCliente) throws SQLException;
 	public boolean pedidoFaturado (int numero) throws SQLException;
-	public void faturarPedido (int numero) throws SQLException;
+	public void faturarPedido (int numero, Date dataFaturado) throws SQLException;
+	public void cancelarPedido(int numero) throws SQLException;
 	public void deletarProdutos(int numero) throws SQLException;
 	public void editarPedido (PedidoVenda pedidoVenda) throws SQLException;
 }

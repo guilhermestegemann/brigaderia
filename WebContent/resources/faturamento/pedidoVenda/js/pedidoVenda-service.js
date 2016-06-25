@@ -63,6 +63,11 @@ $(document).ready(function() {
 		BRIGADERIA.ajax.put(BRIGADERIA.pedidoVendaService.defaultCfg(cfg));
 	};
 	
+	BRIGADERIA.pedidoVendaService.cancelarPedido = function(cfg) {
+		cfg.url = "rest/pedidoVenda/cancelarPedido/"+ cfg.numero;
+		BRIGADERIA.ajax.put(BRIGADERIA.pedidoVendaService.defaultCfg(cfg));
+	};
+	
 	
 	/*
 	BRIGADERIA.pedidoVendaService.deletar = function(cfg) {
@@ -76,7 +81,7 @@ $(document).ready(function() {
 		BRIGADERIA.ajax.get(BRIGADERIA.pedidoVendaService.defaultCfg(cfg));
 	};
 	
-	BRIGADERIA.pediddoVendaService.editarPedido = function (pedido) {
+	BRIGADERIA.pedidoVendaService.editarPedido = function (pedido) {
 		cfg = {
 			url: "rest/pedidoVenda/editarPedido",
 			data: pedido,

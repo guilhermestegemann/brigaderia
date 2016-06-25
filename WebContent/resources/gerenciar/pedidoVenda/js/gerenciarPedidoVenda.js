@@ -45,7 +45,7 @@ $(document).ready( function () {
 				var status = "";
 				var btnFaturar = "";
 				var btnEditar = "";
-				var btnCancelar = "";
+				var btnCancelar = "Cancelar";
 				for (var i = 0; i < listaDePedidos.length; i++) {
 					
 					if (listaDePedidos[i].emissao != null) {
@@ -60,9 +60,10 @@ $(document).ready( function () {
 						btnEditar = "disabled='disabled'";
 					}
 					
-					if (listaDePedidos[i].cancelado == "S") { // era N a condicao
+					if (listaDePedidos[i].cancelado == "S") { 
 						status = "Cancelado";
-						btnCancelar = "disabled='disabled'";
+						btnCancelar = "Descancelar";
+						//$(".btnCancelar").attr("onclick", "BRIGADERIA.gerenciarPedidoVenda.descancelarPedido(" + listaDePedidos[i].numero + ")");
 					}
 					
 					if (listaDePedidos[i].produzido == "S") {
@@ -80,7 +81,7 @@ $(document).ready( function () {
 					  + "<td><button class='btn btn-primary btn-sm' type='button' onclick='BRIGADERIA.gerenciarPedidoVenda.visualizarPedido(" + listaDePedidos[i].numero + "," + "\"" + listaDePedidos[i].faturado + "\"" +")' aria-hidden='true'>Visualizar</button>"
 					  + "<button class='btn btn-warning btn-sm'" + btnEditar + "type='button' onclick='BRIGADERIA.gerenciarPedidoVenda.visualizarPedido(" + listaDePedidos[i].numero + "," + "\"" + listaDePedidos[i].faturado + "\"" +")' aria-hidden='true'>Editar</button>"
 					  + "<button class='btn btn-success btn-sm'" + btnFaturar + "type='button' onclick='BRIGADERIA.gerenciarPedidoVenda.faturarPedido(" + listaDePedidos[i].numero + ")' aria-hidden='true'>Faturar</button>"
-					  + "<button class='btn btn-danger btn-sm'" + btnCancelar + "type='button' onclick='BRIGADERIA.gerenciarPedidoVenda.visualizarPedido(" + listaDePedidos[i].numero + "," + "\"" + listaDePedidos[i].faturado + "\"" +")' aria-hidden='true'>Cancelar</button></td>"
+					  + "<button class='btn btn-danger btn-sm btnCancelar' id='teste' type='button' onclick='BRIGADERIA.gerenciarPedidoVenda.cancelarPedido(" + listaDePedidos[i].numero + "," + "\"" + listaDePedidos[i].faturado + "\"" +")' aria-hidden='true'>"+btnCancelar+"</button></td>"
 					  + "</tr>";
 				}
 				
@@ -128,6 +129,28 @@ $(document).ready( function () {
 						numero : numero,
 						success: function (successo) {
 							bootbox.alert(successo.replace("\n","<br>"));
+							BRIGADERIA.gerenciarPedidoVenda.buscar();
+						},
+						error: function(err) {
+							bootbox.alert(err.responseText);
+						}
+					})
+				}
+			}
+		});
+	}
+	
+	BRIGADERIA.gerenciarPedidoVenda.cancelarPedido = function (numero) {
+		
+		bootbox.confirm({ 
+			size: 'medium',
+			message: "Deseja realmente cancelar o pedido selecionado?", 
+			callback: function(confirma){
+				if (confirma) {
+					BRIGADERIA.pedidoVendaService.cancelarPedido({
+						numero : numero,
+						success: function (successo) {
+							bootbox.alert(successo);
 							BRIGADERIA.gerenciarPedidoVenda.buscar();
 						},
 						error: function(err) {

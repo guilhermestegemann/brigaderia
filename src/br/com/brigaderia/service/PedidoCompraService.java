@@ -75,8 +75,8 @@ public class PedidoCompraService {
 					}
 				}
 				
-				jdbcProduto.atualizarEstoque(codProduto, (qtde * qtdeEntrada), novoCusto, margem);
-				
+				jdbcProduto.atualizarEstoque(codProduto, novoCusto, margem);
+				jdbcProduto.movimentaEstoque(codProduto, (qtde * qtdeEntrada));
 				if (tipoItem == 2){
 					if (novoCusto != custo) {
 						jdbcFichaTecnica.atualizarCustoFichaTecnica(codProduto);

@@ -197,12 +197,16 @@ $(document).ready( function () {
 	};
 	
 	BRIGADERIA.pedidoVenda.exibirEdicao = function(numero, faturado) {
+		if (faturado == "N") {
+			BRIGADERIA.pedidoVenda.listarProdutos();
+		}
 		BRIGADERIA.pedidoVendaService.buscarPedidoPeloNumero({
 			numero : numero,
 			async: false,
 			success : function (pedido) {
+				debugger;
 				$("#numero").val(pedido.numero);
-				if (faturado == "S"){
+				if (pedido.faturado == "S"){
 					$("#cliente").val(pedido.cliente + " - " + pedido.nomeCliente);
 					$("#dataFaturado").val(BRIGADERIA.convertData.dateToStr(pedido.dataFaturado));
 					$("#faturado").attr("checked", true);
@@ -218,23 +222,28 @@ $(document).ready( function () {
 				}
 				$("#totalPedidoVenda").val(parseFloat(pedido.total).toFixed(2));
 				debugger;
-				itemPedido = {};
-				itemPedido = pedido.itemPedidoVenda;
-				produtos = itemPedido;
-				for (var i = 0; i < itemPedido.length; i++ ) {
+				itemPedidoVO = {};
+				itemPedidoVO = pedido.itemPedidoVenda;
+				for (var i = 0; i < itemPedidoVO.length; i++ ) {
 					var html = ""
 						html =  "<tr class='itemPedidoVenda'>"
-							  + "<td >" + itemPedido[i].codigoProduto + "</td>"
-							  + "<td>" + itemPedido[i].descricao + "</td>"
-							  + "<td>" + itemPedido[i].unEstoque + "</td>"
-							  + "<td>" + itemPedido[i].qtde + "</td>"
-							  + "<td>" + parseFloat(itemPedido[i].unitario).toFixed(2) + "</td>"
-							  + "<td>" + itemPedido[i].total + "</td>"
-							  + "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.pedidoVenda.editarProduto(this"+ "," + itemPedido[i].codigoProduto + "," + "\"" + itemPedido[i].descricao + "\"" + "," + itemPedido[i].qtde + "," + "\"" + itemPedido[i].unEstoque + "\"" + "," + parseFloat(itemPedido[i].unitario).toFixed(2) + "," + itemPedido[i].total +")' aria-hidden='true'></i></a>"
-						  	  + "<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.pedidoVenda.deletarProduto(this"+ "," + itemPedido[i].codigoProduto + "," + "\"" + itemPedido[i].descricao + "\"" + "," + itemPedido[i].total +")' aria-hidden='true'></i></a></td>"
-						  + "</tr>";		
-						
+							  + "<td >" + itemPedidoVO[i].codigoProduto + "</td>"
+							  + "<td>" + itemPedidoVO[i].descricao + "</td>"
+							  + "<td>" + itemPedidoVO[i].unEstoque + "</td>"
+							  + "<td>" + itemPedidoVO[i].qtde + "</td>"
+							  + "<td>" + parseFloat(itemPedidoVO[i].unitario).toFixed(2) + "</td>"
+							  + "<td>" + itemPedidoVO[i].total + "</td>";
+							  if (pedido.faturado == "S") {
+								  html += "<td></td><td></td>";
+							  }else{
+								  html += "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.pedidoVenda.editarProduto(this"+ "," + itemPedidoVO[i].codigoProduto + "," + "\"" + itemPedidoVO[i].descricao + "\"" + "," + itemPedidoVO[i].qtde + "," + "\"" + itemPedidoVO[i].unEstoque + "\"" + "," + parseFloat(itemPedidoVO[i].unitario).toFixed(2) + "," + itemPedidoVO[i].total +")' aria-hidden='true'></i></a>"
+							  	  + "<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.pedidoVenda.deletarProduto(this"+ "," + itemPedidoVO[i].codigoProduto + "," + "\"" + itemPedidoVO[i].descricao + "\"" + "," + itemPedidoVO[i].total +")' aria-hidden='true'></i></a></td>";
+							  }
+							  
+						  html += "</tr>";		
+						produtoArray.push(itemPedidoVO[i]);
 						$("#itensPedidoVenda tbody").append(html);
+						$("#produtos option[value='"+ itemPedidoVO[i].codigoProduto +"']").remove();
 				}
 				$("#btnSalvar").attr("onclick", "BRIGADERIA.pedidoVenda.salvarEdicao()");
 			}
@@ -243,6 +252,7 @@ $(document).ready( function () {
 	
 	BRIGADERIA.pedidoVenda.salvarEdicao = function(){
 		var pedido = {
+				numero: $("#numero").val(),
 				cliente : $("#clientes").val(),
 				total : $("#totalPedidoVenda").val(),
 				itemPedidoVenda: produtoArray

@@ -166,13 +166,34 @@ public class PedidoVendaService {
 				for (ItemPedidoVenda itemPedidoVenda : listItemPedido) {
 					jdbcProduto.movimentaEstoque(itemPedidoVenda.getCodigoProduto(), (itemPedidoVenda.getQtde() *-1));
 				}
-				jdbcPedidoVenda.faturarPedido(numero);
+				
+				
+				jdbcPedidoVenda.faturarPedido(numero, new Date());
 				msg = "Pedido faturado com sucesso!";
 			}
 		}finally{
 			conec.fecharConexao();
 		}
 		return msg;
+	}
+	
+	public void cancelarPedido (int numero) throws SQLException {
+		Conexao conec = new Conexao();
+		try{
+			Connection conexao = conec.abrirConexao();
+			PedidoVendaDAO jdbcPedidoVenda = new JDBCPedidoVendaDAO(conexao);
+			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
+			if (jdbcPedidoVenda.pedidoFaturado(numero)) {
+				List<ItemPedidoVenda> itemPedido = new ArrayList<>();
+				itemPedido = jdbcPedidoVenda.buscarItensPedido(numero);
+				for (ItemPedidoVenda itemPedidoVenda : itemPedido) {
+					jdbcProduto.movimentaEstoque(itemPedidoVenda.getCodigoProduto(), itemPedidoVenda.getQtde());
+				}
+			}
+			jdbcPedidoVenda.cancelarPedido(numero);
+		}finally{
+			conec.fecharConexao();
+		}
 	}
 	
 /*	

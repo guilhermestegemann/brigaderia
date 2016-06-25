@@ -120,6 +120,20 @@ public class PedidoVendaRest extends UtilRest{
 	}
 	
 	@PUT
+	@Path("/cancelarPedido/{numero}")
+	@Consumes("application/*")
+	public Response cancelarPedido(@PathParam("numero")int numero) throws BrigaderiaException {
+		try {
+			PedidoVendaService service = new PedidoVendaService();
+			service.cancelarPedido(numero);
+			return buildResponse("Pedido cancelado com sucesso!");
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return buildErrorResponse("Ocorreu um erro ao faturar o pedido. Entre em contato com o administrador do sistema.");
+		}
+	}
+	
+	@PUT
 	@Path("/editarPedido")
 	@Consumes("application/*")
 	public Response editarPedido(String pedidoEditado) throws BrigaderiaException {

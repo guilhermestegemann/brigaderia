@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.com.brigaderia.exception.ClienteComPedidoException;
@@ -201,10 +202,12 @@ public class JDBCPedidoVendaDAO implements PedidoVendaDAO{
 		}
 	}
 	
-	public void faturarPedido (int numero) throws SQLException {
-		String comando = "UPDATE PEDIDO SET PEDIDO.FATURADO = 'S' WHERE PEDIDO.NUMERO = " + numero;
+	public void faturarPedido (int numero, Date dataFaturado) throws SQLException {
+		String comando = "UPDATE PEDIDO SET PEDIDO.FATURADO = 'S', PEDIDO.CANCELADO = 'N',  PEDIDO.DATAFATURADO = ?"
+				       + " WHERE PEDIDO.NUMERO = " + numero;
 		PreparedStatement p;
 		p = this.conexao.prepareStatement(comando);
+		p.setDate(1, new java.sql.Date (dataFaturado.getTime()));
 		p.executeUpdate();
 	}
 	
@@ -214,6 +217,12 @@ public class JDBCPedidoVendaDAO implements PedidoVendaDAO{
 		Statement p;
 		p = this.conexao.createStatement();
 		p.execute(comando);	
+	}
+	
+	public void cancelarPedido(int numero) throws SQLException {
+		String comando = "UPDATE PEDIDO SET PEDIDO.CANCELADO = 'S' WHERE PEDIDO.NUMERO = " + numero;
+		PreparedStatement p = this.conexao.prepareStatement(comando);
+		p.executeUpdate();
 	}
 }
 

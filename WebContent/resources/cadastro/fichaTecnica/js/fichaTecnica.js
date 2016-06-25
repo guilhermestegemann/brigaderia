@@ -10,7 +10,6 @@ $(document).ready(function(){
 			success: function(data) {
 				var html = "";
 				ingredientes = data;
-
 				for (var i = 0; i < data.length; i++) {
 					html += "<option value='" + data[i].codigo + "'>" + data[i].descricao + "</option>";
 				}
