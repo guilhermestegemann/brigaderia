@@ -129,7 +129,21 @@ public class PedidoVendaRest extends UtilRest{
 			return buildResponse("Pedido cancelado com sucesso!");
 		}catch(SQLException e) {
 			e.printStackTrace();
-			return buildErrorResponse("Ocorreu um erro ao faturar o pedido. Entre em contato com o administrador do sistema.");
+			return buildErrorResponse("Ocorreu um erro ao cancelar o pedido. Entre em contato com o administrador do sistema.");
+		}
+	}
+	
+	@PUT
+	@Path("/descancelarPedido/{numero}")
+	@Consumes("application/*")
+	public Response descancelarPedido(@PathParam("numero")int numero) throws BrigaderiaException {
+		try {
+			PedidoVendaService service = new PedidoVendaService();
+			service.descancelarPedido(numero);
+			return buildResponse("Pedido descancelado com sucesso!");
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return buildErrorResponse("Ocorreu um erro ao descancelar o pedido. Entre em contato com o administrador do sistema.");
 		}
 	}
 	
@@ -150,18 +164,19 @@ public class PedidoVendaRest extends UtilRest{
 			return buildErrorResponse(ERROINESPERADO);
 		}
 	}
-/*	
+
 	@DELETE
 	@Path("/deletar/{numero}")
 	@Consumes("application/*")
 	
 	public Response deletar (@PathParam("numero") int numero) throws BrigaderiaException{
 		try {
-			PedidoCompraService service = new PedidoCompraService();
-			return this.buildResponse(service.deletarPedido(numero));
+			PedidoVendaService service = new PedidoVendaService();
+			service.deletarPedido(numero);
+			return this.buildResponse("Pedido deletado com sucesso!");
 		}catch (SQLException e) {
 			e.printStackTrace();
 			return buildErrorResponse(ERROINESPERADO);
 		}
-	}*/
+	}
 }

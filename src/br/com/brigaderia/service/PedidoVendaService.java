@@ -196,44 +196,27 @@ public class PedidoVendaService {
 		}
 	}
 	
-/*	
-	public String deletarPedido (int numero) throws SQLException {
+	public void descancelarPedido (int numero) throws SQLException {
+		Conexao conec = new Conexao();
+		try{
+			Connection conexao = conec.abrirConexao();
+			PedidoVendaDAO jdbcPedidoVenda = new JDBCPedidoVendaDAO(conexao);
+			jdbcPedidoVenda.descancelarPedido(numero);
+		}finally{
+			conec.fecharConexao();
+		}
+	}
+	
+
+	public void deletarPedido (int numero) throws SQLException {
 		
 		Conexao conec = new Conexao();
-		String msg = "";
 		try {
 			Connection conexao = conec.abrirConexao();
-			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
-			PedidoCompraDAO jdbcPedidoCompra = new JDBCPedidoCompraDAO(conexao);
-			List<ItemPedidoCompra> listItemPedido = new ArrayList<ItemPedidoCompra>();
-			listItemPedido = jdbcPedidoCompra.buscarItensPedido(numero);
-			float estoque, qtde;
-			float qtdeEntrada = 0;
-			for (ItemPedidoCompra itemPedidoCompra : listItemPedido) {
-				estoque = itemPedidoCompra.getEstoque();
-				qtde = itemPedidoCompra.getQtde();
-				Produto produto = new Produto();
-				produto = jdbcProduto.buscarPeloCodigo(itemPedidoCompra.getCodigoProduto());
-				qtdeEntrada = produto.getQtdeEntrada();
-				if (estoque < qtde) {
-					if (msg.equals("")){
-						msg = "Produtos com inconsistência ao excluir Pedido de Compra.\n";
-					}
-					msg += "Código: " + itemPedidoCompra.getCodigoProduto() + " | Descrição: " + itemPedidoCompra.getDescricao()
-						 + " | Estoque: " + estoque + " | Quantidade: " + qtde + "<br>";	
-				}
-			}
-			if (msg.equals("")) {
-				jdbcPedidoCompra.deletarPedido(numero);
-				for (int i = 0; i < listItemPedido.size(); i++) {
-					jdbcProduto.retiraEstoque(listItemPedido.get(i).getCodigoProduto(), (listItemPedido.get(i).getQtde() * qtdeEntrada));
-				}
-				
-				msg = "Pedido deletado com sucesso";
-			}	
+			PedidoVendaDAO jdbcPedidoVenda = new JDBCPedidoVendaDAO(conexao);
+			jdbcPedidoVenda.deletarPedido(numero);
 		}finally {
 			conec.fecharConexao();
 		}
-		return msg;
-	}*/
+	}
 }

@@ -23,6 +23,8 @@ public interface PedidoVendaDAO {
 	public boolean pedidoFaturado (int numero) throws SQLException;
 	public void faturarPedido (int numero, Date dataFaturado) throws SQLException;
 	public void cancelarPedido(int numero) throws SQLException;
+	public void descancelarPedido(int numero) throws SQLException;
 	public void deletarProdutos(int numero) throws SQLException;
 	public void editarPedido (PedidoVenda pedidoVenda) throws SQLException;
+	public void deletarPedido (int numero) throws SQLException;
 }

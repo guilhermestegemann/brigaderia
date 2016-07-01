@@ -224,6 +224,18 @@ public class JDBCPedidoVendaDAO implements PedidoVendaDAO{
 		PreparedStatement p = this.conexao.prepareStatement(comando);
 		p.executeUpdate();
 	}
+	
+	public void descancelarPedido(int numero) throws SQLException {
+		String comando = "UPDATE PEDIDO SET PEDIDO.CANCELADO = 'N', PEDIDO.FATURADO = 'N' WHERE PEDIDO.NUMERO = " + numero;
+		PreparedStatement p = this.conexao.prepareStatement(comando);
+		p.executeUpdate();
+	}
+	
+	public void deletarPedido (int numero) throws SQLException {
+		String comando = "DELETE FROM PEDIDO WHERE PEDIDO.NUMERO = " + numero;
+		Statement p = this.conexao.createStatement();
+		p.execute(comando);
+	}
 }
 
 
