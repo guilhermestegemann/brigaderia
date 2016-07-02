@@ -28,7 +28,6 @@ public class PedidoCompraService {
 		try {
 			
 			conexao.setAutoCommit(false);
-			pedidoCompra.setTotal(pedidoCompra.getTotal());
 			ValidaPedidoCompra validaPedidoCompra = new ValidaPedidoCompra();
 			validaPedidoCompra.validar(pedidoCompra);
 			pedidoCompra.setData(new Date());

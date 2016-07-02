@@ -16,6 +16,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.objetos.PedidoCompra;
+import br.com.brigaderia.objetos.Perda;
 import br.com.brigaderia.service.PedidoCompraService;
 import br.com.brigaderia.service.PerdaService;
 
@@ -25,17 +26,16 @@ public class PerdaRest extends UtilRest{
 
 	static final String ERROINESPERADO = "Ocorreu um erro inesperado. Entre em contato com o administrador do sistema.";
 	
-/*	@POST
+	@POST
 	@Path ("/adicionar")
 	@Consumes(MediaType.APPLICATION_JSON)
 	
 	public Response adicionar(String param) {
 		
 		try {
-			PedidoCompra pedidoCompra = new ObjectMapper().readValue(param, PedidoCompra.class);
-			PedidoCompraService service = new PedidoCompraService();
-			service.adicionarPedido(pedidoCompra);
-			return buildResponse("Pedido de Compra lançado com sucesso.");
+			Perda perda = new ObjectMapper().readValue(param, Perda.class);
+			PerdaService service = new PerdaService();
+			return buildResponse(service.adicionarPerda(perda));
 		}catch (BrigaderiaException e){
 			return buildErrorResponse(e.getMessage());
 		}catch (Exception e) {
@@ -43,7 +43,7 @@ public class PerdaRest extends UtilRest{
 			return buildErrorResponse(ERROINESPERADO);
 		}
 	}
-*/	
+	
 	@GET
 	@Path("/listarProdutos")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -57,23 +57,23 @@ public class PerdaRest extends UtilRest{
 			return buildErrorResponse("Ocorreu um erro ao buscar produtos. Entre em contato com o administrador do sistema.");
 		}
 	}
-/*	
+	
 	@GET
-	@Path("/buscarPedidoCompra/{dataInicio}/{dataFim}")
+	@Path("/buscarPerda/{dataInicio}/{dataFim}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	
-	public Response buscarPedidos (@PathParam("dataInicio") String dataInicio, @PathParam("dataFim") String dataFim) throws BrigaderiaException{
+	public Response buscarPerdas (@PathParam("dataInicio") String dataInicio, @PathParam("dataFim") String dataFim) throws BrigaderiaException{
 		
 		try {
 			
-			PedidoCompraService service = new PedidoCompraService();
-			return buildResponse(service.buscarPedidoCompra(dataInicio, dataFim));
+			PerdaService service = new PerdaService();
+			return buildResponse(service.buscarPerdas(dataInicio, dataFim));
 		}catch(SQLException e) {
 			e.printStackTrace();
 			return buildErrorResponse("Ocorreu um erro ao buscar pedidos de compra. Entre em contato com o administrador do sistema.");
 		}
 	}
-	
+	/*	
 	@GET
 	@Path("/buscarPedidoPeloNumero/{numero}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})

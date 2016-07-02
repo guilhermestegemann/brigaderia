@@ -32,14 +32,14 @@ $(document).ready(function() {
 		cfg.url = "rest/perda/listarProdutos";
 		BRIGADERIA.ajax.get(BRIGADERIA.perdaService.defaultCfg(cfg));
 	};
-	/*	
-	BRIGADERIA.perdaService.adicionar = function(newPedido) {
+		
+	BRIGADERIA.perdaService.adicionar = function(newPerda) {
 		cfg = {
 			url: "rest/perda/adicionar",
-			data: newPedido,
+			data: newPerda,
 			success : function (sucesso) {
-				bootbox.alert(sucesso);
-				carregarConteudo ('resources/gerenciar/perda/gerenciarPerda.html');
+				bootbox.alert(sucesso.replace("\n","<br>"));
+				carregarConteudo ('resources/gerenciar/perda/gerenciarPerdas.html');
 			},
 			error : function (err) {
 				bootbox.alert(err.responseText);
@@ -47,12 +47,12 @@ $(document).ready(function() {
 		};
 		BRIGADERIA.ajax.post(BRIGADERIA.perdaService.defaultCfg(cfg));
 	};
-	
+		
 	BRIGADERIA.perdaService.listar = function(cfg){
 		cfg.url = "rest/perda/buscarPerda/" + cfg.dataInicio + "/" + cfg.dataFim;
 		BRIGADERIA.ajax.get(BRIGADERIA.perdaService.defaultCfg(cfg));
 	};
-	
+	/*	
 	BRIGADERIA.perdaService.deletar = function(cfg) {
 		cfg.url = "rest/perda/deletar/" + cfg.numero;
 		

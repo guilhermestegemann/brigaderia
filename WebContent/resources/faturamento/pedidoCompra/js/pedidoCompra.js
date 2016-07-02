@@ -83,7 +83,7 @@ $(document).ready( function () {
 						  + "<td>" + unEntrada + "</td>"
 						  + "<td>" + $("#qtdeProduto").val().replace(",",".") + "</td>"
 						  + "<td>" + parseFloat($("#unitario").val().replace(",",".")).toFixed(2) + "</td>"
-						  + "<td>" + $("#totalItemPedidoCompra").val() + "</td>"
+						  + "<td>" + parseFloat($("#totalItemPedidoCompra").val()).toFixed(2) + "</td>"
 						  + "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.pedidoCompra.editarProduto(this"+ "," + $("#produtos").val() + "," + "\"" + descricao + "\"" + "," + parseFloat($("#qtdeProduto").val().replace(",",".")) + "," + "\"" + unEntrada + "\"" + "," + parseFloat($("#unitario").val()) + "," + parseFloat($("#totalItemPedidoCompra").val()) +")' aria-hidden='true'></i></a>"
 						  	  + "<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.pedidoCompra.deletarProduto(this"+ "," + $("#produtos").val() + "," + "\"" + descricao + "\"" + "," + parseFloat($("#totalItemPedidoCompra").val()) +")' aria-hidden='true'></i></a></td>"
 					  + "</tr>";

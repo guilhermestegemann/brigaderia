@@ -8,83 +8,62 @@ import java.util.List;
 
 import br.com.brigaderia.bd.conexao.Conexao;
 import br.com.brigaderia.exception.BrigaderiaException;
-import br.com.brigaderia.jdbc.JDBCFichaTecnicaDAO;
-import br.com.brigaderia.jdbc.JDBCPedidoCompraDAO;
+import br.com.brigaderia.jdbc.JDBCPerdaDAO;
 import br.com.brigaderia.jdbc.JDBCProdutoDAO;
-import br.com.brigaderia.jdbcinterface.FichaTecnicaDAO;
-import br.com.brigaderia.jdbcinterface.PedidoCompraDAO;
+import br.com.brigaderia.jdbcinterface.PerdaDAO;
 import br.com.brigaderia.jdbcinterface.ProdutoDAO;
-import br.com.brigaderia.objetos.ItemPedidoCompra;
-import br.com.brigaderia.objetos.PedidoCompra;
+import br.com.brigaderia.objetos.ItemPerda;
+import br.com.brigaderia.objetos.Perda;
 import br.com.brigaderia.objetos.Produto;
-import br.com.brigaderia.validacoes.ValidaPedidoCompra;
+import br.com.brigaderia.validacoes.ValidaPerda;
 
 public class PerdaService {
 	
-/*	public void adicionarPedido (PedidoCompra pedidoCompra) throws BrigaderiaException, SQLException {
-		
+	public String adicionarPerda (Perda perda) throws BrigaderiaException, SQLException {
+		String msg = "";
 		Conexao conec = new Conexao();
 		Connection conexao = conec.abrirConexao();
 		try {
 			
 			conexao.setAutoCommit(false);
-			pedidoCompra.setTotal(pedidoCompra.getTotal());
-			ValidaPedidoCompra validaPedidoCompra = new ValidaPedidoCompra();
-			validaPedidoCompra.validar(pedidoCompra);
-			pedidoCompra.setData(new Date());
-			PedidoCompraDAO jdbcPedidoCompra = new JDBCPedidoCompraDAO(conexao);
+			ValidaPerda validaPerda = new ValidaPerda();
+			validaPerda.validar(perda);
+			perda.setData(new Date());
+			PerdaDAO jdbcPerda = new JDBCPerdaDAO(conexao);
 			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
-			FichaTecnicaDAO jdbcFichaTecnica = new JDBCFichaTecnicaDAO(conexao);
-			pedidoCompra.setNumero(jdbcPedidoCompra.adicionarPedido(pedidoCompra));
-			List<ItemPedidoCompra> listProdutos = new ArrayList<>();
-			listProdutos = pedidoCompra.getItemPedidoCompra();
+			perda.setNumero(jdbcPerda.adicionarPerda(perda));
+			List<ItemPerda> listProdutos = new ArrayList<>();
+			listProdutos = perda.getItemPerda();
 			
-			int codProduto, tipoItem;
-			float qtde, unitario, total, custo, qtdeEntrada, estoque, valorVenda, novoCusto, margem;
+			for (ItemPerda itemPerda : listProdutos) {
+				jdbcPerda.adicionarProdutos(perda.getNumero(), itemPerda.getCodigoProduto(), itemPerda.getQtde(),
+								            itemPerda.getUnitario(), itemPerda.getTotal());
+			}
 			
-			for (ItemPedidoCompra itemPedidoCompra : listProdutos) {
-				codProduto = itemPedidoCompra.getCodigoProduto();
-				qtde = itemPedidoCompra.getQtde();
-				unitario = itemPedidoCompra.getUnitario();
-				total = itemPedidoCompra.getTotal();
-				Produto produto = null;
-				produto = new Produto();
-				produto = jdbcProduto.buscarPeloCodigo(codProduto);
-				tipoItem = produto.getTipoItem();
-				custo = produto.getValorCusto();
-				qtdeEntrada = produto.getQtdeEntrada();
-				estoque = produto.getEstoque();
-				valorVenda = produto.getValorVenda();
+			List<ItemPerda> listaItemPerda = new ArrayList<ItemPerda>();
+			listaItemPerda = jdbcPerda.buscarItensPerda(perda.getNumero());
+			
+			for (ItemPerda itemPerda : listaItemPerda) {
 				
-				novoCusto = 0;
-				margem = 0;
-				jdbcPedidoCompra.adicionarProdutos(pedidoCompra.getNumero(), codProduto, qtde, unitario, total);
-				
-				//Calculo de Custo Medio
-				if (estoque <= 0) {
-					if(unitario > 0) {
-						novoCusto = unitario / qtdeEntrada;	
+				if (itemPerda.getEstoque() < itemPerda.getQtde()) {
+					if (msg.equals("")){
+						msg = "Estoque insuficiente para os seguinte produtos:.\n";
 					}
-				}else{
-					novoCusto =((custo * estoque) + (unitario * qtde))/(estoque + qtde);
-					
+					msg += "Código: " + itemPerda.getCodigoProduto() + " | Descrição: " + itemPerda.getDescricao()
+						 + " | Estoque: " + itemPerda.getEstoque() + " | Quantidade: " + itemPerda.getQtde() + "<br>";	
 				}
-				if (novoCusto > 0) {
-					if (valorVenda > 0) {
-						margem = ((valorVenda / novoCusto)-1)*100;
-					}
+			}
+			if (msg.equals("")) {
+				for (ItemPerda itemPerda : listaItemPerda) {
+					jdbcProduto.movimentaEstoque(itemPerda.getCodigoProduto(), (itemPerda.getQtde() *-1));
 				}
-				
-				jdbcProduto.atualizarEstoque(codProduto, novoCusto, margem);
-				jdbcProduto.movimentaEstoque(codProduto, (qtde * qtdeEntrada));
-				if (tipoItem == 2){
-					if (novoCusto != custo) {
-						jdbcFichaTecnica.atualizarCustoFichaTecnica(codProduto);
-					}
-				}
+				msg = "Perda lançada com sucesso!";
+			}else{
+				conexao.rollback();
 			}
 			conexao.commit();
 		}catch (BrigaderiaException e) {
+			conexao.rollback();
 			e.printStackTrace();
 			throw e;
 		} catch (SQLException e) {
@@ -94,8 +73,9 @@ public class PerdaService {
 		}finally {
 			conec.fecharConexao();
 		}
+		return msg;
 	}
-*/	
+	
 	public List<Produto> buscarProdutos() throws SQLException {
 		
 		Conexao conec = new Conexao();
@@ -107,19 +87,19 @@ public class PerdaService {
 			conec.fecharConexao();
 		}
 	}
-/*	
-	public List<PedidoCompra> buscarPedidoCompra (String dataIni, String dataFim) throws SQLException {
+
+	public List<Perda> buscarPerdas (String dataIni, String dataFim) throws SQLException {
 		
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
-			PedidoCompraDAO jdbcPedidoCompra = new JDBCPedidoCompraDAO(conexao);
-			return jdbcPedidoCompra.buscarPedidos(dataIni, dataFim);
+			PerdaDAO jdbcPerda = new JDBCPerdaDAO(conexao);
+			return jdbcPerda.buscarPerdas(dataIni, dataFim);
 		}finally{
 			conec.fecharConexao();
 		}
 	}
-	
+	/*		
 	public PedidoCompra buscarPedidoPeloNumero (int numero) throws SQLException {
 		
 		Conexao conec = new Conexao();

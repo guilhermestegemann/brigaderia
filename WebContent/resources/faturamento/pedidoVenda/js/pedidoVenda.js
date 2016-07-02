@@ -8,7 +8,6 @@ $(document).ready( function () {
 	$("#subConteudo").text(""); //inicia div vazia
 	
 	$("#produtos").on('change',function(){
-		debugger;
 		for (var i = 0; i < produtos.length; i++) {
 			if (produtos[i].codigoProduto == $("#produtos").val()) {
 				$("#unEstoque").val(produtos[i].unEstoque);

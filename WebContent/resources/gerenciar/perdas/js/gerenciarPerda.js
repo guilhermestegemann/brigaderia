@@ -2,7 +2,7 @@ BRIGADERIA.gerenciarPerda = new Object();
 
 $(document).ready( function () {
 	
-/*	$("#subConteudo").text(""); //inicia div vazia
+	$("#subConteudo").text(""); //inicia div vazia
 	
 	$('.dataFiltro').datepicker({
 		format: 'dd/mm/yyyy'
@@ -22,35 +22,35 @@ $(document).ready( function () {
 			dataFim = BRIGADERIA.convertData.strToDate(dataFim);
 		}
 		
-		BRIGADERIA.gerenciarPerda.exibirPedidos (undefined, dataInicio, dataFim);
+		BRIGADERIA.gerenciarPerda.exibirPerdas (undefined, dataInicio, dataFim);
 	};
 	
-	BRIGADERIA.gerenciarPerda.exibirPedidos = function(listaDePedidos, dataInicio, dataFim) {
+	BRIGADERIA.gerenciarPerda.exibirPerdas = function(listaDePerdas, dataInicio, dataFim) {
 		
-		BRIGADERIA.pedidoCompraService.listar({
+		BRIGADERIA.perdaService.listar({
 			dataInicio: dataInicio,
 			dataFim: dataFim,
-			success : function (listaDePedidos) {
+			success : function (listaDePerdas) {
 				
 				var html = "";
 				
-				for (var i = 0; i < listaDePedidos.length; i++) {
+				for (var i = 0; i < listaDePerdas.length; i++) {
 					
-					if (listaDePedidos[i].data != null) {
-						listaDePedidos[i].data = BRIGADERIA.convertData.dateToStr(listaDePedidos[i].data);
+					if (listaDePerdas[i].data != null) {
+						listaDePerdas[i].data = BRIGADERIA.convertData.dateToStr(listaDePerdas[i].data);
 					}
 					
 					
 					html += "<tr>"
-					  + "<td>" + listaDePedidos[i].numero + "</td>"
-					  + "<td>" + listaDePedidos[i].data + "</td>"
-					  + "<td>" + "R$ " + parseFloat(listaDePedidos[i].total).toFixed(2) + "</td>"
-					  + "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.gerenciarPerda.visualizarPedido(" + listaDePedidos[i].numero + ")' aria-hidden='true'></i></a>"
-					  	 +	"<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.gerenciarPerda.deletarPedido(" + listaDePedidos[i].numero + ")' aria-hidden='true'></i></a>  </td>"
+					  + "<td>" + listaDePerdas[i].numero + "</td>"
+					  + "<td>" + listaDePerdas[i].data + "</td>"
+					  + "<td>" + "R$ " + parseFloat(listaDePerdas[i].total).toFixed(2) + "</td>"
+					  + "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.gerenciarPerda.visualizarPerda(" + listaDePerdas[i].numero + ")' aria-hidden='true'></i></a>"
+					  	 +	"<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.gerenciarPerda.deletarPerda(" + listaDePerdas[i].numero + ")' aria-hidden='true'></i></a>  </td>"
 					  + "</tr>";
 				}
 				
-				$("#resultadoPedidoCompra tbody").html(html);
+				$("#resultadoPerda tbody").html(html);
 			
 			},
 			error : function(err) {
@@ -64,7 +64,7 @@ $(document).ready( function () {
 	});
 	
 	BRIGADERIA.gerenciarPerda.buscar();
-*/	
+	
 	BRIGADERIA.gerenciarPerda.lancarPerda = function() {
 		$("#conteudo").load("resources/movimento/perdas/perdas.html", function (){
 		BRIGADERIA.perda.exibirFormulario();

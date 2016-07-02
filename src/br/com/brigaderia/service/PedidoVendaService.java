@@ -31,7 +31,6 @@ public class PedidoVendaService {
 		try {
 			
 			conexao.setAutoCommit(false);
-			//pedidoVenda.setTotal(pedidoVenda.getTotal()); ?????
 			ValidaPedidoVenda validaPedidoVenda = new ValidaPedidoVenda();
 			validaPedidoVenda.validar(pedidoVenda);
 			pedidoVenda.setDataEmissao(new Date());

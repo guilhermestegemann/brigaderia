@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.brigaderia.exception.AtualizarEstoqueException;
 import br.com.brigaderia.exception.ProdutoVinculadoEmPedidoCompraException;
 import br.com.brigaderia.ferramentas.ConversorDecimal;
 import br.com.brigaderia.jdbcinterface.PedidoCompraDAO;
@@ -44,7 +43,7 @@ public class JDBCPedidoCompraDAO implements PedidoCompraDAO {
 		return pedidoCompra.getNumero();
 	}
 	
-	public void adicionarProdutos(int numeroPedido, int codProduto, float qtde, float unitario, float total) throws AtualizarEstoqueException {
+	public void adicionarProdutos(int numeroPedido, int codProduto, float qtde, float unitario, float total) {
 		
 		String comando = "INSERT INTO ITEMCOMPRA (NUMERO, PRODUTO, QTDE, UNITARIO, TOTAL) VALUES (?,?,?,?,?)";
 		PreparedStatement p;
@@ -58,7 +57,6 @@ public class JDBCPedidoCompraDAO implements PedidoCompraDAO {
 			p.execute();
 		}catch (SQLException e) {
 			e.printStackTrace();
-			throw new AtualizarEstoqueException();
 		}
 	}
 	
