@@ -1,0 +1,46 @@
+<script type="text/javascript" src="resources/movimento/perdas/js/perda-service.js"></script>
+<script type="text/javascript" src="resources/movimento/perdas/js/perda.js"></script>
+<div class='jumbotron'>
+	<h1>Visualização de Perda</h1>
+	<div class="col-sm-12">
+		<hr>
+	</div>
+	<form method='POST' role='form' class='form-group' action=''>
+		<div class="form-group col-sm-2">
+			<label for='numero'>Numero</label>
+			<input type="text" class="form-control" id="numero" name="numero" readonly />
+		</div>
+		<div class="form-group col-sm-2">
+			<label for='data'>Data</label>
+			<input type="text" class="form-control" id="data" name="data" readonly />
+		</div>
+		<div class="form-group col-sm-2">
+			<label for='totalPerda'>Total</label>
+			<input type="text" class="form-control" id="totalPerda" name="totalPerda" readonly />
+		</div>
+		<div class="col-sm-12">
+			<hr>
+		</div>
+
+	</form>
+	<div class="col-sm-12">
+		<table class='table col-sm-10' id='itensPerda'>
+			<thead>
+				<tr>
+					<th>Cód. Ingrediente</th>
+					<th>Descrição</th>
+					<th>UN</th>
+					<th>Valor Custo</th>
+					<th>Total</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				
+			</tbody>
+		</table>
+	</div>
+	<div class="btn pull-right form-group">
+		<button class="btn btn-danger btn-lg" onclick= "carregarConteudoCancel('resources/gerenciar/perdas/gerenciarPerdas.html')" type="button">Sair</button>
+	</div>
+</div>
