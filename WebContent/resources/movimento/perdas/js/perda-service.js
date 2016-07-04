@@ -52,16 +52,16 @@ $(document).ready(function() {
 		cfg.url = "rest/perda/buscarPerda/" + cfg.dataInicio + "/" + cfg.dataFim;
 		BRIGADERIA.ajax.get(BRIGADERIA.perdaService.defaultCfg(cfg));
 	};
-	/*	
+		
 	BRIGADERIA.perdaService.deletar = function(cfg) {
 		cfg.url = "rest/perda/deletar/" + cfg.numero;
 		
 		BRIGADERIA.ajax.del(BRIGADERIA.perdaService.defaultCfg(cfg));
 	};
 	
-	BRIGADERIA.perdaService.buscarPedidoPeloNumero = function(cfg) {
-		cfg.url = "rest/perda/buscarPedidoPeloNumero/" + cfg.numero;
+	BRIGADERIA.perdaService.buscarPerdaPeloNumero = function(cfg) {
+		cfg.url = "rest/perda/buscarPerdaPeloNumero/" + cfg.numero;
 		BRIGADERIA.ajax.get(BRIGADERIA.perdaService.defaultCfg(cfg));
 	};
-	*/
+	
 });

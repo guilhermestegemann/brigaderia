@@ -15,9 +15,7 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import br.com.brigaderia.exception.BrigaderiaException;
-import br.com.brigaderia.objetos.PedidoCompra;
 import br.com.brigaderia.objetos.Perda;
-import br.com.brigaderia.service.PedidoCompraService;
 import br.com.brigaderia.service.PerdaService;
 
 @Path("perda")
@@ -73,17 +71,17 @@ public class PerdaRest extends UtilRest{
 			return buildErrorResponse("Ocorreu um erro ao buscar pedidos de compra. Entre em contato com o administrador do sistema.");
 		}
 	}
-	/*	
+		
 	@GET
-	@Path("/buscarPedidoPeloNumero/{numero}")
+	@Path("/buscarPerdaPeloNumero/{numero}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public Response buscarPedidoPeloNumero(@PathParam("numero")int numero) throws BrigaderiaException{
+	public Response buscarPerdaPeloNumero(@PathParam("numero")int numero) throws BrigaderiaException{
 		try {
-			PedidoCompraService service = new PedidoCompraService(); 
-			return buildResponse(service.buscarPedidoPeloNumero(numero));
+			PerdaService service = new PerdaService(); 
+			return buildResponse(service.buscarPerdaPeloNumero(numero));
 		}catch (SQLException e) {
 			e.printStackTrace();
-			return buildErrorResponse("Ocorreu um erro ao buscar pedidos de compra. Entre em contato com o administrador do sistema.");
+			return buildErrorResponse("Ocorreu um erro ao buscar perdas. Entre em contato com o administrador do sistema.");
 		}
 	}
 	
@@ -93,12 +91,13 @@ public class PerdaRest extends UtilRest{
 	
 	public Response deletar (@PathParam("numero") int numero) throws BrigaderiaException{
 		try {
-			PedidoCompraService service = new PedidoCompraService();
-			return this.buildResponse(service.deletarPedido(numero));
+			PerdaService service = new PerdaService();
+			service.deletarPerda(numero);
+			return buildResponse("Perda deletada com sucesso!");
 		}catch (SQLException e) {
 			e.printStackTrace();
 			return buildErrorResponse(ERROINESPERADO);
 		}
 	}
-	*/
+	
 }

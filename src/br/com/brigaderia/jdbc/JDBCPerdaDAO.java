@@ -11,9 +11,7 @@ import java.util.List;
 import br.com.brigaderia.exception.ProdutoVinculadoEmPerdaException;
 import br.com.brigaderia.ferramentas.ConversorDecimal;
 import br.com.brigaderia.jdbcinterface.PerdaDAO;
-import br.com.brigaderia.objetos.ItemPedidoVenda;
 import br.com.brigaderia.objetos.ItemPerda;
-import br.com.brigaderia.objetos.PedidoCompra;
 import br.com.brigaderia.objetos.Perda;
 
 public class JDBCPerdaDAO implements PerdaDAO{
@@ -106,6 +104,28 @@ public class JDBCPerdaDAO implements PerdaDAO{
 			listPerda.add(perda);
 		}
 		return listPerda;
+	}
+	
+	public Perda buscarPeloNumero (int numero) throws SQLException {
+		
+		String comando = "SELECT * FROM PERDA WHERE PERDA.NUMERO = " + numero;
+		Perda perda = new Perda();
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(comando);
+		while(rs.next()) {
+			perda.setNumero(rs.getInt("NUMERO"));
+			perda.setData(rs.getDate("DATA"));
+			perda.setTotal(rs.getDouble("TOTAL"));
+		}
+		return perda;
+	}
+	
+	public void deletarPerda(int numero) throws SQLException {
+		
+		String comando = "DELETE FROM PERDA WHERE PERDA.NUMERO = " + numero;
+		Statement p;
+		p = this.conexao.createStatement();
+		p.execute(comando);	
 	}
 	
 	public void countProdutos(int codigo) throws SQLException, ProdutoVinculadoEmPerdaException  {

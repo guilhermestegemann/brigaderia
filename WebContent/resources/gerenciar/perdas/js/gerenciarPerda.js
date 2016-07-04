@@ -71,23 +71,23 @@ $(document).ready( function () {
 		});
 	};
 	
-/*	BRIGADERIA.gerenciarPerda.visualizarPedido = function(numero) {
-		$("#conteudo").load("resources/faturamento/pedidoCompra/pedidoCompraView.html", function (){
-			BRIGADERIA.pedidoCompra.exibirEdicao(numero);
+	BRIGADERIA.gerenciarPerda.visualizarPerda = function(numero) {
+		$("#conteudo").load("resources/movimento/perdas/perdasView.html", function (){
+			BRIGADERIA.perda.exibirEdicao(numero);
 		});	
 	};
-	
-	BRIGADERIA.gerenciarPerda.deletarPedido = function (numero) {
+		
+	BRIGADERIA.gerenciarPerda.deletarPerda = function (numero) {
 		
 		bootbox.confirm({ 
 			size: 'medium',
-			message: "A exclusão de Pedido de Compra faz a saída dos itens no estoque. A quantidade de cada produto será verificada antes da exclusão. Deseja continuar?", 
+			message: "Deseja realmente deletar o lançamento de perda?", 
 			callback: function(confirma){
-				if (confirma == true) {
-					BRIGADERIA.pedidoCompraService.deletar({
+				if (confirma) {
+					BRIGADERIA.perdaService.deletar({
 						numero : numero,
-						success: function (successo) {
-							bootbox.alert(successo.replace("\n","<br>"));
+						success: function (sucesso) {
+							bootbox.alert(sucesso);
 							BRIGADERIA.gerenciarPerda.buscar();
 						},
 						error: function(err) {
@@ -98,7 +98,6 @@ $(document).ready( function () {
 			}
 		});
 	}
-	*/
 });
 
 

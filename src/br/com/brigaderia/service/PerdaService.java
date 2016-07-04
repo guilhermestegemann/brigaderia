@@ -99,60 +99,47 @@ public class PerdaService {
 			conec.fecharConexao();
 		}
 	}
-	/*		
-	public PedidoCompra buscarPedidoPeloNumero (int numero) throws SQLException {
+		
+	public Perda buscarPerdaPeloNumero (int numero) throws SQLException {
 		
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
-			PedidoCompraDAO jdbcPedidoCompra = new JDBCPedidoCompraDAO(conexao);
-			PedidoCompra pedidoCompra = jdbcPedidoCompra.buscarPeloNumero(numero);
-			pedidoCompra.setItemPedidoCompra(jdbcPedidoCompra.buscarItensPedido(pedidoCompra.getNumero()));
-			return pedidoCompra;
+			PerdaDAO jdbcPerda = new JDBCPerdaDAO(conexao);
+			Perda perda = jdbcPerda.buscarPeloNumero(numero);
+			perda.setItemPerda(jdbcPerda.buscarItensPerda(perda.getNumero()));
+			return perda;
 		}finally{
 			conec.fecharConexao();
 		}	
 	}
 	
-	
-	public String deletarPedido (int numero) throws SQLException {
+		
+	public void deletarPerda (int numero) throws SQLException {
 		
 		Conexao conec = new Conexao();
-		String msg = "";
+		Connection conexao = conec.abrirConexao();
 		try {
-			Connection conexao = conec.abrirConexao();
+			conexao.setAutoCommit(false);
 			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
-			PedidoCompraDAO jdbcPedidoCompra = new JDBCPedidoCompraDAO(conexao);
-			List<ItemPedidoCompra> listItemPedido = new ArrayList<ItemPedidoCompra>();
-			listItemPedido = jdbcPedidoCompra.buscarItensPedido(numero);
-			float estoque, qtde;
-			float qtdeEntrada = 0;
-			for (ItemPedidoCompra itemPedidoCompra : listItemPedido) {
-				estoque = itemPedidoCompra.getEstoque();
-				qtde = itemPedidoCompra.getQtde();
-				Produto produto = new Produto();
-				produto = jdbcProduto.buscarPeloCodigo(itemPedidoCompra.getCodigoProduto());
-				qtdeEntrada = produto.getQtdeEntrada();
-				if (estoque < qtde) {
-					if (msg.equals("")){
-						msg = "Produtos com inconsistência ao excluir Pedido de Compra.\n";
-					}
-					msg += "Código: " + itemPedidoCompra.getCodigoProduto() + " | Descrição: " + itemPedidoCompra.getDescricao()
-						 + " | Estoque: " + estoque + " | Quantidade: " + qtde + "<br>";	
-				}
+			PerdaDAO jdbcPerda = new JDBCPerdaDAO(conexao);
+			List<ItemPerda> listItemPerda = new ArrayList<ItemPerda>();
+			listItemPerda = jdbcPerda.buscarItensPerda(numero);
+			
+			
+			for (ItemPerda itemPerda : listItemPerda) {
+				jdbcProduto.movimentaEstoque(itemPerda.getCodigoProduto(), itemPerda.getQtde());
 			}
-			if (msg.equals("")) {
-				jdbcPedidoCompra.deletarPedido(numero);
-				for (int i = 0; i < listItemPedido.size(); i++) {
-					jdbcProduto.movimentaEstoque(listItemPedido.get(i).getCodigoProduto(), ((listItemPedido.get(i).getQtde() * qtdeEntrada)*-1));
-				}
-				
-				msg = "Pedido deletado com sucesso";
-			}	
-		}finally {
+			jdbcPerda.deletarPerda(numero);	
+			conexao.commit();
+		}catch(SQLException e){
+			e.printStackTrace();
+			conexao.rollback();
+			throw e;
+		}
+		finally {
 			conec.fecharConexao();
 		}
-		return msg;
 	}
-	*/
+	
 }

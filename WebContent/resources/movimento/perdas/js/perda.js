@@ -168,33 +168,32 @@ $(document).ready( function () {
 			BRIGADERIA.perdaService.adicionar(newPerda);
 		}
 	};
-	/*	
-	BRIGADERIA.pedidoCompra.exibirEdicao = function(numero) {
-		BRIGADERIA.pedidoCompraService.buscarPedidoPeloNumero({
+		
+	BRIGADERIA.perda.exibirEdicao = function(numero) {
+		BRIGADERIA.perdaService.buscarPerdaPeloNumero({
 			numero : numero,
 			async: false,
-			success : function (pedido) {
-				$("#numero").val(pedido.numero);
-				$("#data").val(BRIGADERIA.convertData.dateToStr(pedido.data));
-				$("#totalPerda").val(parseFloat(pedido.total).toFixed(2));
-				itemPedido = {};
-				itemPedido = pedido.itemPedidoCompra;
-				
-				for (var i = 0; i < itemPedido.length; i++ ) {
+			success : function (perda) {
+				$("#numero").val(perda.numero);
+				$("#data").val(BRIGADERIA.convertData.dateToStr(perda.data));
+				$("#totalPerda").val(parseFloat(perda.total).toFixed(2));
+				itemPerda = {};
+				itemPerda = perda.itemPerda;
+				console.log(itemPerda);
+				for (var i = 0; i < itemPerda.length; i++ ) {
 					var html = ""
-						html =  "<tr class='itemPedidoCompra'>"
-							  + "<td >" + itemPedido[i].codigoProduto + "</td>"
-							  + "<td>" + itemPedido[i].descricao + "</td>"
-							  + "<td>" + itemPedido[i].unEntrada + "</td>"
-							  + "<td>" + itemPedido[i].qtde + "</td>"
-							  + "<td>" + parseFloat(itemPedido[i].unitario).toFixed(2) + "</td>"
-							  + "<td>" + itemPedido[i].total + "</td>"
+						html =  "<tr class='itemPerda'>"
+							  + "<td >" + itemPerda[i].codigoProduto + "</td>"
+							  + "<td>" + itemPerda[i].descricao + "</td>"
+							  + "<td>" + itemPerda[i].unEstoque + "</td>"
+							  + "<td>" + itemPerda[i].qtde + "</td>"
+							  + "<td>" + parseFloat(itemPerda[i].unitario).toFixed(2) + "</td>"
+							  + "<td>" + itemPerda[i].total + "</td>"
 						  + "</tr>";		
 						
-						$("#itensPedidoCompra tbody").append(html);
+						$("#itensPerda tbody").append(html);
 				}
 			}
 		});	
 	};
-	*/
 });
