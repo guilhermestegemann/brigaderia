@@ -27,4 +27,5 @@ public interface PedidoVendaDAO {
 	public void deletarProdutos(int numero) throws SQLException;
 	public void editarPedido (PedidoVenda pedidoVenda) throws SQLException;
 	public void deletarPedido (int numero) throws SQLException;
+	public List<PedidoVenda> buscarPedidosImportacao() throws SQLException;
 }

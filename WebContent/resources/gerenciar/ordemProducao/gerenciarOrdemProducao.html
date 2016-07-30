@@ -1,13 +1,5 @@
-<script type="text/javascript">
-	$(".deletaRegistro").on( "click", function() {
-		bootbox.confirm({ 
-		    size: 'small',
-		    message: "Deseja deletar a Ordem de Produção?", 
-		    callback: function(result){
-		    }
-		})
-	})
-</script>
+<script type="text/javascript" src="resources/movimento/ordemProducao/js/ordemProducao-service.js"></script>
+<script type="text/javascript" src="resources/gerenciar/ordemProducao/js/gerenciarOrdemProducao.js"></script>
 <div class='jumbotron container-fluid'>
 	<h1>Ordem de Produção</h1>
 	<hr>
@@ -17,10 +9,10 @@
 			<span class="input-group-btn">
 				<button class="btn btn-success" type="button">Pesquisar</button>
 			</span>
-			<button class='btn btn-primary btn pull-right' onclick="carregarConteudo('resources/movimento/ordemProducao/ordemProducao.html')">Lançar Ordem de Produção</button>
+			<button class='btn btn-primary btn pull-right' onclick="BRIGADERIA.gerenciarOrdemProducao.lancarOrdemProducao()">Lançar Ordem de Produção</button>
 		</div>
 	</div>
-	<table class='table col-sm-12'>
+	<table id='resultadoOrdemProducao' class='table col-sm-12'>
 		<thead>
 			<tr>
 				<th><strong>Código</strong></th>
@@ -30,48 +22,6 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>1</td>
-				<td>11/10/2015</td>
-				<td>Produzido</td>
-				<td><a href='#' onclick="carregarConteudo('resources/movimento/ordemProducao/ordemProducao.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>11/10/2015</td>
-				<td>Produzido</td>
-				<td><a href='#' onclick="carregarConteudo('resources/movimento/ordemProducao/ordemProducao.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>11/10/2015</td>
-				<td>Produzido</td>
-				<td><a href='#' onclick="carregarConteudo('resources/movimento/ordemProducao/ordemProducao.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>11/10/2015</td>
-				<td>Produzido</td>
-				<td><a href='#' onclick="carregarConteudo('resources/movimento/ordemProducao/ordemProducao.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>11/10/2015</td>
-				<td>Produzido</td>
-				<td><a href='#' onclick="carregarConteudo('resources/movimento/ordemProducao/ordemProducao.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>11/10/2015</td>
-				<td>Produzido</td>
-				<td><a href='#' onclick="carregarConteudo('resources/movimento/ordemProducao/ordemProducao.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>11/10/2015</td>
-				<td>Produzido</td>
-				<td><a href='#' onclick="carregarConteudo('resources/movimento/ordemProducao/ordemProducao.html')"><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></a>      <a href='#'><i class="glyphicon glyphicon-remove-sign deletaRegistro" aria-hidden="true"></i></a>  </td>
-			</tr>
 			
 		</tbody>
 	</table>

@@ -236,6 +236,25 @@ public class JDBCPedidoVendaDAO implements PedidoVendaDAO{
 		Statement p = this.conexao.createStatement();
 		p.execute(comando);
 	}
+	
+	public List<PedidoVenda> buscarPedidosImportacao() throws SQLException {
+		String comando = "SELECT PEDIDO.NUMERO, PEDIDO.CLIENTE, CLIENTE.NOME, PEDIDO.EMISSAO, PEDIDO.FATURADO, PEDIDO.CANCELADO, "
+				       + "PEDIDO.PRODUZIDO, PEDIDO.TOTAL "
+				       + "FROM PEDIDO "
+				       + "INNER JOIN CLIENTE ON CLIENTE.CODIGO = PEDIDO.CLIENTE "
+				       + "WHERE PEDIDO.FATURADO = 'N' "
+				       + "AND PEDIDO.CANCELADO = 'N' "
+				       + "AND PEDIDO.PRODUZIDO = 'N' "
+				       + "AND PEDIDO.ORDEMPRODUCAO IS NULL";
+		PedidoVenda pedidoVenda = null;
+		List<PedidoVenda> listaPedidos = new ArrayList<>();
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(comando);
+		while (rs.next()) {
+			pedidoVenda = new PedidoVenda();
+			// parei aqui
+		}
+	}
 }
 
 
