@@ -188,8 +188,10 @@ $(document).ready( function () {
 			cancelado : "N",
 			itemPedidoVenda: produtoArray
 		};
-		if (newPedido.itemPedidoVenda == "") {
-			bootbox.alert("Produtos não inseridos");
+		if (newPedido.cliente == "") {
+			bootbox.alert("Cliente não informado!");
+		}else if (newPedido.itemPedidoVenda == "") {
+			bootbox.alert("Produtos não inseridos!");
 		}else{
 			BRIGADERIA.pedidoVendaService.adicionar(newPedido);
 		}
