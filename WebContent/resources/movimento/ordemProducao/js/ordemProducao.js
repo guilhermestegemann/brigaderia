@@ -61,8 +61,8 @@ $(document).ready(function (){
 						  + "<td>" + descricao + "</td>"
 						  + "<td>" + $("#qtdeProduto").val().replace(",",".") + "</td>"
 						  + "<td>" + unEstoque + "</td>"
-						  + "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.ordemProducao.editarProduto(this"+ "," + $("#produtos").val() + "," + "\"" + descricao + "\"" + "," + parseFloat($("#qtdeProduto").val().replace(",",".")) + "," + "\"" + unEstoque + "\"" + ")' aria-hidden='true'></i></a>"
-						  	  + "<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.ordemProducao.deletarProduto(this"+ "," + $("#produtos").val() + "," + "\"" + descricao + "\"" + ")' aria-hidden='true'></i></a></td>"
+						  + "<td><button class='btn btn-primary btn-sm' type='button' onclick='BRIGADERIA.ordemProducao.editarProduto(this"+ "," + $("#produtos").val() + "," + "\"" + descricao + "\"" + "," + parseFloat($("#qtdeProduto").val().replace(",",".")) + "," + "\"" + unEstoque + "\"" + ")' aria-hidden='true'>Editar</button>"
+						  	  + "<button class='btn btn-danger btn-sm' type='button' onclick='BRIGADERIA.ordemProducao.deletarProduto(this"+ "," + $("#produtos").val() + "," + "\"" + descricao + "\"" + ")' aria-hidden='true'>Excluir</button></td>"
 					  + "</tr>";
 				
 				var prod = {
@@ -128,7 +128,7 @@ $(document).ready(function (){
 		}
 	};
 	
-	BRIGADERIA.ordemProducao.importarPedido = function(){
+	BRIGADERIA.ordemProducao.importarPedidos = function(){
 		BRIGADERIA.ordemProducaoService.listarPedidosImportacao ({
 			success : function (listaPedido) {
 				console.log(listaPedido);

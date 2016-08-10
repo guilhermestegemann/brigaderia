@@ -39,8 +39,8 @@ $(document).ready(function() {
 					  + "<td>" + listaDeProdutos[i].estoque 
 					  + "<td>" + "R$ " + listaDeProdutos[i].valorCusto + "</td>"
 					  + "<td>" + "R$ " +listaDeProdutos[i].valorVenda + "</td>"
-					  + "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.gerenciarProdutos.editarProduto(" + listaDeProdutos[i].codigoProduto + "," + listaDeProdutos[i].tipoItem + ")' aria-hidden='true'></i></a>"
-					  	 +	"<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.gerenciarProdutos.deletarProduto(" + listaDeProdutos[i].codigoProduto + "," + listaDeProdutos[i].tipoItem + ")' aria-hidden='true'></i></a>  </td>"
+					  + "<td><button class='btn btn-primary btn-sm' type='button' onclick='BRIGADERIA.gerenciarProdutos.editarProduto(" + listaDeProdutos[i].codigoProduto + "," + listaDeProdutos[i].tipoItem + ")' aria-hidden='true'>Editar</button>"
+					  	 +	"<button class='btn btn-danger btn-sm' type='button' onclick='BRIGADERIA.gerenciarProdutos.deletarProduto(" + listaDeProdutos[i].codigoProduto + "," + listaDeProdutos[i].tipoItem + ")' aria-hidden='true'>Excluir</buttton>  </td>"
 					  + "</tr>";
 				}
 				

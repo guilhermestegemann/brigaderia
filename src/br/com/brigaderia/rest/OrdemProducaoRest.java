@@ -63,7 +63,7 @@ public class OrdemProducaoRest extends UtilRest{
 	public Response buscarPedidosImportacao(){
 		try{
 			OrdemProducaoService service = new OrdemProducaoService();
-			return buildResponse(service.buscarPedidosImportacao);
+			return buildResponse(service.buscarPedidosImportacao());
 		}catch(SQLException e){
 			e.printStackTrace();
 			return buildErrorResponse("Ocorreu um erro ao buscar pedidos. Entre em contato com o administrador do sistema.");

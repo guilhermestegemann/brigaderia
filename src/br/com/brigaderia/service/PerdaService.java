@@ -59,7 +59,7 @@ public class PerdaService {
 				}
 				msg = "Perda lançada com sucesso!";
 			}else{
-				conexao.rollback();
+				conexao.rollback();	
 			}
 			conexao.commit();
 		}catch (BrigaderiaException e) {

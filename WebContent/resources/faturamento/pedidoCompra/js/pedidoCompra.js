@@ -84,8 +84,8 @@ $(document).ready( function () {
 						  + "<td>" + $("#qtdeProduto").val().replace(",",".") + "</td>"
 						  + "<td>" + parseFloat($("#unitario").val().replace(",",".")).toFixed(2) + "</td>"
 						  + "<td>" + parseFloat($("#totalItemPedidoCompra").val()).toFixed(2) + "</td>"
-						  + "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.pedidoCompra.editarProduto(this"+ "," + $("#produtos").val() + "," + "\"" + descricao + "\"" + "," + parseFloat($("#qtdeProduto").val().replace(",",".")) + "," + "\"" + unEntrada + "\"" + "," + parseFloat($("#unitario").val()) + "," + parseFloat($("#totalItemPedidoCompra").val()) +")' aria-hidden='true'></i></a>"
-						  	  + "<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.pedidoCompra.deletarProduto(this"+ "," + $("#produtos").val() + "," + "\"" + descricao + "\"" + "," + parseFloat($("#totalItemPedidoCompra").val()) +")' aria-hidden='true'></i></a></td>"
+						  + "<td><button class='btn btn-primary btn-sm' type='button' onclick='BRIGADERIA.pedidoCompra.editarProduto(this"+ "," + $("#produtos").val() + "," + "\"" + descricao + "\"" + "," + parseFloat($("#qtdeProduto").val().replace(",",".")) + "," + "\"" + unEntrada + "\"" + "," + parseFloat($("#unitario").val()) + "," + parseFloat($("#totalItemPedidoCompra").val()) +")' aria-hidden='true'>Editar</button>"
+						  	  + "<button class='btn btn-danger btn-sm' type='button' onclick='BRIGADERIA.pedidoCompra.deletarProduto(this"+ "," + $("#produtos").val() + "," + "\"" + descricao + "\"" + "," + parseFloat($("#totalItemPedidoCompra").val()) +")' aria-hidden='true'>Excluir</button></td>"
 					  + "</tr>";
 				$("#totalPedidoCompra").val(parseFloat(parseFloat($("#totalItemPedidoCompra").val()) + parseFloat($("#totalPedidoCompra").val())).toFixed(2)) // soma o total do pedido.
 				var prod = {

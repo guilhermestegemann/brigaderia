@@ -74,16 +74,19 @@ $(document).ready( function () {
 			var html = "";
 			var descricao = "";
 			var unEstoque = "";
+			var estoque = "";
 			
 			for (var i = 0; i < ingredientes.length; i++) {
 		
 				if ((ingredientes[i].codigoProduto == $("#ingredientes").val()) && (unEstoque == "")) {
 					unEstoque = ingredientes[i].unEstoque;
 					descricao = ingredientes[i].descricao; 
+					estoque = ingredientes[i].estoque;
 				}
 			}
-			
-			if (unEstoque != "") {
+			if (estoque < $("#qtdeIngrediente").val()){
+				bootbox.alert("Estoque insuficiente.");
+			}else if (unEstoque != "") {
 				html =  "<tr class='itemPerda'>"
 						  + "<td >" + $("#ingredientes").val() + "</td>"
 						  + "<td>" + descricao + "</td>"
@@ -91,8 +94,8 @@ $(document).ready( function () {
 						  + "<td>" + $("#qtdeIngrediente").val().replace(",",".") + "</td>"
 						  + "<td>" + parseFloat($("#valorCusto").val().replace(",",".")).toFixed(2) + "</td>"
 						  + "<td>" + parseFloat($("#totalItemPerda").val()).toFixed(2) + "</td>"
-						  + "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.perda.editarProduto(this"+ "," + $("#ingredientes").val() + "," + "\"" + descricao + "\"" + "," + parseFloat($("#qtdeIngrediente").val().replace(",",".")) + "," + "\"" + unEstoque + "\"" + "," + parseFloat($("#valorCusto").val()) + "," + parseFloat($("#totalItemPerda").val()) +")' aria-hidden='true'></i></a>"
-						  	  + "<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.perda.deletarProduto(this"+ "," + $("#ingredientes").val() + "," + "\"" + descricao + "\"" + "," + parseFloat($("#totalItemPerda").val()) +")' aria-hidden='true'></i></a></td>"
+						  + "<td><button class='btn btn-primary btn-sm' type='button' onclick='BRIGADERIA.perda.editarProduto(this"+ "," + $("#ingredientes").val() + "," + "\"" + descricao + "\"" + "," + parseFloat($("#qtdeIngrediente").val().replace(",",".")) + "," + "\"" + unEstoque + "\"" + "," + parseFloat($("#valorCusto").val()) + "," + parseFloat($("#totalItemPerda").val()) +")' aria-hidden='true'>Editar</button>"
+						  	  + "<button class='btn btn-danger btn-sm' type='button' onclick='BRIGADERIA.perda.deletarProduto(this"+ "," + $("#ingredientes").val() + "," + "\"" + descricao + "\"" + "," + parseFloat($("#totalItemPerda").val()) +")' aria-hidden='true'>Excluir</button></td>"
 					  + "</tr>";
 				$("#totalPerda").val(parseFloat(parseFloat($("#totalItemPerda").val()) + parseFloat($("#totalPerda").val())).toFixed(2)) // soma o total do pedido.
 				var prod = {

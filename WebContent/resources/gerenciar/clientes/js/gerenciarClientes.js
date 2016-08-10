@@ -36,8 +36,8 @@ $(document).ready(function() {
 					  + "<td>" + listaDeClientes[i].cidade + " - " + listaDeClientes[i].uf + "</td>"
 					  + "<td>" + listaDeClientes[i].bairro + "</td>"
 					  + "<td>" + listaDeClientes[i].ultimaVenda + "</td>"
-					  + "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.gerenciarClientes.editarCliente(" + listaDeClientes[i].codigo + ")' aria-hidden='true'></i></a>"
-					  	 +	"<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.gerenciarClientes.deletarCliente(" + listaDeClientes[i].codigo + ")' aria-hidden='true'></i></a>  </td>"
+					  + "<td><button class='btn btn-primary btn-sm' type='button' onclick='BRIGADERIA.gerenciarClientes.editarCliente(" + listaDeClientes[i].codigo + ")' aria-hidden='true'>Editar</button>"
+					  	 +	"<button class='btn btn-danger btn-sm' type='button' onclick='BRIGADERIA.gerenciarClientes.deletarCliente(" + listaDeClientes[i].codigo + ")' aria-hidden='true'>Excluir</button>  </td>"
 					  + "</tr>";
 				}
 				

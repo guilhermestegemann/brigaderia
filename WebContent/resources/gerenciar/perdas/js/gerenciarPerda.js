@@ -8,6 +8,7 @@ $(document).ready( function () {
 		format: 'dd/mm/yyyy'
 	});
 	
+	
 	BRIGADERIA.gerenciarPerda.buscar = function () {
 		var dataInicio = $("#dataInicio").val();
 		var dataFim = $("#dataFim").val();
@@ -45,8 +46,8 @@ $(document).ready( function () {
 					  + "<td>" + listaDePerdas[i].numero + "</td>"
 					  + "<td>" + listaDePerdas[i].data + "</td>"
 					  + "<td>" + "R$ " + parseFloat(listaDePerdas[i].total).toFixed(2) + "</td>"
-					  + "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.gerenciarPerda.visualizarPerda(" + listaDePerdas[i].numero + ")' aria-hidden='true'></i></a>"
-					  	 +	"<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.gerenciarPerda.deletarPerda(" + listaDePerdas[i].numero + ")' aria-hidden='true'></i></a>  </td>"
+					  + "<td><button class='btn btn-primary btn-sm' type='button' onclick='BRIGADERIA.gerenciarPerda.visualizarPerda(" + listaDePerdas[i].numero + ")' aria-hidden='true'>Visualizar</button>"
+					  	 +	"<button class='btn btn-danger btn-sm' type='button' onclick='BRIGADERIA.gerenciarPerda.deletarPerda(" + listaDePerdas[i].numero + ")' aria-hidden='true'>Excluir</button>  </td>"
 					  + "</tr>";
 				}
 				

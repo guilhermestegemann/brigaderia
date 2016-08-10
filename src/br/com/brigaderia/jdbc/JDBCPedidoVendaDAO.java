@@ -238,8 +238,7 @@ public class JDBCPedidoVendaDAO implements PedidoVendaDAO{
 	}
 	
 	public List<PedidoVenda> buscarPedidosImportacao() throws SQLException {
-		String comando = "SELECT PEDIDO.NUMERO, PEDIDO.CLIENTE, CLIENTE.NOME, PEDIDO.EMISSAO, PEDIDO.FATURADO, PEDIDO.CANCELADO, "
-				       + "PEDIDO.PRODUZIDO, PEDIDO.TOTAL "
+		String comando = "SELECT PEDIDO.NUMERO, PEDIDO.CLIENTE, CLIENTE.NOME AS NOMECLIENTE, PEDIDO.EMISSAO, PEDIDO.TOTAL "
 				       + "FROM PEDIDO "
 				       + "INNER JOIN CLIENTE ON CLIENTE.CODIGO = PEDIDO.CLIENTE "
 				       + "WHERE PEDIDO.FATURADO = 'N' "
@@ -252,8 +251,15 @@ public class JDBCPedidoVendaDAO implements PedidoVendaDAO{
 		ResultSet rs = stmt.executeQuery(comando);
 		while (rs.next()) {
 			pedidoVenda = new PedidoVenda();
-			// parei aqui
+			pedidoVenda.setNumero(rs.getInt("NUMERO"));
+			pedidoVenda.setCliente(rs.getInt("CLIENTE"));
+			pedidoVenda.setNomeCliente(rs.getString("NOMECLIENTE"));
+			pedidoVenda.setDataEmissao(rs.getDate("EMISSAO"));
+			pedidoVenda.setTotal(rs.getDouble("TOTAL"));
+			pedidoVenda.setItemPedidoVenda(buscarItensPedido(pedidoVenda.getNumero()));
+			listaPedidos.add(pedidoVenda);
 		}
+		return listaPedidos;
 	}
 }
 
