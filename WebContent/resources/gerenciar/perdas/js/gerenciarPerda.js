@@ -4,10 +4,10 @@ $(document).ready( function () {
 	
 	$("#subConteudo").text(""); //inicia div vazia
 	
-	$('.dataFiltro').datepicker({
-		format: 'dd/mm/yyyy'
-	});
-	
+//	$('.dataFiltro').datepicker({
+//		format: 'dd/mm/yyyy'
+	//});
+
 	
 	BRIGADERIA.gerenciarPerda.buscar = function () {
 		var dataInicio = $("#dataInicio").val();
