@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import br.com.brigaderia.exception.BrigaderiaException;
+import br.com.brigaderia.exception.PedidoFaturadoException;
 import br.com.brigaderia.objetos.PedidoVenda;
 import br.com.brigaderia.service.PedidoVendaService;
 
@@ -174,6 +175,8 @@ public class PedidoVendaRest extends UtilRest{
 			PedidoVendaService service = new PedidoVendaService();
 			service.deletarPedido(numero);
 			return this.buildResponse("Pedido deletado com sucesso!");
+		}catch(PedidoFaturadoException e){
+			return buildErrorResponse("Pedido faturado não pode ser deletado!");
 		}catch (SQLException e) {
 			e.printStackTrace();
 			return buildErrorResponse(ERROINESPERADO);

@@ -69,24 +69,26 @@ public class OrdemProducaoRest extends UtilRest{
 			return buildErrorResponse("Ocorreu um erro ao buscar pedidos. Entre em contato com o administrador do sistema.");
 		}
 	}
-/*	
+	
 	@GET
-	@Path("/buscarPerda/{dataInicio}/{dataFim}")
+	@Path("/buscarOrdemProducao/{dataInicio}/{dataFim}/{status}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	
-	public Response buscarPerdas (@PathParam("dataInicio") String dataInicio, @PathParam("dataFim") String dataFim) throws BrigaderiaException{
+	public Response buscarOrdemProducao (@PathParam("dataInicio") String dataInicio, 
+										 @PathParam("dataFim") String dataFim,
+										 @PathParam("status") String status) throws BrigaderiaException{
 		
 		try {
 			
-			PerdaService service = new PerdaService();
-			return buildResponse(service.buscarPerdas(dataInicio, dataFim));
+			OrdemProducaoService service = new OrdemProducaoService();
+			return buildResponse(service.buscarOrdens(dataInicio, dataFim, status));
 		}catch(SQLException e) {
 			e.printStackTrace();
-			return buildErrorResponse("Ocorreu um erro ao buscar pedidos de compra. Entre em contato com o administrador do sistema.");
+			return buildErrorResponse("Ocorreu um erro ao buscar ordens de produção. Entre em contato com o administrador do sistema.");
 		}
 	}
 		
-	@GET
+/*	@GET
 	@Path("/buscarPerdaPeloNumero/{numero}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	public Response buscarPerdaPeloNumero(@PathParam("numero")int numero) throws BrigaderiaException{

@@ -4,20 +4,38 @@
 	<h1>Ordem de Produção</h1>
 	<hr>
 	<div class="">
-		<div class="input-group col-sm-9">
-			<input type="text" class="form-control col-sm-6" placeholder="Procure pela Ordem de Produção...">
-			<span class="input-group-btn">
-				<button class="btn btn-success" type="button">Pesquisar</button>
-			</span>
+		<div class="form-group col-sm-3">
+			<input type="text" class="form-control dataFiltro" id="dataInicio" name="dataInicio" placeholder="Data Inicio"/>
+		</div>
+		<div class="form-group col-sm-3">
+			<input type="text" class="form-control dataFiltro" id="dataFim" name="dataFim" placeholder="Data Fim"/>
+		</div>
+		<div class="form-group col-sm-2">
+			<select class="form-control" id="filtroStatus" name="filtroStatus">
+				<option value="pendente">Pendente</option>
+				<option value="emProducao">Em Produção</option>
+				<option value="produzida">Produzida</option>
+				<option value="cancelada">Cancelada</option>
+				<option value="todas">Todas</option>
+			</select>
+		</div>
+		<div class="input-group col-sm-4">
+				<button class="btn btn-success" id="buttonPesquisar" type="button">Pesquisar</button>
+			
 			<button class='btn btn-primary btn pull-right' onclick="BRIGADERIA.gerenciarOrdemProducao.lancarOrdemProducao()">Lançar Ordem de Produção</button>
 		</div>
 	</div>
+	
 	<table id='resultadoOrdemProducao' class='table col-sm-12'>
 		<thead>
 			<tr>
-				<th><strong>Código</strong></th>
+				<th><strong>Número</strong></th>
 				<th>Data</th>
+				<th>Data/Hora Início</th>
+				<th>Data/Hora Fim</th>
+				<th>Duração</th>
 				<th>Status</th>
+				<th>Ação</th>
 				<th></th>
 			</tr>
 		</thead>

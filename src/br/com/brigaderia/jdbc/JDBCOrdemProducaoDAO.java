@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.brigaderia.exception.ProdutoVinculadoEmOrdemProducaoException;
 import br.com.brigaderia.jdbcinterface.OrdemProducaoDAO;
@@ -65,4 +67,55 @@ public class JDBCOrdemProducaoDAO implements OrdemProducaoDAO {
 			throw e;
 		}
 	}
+	
+	public List<OrdemProducao> buscarOrdens (String dataInicio, String dataFim, String status) throws SQLException {
+		String condicao = "";
+		switch (status) {
+		case "pendente":
+			condicao = "WHERE EMPRODUCAO = 'N' AND PRODUZIDA = 'N' AND CANCELADA = 'N' ";
+			break;
+		case "emProducao":
+			condicao = "WHERE ORDEMPRODUCAO.EMPRODUCAO = 'S' ";
+			break;
+		case "produzida":
+			condicao = "WHERE ORDEMPRODUCAO.PRODUZIDA = 'S' ";
+			break;
+		case "cancelada": 
+			condicao = "WHERE ORDEMPRODUCAO.CANCELADA = 'S' ";
+			break;
+		default:
+			break;
+		}
+		String comando = "SELECT * FROM ORDEMPRODUCAO " + condicao;
+		if ((!dataInicio.equals("null") && !dataInicio.equals("")) && (!dataFim.equals("null") && !dataFim.equals(""))) {
+			if (condicao.equals("")){
+				comando += "WHERE ORDEMPRODUCAO.DATA BETWEEN '" + dataInicio + "' AND '" + dataFim + "'";
+			}else{
+				comando += "AND ORDEMPRODUCAO.DATA BETWEEN '" + dataInicio + "' AND '" + dataFim + "'";
+			}
+			
+		}
+		comando += " ORDER BY DATA DESC";
+		
+		List<OrdemProducao> listOrdem= new ArrayList<OrdemProducao>();
+		OrdemProducao ordem = null;
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(comando);
+		while(rs.next()) {
+			ordem = new OrdemProducao();
+			ordem.setNumero(rs.getInt("NUMERO"));
+			ordem.setData(rs.getDate("DATA"));
+			ordem.setHoraInicio(rs.getDate("INICIO"));
+			ordem.setHoraFim(rs.getDate("FIM"));
+			ordem.setDuracao(rs.getDate("DURACAO"));
+			ordem.setEmProducao(rs.getString("EMPRODUCAO"));
+			ordem.setProduzida(rs.getString("PRODUZIDA"));
+			ordem.setCancelada(rs.getString("CANCELADA"));
+			listOrdem.add(ordem);
+		}
+		return listOrdem;
+	}
+	
+	
+	
 }

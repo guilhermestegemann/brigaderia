@@ -32,6 +32,11 @@ $(document).ready(function() {
 		cfg.url = "rest/ordemProducao/listarProdutos";
 		BRIGADERIA.ajax.get(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));
 	};
+	
+	BRIGADERIA.ordemProducaoService.listar = function(cfg){
+		cfg.url = "rest/ordemProducao/buscarOrdemProducao/" + cfg.dataInicio + "/" + cfg.dataFim + "/" + cfg.status;
+		BRIGADERIA.ajax.get(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));
+	};
 		
 	BRIGADERIA.ordemProducaoService.adicionar = function(newPerda) {
 		cfg = {

@@ -10,20 +10,15 @@ import br.com.brigaderia.bd.conexao.Conexao;
 import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.jdbc.JDBCOrdemProducaoDAO;
 import br.com.brigaderia.jdbc.JDBCPedidoVendaDAO;
-import br.com.brigaderia.jdbc.JDBCPerdaDAO;
 import br.com.brigaderia.jdbc.JDBCProdutoDAO;
 import br.com.brigaderia.jdbcinterface.OrdemProducaoDAO;
 import br.com.brigaderia.jdbcinterface.PedidoVendaDAO;
-import br.com.brigaderia.jdbcinterface.PerdaDAO;
 import br.com.brigaderia.jdbcinterface.ProdutoDAO;
 import br.com.brigaderia.objetos.ItemOrdemProducao;
-import br.com.brigaderia.objetos.ItemPerda;
 import br.com.brigaderia.objetos.OrdemProducao;
 import br.com.brigaderia.objetos.PedidoVenda;
-import br.com.brigaderia.objetos.Perda;
 import br.com.brigaderia.objetos.Produto;
 import br.com.brigaderia.validacoes.ValidaOrdemProducao;
-import br.com.brigaderia.validacoes.ValidaPerda;
 
 public class OrdemProducaoService {
 	
@@ -82,19 +77,19 @@ public class OrdemProducaoService {
 			 conec.fecharConexao();
 		 }
 	}
-/*
-	public List<Perda> buscarPerdas (String dataIni, String dataFim) throws SQLException {
+
+	public List<OrdemProducao> buscarOrdens (String dataIni, String dataFim, String status) throws SQLException {
 		
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
-			PerdaDAO jdbcPerda = new JDBCPerdaDAO(conexao);
-			return jdbcPerda.buscarPerdas(dataIni, dataFim);
+			OrdemProducaoDAO jdbcOrdemProducao = new JDBCOrdemProducaoDAO(conexao);
+			return jdbcOrdemProducao.buscarOrdens(dataIni, dataFim, status);
 		}finally{
 			conec.fecharConexao();
 		}
 	}
-		
+/*		
 	public Perda buscarPerdaPeloNumero (int numero) throws SQLException {
 		
 		Conexao conec = new Conexao();

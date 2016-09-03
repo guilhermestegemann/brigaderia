@@ -208,13 +208,18 @@ public class PedidoVendaService {
 	}
 	
 
-	public void deletarPedido (int numero) throws SQLException {
+	public void deletarPedido (int numero) throws SQLException, PedidoFaturadoException {
 		
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
 			PedidoVendaDAO jdbcPedidoVenda = new JDBCPedidoVendaDAO(conexao);
-			jdbcPedidoVenda.deletarPedido(numero);
+			if (jdbcPedidoVenda.pedidoFaturado(numero)){
+				throw new PedidoFaturadoException();
+			}else{
+				jdbcPedidoVenda.deletarPedido(numero);
+			}
+			
 		}finally {
 			conec.fecharConexao();
 		}
