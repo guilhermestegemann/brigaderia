@@ -209,17 +209,10 @@ $(document).ready( function () {
 				if (pedido.faturado == "S"){
 					$("#cliente").val(pedido.cliente + " - " + pedido.nomeCliente);
 					$("#dataFaturado").val(BRIGADERIA.convertData.dateToStr(pedido.dataFaturado));
-					$("#faturado").attr("checked", true);
 				}else{
 					BRIGADERIA.pedidoVenda.listarClientes("#clientes", pedido.cliente);
 				}
 				$("#dataEmissao").val(BRIGADERIA.convertData.dateToStr(pedido.dataEmissao));
-				if (pedido.produzido == "S") {
-					$("#produzido").attr("checked", true);
-				}
-				if (pedido.cancelado == "S") {
-					$("#cancelado").attr("checked", true);
-				}
 				$("#totalPedidoVenda").val(parseFloat(pedido.total).toFixed(2));
 				itemPedidoVO = {};
 				itemPedidoVO = pedido.itemPedidoVenda;
@@ -232,6 +225,7 @@ $(document).ready( function () {
 							  + "<td>" + itemPedidoVO[i].qtde + "</td>"
 							  + "<td>" + parseFloat(itemPedidoVO[i].unitario).toFixed(2) + "</td>"
 							  + "<td>" + itemPedidoVO[i].total + "</td>";
+							  //Se o pedido estiver faturado, não habilita as opções de edição	
 							  if (pedido.faturado == "S") {
 								  html += "<td></td><td></td>";
 							  }else{

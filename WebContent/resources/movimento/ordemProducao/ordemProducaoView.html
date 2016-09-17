@@ -35,26 +35,6 @@
 		<div class="col-sm-12">
 			<hr>
 		</div>
-		<div class="col-sm-12">
-			<div class="form-group col-sm-6">
-				<label for='produtos'>Produto</label>
-				<select class="form-control" id="produtos" name="produtos">
-					<option value="">Selecione</option>
-				</select>
-				
-			</div>
-			<div class="form-group col-sm-2">
-				<label for='qtdeProduto'>Quantidade</label>
-				<input type="text" class="form-control" id="qtdeProduto" name="qtdeProduto" />
-			</div>
-			<div class="form-group col-sm-2">
-				<label for='unEstoque'>UN</label>
-				<input type="text" class="form-control" id="unEstoque" name="unEstoque" readonly/>
-			</div>
-			<div class="btn pull-right form-group">
-				<button class="btn btn-primary btn-lg" onclick= "BRIGADERIA.ordemProducao.incluirProduto()" type="button">Incluir</button>
-			</div>
-		</div>
 
 	</form>
 	<div class="col-sm-12">
@@ -65,7 +45,6 @@
 					<th>Descrição</th>
 					<th>Quantidade</th>
 					<th>UN</th>
-					<th>Ações</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -75,7 +54,6 @@
 		</table>
 	</div>
 	<div class="btn pull-right form-group">
-		<button class="btn btn-primary btn-lg" id="btnSalvar" onclick= "BRIGADERIA.ordemProducao.adicionar()" type="button">Salvar</button>
-		<button class="btn btn-danger btn-lg" onclick= "carregarConteudoCancel('resources/gerenciar/ordemProducao/gerenciarOrdemProducao.html')" type="button">Cancelar</button>
+		<button class="btn btn-danger btn-lg" onclick= "carregarConteudo('resources/gerenciar/ordemProducao/gerenciarOrdemProducao.html')" type="button">Sair</button>
 	</div>
 </div>

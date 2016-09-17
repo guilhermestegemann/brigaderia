@@ -47,6 +47,7 @@ $(document).ready(function (){
 				
 				var html = "";
 				var status = "";
+				var shoBtnEditar = "Editar";
 				for (var i = 0; i < listaDeOrdens.length; i++) {
 					
 					if (listaDeOrdens[i].data != null) {
@@ -58,6 +59,7 @@ $(document).ready(function (){
 					}
 					if (listaDeOrdens[i].produzida == "S"){
 						status = "Produzida";
+						shoBtnEditar = "Visualizar"
 					}
 					if (listaDeOrdens[i].cancelada == "S"){
 						status = "Cancelada";
@@ -79,7 +81,7 @@ $(document).ready(function (){
 					  + "<td>" + listaDeOrdens[i].horaFim + "</td>"
 					  + "<td>" + listaDeOrdens[i].duracao + "</td>"
 					  + "<td>" + status + "</td>"
-					  + "<td><button class='btn btn-primary btn-sm' type='button' onclick='BRIGADERIA.gerenciarOrdemProducao.visualizarOrdemProducao(" + listaDeOrdens[i].numero + ")' aria-hidden='true'>Visualizar</button>"
+					  + "<td><button class='btn btn-primary btn-sm' type='button' onclick='BRIGADERIA.gerenciarOrdemProducao.visualizarOrdemProducao(" + listaDeOrdens[i].numero + ","+ "\"" + listaDeOrdens[i].produzida + "\"" + ")' aria-hidden='true'>"+ shoBtnEditar + "</button>"
 					  	 +	"<button class='btn btn-danger btn-sm' type='button' onclick='BRIGADERIA.gerenciarOrdemProducao.deletarOrdemProducao(" + listaDeOrdens[i].numero + ")' aria-hidden='true'>Excluir</button>  </td>"
 					  + "</tr>";
 				}
@@ -91,6 +93,18 @@ $(document).ready(function (){
 				console.log(err);
 			} 
 		});		   		
+	};
+	
+	BRIGADERIA.gerenciarOrdemProducao.visualizarOrdemProducao = function(numero, produzida) {
+		var url = "";
+		if (produzida == "S") {
+			url = "resources/movimento/ordemProducao/ordemProducaoView.html";
+		}else{
+			url = "resources/movimento/ordemProducao/ordemProducao.html"
+		}
+		$("#conteudo").load(url, function (){
+			BRIGADERIA.ordemProducao.exibirEdicao(numero, produzida);
+		});	
 	};
 	
 	$("#buttonPesquisar").on('click', function(){

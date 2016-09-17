@@ -128,7 +128,43 @@ $(document).ready(function (){
 		}
 	};
 	
-	BRIGADERIA.ordemProducao.importarPedidos = function(){
+	BRIGADERIA.ordemProducao.exibirEdicao = function(numero, produzida) {
+		if (produzida == "N") {
+			BRIGADERIA.ordemProducao.listarProdutos();
+		}
+		BRIGADERIA.ordemProducaoService.buscarOrdemPeloNumero({
+			numero : numero,
+			async: false,
+			success : function (ordem) {
+				$("#numero").val(ordem.numero);
+				$("#data").val(BRIGADERIA.convertData.dateToStr(ordem.data));
+				itemOrdemVO = {};
+				itemOrdemVO = ordem.itemOrdemProducao;
+				for (var i = 0; i < itemOrdemVO.length; i++ ) {
+					var html = ""
+						html =  "<tr class='itemOrdemProducao'>"
+							  + "<td >" + itemOrdemVO[i].codigoProduto + "</td>"
+							  + "<td>" + itemOrdemVO[i].descricao + "</td>"
+							  + "<td>" + itemOrdemVO[i].qtde + "</td>"
+							  + "<td>" + itemOrdemVO[i].unEstoque + "</td>";
+							  if (ordem.produzida == "S") {
+								  html += "<td></td><td></td>";
+							  }else{
+								  html += "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.ordemProducao.editarProduto(this"+ "," + itemOrdemVO[i].codigoProduto + "," + "\"" + itemOrdemVO[i].descricao + "\"" + "," + itemOrdemVO[i].qtde + "," + "\"" + itemOrdemVO[i].unEstoque + "\"" + ")' aria-hidden='true'></i></a>"
+							  	  + "<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.ordemProducao.deletarProduto(this"+ "," + itemOrdemVO[i].codigoProduto + "," + "\"" + itemOrdemVO[i].descricao + "\"" + ")' aria-hidden='true'></i></a></td>";
+							  }
+							  
+						  html += "</tr>";
+						produtoArray.push(itemOrdemVO[i]);
+						$("#itensOrdemProducao tbody").append(html);
+						$("#produtos option[value='"+ itemOrdemVO[i].codigoProduto +"']").remove();
+				}
+				$("#btnSalvar").attr("onclick", "BRIGADERIA.ordemProducao.salvarEdicao()");
+			}
+		});	
+	};
+	
+	/*BRIGADERIA.ordemProducao.importarPedidos = function(){
 		BRIGADERIA.ordemProducaoService.listarPedidosImportacao ({
 			success : function (listaPedido) {
 				console.log(listaPedido);
@@ -137,6 +173,6 @@ $(document).ready(function (){
 				console.log(error);
 			}
 		})
-	};
+	};*/
 	
 });

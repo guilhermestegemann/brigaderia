@@ -11,7 +11,7 @@ public class Conexao {
 			//instru��o que identifica o tipo de driver utulizado para a conex�o como banco de dados.
 			Class.forName("org.gjt.mm.mysql.Driver");
 			//Notem o endere�amento feito do servidor de banco de dados e driver.
-			conexao = java.sql.DriverManager.getConnection("jdbc:mysql://localhost:3306/brigaderia", "root", "masterkey");
+			conexao = java.sql.DriverManager.getConnection("jdbc:mysql://localhost:3306/brigaderia", "root", "root");
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

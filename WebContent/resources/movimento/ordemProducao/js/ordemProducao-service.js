@@ -63,12 +63,12 @@ $(document).ready(function() {
 		
 		BRIGADERIA.ajax.del(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));
 	};
-	
-	BRIGADERIA.ordemProducaoService.buscarPerdaPeloNumero = function(cfg) {
-		cfg.url = "rest/perda/buscarPerdaPeloNumero/" + cfg.numero;
+	*/
+	BRIGADERIA.ordemProducaoService.buscarOrdemPeloNumero = function(cfg) {
+		cfg.url = "rest/ordemProducao/buscarOrdemPeloNumero/" + cfg.numero;
 		BRIGADERIA.ajax.get(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));
 	};
-	*/
+	
 	
 	BRIGADERIA.ordemProducaoService.listarPedidosImportacao = function(cfg) {
 		cfg.url = "rest/ordemProducao/buscarPedidosImportacao";

@@ -10,6 +10,7 @@ import java.util.List;
 
 import br.com.brigaderia.exception.ProdutoVinculadoEmOrdemProducaoException;
 import br.com.brigaderia.jdbcinterface.OrdemProducaoDAO;
+import br.com.brigaderia.objetos.ItemOrdemProducao;
 import br.com.brigaderia.objetos.OrdemProducao;
 
 public class JDBCOrdemProducaoDAO implements OrdemProducaoDAO {
@@ -116,6 +117,45 @@ public class JDBCOrdemProducaoDAO implements OrdemProducaoDAO {
 		return listOrdem;
 	}
 	
+	public OrdemProducao buscarPeloNumero (int numero) throws SQLException {
+		
+		String comando = "SELECT * FROM ORDEMPRODUCAO WHERE ORDEMPRODUCAO.NUMERO = " + numero;
+		OrdemProducao ordem = new OrdemProducao();
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(comando);
+		while(rs.next()) {
+			ordem.setNumero(rs.getInt("NUMERO"));
+			ordem.setHoraInicio(rs.getDate("INICIO"));
+			ordem.setHoraFim(rs.getDate("FIM"));
+			ordem.setDuracao(rs.getDate("DURACAO"));
+			ordem.setData(rs.getDate("DATA"));
+			ordem.setEmProducao(rs.getString("EMPRODUCAO"));
+			ordem.setProduzida(rs.getString("PRODUZIDA"));
+			ordem.setCancelada(rs.getString("CANCELADA"));
+		}
+		return ordem;
+	}
 	
+public List<ItemOrdemProducao> buscarItensOrdem(int numero) throws SQLException  {
+		
+		List<ItemOrdemProducao> listItemOrdem = new ArrayList<ItemOrdemProducao>();
+		String comando = "SELECT IO.PRODUTO, P.DESCRICAO, P.UNESTOQUE, P.ESTOQUE, IO.QTDE "
+				       + "FROM ITEMORDEMPRODUCAO IO "
+				       + "INNER JOIN PRODUTO P ON P.CODIGO = IO.PRODUTO "
+				       + "WHERE IO.ORDEMPRODUCAO = " + numero;
+		ItemOrdemProducao itemOrdem = null;
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(comando);
+		while(rs.next()) {
+			itemOrdem = new ItemOrdemProducao();
+			itemOrdem.setCodigoProduto(rs.getInt("PRODUTO"));
+			itemOrdem.setDescricao(rs.getString("DESCRICAO"));
+			itemOrdem.setUnEstoque(rs.getString("UNESTOQUE"));
+			itemOrdem.setEstoque(rs.getFloat("ESTOQUE"));
+			itemOrdem.setQtde(rs.getFloat("QTDE"));
+			listItemOrdem.add(itemOrdem);
+		}
+		return listItemOrdem;
+	}
 	
 }

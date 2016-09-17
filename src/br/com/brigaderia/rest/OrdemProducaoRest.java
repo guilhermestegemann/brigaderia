@@ -88,19 +88,19 @@ public class OrdemProducaoRest extends UtilRest{
 		}
 	}
 		
-/*	@GET
-	@Path("/buscarPerdaPeloNumero/{numero}")
+	@GET
+	@Path("/buscarOrdemPeloNumero/{numero}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public Response buscarPerdaPeloNumero(@PathParam("numero")int numero) throws BrigaderiaException{
+	public Response buscarOrdemPeloNumero(@PathParam("numero")int numero) throws BrigaderiaException{
 		try {
-			PerdaService service = new PerdaService(); 
-			return buildResponse(service.buscarPerdaPeloNumero(numero));
+			OrdemProducaoService service = new OrdemProducaoService(); 
+			return buildResponse(service.buscarOrdemPeloNumero(numero));
 		}catch (SQLException e) {
 			e.printStackTrace();
-			return buildErrorResponse("Ocorreu um erro ao buscar perdas. Entre em contato com o administrador do sistema.");
+			return buildErrorResponse("Ocorreu um erro ao buscar ordens. Entre em contato com o administrador do sistema.");
 		}
 	}
-	
+/*	
 	@DELETE
 	@Path("/deletar/{numero}")
 	@Consumes("application/*")

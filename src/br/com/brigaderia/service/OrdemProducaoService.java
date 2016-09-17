@@ -89,22 +89,22 @@ public class OrdemProducaoService {
 			conec.fecharConexao();
 		}
 	}
-/*		
-	public Perda buscarPerdaPeloNumero (int numero) throws SQLException {
+		
+	public OrdemProducao buscarOrdemPeloNumero (int numero) throws SQLException {
 		
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
-			PerdaDAO jdbcPerda = new JDBCPerdaDAO(conexao);
-			Perda perda = jdbcPerda.buscarPeloNumero(numero);
-			perda.setItemPerda(jdbcPerda.buscarItensPerda(perda.getNumero()));
-			return perda;
+			OrdemProducaoDAO jdbcOrdem = new JDBCOrdemProducaoDAO(conexao);
+			OrdemProducao ordem = jdbcOrdem.buscarPeloNumero(numero);
+			ordem.setItemOrdemProducao(jdbcOrdem.buscarItensOrdem(ordem.getNumero()));
+			return ordem;
 		}finally{
 			conec.fecharConexao();
 		}	
 	}
 	
-		
+	/*		
 	public void deletarPerda (int numero) throws SQLException {
 		
 		Conexao conec = new Conexao();
