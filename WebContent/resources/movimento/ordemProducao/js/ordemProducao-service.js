@@ -69,6 +69,20 @@ $(document).ready(function() {
 		BRIGADERIA.ajax.get(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));
 	};
 	
+	BRIGADERIA.ordemProducaoService.editarOrdemProducao = function(ordemProducao) {
+		cfg = {
+			url : "rest/ordemProducao/editarOrdemProducao",
+			data : ordemProducao,
+			success : function(sucesso){
+				bootbox.alert(sucesso);
+				carregarConteudo('resources/gerenciar/ordemProducao/gerenciarOrdemProducao.html');
+			},
+			error: function(err){
+				bootbox.alert(err.responseText);
+			}
+		};
+		BRIGADERIA.ajax.put(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));
+	};
 	
 	BRIGADERIA.ordemProducaoService.listarPedidosImportacao = function(cfg) {
 		cfg.url = "rest/ordemProducao/buscarPedidosImportacao";

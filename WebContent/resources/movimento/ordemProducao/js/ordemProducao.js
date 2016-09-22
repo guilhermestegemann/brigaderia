@@ -128,6 +128,18 @@ $(document).ready(function (){
 		}
 	};
 	
+	BRIGADERIA.ordemProducao.salvarEdicao = function () {
+		var ordemProducao = {
+				numero : $("#numero").val(),
+				itemOrdemProducao : produtoArray
+		}
+		if(ordemProducao.itemOrdemProducao == ""){
+			bootbox.alert("Produtos não inseridos");
+		}else{
+			BRIGADERIA.ordemProducaoService.editarOrdemProducao(ordemProducao);
+		}
+	}
+	
 	BRIGADERIA.ordemProducao.exibirEdicao = function(numero, produzida) {
 		if (produzida == "N") {
 			BRIGADERIA.ordemProducao.listarProdutos();
@@ -150,8 +162,8 @@ $(document).ready(function (){
 							  if (ordem.produzida == "S") {
 								  html += "<td></td><td></td>";
 							  }else{
-								  html += "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.ordemProducao.editarProduto(this"+ "," + itemOrdemVO[i].codigoProduto + "," + "\"" + itemOrdemVO[i].descricao + "\"" + "," + itemOrdemVO[i].qtde + "," + "\"" + itemOrdemVO[i].unEstoque + "\"" + ")' aria-hidden='true'></i></a>"
-							  	  + "<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.ordemProducao.deletarProduto(this"+ "," + itemOrdemVO[i].codigoProduto + "," + "\"" + itemOrdemVO[i].descricao + "\"" + ")' aria-hidden='true'></i></a></td>";
+								  html += "<td><button class='btn btn-primary btn-sm' type='button' onclick='BRIGADERIA.ordemProducao.editarProduto(this"+ "," + itemOrdemVO[i].codigoProduto + "," + "\"" + itemOrdemVO[i].descricao + "\"" + "," + itemOrdemVO[i].qtde + "," + "\"" + itemOrdemVO[i].unEstoque + "\"" + ")' aria-hidden='true'>Editar</button>"
+							  	  + "<button class='btn btn-danger btn-sm' type='button' onclick='BRIGADERIA.ordemProducao.deletarProduto(this"+ "," + itemOrdemVO[i].codigoProduto + "," + "\"" + itemOrdemVO[i].descricao + "\"" + ")' aria-hidden='true'>Excluir</button></td>";
 							  }
 							  
 						  html += "</tr>";

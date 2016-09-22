@@ -136,7 +136,7 @@ public class JDBCOrdemProducaoDAO implements OrdemProducaoDAO {
 		return ordem;
 	}
 	
-public List<ItemOrdemProducao> buscarItensOrdem(int numero) throws SQLException  {
+	public List<ItemOrdemProducao> buscarItensOrdem(int numero) throws SQLException  {
 		
 		List<ItemOrdemProducao> listItemOrdem = new ArrayList<ItemOrdemProducao>();
 		String comando = "SELECT IO.PRODUTO, P.DESCRICAO, P.UNESTOQUE, P.ESTOQUE, IO.QTDE "
@@ -157,5 +157,12 @@ public List<ItemOrdemProducao> buscarItensOrdem(int numero) throws SQLException 
 		}
 		return listItemOrdem;
 	}
+	
+	public void deletarProdutos (int numero) throws SQLException {
+		String comando = "DELETE FROM ITEMORDEMPRODUCAO WHERE ITEMORDEMPRODUCAO.ORDEMPRODUCAO = " + numero;
+		Statement stmt = this.conexao.createStatement();
+		stmt.execute(comando);
+	}
+	
 	
 }

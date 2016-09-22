@@ -15,5 +15,6 @@ public interface OrdemProducaoDAO {
 	public List<OrdemProducao> buscarOrdens (String dataInicio, String dataFim, String status) throws SQLException;
 	public OrdemProducao buscarPeloNumero (int numero) throws SQLException;
 	public List<ItemOrdemProducao> buscarItensOrdem(int numero) throws SQLException;
+	public void deletarProdutos(int numero) throws SQLException;
 
 }

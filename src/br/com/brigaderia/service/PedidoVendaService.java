@@ -77,6 +77,7 @@ public class PedidoVendaService {
 			}
 			conexao.commit();
 		}catch (BrigaderiaException e) {
+			conexao.rollback();
 			e.printStackTrace();
 			throw e;
 		} catch (SQLException e) {

@@ -104,6 +104,35 @@ public class OrdemProducaoService {
 		}	
 	}
 	
+	public void editarOrdemProducao (OrdemProducao ordem) throws SQLException, BrigaderiaException {
+		Conexao conec = new Conexao();
+		Connection conexao = conec.abrirConexao();
+		try {
+			conexao.setAutoCommit(false);
+			ValidaOrdemProducao validaOrdem = new ValidaOrdemProducao();
+			validaOrdem.validar(ordem);
+			OrdemProducaoDAO jdbcOrdemProducao = new JDBCOrdemProducaoDAO(conexao);
+			jdbcOrdemProducao.deletarProdutos(ordem.getNumero());
+			List<ItemOrdemProducao> listProdutos = new ArrayList<>();
+			listProdutos = ordem.getItemOrdemProducao();
+			
+			for (ItemOrdemProducao itemOrdemProducao : listProdutos) {
+				jdbcOrdemProducao.adicionarProdutos(ordem.getNumero(), itemOrdemProducao.getCodigoProduto(), itemOrdemProducao.getQtde());
+			}
+			conexao.commit();
+		}catch (BrigaderiaException e){
+			conexao.rollback();
+			e.printStackTrace();
+			throw e;
+		}catch (SQLException e){
+			conexao.rollback();
+			e.printStackTrace();
+			throw new BrigaderiaException();
+		}finally {
+			conec.fecharConexao();
+		}
+	}
+	
 	/*		
 	public void deletarPerda (int numero) throws SQLException {
 		

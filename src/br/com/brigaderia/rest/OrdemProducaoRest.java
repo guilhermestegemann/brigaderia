@@ -6,6 +6,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -16,6 +17,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.objetos.OrdemProducao;
+import br.com.brigaderia.objetos.PedidoVenda;
 import br.com.brigaderia.service.OrdemProducaoService;
 
 @Path("ordemProducao")
@@ -98,6 +100,25 @@ public class OrdemProducaoRest extends UtilRest{
 		}catch (SQLException e) {
 			e.printStackTrace();
 			return buildErrorResponse("Ocorreu um erro ao buscar ordens. Entre em contato com o administrador do sistema.");
+		}
+	}
+	
+	@PUT
+	@Path("/editarOrdemProducao")
+	@Consumes("application/*")
+	public Response editarOrdemProducao (String ordemEditada) throws BrigaderiaException {
+		try {
+			//OrdemProducao ordem = new ObjectMapper().readValue(ordemEditada, OrdemProducao.class);
+			OrdemProducao ordem = new ObjectMapper().readValue(ordemEditada, OrdemProducao.class);
+			OrdemProducaoService service = new OrdemProducaoService();
+			service.editarOrdemProducao(ordem);
+			return buildResponse("Ordem de Produção editada com sucesso");
+		}catch(SQLException e){
+			e.printStackTrace();
+			return buildErrorResponse("Ocorreu um erro ao editar a ordem de produção. Entre em contato com o administrador do sistema.");
+		}catch(Exception e){
+			e.printStackTrace();
+			return buildErrorResponse(ERROINESPERADO);
 		}
 	}
 /*	
