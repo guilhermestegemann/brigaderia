@@ -19,6 +19,7 @@ import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.objetos.OrdemProducao;
 import br.com.brigaderia.objetos.PedidoVenda;
 import br.com.brigaderia.service.OrdemProducaoService;
+import br.com.brigaderia.service.PedidoVendaService;
 
 @Path("ordemProducao")
 
@@ -119,6 +120,45 @@ public class OrdemProducaoRest extends UtilRest{
 		}catch(Exception e){
 			e.printStackTrace();
 			return buildErrorResponse(ERROINESPERADO);
+		}
+	}
+	
+	@PUT
+	@Path("/produzir/{numero}")
+	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	public Response produzir(@PathParam("numero")int numero) throws BrigaderiaException {
+		try {
+			OrdemProducaoService service = new OrdemProducaoService();
+			return buildResponse(service.produzir(numero));
+		}catch(SQLException e){
+			e.printStackTrace();
+			return buildErrorResponse("Ocorreu um erro ao produzir a ordem de produção. Entre em contato com o administrador do sistema.");
+		}
+	}
+	
+/*	@PUT
+	@Path("/cancelarProducao/{numero}")
+	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	public Response cancelarProducao(@PathParam("numero")int numero) throws BrigaderiaException {
+		try {
+			OrdemProducaoService service = new OrdemProducaoService();
+			return buildResponse(service.cancelarProducao(numero));
+		}catch(SQLException e){
+			e.printStackTrace();
+			return buildErrorResponse("Ocorreu um erro ao cancelar a ordem de produção. Entre em contato com o administrador do sistema.");
+		}
+	}
+	
+	@PUT
+	@Path("/cancelarProduzido/{numero}")
+	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	public Response cancelarProduzido(@PathParam("numero")int numero) throws BrigaderiaException {
+		try {
+			OrdemProducaoService service = new OrdemProducaoService();
+			return buildResponse(service.cancelarProduzido(numero));
+		}catch(SQLException e){
+			e.printStackTrace();
+			return buildErrorResponse("Ocorreu um erro ao cancelar a ordem de produção. Entre em contato com o administrador do sistema.");
 		}
 	}
 /*	

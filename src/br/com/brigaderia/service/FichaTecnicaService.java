@@ -13,7 +13,7 @@ import br.com.brigaderia.jdbcinterface.FichaTecnicaDAO;
 import br.com.brigaderia.jdbcinterface.ProdutoDAO;
 import br.com.brigaderia.objetos.FichaTecnica;
 import br.com.brigaderia.objetos.IngredientesVO;
-import br.com.brigaderia.objetos.ItemFichaTecnicaVO;
+import br.com.brigaderia.objetos.ItemFichaTecnica;
 import br.com.brigaderia.validacoes.ValidaFichaTecnica;
 
 public class FichaTecnicaService {
@@ -39,11 +39,11 @@ public class FichaTecnicaService {
 			ValidaFichaTecnica validaFichatecnica = new ValidaFichaTecnica();
 			validaFichatecnica.validar(fichaTecnica);
 			int codFichaTecnica = jdbcFichaTecnica.adicionar(fichaTecnica);
-			List<ItemFichaTecnicaVO> listIngredientes = new ArrayList<>();
+			List<ItemFichaTecnica> listIngredientes = new ArrayList<>();
 			listIngredientes =	fichaTecnica.getIngredientes();
 			
 			for(int i = 0; i < listIngredientes.size(); i++) {
-				jdbcFichaTecnica.adicionarIngredientes(codFichaTecnica, listIngredientes.get(i).getCodigo(), listIngredientes.get(i).getQtde());
+				jdbcFichaTecnica.adicionarIngredientes(codFichaTecnica, listIngredientes.get(i).getCodigoProduto(), listIngredientes.get(i).getQtde());
 			}	
 		}finally{
 			conec.fecharConexao();
@@ -73,11 +73,11 @@ public class FichaTecnicaService {
 			validaFichatecnica.validar(fichaTecnica);
 			jdbcFichaTecnica.atualizar(fichaTecnica);
 			jdbcFichaTecnica.deletarIngredientes(fichaTecnica.getCodigoFichaTecnica());
-			List<ItemFichaTecnicaVO> listIngredientes = new ArrayList<>();
+			List<ItemFichaTecnica> listIngredientes = new ArrayList<>();
 			listIngredientes =	fichaTecnica.getIngredientes();
 			
 			for(int i = 0; i < listIngredientes.size(); i++) {
-				jdbcFichaTecnica.adicionarIngredientes(fichaTecnica.getCodigoFichaTecnica(), listIngredientes.get(i).getCodigo(), listIngredientes.get(i).getQtde());
+				jdbcFichaTecnica.adicionarIngredientes(fichaTecnica.getCodigoFichaTecnica(), listIngredientes.get(i).getCodigoProduto(), listIngredientes.get(i).getQtde());
 			}
 		}finally{
 			conec.fecharConexao();

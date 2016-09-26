@@ -84,6 +84,21 @@ $(document).ready(function() {
 		BRIGADERIA.ajax.put(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));
 	};
 	
+	BRIGADERIA.ordemProducaoService.produzir = function(cfg) {
+		cfg.url = "rest/ordemProducao/produzir/"+ cfg.numero;
+		BRIGADERIA.ajax.put(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));
+	};
+	
+	BRIGADERIA.ordemProducaoService.cancelarProducao = function(cfg) {
+		cfg.url = "rest/ordemProducao/cancelarProducao/"+ cfg.numero;
+		BRIGADERIA.ajax.put(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));
+	};
+	
+	BRIGADERIA.ordemProducaoService.cancelarProduzido = function(cfg) {
+		cfg.url = "rest/ordemProducao/cancelarProduzido/"+ cfg.numero;
+		BRIGADERIA.ajax.put(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));
+	};
+	
 	BRIGADERIA.ordemProducaoService.listarPedidosImportacao = function(cfg) {
 		cfg.url = "rest/ordemProducao/buscarPedidosImportacao";
 		BRIGADERIA.ajax.get(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));

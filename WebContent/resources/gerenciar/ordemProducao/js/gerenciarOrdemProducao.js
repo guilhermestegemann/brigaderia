@@ -47,7 +47,10 @@ $(document).ready(function (){
 				
 				var html = "";
 				var status = "";
-				var shoBtnEditar = "Editar";
+				var showBtnEditar = "Editar";
+				var showBtnProduzir = "Produzir";
+				var tipoBtnProduzir = "success"
+				var btnExcluir = "";
 				for (var i = 0; i < listaDeOrdens.length; i++) {
 					
 					if (listaDeOrdens[i].data != null) {
@@ -56,19 +59,30 @@ $(document).ready(function (){
 					status = "Pendente";
 					if (listaDeOrdens[i].emProducao =="S"){
 						status = "Em Produção";
+						showBtnProduzir = "Cancelar Produção";
+						tipoBtnProduzir = "warning";
+						btnExcluir = "disabled='disabled'";
 					}
 					if (listaDeOrdens[i].produzida == "S"){
 						status = "Produzida";
-						shoBtnEditar = "Visualizar"
+						showBtnEditar = "Visualizar";
+						btnExcluir = "disabled='disabled'";
+						showBtnProduzir = "Cancelar";
+						tipoBtnProduzir = "warning";
 					}
 					if (listaDeOrdens[i].cancelada == "S"){
 						status = "Cancelada";
 					}
+					debugger;
 					if (listaDeOrdens[i].horaInicio == null){
 						listaDeOrdens[i].horaInicio = "";
+					}else{
+						listaDeOrdens[i].horaInicio = BRIGADERIA.convertData.dateToStr(listaDeOrdens[i].horaInicio);
 					}
 					if (listaDeOrdens[i].horaFim == null){
 						listaDeOrdens[i].horaFim = "";
+					}else{
+						listaDeOrdens[i].horaFim = BRIGADERIA.convertData.dateToStr(listaDeOrdens[i].horaFim);
 					}
 					if (listaDeOrdens[i].duracao == null){
 						listaDeOrdens[i].duracao = "";
@@ -77,12 +91,13 @@ $(document).ready(function (){
 					html += "<tr>"
 					  + "<td>" + listaDeOrdens[i].numero + "</td>"
 					  + "<td>" + listaDeOrdens[i].data + "</td>"
-					  + "<td>" + listaDeOrdens[i].duracao + "</td>"
+					  + "<td>" + listaDeOrdens[i].horaInicio + "</td>"
 					  + "<td>" + listaDeOrdens[i].horaFim + "</td>"
 					  + "<td>" + listaDeOrdens[i].duracao + "</td>"
 					  + "<td>" + status + "</td>"
-					  + "<td><button class='btn btn-primary btn-sm' type='button' onclick='BRIGADERIA.gerenciarOrdemProducao.visualizarOrdemProducao(" + listaDeOrdens[i].numero + ","+ "\"" + listaDeOrdens[i].produzida + "\"" + ")' aria-hidden='true'>"+ shoBtnEditar + "</button>"
-					  	 +	"<button class='btn btn-danger btn-sm' type='button' onclick='BRIGADERIA.gerenciarOrdemProducao.deletarOrdemProducao(" + listaDeOrdens[i].numero + ")' aria-hidden='true'>Excluir</button>  </td>"
+					  + "<td><button class='btn btn-primary btn-sm' type='button' onclick='BRIGADERIA.gerenciarOrdemProducao.visualizarOrdemProducao(" + listaDeOrdens[i].numero + ","+ "\"" + listaDeOrdens[i].produzida + "\"" + ")' aria-hidden='true'>"+ showBtnEditar + "</button>"
+					     + "<button class='btn btn-"+tipoBtnProduzir+" btn-sm' type='button' onclick='BRIGADERIA.gerenciarOrdemProducao.controlaAcao(" + listaDeOrdens[i].numero + ","+ "\"" + listaDeOrdens[i].emProducao + "\"" + "," + "\"" + listaDeOrdens[i].produzida + "\"" + ")' aria-hidden='true'>"+ showBtnProduzir + "</button>"
+					  	 + "<button class='btn btn-danger btn-sm' type='button'" + btnExcluir + "onclick='BRIGADERIA.gerenciarOrdemProducao.deletarOrdemProducao(" + listaDeOrdens[i].numero + ")' aria-hidden='true'>Excluir</button>  </td>"
 					  + "</tr>";
 				}
 				
@@ -93,6 +108,64 @@ $(document).ready(function (){
 				console.log(err);
 			} 
 		});		   		
+	};
+	
+	BRIGADERIA.gerenciarOrdemProducao.controlaAcao = function(numero, emProducao, produzida){
+		var acao = "";
+		var confirmacao = "";
+		if ((emProducao == "N") && (produzida == "N")){
+			acao = "produzir";
+			confirmacao = "Deseja realmente iniciar a produção?";
+		}else if (emProducao == "S") {
+			acao = "cancelarProducao";
+			confirmacao = "Deseja realmente cancelar a produção iniciada?";
+		}else {
+			acao = "cancelarProduzido";
+			confirmacao = "Deseja realmente cancelar a produção concluída?";
+		}
+		bootbox.confirm({ 
+			size: 'medium',
+			message: confirmacao, 
+			callback: function(confirma){
+				if (confirma) {
+					if (acao == "produzir") {
+						BRIGADERIA.ordemProducaoService.produzir({
+							numero : numero,
+							success: function (successo) {
+								bootbox.alert(successo.replace("\n","<br>"));
+								BRIGADERIA.gerenciarOrdemProducao.buscar();
+							},
+							error: function(err) {
+								bootbox.alert(err.responseText);
+							}
+						});
+					}else if (acao == "cancelarProducao"){
+						BRIGADERIA.ordemProducaoService.cancelarProducao({
+							numero : numero,
+							success: function (successo) {
+								bootbox.alert(successo);
+								BRIGADERIA.gerenciarOrdemProducao.buscar();
+							},
+							error: function(err) {
+								bootbox.alert(err.responseText);
+							}
+						});
+					}else {
+						BRIGADERIA.ordemProducaoService.cancelarProduzido({
+							numero : numero,
+							success: function (successo) {
+								bootbox.alert(successo);
+								BRIGADERIA.gerenciarOrdemProducao.buscar();
+							},
+							error: function(err) {
+								bootbox.alert(err.responseText);
+							}
+						});
+					}
+				}
+			}
+		});
+		
 	};
 	
 	BRIGADERIA.gerenciarOrdemProducao.visualizarOrdemProducao = function(numero, produzida) {

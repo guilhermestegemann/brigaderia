@@ -12,7 +12,7 @@ import br.com.brigaderia.exception.IngredienteVinculadoEmFichaTecnicaException;
 import br.com.brigaderia.exception.SomarCustoFichaTecnicaException;
 import br.com.brigaderia.jdbcinterface.FichaTecnicaDAO;
 import br.com.brigaderia.objetos.FichaTecnica;
-import br.com.brigaderia.objetos.ItemFichaTecnicaVO;
+import br.com.brigaderia.objetos.ItemFichaTecnica;
 
 public class JDBCFichaTecnicaDAO implements FichaTecnicaDAO{
 	
@@ -112,21 +112,21 @@ public class JDBCFichaTecnicaDAO implements FichaTecnicaDAO{
 		return fichaTecnica;
 	}
 	
-	private List<ItemFichaTecnicaVO> buscarIngredientesPeloCodigo(int codigo) throws SQLException {
+	private List<ItemFichaTecnica> buscarIngredientesPeloCodigo(int codigo) throws SQLException {
 		
-		List<ItemFichaTecnicaVO> listItemFichaTecnica = new ArrayList<ItemFichaTecnicaVO>();
+		List<ItemFichaTecnica> listItemFichaTecnica = new ArrayList<ItemFichaTecnica>();
 		String comando = "SELECT ITEMFICHATECNICA.INGREDIENTE, PRODUTO.DESCRICAO, PRODUTO.UNESTOQUE, ITEMFICHATECNICA.QTDE "
 				       + "FROM ITEMFICHATECNICA "
 				       + "INNER JOIN PRODUTO ON PRODUTO.CODIGO = ITEMFICHATECNICA.INGREDIENTE "
 				       + "WHERE ITEMFICHATECNICA.FICHATECNICA = " + codigo;
-		ItemFichaTecnicaVO itemFichaTecnicaVO = null;
+		ItemFichaTecnica itemFichaTecnicaVO = null;
 		Statement stmt = conexao.createStatement();
 		ResultSet rs = stmt.executeQuery(comando);
 		while(rs.next()) {
-			itemFichaTecnicaVO = new ItemFichaTecnicaVO();
-			itemFichaTecnicaVO.setCodigo(rs.getInt("ingrediente"));
+			itemFichaTecnicaVO = new ItemFichaTecnica();
+			itemFichaTecnicaVO.setCodigoProduto(rs.getInt("ingrediente"));
 			itemFichaTecnicaVO.setDescricao(rs.getString("descricao"));
-			itemFichaTecnicaVO.setUn(rs.getString("unestoque"));
+			itemFichaTecnicaVO.setUnEstoque(rs.getString("unestoque"));
 			itemFichaTecnicaVO.setQtde(rs.getFloat("qtde"));
 			listItemFichaTecnica.add(itemFichaTecnicaVO);
 		}
@@ -164,4 +164,30 @@ public class JDBCFichaTecnicaDAO implements FichaTecnicaDAO{
 			throw new IngredienteVinculadoEmFichaTecnicaException();
 		}
 	}
+	
+	public List<ItemFichaTecnica> buscarQtdeIngrediente (int numOrdem) throws SQLException {
+		List<ItemFichaTecnica> listItemFichaTecnica = new ArrayList<>();
+		String comando = "SELECT ITEMFICHATECNICA.INGREDIENTE, PRODUTO.DESCRICAO AS DESCRICAO, PRODUTO.ESTOQUE, "
+				       + "SUM(ITEMORDEMPRODUCAO.QTDE * ITEMFICHATECNICA.QTDE) AS QTDETOTAL "
+				       + "FROM ITEMFICHATECNICA "
+				       + "INNER JOIN FICHATECNICA ON FICHATECNICA.CODIGO = ITEMFICHATECNICA.FICHATECNICA "
+				       + "INNER JOIN ITEMORDEMPRODUCAO ON ITEMORDEMPRODUCAO.PRODUTO = FICHATECNICA.PRODUTO "
+				       + "INNER JOIN PRODUTO ON PRODUTO.CODIGO = ITEMFICHATECNICA.INGREDIENTE "
+				       + "WHERE ITEMORDEMPRODUCAO.ORDEMPRODUCAO = " + numOrdem
+				       + " GROUP BY 1";
+		ItemFichaTecnica itemFicha = null;
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(comando);
+		while(rs.next()){
+			itemFicha = new ItemFichaTecnica();
+			itemFicha.setCodigoProduto(rs.getInt("INGREDIENTE"));
+			itemFicha.setDescricao(rs.getString("DESCRICAO"));
+			itemFicha.setEstoque(rs.getFloat("ESTOQUE"));
+			itemFicha.setQtde(rs.getFloat("QTDETOTAL"));
+			listItemFichaTecnica.add(itemFicha);
+		}
+		return listItemFichaTecnica;
+	}
+	
+	
 }

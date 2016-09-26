@@ -2,18 +2,23 @@ package br.com.brigaderia.service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import br.com.brigaderia.bd.conexao.Conexao;
 import br.com.brigaderia.exception.BrigaderiaException;
+import br.com.brigaderia.exception.OrdemEmProducaoException;
+import br.com.brigaderia.jdbc.JDBCFichaTecnicaDAO;
 import br.com.brigaderia.jdbc.JDBCOrdemProducaoDAO;
 import br.com.brigaderia.jdbc.JDBCPedidoVendaDAO;
 import br.com.brigaderia.jdbc.JDBCProdutoDAO;
+import br.com.brigaderia.jdbcinterface.FichaTecnicaDAO;
 import br.com.brigaderia.jdbcinterface.OrdemProducaoDAO;
 import br.com.brigaderia.jdbcinterface.PedidoVendaDAO;
 import br.com.brigaderia.jdbcinterface.ProdutoDAO;
+import br.com.brigaderia.objetos.ItemFichaTecnica;
 import br.com.brigaderia.objetos.ItemOrdemProducao;
 import br.com.brigaderia.objetos.OrdemProducao;
 import br.com.brigaderia.objetos.PedidoVenda;
@@ -131,6 +136,53 @@ public class OrdemProducaoService {
 		}finally {
 			conec.fecharConexao();
 		}
+	}
+	
+	public String produzir (int numero) throws SQLException, BrigaderiaException {
+		Conexao conec = new Conexao();
+		Connection conexao = conec.abrirConexao();
+		String msg = "";
+		try {
+			conexao.setAutoCommit(false);
+			OrdemProducaoDAO jdbcOrdem = new JDBCOrdemProducaoDAO(conexao);
+			if (jdbcOrdem.emProducao(numero)) {
+				throw new OrdemEmProducaoException();
+			}
+			List<ItemFichaTecnica> listIngredientes = new ArrayList<>();
+			FichaTecnicaDAO jdbcFichaTecnica = new JDBCFichaTecnicaDAO(conexao);
+			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
+			listIngredientes = jdbcFichaTecnica.buscarQtdeIngrediente(numero);
+			for (ItemFichaTecnica itemFichaTecnica : listIngredientes) {
+				if (itemFichaTecnica.getQtde() > itemFichaTecnica.getEstoque()) {
+					if (msg.equals("")) {
+						msg = "Estoque insuficiente para os seguintes ingredientes: \n";
+					}
+					msg += "Código: " + itemFichaTecnica.getCodigoProduto() + " | Descrição: " + itemFichaTecnica.getDescricao()
+					 + " | Estoque: " + itemFichaTecnica.getEstoque() + " | Quantidade: " + itemFichaTecnica.getQtde() + " <br>";
+				}
+			}
+			if (msg.equals("")){
+				for (ItemFichaTecnica itemFichaTecnica : listIngredientes) {
+					jdbcProduto.movimentaEstoque(itemFichaTecnica.getCodigoProduto(), (itemFichaTecnica.getQtde()* -1));
+				}
+				Date hoje  = new Date();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+				jdbcOrdem.setarEmProducao(numero, sdf.format(hoje));
+				msg = "Ordem de Produção " + numero + " iniciada";
+			}
+			conexao.commit();
+		}catch (BrigaderiaException e) {
+			conexao.rollback();
+			e.printStackTrace();
+			throw e;
+		}catch(SQLException e){
+			conexao.rollback();
+			e.printStackTrace();
+			throw e;
+		}finally {
+			conec.fecharConexao();
+		}
+		return msg;
 	}
 	
 	/*		

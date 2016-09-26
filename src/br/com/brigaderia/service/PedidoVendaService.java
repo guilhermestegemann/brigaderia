@@ -157,10 +157,10 @@ public class PedidoVendaService {
 				
 				if (itemPedidoVenda.getEstoque() < itemPedidoVenda.getQtde()) {
 					if (msg.equals("")){
-						msg = "Estoque insuficiente para os seguinte produtos:.\n";
+						msg = "Estoque insuficiente para os seguinte produtos: \n";
 					}
 					msg += "Código: " + itemPedidoVenda.getCodigoProduto() + " | Descrição: " + itemPedidoVenda.getDescricao()
-						 + " | Estoque: " + itemPedidoVenda.getEstoque() + " | Quantidade: " + itemPedidoVenda.getQtde() + "<br>";	
+						 + " | Estoque: " + itemPedidoVenda.getEstoque() + " | Quantidade: " + itemPedidoVenda.getQtde() + " <br>";	
 				}
 			}
 			if (msg.equals("")) {

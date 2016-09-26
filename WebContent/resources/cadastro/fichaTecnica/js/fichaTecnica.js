@@ -42,7 +42,6 @@ $(document).ready(function(){
 			var qtde = $("#qtdeIngrediente").val();
 			
 			for (var i = 0; i < ingredientes.length; i++) {
-		
 				if ((ingredientes[i].codigo == codigo) && (un == "")) {
 					un = ingredientes[i].un;
 					descricao = ingredientes[i].descricao;
@@ -59,7 +58,7 @@ $(document).ready(function(){
 					  + "</tr>";
 				
 				var ing = {
-						codigo: codigo,
+						codigoProduto: codigo,
 						qtde: qtde
 				} ;
 				ingredienteArray.push(ing);
@@ -123,20 +122,20 @@ $(document).ready(function(){
 				for (var i = 0; i < ingredientesVO.length; i++) {
 					html = "";
 					html =  "<tr class='ingredientes'>"
-						  + "<td>" + ingredientesVO[i].codigo + "</td>"
+						  + "<td>" + ingredientesVO[i].codigoProduto + "</td>"
 						  + "<td>" + ingredientesVO[i].descricao + "</td>"
-						  + "<td>" + ingredientesVO[i].un + "</td>"
+						  + "<td>" + ingredientesVO[i].unEstoque + "</td>"
 						  + "<td id='qtde'>" + ingredientesVO[i].qtde + "</td>"
-						  + "<td><button class='btn btn-primary btn-sm' type='button' onclick='BRIGADERIA.fichaTecnica.editarIngrediente(this"+ "," + ingredientesVO[i].codigo + "," + "\"" + ingredientesVO[i].descricao + "\"" + "," + parseFloat(ingredientesVO[i].qtde) + ")' aria-hidden='true'>Editar</button>"
-						  + "<button class='btn btn-danger btn-sm' type='button' onclick='BRIGADERIA.fichaTecnica.deletarIngrediente(this"+ "," + ingredientesVO[i].codigo + "," + "\"" + ingredientesVO[i].descricao + "\"" + ")' aria-hidden='true'>Excluir</button></td>"
+						  + "<td><button class='btn btn-primary btn-sm' type='button' onclick='BRIGADERIA.fichaTecnica.editarIngrediente(this"+ "," + ingredientesVO[i].codigoProduto + "," + "\"" + ingredientesVO[i].descricao + "\"" + "," + parseFloat(ingredientesVO[i].qtde) + ")' aria-hidden='true'>Editar</button>"
+						  + "<button class='btn btn-danger btn-sm' type='button' onclick='BRIGADERIA.fichaTecnica.deletarIngrediente(this"+ "," + ingredientesVO[i].codigoProduto + "," + "\"" + ingredientesVO[i].descricao + "\"" + ")' aria-hidden='true'>Excluir</button></td>"
 					  + "</tr>";
 					var ing = {
-							codigo: ingredientesVO[i].codigo,
+							codigoProduto: ingredientesVO[i].codigoProduto,
 							qtde: ingredientesVO[i].qtde
 					};
 					ingredienteArray.push(ing);
 					$("#ingredientesFichaTecnica tbody").append(html);
-					$("#ingrediente option[value='"+ ingredientesVO[i].codigo +"']").remove();
+					$("#ingrediente option[value='"+ ingredientesVO[i].codigoProduto +"']").remove();
 				}
 				$("#tipoItemField").text("");
 				$("#tipoItemField").html('<label for="tipoItemInput">*Tipo Item</label><input type="text" class="form-control float" id="tipoItemInput" name="tipoItemInput" readonly/>');
@@ -148,7 +147,6 @@ $(document).ready(function(){
 	}
 	
 	BRIGADERIA.fichaTecnica.editarIngrediente = function (handler, codigo, descricao, qtde) {
-		
 		$("#qtdeIngrediente").val(parseFloat(qtde));
 		
 		for (var i = 0; i < ingredienteArray.length; i++) {
@@ -171,7 +169,7 @@ $(document).ready(function(){
 			callback: function(confirma){
 				if (confirma) {
 					for (var i = 0; i < ingredienteArray.length; i++) {
-						if (ingredienteArray[i].codigo == codigo) {
+						if (ingredienteArray[i].codigoProduto == codigo) {
 							ingredienteArray.splice(i, 1);
 						}
 					}
