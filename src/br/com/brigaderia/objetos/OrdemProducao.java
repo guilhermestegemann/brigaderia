@@ -13,8 +13,8 @@ public class OrdemProducao implements Serializable{
 	
 	
 	private int numero;
-	private long horaInicio;
-	private Date horaFim;
+	private String horaInicio;
+	private String horaFim;
 	private Date duracao;
 	private Date data;
 	private String emProducao;
@@ -34,16 +34,16 @@ public class OrdemProducao implements Serializable{
 	public void setNumero(int numero) {
 		this.numero = numero;
 	}
-	public long getHoraInicio() {
+	public String getHoraInicio() {
 		return horaInicio;
 	}
-	public void setHoraInicio(long l) {
-		this.horaInicio = l;
+	public void setHoraInicio(String date) {
+		this.horaInicio = date;
 	}
-	public Date getHoraFim() {
+	public String getHoraFim() {
 		return horaFim;
 	}
-	public void setHoraFim(Date horaFim) {
+	public void setHoraFim(String horaFim) {
 		this.horaFim = horaFim;
 	}
 	public Date getDuracao() {

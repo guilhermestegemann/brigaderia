@@ -10,6 +10,8 @@ import java.util.List;
 import br.com.brigaderia.bd.conexao.Conexao;
 import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.exception.OrdemEmProducaoException;
+import br.com.brigaderia.exception.OrdemNaoEmProducaoException;
+import br.com.brigaderia.exception.OrdemProducaoCanceladaException;
 import br.com.brigaderia.jdbc.JDBCFichaTecnicaDAO;
 import br.com.brigaderia.jdbc.JDBCOrdemProducaoDAO;
 import br.com.brigaderia.jdbc.JDBCPedidoVendaDAO;
@@ -148,6 +150,9 @@ public class OrdemProducaoService {
 			if (jdbcOrdem.emProducao(numero)) {
 				throw new OrdemEmProducaoException();
 			}
+			if (jdbcOrdem.estaCancelada(numero)) {
+				throw new OrdemProducaoCanceladaException();
+			}
 			List<ItemFichaTecnica> listIngredientes = new ArrayList<>();
 			FichaTecnicaDAO jdbcFichaTecnica = new JDBCFichaTecnicaDAO(conexao);
 			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
@@ -183,6 +188,40 @@ public class OrdemProducaoService {
 			conec.fecharConexao();
 		}
 		return msg;
+	}
+	
+	public void cancelarProducao (int numero) throws SQLException, BrigaderiaException{
+		Conexao conec = new Conexao();
+		Connection conexao = conec.abrirConexao();
+		try {
+			conexao.setAutoCommit(false);
+			OrdemProducaoDAO jdbcOrdem = new JDBCOrdemProducaoDAO(conexao);
+			if (!jdbcOrdem.emProducao(numero)) {
+				throw new OrdemNaoEmProducaoException();
+			}
+			if (jdbcOrdem.estaCancelada(numero)) {
+				throw new OrdemProducaoCanceladaException();
+			}
+			List<ItemFichaTecnica> listIngredientes = new ArrayList<>();
+			FichaTecnicaDAO jdbcFichaTecnica = new JDBCFichaTecnicaDAO(conexao);
+			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
+			listIngredientes = jdbcFichaTecnica.buscarQtdeIngrediente(numero);
+			for (ItemFichaTecnica itemFichaTecnica : listIngredientes) {
+				jdbcProduto.movimentaEstoque(itemFichaTecnica.getCodigoProduto(), itemFichaTecnica.getQtde());
+			}
+			jdbcOrdem.cancelarProducao(numero);
+			conexao.commit();
+		}catch (BrigaderiaException e) {
+			conexao.rollback();
+			e.printStackTrace();
+			throw e;
+		}catch(SQLException e){
+			conexao.rollback();
+			e.printStackTrace();
+			throw e;
+		}finally{
+			conec.fecharConexao();
+		}
 	}
 	
 	/*		

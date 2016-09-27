@@ -47,10 +47,11 @@ $(document).ready(function (){
 				
 				var html = "";
 				var status = "";
-				var showBtnEditar = "Editar";
-				var showBtnProduzir = "Produzir";
-				var tipoBtnProduzir = "success"
+				var textoBtnEditar = "Editar";
+				var textoBtnProduzir = "Produzir";
+				var tipoBtnProduzir = "success";
 				var btnExcluir = "";
+				var btnFinalizar = "disabled='disabled'";
 				for (var i = 0; i < listaDeOrdens.length; i++) {
 					
 					if (listaDeOrdens[i].data != null) {
@@ -59,30 +60,30 @@ $(document).ready(function (){
 					status = "Pendente";
 					if (listaDeOrdens[i].emProducao =="S"){
 						status = "Em Produção";
-						showBtnProduzir = "Cancelar Produção";
-						tipoBtnProduzir = "warning";
+						textoBtnProduzir = "Cancelar Produção";
+						tipoBtnProduzir = "info";
 						btnExcluir = "disabled='disabled'";
+						btnFinalizar = "";
 					}
 					if (listaDeOrdens[i].produzida == "S"){
 						status = "Produzida";
-						showBtnEditar = "Visualizar";
+						textoBtnEditar = "Visualizar";
 						btnExcluir = "disabled='disabled'";
-						showBtnProduzir = "Cancelar";
+						textoBtnProduzir = "Cancelar";
 						tipoBtnProduzir = "warning";
 					}
 					if (listaDeOrdens[i].cancelada == "S"){
 						status = "Cancelada";
 					}
-					debugger;
 					if (listaDeOrdens[i].horaInicio == null){
 						listaDeOrdens[i].horaInicio = "";
 					}else{
-						listaDeOrdens[i].horaInicio = BRIGADERIA.convertData.dateToStr(listaDeOrdens[i].horaInicio);
+						listaDeOrdens[i].horaInicio = BRIGADERIA.convertData.dateToStr(listaDeOrdens[i].horaInicio.substring(0,10)) + " " + listaDeOrdens[i].horaInicio.substring(11,19);
 					}
 					if (listaDeOrdens[i].horaFim == null){
 						listaDeOrdens[i].horaFim = "";
 					}else{
-						listaDeOrdens[i].horaFim = BRIGADERIA.convertData.dateToStr(listaDeOrdens[i].horaFim);
+						listaDeOrdens[i].horaFim = BRIGADERIA.convertData.dateToStr(listaDeOrdens[i].horaFim.substring(0,10)) + " " + listaDeOrdens[i].horaFim.substring(11,19);
 					}
 					if (listaDeOrdens[i].duracao == null){
 						listaDeOrdens[i].duracao = "";
@@ -95,8 +96,9 @@ $(document).ready(function (){
 					  + "<td>" + listaDeOrdens[i].horaFim + "</td>"
 					  + "<td>" + listaDeOrdens[i].duracao + "</td>"
 					  + "<td>" + status + "</td>"
-					  + "<td><button class='btn btn-primary btn-sm' type='button' onclick='BRIGADERIA.gerenciarOrdemProducao.visualizarOrdemProducao(" + listaDeOrdens[i].numero + ","+ "\"" + listaDeOrdens[i].produzida + "\"" + ")' aria-hidden='true'>"+ showBtnEditar + "</button>"
-					     + "<button class='btn btn-"+tipoBtnProduzir+" btn-sm' type='button' onclick='BRIGADERIA.gerenciarOrdemProducao.controlaAcao(" + listaDeOrdens[i].numero + ","+ "\"" + listaDeOrdens[i].emProducao + "\"" + "," + "\"" + listaDeOrdens[i].produzida + "\"" + ")' aria-hidden='true'>"+ showBtnProduzir + "</button>"
+					  + "<td><button class='btn btn-primary btn-sm' type='button' onclick='BRIGADERIA.gerenciarOrdemProducao.visualizarOrdemProducao(" + listaDeOrdens[i].numero + ","+ "\"" + listaDeOrdens[i].produzida + "\"" + ")' aria-hidden='true'>"+ textoBtnEditar + "</button>"
+					     + "<button class='btn btn-"+tipoBtnProduzir+" btn-sm' type='button' onclick='BRIGADERIA.gerenciarOrdemProducao.controlaAcao(" + listaDeOrdens[i].numero + ","+ "\"" + listaDeOrdens[i].emProducao + "\"" + "," + "\"" + listaDeOrdens[i].produzida + "\"" + ")' aria-hidden='true'>"+ textoBtnProduzir + "</button>"
+					     + "<button class='btn btn-success btn-sm' type='button'" + btnFinalizar + "onclick='BRIGADERIA.gerenciarOrdemProducao.finalizarProducao(" + listaDeOrdens[i].numero + ")' aria-hidden='true'>Finalizar Produção</button>"
 					  	 + "<button class='btn btn-danger btn-sm' type='button'" + btnExcluir + "onclick='BRIGADERIA.gerenciarOrdemProducao.deletarOrdemProducao(" + listaDeOrdens[i].numero + ")' aria-hidden='true'>Excluir</button>  </td>"
 					  + "</tr>";
 				}
@@ -165,7 +167,27 @@ $(document).ready(function (){
 				}
 			}
 		});
-		
+	};
+	
+	BRIGADERIA.gerenciarOrdemProducao.finalizarProducao = function(numero){
+		bootbox.confirm({ 
+			size: 'medium',
+			message: "Deseja realmente finalizar a produção?", 
+			callback: function(confirma){
+				if (confirma) {
+					BRIGADERIA.ordemProducaoService.finalizarProducao({
+						numero : numero,
+						success: function (successo) {
+							bootbox.alert(successo);
+							BRIGADERIA.gerenciarOrdemProducao.buscar();
+						},
+						error: function(err) {
+							bootbox.alert(err.responseText);
+						}
+					});
+				}
+			}
+		});
 	};
 	
 	BRIGADERIA.gerenciarOrdemProducao.visualizarOrdemProducao = function(numero, produzida) {

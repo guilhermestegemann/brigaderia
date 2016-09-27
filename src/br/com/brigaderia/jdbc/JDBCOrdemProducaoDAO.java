@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import br.com.brigaderia.exception.ProdutoVinculadoEmOrdemProducaoException;
@@ -107,8 +106,8 @@ public class JDBCOrdemProducaoDAO implements OrdemProducaoDAO {
 			ordem = new OrdemProducao();
 			ordem.setNumero(rs.getInt("NUMERO"));
 			ordem.setData(rs.getDate("DATA"));
-			ordem.setHoraInicio(rs.getDate("INICIO").getTime());
-			ordem.setHoraFim(rs.getDate("FIM"));
+			ordem.setHoraInicio(rs.getString("INICIO"));
+			ordem.setHoraFim(rs.getString("FIM"));
 			ordem.setDuracao(rs.getDate("DURACAO"));
 			ordem.setEmProducao(rs.getString("EMPRODUCAO"));
 			ordem.setProduzida(rs.getString("PRODUZIDA"));
@@ -126,8 +125,8 @@ public class JDBCOrdemProducaoDAO implements OrdemProducaoDAO {
 		ResultSet rs = stmt.executeQuery(comando);
 		while(rs.next()) {
 			ordem.setNumero(rs.getInt("NUMERO"));
-			ordem.setHoraInicio(rs.getLong("INICIO"));
-			ordem.setHoraFim(rs.getDate("FIM"));
+			ordem.setHoraInicio(rs.getString("INICIO"));
+			ordem.setHoraFim(rs.getString("FIM"));
 			ordem.setDuracao(rs.getDate("DURACAO"));
 			ordem.setData(rs.getDate("DATA"));
 			ordem.setEmProducao(rs.getString("EMPRODUCAO"));
@@ -182,9 +181,26 @@ public class JDBCOrdemProducaoDAO implements OrdemProducaoDAO {
 				       + " WHERE ORDEMPRODUCAO.NUMERO = " + numero;
 		PreparedStatement p;
 		p = this.conexao.prepareStatement(comando);
-		//p.setDate(1, new java.sql.Date (dataInicio.getTime()));
-		//System.out.println(dataInicio.getMinutes()););
+		p.executeUpdate();
+	}
+	
+	public boolean estaCancelada (int numero) throws SQLException {
+		String comando = "SELECT * FROM ORDEMPRODUCAO WHERE ORDEMPRODUCAO.CANCELADA = 'S' AND ORDEMPRODUCAO.NUMERO = " + numero + " LIMIT 1";
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(comando);
+		if (rs.next()) {
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public void cancelarProducao (int numero) throws SQLException {
 		
+		String comando = "UPDATE ORDEMPRODUCAO SET ORDEMPRODUCAO.EMPRODUCAO = 'N', ORDEMPRODUCAO.INICIO = NULL"
+				       + " WHERE ORDEMPRODUCAO.NUMERO = " + numero;
+		PreparedStatement p;
+		p = this.conexao.prepareStatement(comando);	
 		p.executeUpdate();
 	}
 	

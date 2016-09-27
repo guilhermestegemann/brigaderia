@@ -94,6 +94,11 @@ $(document).ready(function() {
 		BRIGADERIA.ajax.put(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));
 	};
 	
+	BRIGADERIA.ordemProducaoService.finalizarProducao = function(cfg) {
+		cfg.url = "rest/ordemProducao/finalizarProducao/"+ cfg.numero;
+		BRIGADERIA.ajax.put(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));
+	};
+	
 	BRIGADERIA.ordemProducaoService.cancelarProduzido = function(cfg) {
 		cfg.url = "rest/ordemProducao/cancelarProduzido/"+ cfg.numero;
 		BRIGADERIA.ajax.put(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));

@@ -1,7 +1,6 @@
 package br.com.brigaderia.jdbcinterface;
 
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 import br.com.brigaderia.exception.ProdutoVinculadoEmOrdemProducaoException;
@@ -19,5 +18,7 @@ public interface OrdemProducaoDAO {
 	public void deletarProdutos(int numero) throws SQLException;
 	public boolean emProducao (int numero) throws SQLException;
 	public void setarEmProducao (int numero, String dataInicio) throws SQLException;
+	public boolean estaCancelada (int numero) throws SQLException;
+	public void cancelarProducao (int numero) throws SQLException;
 
 }
