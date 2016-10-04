@@ -19,7 +19,6 @@ public class OrdemProducao implements Serializable{
 	private Date data;
 	private String emProducao;
 	private String produzida;
-	private String cancelada;
 	private List<ItemOrdemProducao> itemOrdemProducao;
 	
 	public List<ItemOrdemProducao> getItemOrdemProducao() {
@@ -70,13 +69,4 @@ public class OrdemProducao implements Serializable{
 	public void setProduzida(String produzida) {
 		this.produzida = produzida;
 	}
-	public String getCancelada() {
-		return cancelada;
-	}
-	public void setCancelada(String cancelada) {
-		this.cancelada = cancelada;
-	}
-	
-	
-
 }

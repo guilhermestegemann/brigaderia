@@ -18,4 +18,5 @@ public interface FichaTecnicaDAO {
 	public void countIngredientes(int codigo) throws SQLException, IngredienteVinculadoEmFichaTecnicaException;
 	public void atualizarCustoFichaTecnica(int codIngrediente) throws SQLException;
 	public List<ItemFichaTecnica> buscarQtdeIngrediente (int numOrdem) throws SQLException;
+	public float buscarCustoPeloProduto(int codigoProduto) throws SQLException;
 }

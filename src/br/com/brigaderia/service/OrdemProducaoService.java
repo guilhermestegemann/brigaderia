@@ -11,7 +11,7 @@ import br.com.brigaderia.bd.conexao.Conexao;
 import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.exception.OrdemEmProducaoException;
 import br.com.brigaderia.exception.OrdemNaoEmProducaoException;
-import br.com.brigaderia.exception.OrdemProducaoCanceladaException;
+import br.com.brigaderia.exception.OrdemProduzidaException;
 import br.com.brigaderia.jdbc.JDBCFichaTecnicaDAO;
 import br.com.brigaderia.jdbc.JDBCOrdemProducaoDAO;
 import br.com.brigaderia.jdbc.JDBCPedidoVendaDAO;
@@ -140,7 +140,7 @@ public class OrdemProducaoService {
 		}
 	}
 	
-	public String produzir (int numero) throws SQLException, BrigaderiaException {
+	public String iniciarProducao (int numero) throws SQLException, BrigaderiaException {
 		Conexao conec = new Conexao();
 		Connection conexao = conec.abrirConexao();
 		String msg = "";
@@ -149,9 +149,6 @@ public class OrdemProducaoService {
 			OrdemProducaoDAO jdbcOrdem = new JDBCOrdemProducaoDAO(conexao);
 			if (jdbcOrdem.emProducao(numero)) {
 				throw new OrdemEmProducaoException();
-			}
-			if (jdbcOrdem.estaCancelada(numero)) {
-				throw new OrdemProducaoCanceladaException();
 			}
 			List<ItemFichaTecnica> listIngredientes = new ArrayList<>();
 			FichaTecnicaDAO jdbcFichaTecnica = new JDBCFichaTecnicaDAO(conexao);
@@ -199,9 +196,6 @@ public class OrdemProducaoService {
 			if (!jdbcOrdem.emProducao(numero)) {
 				throw new OrdemNaoEmProducaoException();
 			}
-			if (jdbcOrdem.estaCancelada(numero)) {
-				throw new OrdemProducaoCanceladaException();
-			}
 			List<ItemFichaTecnica> listIngredientes = new ArrayList<>();
 			FichaTecnicaDAO jdbcFichaTecnica = new JDBCFichaTecnicaDAO(conexao);
 			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
@@ -210,6 +204,56 @@ public class OrdemProducaoService {
 				jdbcProduto.movimentaEstoque(itemFichaTecnica.getCodigoProduto(), itemFichaTecnica.getQtde());
 			}
 			jdbcOrdem.cancelarProducao(numero);
+			conexao.commit();
+		}catch (BrigaderiaException e) {
+			conexao.rollback();
+			e.printStackTrace();
+			throw e;
+		}catch(SQLException e){
+			conexao.rollback();
+			e.printStackTrace();
+			throw e;
+		}finally{
+			conec.fecharConexao();
+		}
+	}
+	
+	public void finalizarProducao (int numero) throws SQLException, BrigaderiaException {
+		Conexao conec = new Conexao();
+		Connection conexao = conec.abrirConexao();
+		try{
+			conexao.setAutoCommit(false);
+			OrdemProducaoDAO jdbcOrdem = new JDBCOrdemProducaoDAO(conexao);
+			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
+			FichaTecnicaDAO jdbcFichatecnica = new JDBCFichaTecnicaDAO(conexao);
+			if (!jdbcOrdem.emProducao(numero)) {
+				throw new OrdemNaoEmProducaoException();
+			}
+			if(jdbcOrdem.produzida(numero)) {
+				throw new OrdemProduzidaException();
+			}
+			
+			List<ItemOrdemProducao> listProdutos = new ArrayList<>();
+			listProdutos = jdbcOrdem.buscarItensOrdem(numero);
+			float custo;
+			float novoCusto = 0;
+			for (ItemOrdemProducao itemOrdemProducao : listProdutos) {
+				custo = jdbcFichatecnica.buscarCustoPeloProduto(itemOrdemProducao.getCodigoProduto());
+				if (itemOrdemProducao.getEstoque() <= 0) {
+					if(custo > 0) {
+						novoCusto = custo;	
+					}
+				}else{
+					novoCusto =((itemOrdemProducao.getValorCusto() * itemOrdemProducao.getEstoque()) + (custo * itemOrdemProducao.getQtde()))/(itemOrdemProducao.getEstoque() + itemOrdemProducao.getQtde());
+					
+				}
+				jdbcProduto.atualizarCusto(itemOrdemProducao.getCodigoProduto(), novoCusto);
+				jdbcProduto.movimentaEstoque(itemOrdemProducao.getCodigoProduto(), itemOrdemProducao.getQtde());
+			}
+			Date hoje  = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			jdbcOrdem.setarProduzida(numero, sdf.format(hoje));
+			jdbcOrdem.setarNaoEmProducao(numero);
 			conexao.commit();
 		}catch (BrigaderiaException e) {
 			conexao.rollback();

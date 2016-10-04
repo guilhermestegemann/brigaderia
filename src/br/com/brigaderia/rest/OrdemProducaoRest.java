@@ -122,12 +122,12 @@ public class OrdemProducaoRest extends UtilRest{
 	}
 	
 	@PUT
-	@Path("/produzir/{numero}")
+	@Path("/iniciarProducao/{numero}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public Response produzir(@PathParam("numero")int numero) throws BrigaderiaException {
+	public Response iniciarProducao(@PathParam("numero")int numero) throws BrigaderiaException {
 		try {
 			OrdemProducaoService service = new OrdemProducaoService();
-			return buildResponse(service.produzir(numero));
+			return buildResponse(service.iniciarProducao(numero));
 		}catch (BrigaderiaException e){
 			return buildErrorResponse(e.getMessage());
 		}catch(SQLException e){
@@ -137,13 +137,29 @@ public class OrdemProducaoRest extends UtilRest{
 	}
 	
 	@PUT
-	@Path("/cancelarProducao/{numero}")
+	@Path("/cancelarInicio/{numero}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	public Response cancelarProducao(@PathParam("numero")int numero) throws BrigaderiaException {
 		try {
 			OrdemProducaoService service = new OrdemProducaoService();
 			service.cancelarProducao(numero);
-			return buildResponse("Produção cancelada com sucesso");
+			return buildResponse("Inicio de produção cancelada com sucesso");
+		}catch (BrigaderiaException e){
+			return buildErrorResponse(e.getMessage());
+		}catch(SQLException e){
+			e.printStackTrace();
+			return buildErrorResponse(ERROINESPERADO);
+		}
+	}
+	
+	@PUT
+	@Path("/finalizarProducao/{numero}")
+	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	public Response finalizarProducao(@PathParam("numero")int numero) throws BrigaderiaException {
+		try {
+			OrdemProducaoService service = new OrdemProducaoService();
+			service.finalizarProducao(numero);
+			return buildResponse("Produção finalizada com sucesso");
 		}catch (BrigaderiaException e){
 			return buildErrorResponse(e.getMessage());
 		}catch(SQLException e){

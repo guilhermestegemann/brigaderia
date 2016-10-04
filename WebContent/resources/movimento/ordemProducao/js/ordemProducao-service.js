@@ -52,18 +52,13 @@ $(document).ready(function() {
 		};
 		BRIGADERIA.ajax.post(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));
 	};
-	/*		
-	BRIGADERIA.ordemProducaoService.listar = function(cfg){
-		cfg.url = "rest/perda/buscarPerda/" + cfg.dataInicio + "/" + cfg.dataFim;
-		BRIGADERIA.ajax.get(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));
-	};
-		
-	BRIGADERIA.ordemProducaoService.deletar = function(cfg) {
-		cfg.url = "rest/perda/deletar/" + cfg.numero;
+	
+	BRIGADERIA.ordemProducaoService.deletarOrdem = function(cfg) {
+		cfg.url = "rest/ordemProducao/deletarOrdem/" + cfg.numero;
 		
 		BRIGADERIA.ajax.del(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));
 	};
-	*/
+	
 	BRIGADERIA.ordemProducaoService.buscarOrdemPeloNumero = function(cfg) {
 		cfg.url = "rest/ordemProducao/buscarOrdemPeloNumero/" + cfg.numero;
 		BRIGADERIA.ajax.get(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));
@@ -84,23 +79,23 @@ $(document).ready(function() {
 		BRIGADERIA.ajax.put(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));
 	};
 	
-	BRIGADERIA.ordemProducaoService.produzir = function(cfg) {
-		cfg.url = "rest/ordemProducao/produzir/"+ cfg.numero;
+	BRIGADERIA.ordemProducaoService.iniciarProducao = function(cfg) {
+		cfg.url = "rest/ordemProducao/iniciarProducao/"+ cfg.numero;
 		BRIGADERIA.ajax.put(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));
 	};
 	
-	BRIGADERIA.ordemProducaoService.cancelarProducao = function(cfg) {
-		cfg.url = "rest/ordemProducao/cancelarProducao/"+ cfg.numero;
+	BRIGADERIA.ordemProducaoService.cancelarInicio = function(cfg) {
+		cfg.url = "rest/ordemProducao/cancelarInicio/"+ cfg.numero;
+		BRIGADERIA.ajax.put(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));
+	};
+	
+	BRIGADERIA.ordemProducaoService.cancelarFinalizada = function(cfg) {
+		cfg.url = "rest/ordemProducao/cancelarFinalizada/"+ cfg.numero;
 		BRIGADERIA.ajax.put(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));
 	};
 	
 	BRIGADERIA.ordemProducaoService.finalizarProducao = function(cfg) {
 		cfg.url = "rest/ordemProducao/finalizarProducao/"+ cfg.numero;
-		BRIGADERIA.ajax.put(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));
-	};
-	
-	BRIGADERIA.ordemProducaoService.cancelarProduzido = function(cfg) {
-		cfg.url = "rest/ordemProducao/cancelarProduzido/"+ cfg.numero;
 		BRIGADERIA.ajax.put(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));
 	};
 	

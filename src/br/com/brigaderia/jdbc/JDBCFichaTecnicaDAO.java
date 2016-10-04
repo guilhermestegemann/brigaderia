@@ -189,5 +189,16 @@ public class JDBCFichaTecnicaDAO implements FichaTecnicaDAO{
 		return listItemFichaTecnica;
 	}
 	
+	public float buscarCustoPeloProduto(int codigoProduto) throws SQLException{ 
+		String comando = "SELECT FICHATECNICA.TOTALCUSTO FROM FICHATECNICA WHERE FICHATECNICA.PRODUTO = " + codigoProduto + " LIMIT 1";
+		float custo = 0;
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(comando);
+		while(rs.next()) {
+			custo = rs.getFloat("TOTALCUSTO");
+		}
+		return custo;
+	}
+	
 	
 }

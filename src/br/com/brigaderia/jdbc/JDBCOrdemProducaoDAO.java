@@ -34,7 +34,7 @@ public class JDBCOrdemProducaoDAO implements OrdemProducaoDAO {
 	
 	public int adicionarOrdemProducao(OrdemProducao ordemProducao) throws SQLException {
 		
-		String comando = "INSERT INTO ORDEMPRODUCAO (DATA, EMPRODUCAO, PRODUZIDA, CANCELADA) VALUES (?,?,?,?)";
+		String comando = "INSERT INTO ORDEMPRODUCAO (DATA, EMPRODUCAO, PRODUZIDA) VALUES (?,?,?)";
 		PreparedStatement p;
 		
 
@@ -42,7 +42,6 @@ public class JDBCOrdemProducaoDAO implements OrdemProducaoDAO {
 		p.setDate(1, new java.sql.Date(ordemProducao.getData().getTime()));
 		p.setString(2, "N");
 		p.setString(3, "N");
-		p.setString(4, "N");
 		p.execute();
 		ResultSet generatedKeys = p.getGeneratedKeys();
         if (generatedKeys.next()) {
@@ -73,16 +72,13 @@ public class JDBCOrdemProducaoDAO implements OrdemProducaoDAO {
 		String condicao = "";
 		switch (status) {
 		case "pendente":
-			condicao = "WHERE EMPRODUCAO = 'N' AND PRODUZIDA = 'N' AND CANCELADA = 'N' ";
+			condicao = "WHERE EMPRODUCAO = 'N' AND PRODUZIDA = 'N' ";
 			break;
 		case "emProducao":
 			condicao = "WHERE ORDEMPRODUCAO.EMPRODUCAO = 'S' ";
 			break;
 		case "produzida":
 			condicao = "WHERE ORDEMPRODUCAO.PRODUZIDA = 'S' ";
-			break;
-		case "cancelada": 
-			condicao = "WHERE ORDEMPRODUCAO.CANCELADA = 'S' ";
 			break;
 		default:
 			break;
@@ -111,7 +107,6 @@ public class JDBCOrdemProducaoDAO implements OrdemProducaoDAO {
 			ordem.setDuracao(rs.getDate("DURACAO"));
 			ordem.setEmProducao(rs.getString("EMPRODUCAO"));
 			ordem.setProduzida(rs.getString("PRODUZIDA"));
-			ordem.setCancelada(rs.getString("CANCELADA"));
 			listOrdem.add(ordem);
 		}
 		return listOrdem;
@@ -131,7 +126,6 @@ public class JDBCOrdemProducaoDAO implements OrdemProducaoDAO {
 			ordem.setData(rs.getDate("DATA"));
 			ordem.setEmProducao(rs.getString("EMPRODUCAO"));
 			ordem.setProduzida(rs.getString("PRODUZIDA"));
-			ordem.setCancelada(rs.getString("CANCELADA"));
 		}
 		return ordem;
 	}
@@ -139,7 +133,7 @@ public class JDBCOrdemProducaoDAO implements OrdemProducaoDAO {
 	public List<ItemOrdemProducao> buscarItensOrdem(int numero) throws SQLException  {
 		
 		List<ItemOrdemProducao> listItemOrdem = new ArrayList<ItemOrdemProducao>();
-		String comando = "SELECT IO.PRODUTO, P.DESCRICAO, P.UNESTOQUE, P.ESTOQUE, IO.QTDE "
+		String comando = "SELECT IO.PRODUTO, P.DESCRICAO, P.UNESTOQUE, P.ESTOQUE, P.VALORCUSTO, IO.QTDE "
 				       + "FROM ITEMORDEMPRODUCAO IO "
 				       + "INNER JOIN PRODUTO P ON P.CODIGO = IO.PRODUTO "
 				       + "WHERE IO.ORDEMPRODUCAO = " + numero;
@@ -152,6 +146,7 @@ public class JDBCOrdemProducaoDAO implements OrdemProducaoDAO {
 			itemOrdem.setDescricao(rs.getString("DESCRICAO"));
 			itemOrdem.setUnEstoque(rs.getString("UNESTOQUE"));
 			itemOrdem.setEstoque(rs.getFloat("ESTOQUE"));
+			itemOrdem.setValorCusto(rs.getFloat("VALORCUSTO"));
 			itemOrdem.setQtde(rs.getFloat("QTDE"));
 			listItemOrdem.add(itemOrdem);
 		}
@@ -175,6 +170,17 @@ public class JDBCOrdemProducaoDAO implements OrdemProducaoDAO {
 		}
 	}
 	
+	public boolean produzida (int numero) throws SQLException {
+		String comando = "SELECT * FROM ORDEMPRODUCAO WHERE ORDEMPRODUCAO.PRODUZIDA = 'S' AND ORDEMPRODUCAO.NUMERO = " + numero + " LIMIT 1";
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(comando);
+		if (rs.next()) {
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 	public void setarEmProducao (int numero, String dataInicio) throws SQLException {
 		
 		String comando = "UPDATE ORDEMPRODUCAO SET ORDEMPRODUCAO.EMPRODUCAO = 'S', ORDEMPRODUCAO.INICIO = '" + dataInicio +"'"
@@ -184,15 +190,21 @@ public class JDBCOrdemProducaoDAO implements OrdemProducaoDAO {
 		p.executeUpdate();
 	}
 	
-	public boolean estaCancelada (int numero) throws SQLException {
-		String comando = "SELECT * FROM ORDEMPRODUCAO WHERE ORDEMPRODUCAO.CANCELADA = 'S' AND ORDEMPRODUCAO.NUMERO = " + numero + " LIMIT 1";
-		Statement stmt = conexao.createStatement();
-		ResultSet rs = stmt.executeQuery(comando);
-		if (rs.next()) {
-			return true;
-		}else{
-			return false;
-		}
+	public void setarNaoEmProducao (int numero) throws SQLException {
+		
+		String comando = "UPDATE ORDEMPRODUCAO SET ORDEMPRODUCAO.EMPRODUCAO = 'N' WHERE ORDEMPRODUCAO.NUMERO = " + numero;
+		PreparedStatement p;
+		p = this.conexao.prepareStatement(comando);
+		p.executeUpdate();
+	}
+	
+	public void setarProduzida (int numero, String dataInicio) throws SQLException {
+		
+		String comando = "UPDATE ORDEMPRODUCAO SET ORDEMPRODUCAO.PRODUZIDA = 'S', ORDEMPRODUCAO.FIM = '" + dataInicio +"'"
+				       + " WHERE ORDEMPRODUCAO.NUMERO = " + numero;
+		PreparedStatement p;
+		p = this.conexao.prepareStatement(comando);
+		p.executeUpdate();
 	}
 	
 	public void cancelarProducao (int numero) throws SQLException {

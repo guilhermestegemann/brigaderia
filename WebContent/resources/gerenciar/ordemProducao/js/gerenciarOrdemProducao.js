@@ -47,34 +47,51 @@ $(document).ready(function (){
 				
 				var html = "";
 				var status = "";
-				var textoBtnEditar = "Editar";
-				var textoBtnProduzir = "Produzir";
-				var tipoBtnProduzir = "success";
+				var btnEditar = "";
+				var btnIniciarProducao = "";
+				var btnFinalizar = "";
+				var btnCancelarInicio = "";
+				var btnCancelarFinalizada = "";
 				var btnExcluir = "";
-				var btnFinalizar = "disabled='disabled'";
+				var btnVisualizar = "";
+				
 				for (var i = 0; i < listaDeOrdens.length; i++) {
+					//inicia botões vazios
+					btnEditar = "";
+					btnIniciarProducao = "";
+					btnFinalizar = "";
+					btnCancelarInicio = "";
+					var btnCancelarFinalizada = "";
+					btnExcluir = "";
+					btnVisualizar = "";
 					
 					if (listaDeOrdens[i].data != null) {
 						listaDeOrdens[i].data = BRIGADERIA.convertData.dateToStr(listaDeOrdens[i].data);
 					}
+					
 					status = "Pendente";
+					btnEditar = "<button class='btn btn-primary btn-sm' type='button' onclick='BRIGADERIA.gerenciarOrdemProducao.visualizarOrdemProducao(" + listaDeOrdens[i].numero + ","+ "\"" + listaDeOrdens[i].produzida + "\"" + ")' aria-hidden='true'>Editar</button>";
+					btnIniciarProducao = "<button class='btn btn-success btn-sm' type='button' onclick='BRIGADERIA.gerenciarOrdemProducao.iniciarProducao(" + listaDeOrdens[i].numero + ")' aria-hidden='true'>Iniciar Produção</button>";
+					btnExcluir = "<button class='btn btn-danger btn-sm' type='button' onclick='BRIGADERIA.gerenciarOrdemProducao.deletarOrdemProducao(" + listaDeOrdens[i].numero + ")' aria-hidden='true'>Excluir</button>";
+					
 					if (listaDeOrdens[i].emProducao =="S"){
 						status = "Em Produção";
-						textoBtnProduzir = "Cancelar Produção";
-						tipoBtnProduzir = "info";
-						btnExcluir = "disabled='disabled'";
-						btnFinalizar = "";
+						btnExcluir = "";
+						btnIniciarProducao = "";
+						btnFinalizar = "<button class='btn btn-success btn-sm' type='button' onclick='BRIGADERIA.gerenciarOrdemProducao.finalizarProducao(" + listaDeOrdens[i].numero + ")' aria-hidden='true'>Finalizar Produção</button>";
+						btnCancelarInicio = "<button class='btn btn-warning btn-sm' type='button' onclick='BRIGADERIA.gerenciarOrdemProducao.cancelarInicio(" + listaDeOrdens[i].numero + ")' aria-hidden='true'>Cancelar Início</button>"; 
 					}
 					if (listaDeOrdens[i].produzida == "S"){
 						status = "Produzida";
-						textoBtnEditar = "Visualizar";
-						btnExcluir = "disabled='disabled'";
-						textoBtnProduzir = "Cancelar";
-						tipoBtnProduzir = "warning";
+						btnExcluir = "";
+						btnEditar = "";
+						btnProduzir = "";
+						btnCancelarInicio = "";
+						btnIniciarProducao = "";
+						btnCancelarFinalizada = "<button class='btn btn-warning btn-sm' type='button' onclick='BRIGADERIA.gerenciarOrdemProducao.cancelarFinalizada(" + listaDeOrdens[i].numero + ")' aria-hidden='true'>Cancelar</button>";
+						btnVisualizar = "<button class='btn btn-primary btn-sm' type='button' onclick='BRIGADERIA.gerenciarOrdemProducao.visualizarOrdemProducao(" + listaDeOrdens[i].numero + ","+ "\"" + listaDeOrdens[i].produzida + "\"" + ")' aria-hidden='true'>Visualizar</button>";
 					}
-					if (listaDeOrdens[i].cancelada == "S"){
-						status = "Cancelada";
-					}
+					
 					if (listaDeOrdens[i].horaInicio == null){
 						listaDeOrdens[i].horaInicio = "";
 					}else{
@@ -96,13 +113,17 @@ $(document).ready(function (){
 					  + "<td>" + listaDeOrdens[i].horaFim + "</td>"
 					  + "<td>" + listaDeOrdens[i].duracao + "</td>"
 					  + "<td>" + status + "</td>"
-					  + "<td><button class='btn btn-primary btn-sm' type='button' onclick='BRIGADERIA.gerenciarOrdemProducao.visualizarOrdemProducao(" + listaDeOrdens[i].numero + ","+ "\"" + listaDeOrdens[i].produzida + "\"" + ")' aria-hidden='true'>"+ textoBtnEditar + "</button>"
-					     + "<button class='btn btn-"+tipoBtnProduzir+" btn-sm' type='button' onclick='BRIGADERIA.gerenciarOrdemProducao.controlaAcao(" + listaDeOrdens[i].numero + ","+ "\"" + listaDeOrdens[i].emProducao + "\"" + "," + "\"" + listaDeOrdens[i].produzida + "\"" + ")' aria-hidden='true'>"+ textoBtnProduzir + "</button>"
-					     + "<button class='btn btn-success btn-sm' type='button'" + btnFinalizar + "onclick='BRIGADERIA.gerenciarOrdemProducao.finalizarProducao(" + listaDeOrdens[i].numero + ")' aria-hidden='true'>Finalizar Produção</button>"
-					  	 + "<button class='btn btn-danger btn-sm' type='button'" + btnExcluir + "onclick='BRIGADERIA.gerenciarOrdemProducao.deletarOrdemProducao(" + listaDeOrdens[i].numero + ")' aria-hidden='true'>Excluir</button>  </td>"
+					  + "<td>"
+					  	 + btnEditar
+					  	 + btnVisualizar
+					     + btnIniciarProducao
+					     + btnFinalizar
+					     + btnCancelarInicio
+					     + btnCancelarFinalizada
+					     + btnExcluir
+					  + "</td>"
 					  + "</tr>";
 				}
-				
 				$("#resultadoOrdemProducao tbody").html(html);
 			
 			},
@@ -112,58 +133,85 @@ $(document).ready(function (){
 		});		   		
 	};
 	
-	BRIGADERIA.gerenciarOrdemProducao.controlaAcao = function(numero, emProducao, produzida){
-		var acao = "";
-		var confirmacao = "";
-		if ((emProducao == "N") && (produzida == "N")){
-			acao = "produzir";
-			confirmacao = "Deseja realmente iniciar a produção?";
-		}else if (emProducao == "S") {
-			acao = "cancelarProducao";
-			confirmacao = "Deseja realmente cancelar a produção iniciada?";
-		}else {
-			acao = "cancelarProduzido";
-			confirmacao = "Deseja realmente cancelar a produção concluída?";
-		}
+	BRIGADERIA.gerenciarOrdemProducao.iniciarProducao = function(numero){
 		bootbox.confirm({ 
 			size: 'medium',
-			message: confirmacao, 
+			message: "Deseja realmente iniciar a produção?", 
 			callback: function(confirma){
 				if (confirma) {
-					if (acao == "produzir") {
-						BRIGADERIA.ordemProducaoService.produzir({
-							numero : numero,
-							success: function (successo) {
-								bootbox.alert(successo.replace("\n","<br>"));
-								BRIGADERIA.gerenciarOrdemProducao.buscar();
-							},
-							error: function(err) {
-								bootbox.alert(err.responseText);
-							}
-						});
-					}else if (acao == "cancelarProducao"){
-						BRIGADERIA.ordemProducaoService.cancelarProducao({
-							numero : numero,
-							success: function (successo) {
-								bootbox.alert(successo);
-								BRIGADERIA.gerenciarOrdemProducao.buscar();
-							},
-							error: function(err) {
-								bootbox.alert(err.responseText);
-							}
-						});
-					}else {
-						BRIGADERIA.ordemProducaoService.cancelarProduzido({
-							numero : numero,
-							success: function (successo) {
-								bootbox.alert(successo);
-								BRIGADERIA.gerenciarOrdemProducao.buscar();
-							},
-							error: function(err) {
-								bootbox.alert(err.responseText);
-							}
-						});
-					}
+					BRIGADERIA.ordemProducaoService.iniciarProducao({
+						numero : numero,
+						success: function (successo) {
+							bootbox.alert(successo);
+							BRIGADERIA.gerenciarOrdemProducao.buscar();
+						},
+						error: function(err) {
+							bootbox.alert(err.responseText);
+						}
+					});
+				}
+			}
+		});
+	};
+	
+	BRIGADERIA.gerenciarOrdemProducao.cancelarInicio = function(numero){
+		bootbox.confirm({ 
+			size: 'medium',
+			message: "Deseja realmente cancelar o inicio da produção?", 
+			callback: function(confirma){
+				if (confirma) {
+					BRIGADERIA.ordemProducaoService.cancelarInicio({
+						numero : numero,
+						success: function (successo) {
+							bootbox.alert(successo);
+							BRIGADERIA.gerenciarOrdemProducao.buscar();
+						},
+						error: function(err) {
+							bootbox.alert(err.responseText);
+						}
+					});
+				}
+			}
+		});
+	};
+	
+	BRIGADERIA.gerenciarOrdemProducao.deletarOrdemProducao = function(numero){
+		bootbox.confirm({ 
+			size: 'medium',
+			message: "Deseja realmente deletar a ordem de produção?", 
+			callback: function(confirma){
+				if (confirma) {
+					BRIGADERIA.ordemProducaoService.deletarOrdem({
+						numero : numero,
+						success: function (successo) {
+							bootbox.alert(successo);
+							BRIGADERIA.gerenciarOrdemProducao.buscar();
+						},
+						error: function(err) {
+							bootbox.alert(err.responseText);
+						}
+					});
+				}
+			}
+		});
+	};
+	
+	BRIGADERIA.gerenciarOrdemProducao.cancelarFinalizada = function(numero){
+		bootbox.confirm({ 
+			size: 'medium',
+			message: "Deseja realmente cancelar a produção?", 
+			callback: function(confirma){
+				if (confirma) {
+					BRIGADERIA.ordemProducaoService.cancelarFinalizada({
+						numero : numero,
+						success: function (successo) {
+							bootbox.alert(successo);
+							BRIGADERIA.gerenciarOrdemProducao.buscar();
+						},
+						error: function(err) {
+							bootbox.alert(err.responseText);
+						}
+					});
 				}
 			}
 		});

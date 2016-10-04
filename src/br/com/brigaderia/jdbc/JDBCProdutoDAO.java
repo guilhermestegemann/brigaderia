@@ -168,6 +168,15 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 		p.execute();
 	}
 	
+public void atualizarCusto(int codProduto, float custo) throws SQLException  {
+		
+		String update = "UPDATE PRODUTO SET PRODUTO.VALORCUSTO = " + custo
+					  + " WHERE PRODUTO.CODIGO = " + codProduto;		
+		
+		PreparedStatement p = this.conexao.prepareStatement(update);
+		p.execute();
+	}
+	
 	public void movimentaEstoque (int codProduto, float qtde) throws SQLException  {
 		String update = "UPDATE PRODUTO SET PRODUTO.ESTOQUE = ESTOQUE + " + qtde + " WHERE PRODUTO.CODIGO = " + codProduto;
 
