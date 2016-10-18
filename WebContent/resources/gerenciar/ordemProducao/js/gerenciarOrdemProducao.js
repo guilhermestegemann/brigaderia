@@ -199,7 +199,7 @@ $(document).ready(function (){
 	BRIGADERIA.gerenciarOrdemProducao.cancelarFinalizada = function(numero){
 		bootbox.confirm({ 
 			size: 'medium',
-			message: "Deseja realmente cancelar a produção?", 
+			message: "Ao cancelar a produção já finalizada, o produto será removido do estoque e a ordem ficará em produção novamente. Deseja prosseguir?", 
 			callback: function(confirma){
 				if (confirma) {
 					BRIGADERIA.ordemProducaoService.cancelarFinalizada({

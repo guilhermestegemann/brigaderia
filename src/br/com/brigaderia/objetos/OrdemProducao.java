@@ -15,7 +15,7 @@ public class OrdemProducao implements Serializable{
 	private int numero;
 	private String horaInicio;
 	private String horaFim;
-	private Date duracao;
+	private String duracao;
 	private Date data;
 	private String emProducao;
 	private String produzida;
@@ -45,10 +45,10 @@ public class OrdemProducao implements Serializable{
 	public void setHoraFim(String horaFim) {
 		this.horaFim = horaFim;
 	}
-	public Date getDuracao() {
+	public String getDuracao() {
 		return duracao;
 	}
-	public void setDuracao(Date duracao) {
+	public void setDuracao(String duracao) {
 		this.duracao = duracao;
 	}
 	public Date getData() {

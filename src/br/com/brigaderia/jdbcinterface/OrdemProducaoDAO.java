@@ -19,8 +19,9 @@ public interface OrdemProducaoDAO {
 	public boolean emProducao (int numero) throws SQLException;
 	public boolean produzida (int numero) throws SQLException;
 	public void setarEmProducao (int numero, String dataInicio) throws SQLException;
-	public void setarNaoEmProducao (int numero) throws SQLException;
 	public void setarProduzida (int numero, String dataInicio) throws SQLException;
 	public void cancelarProducao (int numero) throws SQLException;
+	public void cancelarProduzida (int numero) throws SQLException;
+	public void deletarOrdem (int numero) throws SQLException;
 
 }

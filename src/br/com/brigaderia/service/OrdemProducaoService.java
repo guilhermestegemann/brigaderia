@@ -11,6 +11,7 @@ import br.com.brigaderia.bd.conexao.Conexao;
 import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.exception.OrdemEmProducaoException;
 import br.com.brigaderia.exception.OrdemNaoEmProducaoException;
+import br.com.brigaderia.exception.OrdemNaoProduzidaException;
 import br.com.brigaderia.exception.OrdemProduzidaException;
 import br.com.brigaderia.jdbc.JDBCFichaTecnicaDAO;
 import br.com.brigaderia.jdbc.JDBCOrdemProducaoDAO;
@@ -253,7 +254,6 @@ public class OrdemProducaoService {
 			Date hoje  = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			jdbcOrdem.setarProduzida(numero, sdf.format(hoje));
-			jdbcOrdem.setarNaoEmProducao(numero);
 			conexao.commit();
 		}catch (BrigaderiaException e) {
 			conexao.rollback();
@@ -268,32 +268,61 @@ public class OrdemProducaoService {
 		}
 	}
 	
-	/*		
-	public void deletarPerda (int numero) throws SQLException {
+	
+	
+	public void cancelarFinalizada (int numero) throws SQLException, BrigaderiaException{
+		Conexao conec = new Conexao();
+		Connection conexao = conec.abrirConexao();
+		try{
+			conexao.setAutoCommit(false);
+			OrdemProducaoDAO jdbcOrdem = new JDBCOrdemProducaoDAO(conexao);
+			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
+			if(!jdbcOrdem.produzida(numero)){
+				throw new OrdemNaoProduzidaException();
+			}
+			List<ItemOrdemProducao> listProdutos = new ArrayList<>();
+			listProdutos = jdbcOrdem.buscarItensOrdem(numero);
+			for (ItemOrdemProducao itemOrdemProducao : listProdutos) {
+				jdbcProduto.movimentaEstoque(itemOrdemProducao.getCodigoProduto(), (itemOrdemProducao.getQtde()* -1));
+			}
+			jdbcOrdem.cancelarProduzida(numero);
+			conexao.commit();
+		}catch (BrigaderiaException e){
+			conexao.rollback();
+			e.printStackTrace();
+			throw e;
+		}catch(SQLException e){
+			conexao.rollback();
+			e.printStackTrace();
+		}finally{
+			conec.fecharConexao();
+		}
+	}
+	
+			
+	public void deletarOrdem (int numero) throws SQLException, BrigaderiaException {
 		
 		Conexao conec = new Conexao();
 		Connection conexao = conec.abrirConexao();
 		try {
-			conexao.setAutoCommit(false);
-			ProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
-			PerdaDAO jdbcPerda = new JDBCPerdaDAO(conexao);
-			List<ItemPerda> listItemPerda = new ArrayList<ItemPerda>();
-			listItemPerda = jdbcPerda.buscarItensPerda(numero);
-			
-			
-			for (ItemPerda itemPerda : listItemPerda) {
-				jdbcProduto.movimentaEstoque(itemPerda.getCodigoProduto(), itemPerda.getQtde());
+			OrdemProducaoDAO jdbcOrdem = new JDBCOrdemProducaoDAO(conexao);
+			if (jdbcOrdem.emProducao(numero)){
+				throw new OrdemEmProducaoException();
 			}
-			jdbcPerda.deletarPerda(numero);	
-			conexao.commit();
+			if (jdbcOrdem.produzida(numero)){
+				throw new OrdemProduzidaException();
+			}
+			jdbcOrdem.deletarOrdem(numero);	
+		}catch(BrigaderiaException e){
+			e.printStackTrace();
+			throw e;
 		}catch(SQLException e){
 			e.printStackTrace();
-			conexao.rollback();
 			throw e;
 		}
 		finally {
 			conec.fecharConexao();
 		}
 	}
-	*/
+	
 }

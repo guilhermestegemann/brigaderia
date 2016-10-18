@@ -168,32 +168,39 @@ public class OrdemProducaoRest extends UtilRest{
 		}
 	}
 	
-/*	@PUT
-	@Path("/cancelarProduzido/{numero}")
+	@PUT
+	@Path("/cancelarFinalizada/{numero}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public Response cancelarProduzido(@PathParam("numero")int numero) throws BrigaderiaException {
+	public Response cancelarFinalizada(@PathParam("numero")int numero) throws BrigaderiaException {
 		try {
 			OrdemProducaoService service = new OrdemProducaoService();
-			return buildResponse(service.cancelarProduzido(numero));
+			service.cancelarFinalizada(numero);
+			return buildResponse("Produção finalizada cancelada com sucesso. Essa produção está em produção novamente.");
+		}catch(BrigaderiaException e) {
+			e.printStackTrace();
+			return buildErrorResponse(e.getMessage());
 		}catch(SQLException e){
 			e.printStackTrace();
 			return buildErrorResponse("Ocorreu um erro ao cancelar a ordem de produção. Entre em contato com o administrador do sistema.");
 		}
 	}
-/*	
+	
 	@DELETE
-	@Path("/deletar/{numero}")
+	@Path("/deletarOrdem/{numero}")
 	@Consumes("application/*")
 	
 	public Response deletar (@PathParam("numero") int numero) throws BrigaderiaException{
 		try {
-			PerdaService service = new PerdaService();
-			service.deletarPerda(numero);
-			return buildResponse("Perda deletada com sucesso!");
+			OrdemProducaoService service = new OrdemProducaoService();
+			service.deletarOrdem(numero);
+			return buildResponse("Ordem de produção deletada com sucesso!");
+		}catch(BrigaderiaException e){
+			e.printStackTrace();
+			return buildErrorResponse(e.getMessage());
 		}catch (SQLException e) {
 			e.printStackTrace();
 			return buildErrorResponse(ERROINESPERADO);
 		}
 	}
-	*/
+	
 }
