@@ -1,3 +1,4 @@
+  <link rel="stylesheet" type="text/css" href="resources/relatorios/sugestaoCompra/css/sugestaoCompra.css">
 <script type="text/javascript" src="resources/relatorios/sugestaoCompra/js/sugestaoCompra-service.js"></script>
 <script type="text/javascript" src="resources/relatorios/sugestaoCompra/js/sugestaoCompra.js"></script>
 <div class='jumbotron'>
@@ -7,19 +8,25 @@
 		<form>
 			<div class="form-group col-sm-4">
 				<select class="form-control" id="clientes" name="clientes">
-					<option value="">Selecione um cliente</option>
+					<option value="0">Selecione um cliente</option>
 				</select>
 		</div>
 			<div class="form-group col-sm-2">
-				<input type="text" class="form-control dataFiltro"
+				<input type="text" id="dataInicio" class="form-control dataFiltro"
 					placeholder="Data Início" />
 			</div>
 			<div class="form-group col-sm-2">
-				<input type="text" class="form-control dataFiltro"
+				<input type="text" id="dataFim" class="form-control dataFiltro"
 					placeholder="Data Fim" />
 			</div>
 			<div>
-				<button class="btn btn-success col-sm-2" type="button">Visualizar</button>
+				<button class="btn btn-success col-sm-1" onclick="BRIGADERIA.sugestaoCompra.gerarSugestao()" type="button">Visualizar</button>
+			</div>
+			<div class="form-group col-sm-1">
+				
+			</div>
+			<div class="form-group col-sm-2">
+				<label id="totalSugestao"></label>
 			</div>
 		</form>
 	</div>

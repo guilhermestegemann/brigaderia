@@ -32,4 +32,9 @@ $(document).ready(function() {
 		cfg.url = "rest/sugestaoCompra/listarClientes";
 		BRIGADERIA.ajax.get(BRIGADERIA.sugestaoCompraService.defaultCfg(cfg));
 	};
+	
+	BRIGADERIA.sugestaoCompraService.gerarSugestao = function(cfg){
+		cfg.url = "rest/sugestaoCompra/gerarSugestao/"+cfg.cliente+"/"+cfg.dataInicio+"/"+cfg.dataFim;
+		BRIGADERIA.ajax.get(BRIGADERIA.sugestaoCompraService.defaultCfg(cfg));
+	}
 });
