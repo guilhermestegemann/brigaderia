@@ -1,4 +1,6 @@
 <link rel="stylesheet" type="text/css" href="resources/relatorios/vendas-estoque.css">
+<script type="text/javascript" src="resources/relatorios/vendas/js/vendas-service.js"></script>
+<script type="text/javascript" src="resources/relatorios/vendas/js/vendas.js"></script>
 
 <div class='jumbotron'>
 	<h1>Vendas</h1>
@@ -7,14 +9,13 @@
 		<form >
 			<div class="form-group col-sm-12" id="radioButtons">
 				<label for="rdbtnTipoRelatorio">Tipo Relatório</label><br/>
-				<label><input type="radio" name="rdbtnTipoRelatorio"> Produtos</label>
-				<label><input type="radio" name="rdbtnTipoRelatorio"> Clientes</label>
+				<label><input type="radio" id="rdbtnProdutos" name="rdbtnTipoRelatorio" onclick="BRIGADERIA.vendas.eventoRadio(this)"> Produtos</label>
+				<label><input type="radio" id="rdbtnClientes" name="rdbtnTipoRelatorio" onclick="BRIGADERIA.vendas.eventoRadio(this)"> Clientes</label>
 			</div>
-			<div class="form-group col-sm-6">
-				<input type="text" class="form-control" placeholder="Informe um cliente para filtrar sua busca...">
-			</div>
-			<div class="form-group col-sm-6">
-				<input type="text" class="form-control" placeholder="Informe um produto para filtrar sua busca..."/>
+			<div class="form-group col-sm-3">
+				<select class="form-control" id="clientes-produtos" name="clientes">
+					
+				</select>
 			</div>
 			<div class="form-group col-sm-2">
 				<input type="text" class="form-control datePicker" placeholder="Data Início"/>
@@ -38,7 +39,7 @@
 	</div>
 </div>
 <div class="col-sm-12">
-	<table class='table col-sm-12'>
+	<table id='resultadoVendas' class='table col-sm-12'>
 		<thead>
 			<tr>
 				<th>Código</th>
