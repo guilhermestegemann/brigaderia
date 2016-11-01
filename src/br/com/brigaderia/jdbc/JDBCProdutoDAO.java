@@ -104,7 +104,7 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 		String comando = "SELECT * FROM PRODUTO ";
 		if ((!valorBusca.equals("")) && (!valorBusca.equals("null") && !valorBusca.equals(""))) {
 			comando += "WHERE PRODUTO.ATIVO = '" + ativo + "'"
-					+ "AND PRODUTO.DESCRICAO LIKE '" + valorBusca + "%'";
+					+ "AND PRODUTO.DESCRICAO LIKE '%" + valorBusca + "%'";
 		}else{
 			comando += "WHERE PRODUTO.ATIVO = '" + ativo + "'";
 		}

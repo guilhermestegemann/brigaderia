@@ -7,11 +7,12 @@ import java.util.List;
 
 import br.com.brigaderia.bd.conexao.Conexao;
 import br.com.brigaderia.jdbc.JDBCProdutoDAO;
-import br.com.brigaderia.jdbc.JDBCVendaPorProdutoDAO;
+import br.com.brigaderia.jdbc.JDBCVendasDAO;
 import br.com.brigaderia.jdbcinterface.ProdutoDAO;
-import br.com.brigaderia.jdbcinterface.VendaPorProdutoDAO;
+import br.com.brigaderia.jdbcinterface.VendasDAO;
 import br.com.brigaderia.objetos.DadosClientesVO;
 import br.com.brigaderia.objetos.Produto;
+import br.com.brigaderia.objetos.VendaPorClienteVO;
 import br.com.brigaderia.objetos.VendaPorProdutoVO;
 
 public class VendaService {
@@ -39,8 +40,19 @@ public class VendaService {
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
-			VendaPorProdutoDAO jdbcVenda = new JDBCVendaPorProdutoDAO(conexao);
+			VendasDAO jdbcVenda = new JDBCVendasDAO(conexao);
 			return jdbcVenda.gerarPorProduto(dataInicio, dataFim, produto, numReg);
+		}finally{
+			conec.fecharConexao();
+		}
+	}
+	
+	public List<VendaPorClienteVO> gerarPorCliente(String dataInicio, String dataFim, int cliente, int numReg) throws SQLException {
+		Conexao conec = new Conexao();
+		try {
+			Connection conexao = conec.abrirConexao();
+			VendasDAO jdbcVenda = new JDBCVendasDAO(conexao);
+			return jdbcVenda.gerarPorCliente(dataInicio, dataFim, cliente, numReg);
 		}finally{
 			conec.fecharConexao();
 		}

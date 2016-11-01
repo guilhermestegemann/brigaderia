@@ -66,7 +66,26 @@ public class VendasRest extends UtilRest{
 			return buildResponse(service.gerarPorProduto(dataInicio, dataFim, produto, numRegistro));
 		}catch(SQLException e) {
 			e.printStackTrace();
-			return buildErrorResponse("Ocorreu um erro ao gerar sugestão de compra. Entre em contato com o administrador do sistema.");
+			return buildErrorResponse("Ocorreu um erro ao gerar relatório de venda por produto. Entre em contato com o administrador do sistema.");
+		}
+	}
+	
+	@GET
+	@Path("/gerarPorCliente/{dataInicio}/{dataFim}/{cliente}/{numRegistro}")
+	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+	
+	public Response gerarPorCliente (@PathParam("dataInicio") String dataInicio, 
+			                       @PathParam("dataFim") String dataFim,
+			                       @PathParam("cliente") int cliente,
+			                       @PathParam("numRegistro") int numRegistro) throws BrigaderiaException{
+		
+		try {
+			
+			VendaService service = new VendaService();
+			return buildResponse(service.gerarPorCliente(dataInicio, dataFim, cliente, numRegistro));
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return buildErrorResponse("Ocorreu um erro ao gerar relatório de venda por cliente. Entre em contato com o administrador do sistema.");
 		}
 	}
 }

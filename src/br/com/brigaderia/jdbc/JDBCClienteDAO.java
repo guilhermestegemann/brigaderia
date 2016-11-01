@@ -68,7 +68,7 @@ public class JDBCClienteDAO implements ClienteDAO{
 					   + "INNER JOIN BAIRRO ON BAIRRO.CODIGO = CLIENTE.BAIRRO ";
 		
 		if (!valorBusca.equals("null") && !valorBusca.equals("")) {
-			comando += "WHERE CLIENTE.NOME LIKE '" + valorBusca + "%'";
+			comando += "WHERE CLIENTE.NOME LIKE '%" + valorBusca + "%'";
 		}
 		
 		List<DadosClientesVO> listDadosClientes = new ArrayList<DadosClientesVO>();

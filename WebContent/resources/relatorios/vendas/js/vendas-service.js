@@ -43,4 +43,9 @@ $(document).ready(function() {
 		BRIGADERIA.ajax.get(BRIGADERIA.vendasService.defaultCfg(cfg));
 	};
 	
+	BRIGADERIA.vendasService.gerarPorCliente = function(cfg){
+		cfg.url = "rest/vendas/gerarPorCliente/"+cfg.dataInicio+"/"+cfg.dataFim+"/"+cfg.cliente+"/"+cfg.numRegistro;
+		BRIGADERIA.ajax.get(BRIGADERIA.vendasService.defaultCfg(cfg));
+	};
+	
 });
