@@ -147,7 +147,6 @@ $(document).ready( function () {
 	}
 	
 	BRIGADERIA.gerenciarPedidoVenda.controlaCancelamento = function (numero, cancelado) {
-		debugger;
 		var acao = "";
 		if (cancelado == "S"){
 			acao = "descancelar";

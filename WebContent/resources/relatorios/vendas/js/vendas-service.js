@@ -37,4 +37,10 @@ $(document).ready(function() {
 		cfg.url = "rest/vendas/listarProdutos";
 		BRIGADERIA.ajax.get(BRIGADERIA.vendasService.defaultCfg(cfg));
 	};
+	
+	BRIGADERIA.vendasService.gerarPorProduto = function(cfg){
+		cfg.url = "rest/vendas/gerarPorProduto/"+cfg.dataInicio+"/"+cfg.dataFim+"/"+cfg.produto+"/"+cfg.numRegistro;
+		BRIGADERIA.ajax.get(BRIGADERIA.vendasService.defaultCfg(cfg));
+	};
+	
 });

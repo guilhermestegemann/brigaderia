@@ -1,4 +1,5 @@
 <link rel="stylesheet" type="text/css" href="resources/relatorios/vendas-estoque.css">
+<link rel="stylesheet" type="text/css" href="resources/relatorios/vendas/css/vendas.css">
 <script type="text/javascript" src="resources/relatorios/vendas/js/vendas-service.js"></script>
 <script type="text/javascript" src="resources/relatorios/vendas/js/vendas.js"></script>
 
@@ -18,95 +19,28 @@
 				</select>
 			</div>
 			<div class="form-group col-sm-2">
-				<input type="text" class="form-control datePicker" placeholder="Data Início"/>
+				<input type="text" class="form-control dataFiltro" id="dataInicio" placeholder="Data Início"/>
 			</div>
 			<div class="form-group col-sm-2">
-				<input type="text" class="form-control datePicker" placeholder="Data Fim"/>
+				<input type="text" class="form-control dataFiltro" id="dataFim" placeholder="Data Fim"/>
+			</div>
+			<div class="form-group col-sm-1">
+				<input type="number" class="form-control" id="numRegistro" placeholder="Registros"/>
+			</div>
+			<div>
+				<button class="btn btn-success col-sm-1" id="gerarRelatorio" type="button">Visualizar</button>
+			</div>
+			<div class="form-group col-sm-1">
+				
 			</div>
 			<div class="form-group col-sm-2">
-				<input type="text" class="form-control" placeholder="Número de Registros"/>
+				<label id="totalVenda"></label>
 			</div>
-			<div class="form-group col-sm-3">
-				<label for="rdbtnOrdenacao">Ordenação</label><br/>
-				<label><input type="radio" name="rdbtnOrdenacao"> Valor Venda</label>
-				<label><input type="radio" name="rdbtnOrdenacao"> Quantidade</label>
-			</div>
-			<div class="checkbox form-group col-sm-2">
-				<label><input type="checkbox" id='ordenaDecrescente' name='ordenaDecrescente'><strong> Ordenação Decrescente</strong></label>
-			</div>
-			<button class="btn btn-success col-sm-12" type="button">Visualizar</button>
 		</form>
 	</div>
 </div>
 <div class="col-sm-12">
 	<table id='resultadoVendas' class='table col-sm-12'>
-		<thead>
-			<tr>
-				<th>Código</th>
-				<th>Nome</th>
-				<th>Quantidade</th>
-				<th>Total Venda</th>
-				<th>Venda/Total</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>35</td>
-				<td>Leite Condensado</td>
-				<td>17</td>
-				<td>120.00</td>
-				<td>50%</td>
-			</tr>
-			<tr>
-				<td>35</td>
-				<td>Leite Condensado</td>
-				<td>17</td>
-				<td>120.00</td>
-				<td>50%</td>
-			</tr>
-			<tr>
-				<td>35</td>
-				<td>Leite Condensado</td>
-				<td>17</td>
-				<td>120.00</td>
-				<td>50%</td>
-			</tr>
-			<tr>
-				<td>35</td>
-				<td>Leite Condensado</td>
-				<td>17</td>
-				<td>120.00</td>
-				<td>50%</td>
-			</tr>
-			<tr>
-				<td>35</td>
-				<td>Leite Condensado</td>
-				<td>17</td>
-				<td>120.00</td>
-				<td>50%</td>
-			</tr>
-			<tr>
-				<td>35</td>
-				<td>Leite Condensado</td>
-				<td>17</td>
-				<td>120.00</td>
-				<td>50%</td>
-			</tr>
-			<tr>
-				<td>35</td>
-				<td>Leite Condensado</td>
-				<td>17</td>
-				<td>120.00</td>
-				<td>50%</td>
-			</tr>
-			<tr>
-				<td>35</td>
-				<td>Leite Condensado</td>
-				<td>17</td>
-				<td>120.00</td>
-				<td>50%</td>
-			</tr>
-			
-		</tbody>
+		
 	</table>
 </div>
