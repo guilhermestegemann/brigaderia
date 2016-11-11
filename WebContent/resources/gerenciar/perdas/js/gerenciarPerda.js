@@ -4,12 +4,13 @@ $(document).ready( function () {
 	
 	$("#subConteudo").text(""); //inicia div vazia
 	
-//	$('.dataFiltro').datepicker({
-//		format: 'dd/mm/yyyy'
-	//});
+	$('.dataFiltro').datepicker({
+		format: 'dd/mm/yyyy'
+	});
 
 	
 	BRIGADERIA.gerenciarPerda.buscar = function () {
+		
 		var dataInicio = $("#dataInicio").val();
 		var dataFim = $("#dataFim").val();
 		if (dataInicio == "") {
@@ -22,6 +23,7 @@ $(document).ready( function () {
 		}else{
 			dataFim = BRIGADERIA.convertData.strToDate(dataFim);
 		}
+		
 		
 		BRIGADERIA.gerenciarPerda.exibirPerdas (undefined, dataInicio, dataFim);
 	};
