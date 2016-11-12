@@ -68,6 +68,7 @@ public class PedidoCompraService {
 					novoCusto =((custo * estoque) + (unitario * qtde))/(estoque + qtde);
 					
 				}
+				//Calculo de margem
 				if (novoCusto > 0) {
 					if (valorVenda > 0) {
 						margem = ((valorVenda / novoCusto)-1)*100;

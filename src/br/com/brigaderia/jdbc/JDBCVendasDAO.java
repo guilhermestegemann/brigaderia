@@ -43,7 +43,7 @@ public class JDBCVendasDAO implements VendasDAO{
 				   + "WHERE PEDIDO.CANCELADO = 'N' "
 				   + "AND PEDIDO.FATURADO = 'S' "
 				   + where														  
-				   + " GROUP BY 1 ";
+				   + " GROUP BY 1 ORDER BY 5 DESC ";
 		if (numReg > 0) {
 			sql += "LIMIT " + numReg;
 		}
@@ -85,7 +85,7 @@ public class JDBCVendasDAO implements VendasDAO{
 				   + "WHERE PEDIDO.CANCELADO = 'N' "
 				   + "AND PEDIDO.FATURADO = 'S' "
 				   + where														  
-				   + " GROUP BY 1 ";
+				   + " GROUP BY 1 ORDER BY 5 DESC";
 		if (numReg > 0) {
 			sql += "LIMIT " + numReg;
 		}

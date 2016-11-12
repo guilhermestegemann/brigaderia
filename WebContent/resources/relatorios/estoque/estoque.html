@@ -1,35 +1,33 @@
-<link rel="stylesheet" type="text/css"
-	href="resources/relatorios/vendas-estoque.css">
+<link rel="stylesheet" type="text/css" href="resources/relatorios/vendas-estoque.css">
+<script type="text/javascript" src="resources/relatorios/estoque/js/estoque-service.js"></script>
+<script type="text/javascript" src="resources/cadastro/tipoItem/js/tipoItem.js"></script>
+<script type="text/javascript" src="resources/cadastro/produtos/js/produtos.js"></script>
+<script type="text/javascript" src="resources/relatorios/estoque/js/estoque.js"></script>
 
 <div class='jumbotron'>
 	<h1>Estoque</h1>
 	<hr>
 	<div class="col-sm-12 row">
 		<form>
-			<div class="form-group col-sm-6" id="radioButtons">
-				<label for="rdbtnIngredienteProduto">Tipo Relatório</label><br /> <label><input
-					type="radio" name="rdbtnIngredienteProduto"> Ingredientes</label> <label><input
-					type="radio" name="rdbtnIngredienteProduto"> Produtos</label>
+			<div class="form-group col-sm-2">
+			<select class="form-control" id="tipoItemFiltro" name="tipoItemFiltro">
+				<option value="0">Tipo Item</option>
+			</select>
 			</div>
-			<div class="form-group col-sm-6" id="radioButtons">
-				<label for="rdbtnInOrdenaCustoQtde">Tipo Ordenação</label><br /> <label><input
-					type="radio" name="rdbtnInOrdenaCustoQtde"> Ordenar por
-					Valor de Custo</label> <label><input type="radio"
-					name="rdbtnInOrdenaCustoQtde"> Ordenas por Quantidade em
-					Estoque</label>
-			</div>
-			<div class="checkbox form-group col-sm-6" id="checkBoxRelatorio">
-				<label><input type="checkbox" id='ordenaDecrescente'
-					name='ordenaDecrescente'><strong> Ordenação
-						Decrescente</strong></label>
+			<div class="form-group col-sm-2">
+			<select class="form-control" id="filtroAtivo" name="filtroAtivo">		
+				<option value="S">Ativo</option>
+				<option value="N">Inativo</option>
+				<option value="">Todos</option>
+			</select>
 			</div>
 			<div>
-				<button class="btn btn-success col-sm-12" type="button">Visualizar</button>
+				<button class="btn btn-success col-sm-2" onclick="BRIGADERIA.estoque.gerarRelatorio()" type="button">Visualizar</button>
 			</div>
 		</form>
 	</div>
 	<div class="col-sm-12">
-		<table class='table col-sm-12'>
+		<table id="resultadoEstoque" class='table col-sm-12'>
 			<thead>
 				<tr>
 					<th>Código</th>
@@ -39,100 +37,11 @@
 					<th>Total Custo</th>
 					<th>Valor Venda</th>
 					<th>Total Venda</th>
+					<th>Margem</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>35</td>
-					<td>Leite Condensado</td>
-					<td>50</td>
-					<td>1</td>
-					<td>50</td>
-					<td>2</td>
-					<td>100</td>
-				</tr>
-				<tr>
-					<td>35</td>
-					<td>Leite Condensado</td>
-					<td>50</td>
-					<td>1</td>
-					<td>50</td>
-					<td>2</td>
-					<td>100</td>
-				</tr>
-				<tr>
-					<td>35</td>
-					<td>Leite Condensado</td>
-					<td>50</td>
-					<td>1</td>
-					<td>50</td>
-					<td>2</td>
-					<td>100</td>
-				</tr>
-				<tr>
-					<td>35</td>
-					<td>Leite Condensado</td>
-					<td>50</td>
-					<td>1</td>
-					<td>50</td>
-					<td>2</td>
-					<td>100</td>
-				</tr>
-				<tr>
-					<td>35</td>
-					<td>Leite Condensado</td>
-					<td>50</td>
-					<td>1</td>
-					<td>50</td>
-					<td>2</td>
-					<td>100</td>
-				</tr>
-				<tr>
-					<td>35</td>
-					<td>Leite Condensado</td>
-					<td>50</td>
-					<td>1</td>
-					<td>50</td>
-					<td>2</td>
-					<td>100</td>
-				</tr>
-				<tr>
-					<td>35</td>
-					<td>Leite Condensado</td>
-					<td>50</td>
-					<td>1</td>
-					<td>50</td>
-					<td>2</td>
-					<td>100</td>
-				</tr>
-				<tr>
-					<td>35</td>
-					<td>Leite Condensado</td>
-					<td>50</td>
-					<td>1</td>
-					<td>50</td>
-					<td>2</td>
-					<td>100</td>
-				</tr>
-				<tr>
-					<td>35</td>
-					<td>Leite Condensado</td>
-					<td>50</td>
-					<td>1</td>
-					<td>50</td>
-					<td>2</td>
-					<td>100</td>
-				</tr>
-				<tr>
-					<td>35</td>
-					<td>Leite Condensado</td>
-					<td>50</td>
-					<td>1</td>
-					<td>50</td>
-					<td>2</td>
-					<td>100</td>
-				</tr>
-
+				
 			</tbody>
 		</table>
 	</div>
