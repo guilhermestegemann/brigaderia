@@ -22,7 +22,9 @@ $(document).ready( function () {
 			dataFim = BRIGADERIA.convertData.strToDate(dataFim);
 		}
 		
-		BRIGADERIA.gerenciarPedidoCompra.exibirPedidos (undefined, dataInicio, dataFim);
+		if(BRIGADERIA.validarDataFiltro.validar(dataInicio, dataFim)){
+			BRIGADERIA.gerenciarPedidoCompra.exibirPedidos (undefined, dataInicio, dataFim);
+		}
 	};
 	
 	BRIGADERIA.gerenciarPedidoCompra.exibirPedidos = function(listaDePedidos, dataInicio, dataFim) {
@@ -62,8 +64,6 @@ $(document).ready( function () {
 	$("#buttonPesquisar").on('click', function(){
 		BRIGADERIA.gerenciarPedidoCompra.buscar();
 	});
-	
-	BRIGADERIA.gerenciarPedidoCompra.buscar();
 	
 	BRIGADERIA.gerenciarPedidoCompra.lancarPedido = function() {
 		$("#conteudo").load("resources/faturamento/pedidoCompra/pedidoCompra.html", function (){

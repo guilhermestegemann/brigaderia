@@ -24,8 +24,9 @@ $(document).ready( function () {
 			dataFim = BRIGADERIA.convertData.strToDate(dataFim);
 		}
 		
-		
-		BRIGADERIA.gerenciarPerda.exibirPerdas (undefined, dataInicio, dataFim);
+		if(BRIGADERIA.validarDataFiltro.validar(dataInicio, dataFim)){
+			BRIGADERIA.gerenciarPerda.exibirPerdas (undefined, dataInicio, dataFim);
+		}
 	};
 	
 	BRIGADERIA.gerenciarPerda.exibirPerdas = function(listaDePerdas, dataInicio, dataFim) {
@@ -65,8 +66,6 @@ $(document).ready( function () {
 	$("#buttonPesquisar").on('click', function(){
 		BRIGADERIA.gerenciarPerda.buscar();
 	});
-	
-	BRIGADERIA.gerenciarPerda.buscar();
 	
 	BRIGADERIA.gerenciarPerda.lancarPerda = function() {
 		$("#conteudo").load("resources/movimento/perdas/perdas.html", function (){

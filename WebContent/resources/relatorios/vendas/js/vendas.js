@@ -79,54 +79,56 @@ $(document).ready(function(){
 		}else{
 			dataFim = BRIGADERIA.convertData.strToDate(dataFim);
 		}
-		BRIGADERIA.vendasService.gerarPorProduto({
-			produto : $("#clientes-produtos").val(),
-			dataInicio : dataInicio,
-			dataFim : dataFim,
-			numRegistro : $("#numRegistro").val() === "" ? '0': $("#numRegistro").val(),
-			success : function(vendasPorProduto){
-				if (vendasPorProduto.length == 0){
-					bootbox.alert("A consulta não retornou nenhuma informação, verifique os filtros aplicados e tente novamente.");
-				}else{
-					var totalVenda = 0;
-					var html = "";
-					var cabecalho = "<thead>"
-									+"<tr>"
-										+"<th>Código</th>"
-										+"<th>Nome</th>"
-										+"<th>Quantidade</th>"
-										+"<th>Valor Médio</th>"
-										+"<th>Total Custo</th>"
-										+"<th>Margem</th>"
-										+"<th>Total Venda</th>"
-										+"<th>Venda/Total</th>"
-									+"</tr>"
-									+"</thead>"
-									+"<tbody></tbody>";
-					for (var i = 0; i < vendasPorProduto.length; i++){
-						totalVenda = parseFloat(totalVenda) + parseFloat(vendasPorProduto[i].total);
+		if(BRIGADERIA.validarDataFiltro.validar(dataInicio, dataFim)){
+			BRIGADERIA.vendasService.gerarPorProduto({
+				produto : $("#clientes-produtos").val(),
+				dataInicio : dataInicio,
+				dataFim : dataFim,
+				numRegistro : $("#numRegistro").val() === "" ? '0': $("#numRegistro").val(),
+				success : function(vendasPorProduto){
+					if (vendasPorProduto.length == 0){
+						bootbox.alert("A consulta não retornou nenhuma informação, verifique os filtros aplicados e tente novamente.");
+					}else{
+						var totalVenda = 0;
+						var html = "";
+						var cabecalho = "<thead>"
+										+"<tr>"
+											+"<th>Código</th>"
+											+"<th>Nome</th>"
+											+"<th>Quantidade</th>"
+											+"<th>Valor Médio</th>"
+											+"<th>Total Custo</th>"
+											+"<th>Margem</th>"
+											+"<th>Total Venda</th>"
+											+"<th>Venda/Total</th>"
+										+"</tr>"
+										+"</thead>"
+										+"<tbody></tbody>";
+						for (var i = 0; i < vendasPorProduto.length; i++){
+							totalVenda = parseFloat(totalVenda) + parseFloat(vendasPorProduto[i].total);
+						}
+						for (var i = 0; i < vendasPorProduto.length; i++){
+							html += "<tr>"
+								+ "<td>"+ vendasPorProduto[i].codigo +"</td>"
+								+ "<td>"+ vendasPorProduto[i].nome +"</td>"
+								+ "<td>"+ parseFloat(vendasPorProduto[i].qtde).toFixed(2) +"</td>"
+								+ "<td>"+ parseFloat(vendasPorProduto[i].valorMedio).toFixed(2) +"</td>"
+								+ "<td>"+ parseFloat(vendasPorProduto[i].custo).toFixed(2) +"</td>"
+								+ "<td>"+ parseFloat(((parseFloat(vendasPorProduto[i].total) - parseFloat(vendasPorProduto[i].custo)) / parseFloat(vendasPorProduto[i].custo)*100)).toFixed(2) +"%</td>"
+								+ "<td>"+ parseFloat(vendasPorProduto[i].total).toFixed(2) +"</td>"
+								+ "<td>"+ parseFloat((parseFloat(vendasPorProduto[i].total) / parseFloat(totalVenda)) * 100).toFixed(2) +"%</td>"
+							+"</tr>";
+						};
+						$("#resultadoVendas").html(cabecalho);
+						$("#resultadoVendas tbody").html(html);
+						$("#totalVenda").text("Total: R$ " + parseFloat(totalVenda).toFixed(2));
 					}
-					for (var i = 0; i < vendasPorProduto.length; i++){
-						html += "<tr>"
-							+ "<td>"+ vendasPorProduto[i].codigo +"</td>"
-							+ "<td>"+ vendasPorProduto[i].nome +"</td>"
-							+ "<td>"+ parseFloat(vendasPorProduto[i].qtde).toFixed(2) +"</td>"
-							+ "<td>"+ parseFloat(vendasPorProduto[i].valorMedio).toFixed(2) +"</td>"
-							+ "<td>"+ parseFloat(vendasPorProduto[i].custo).toFixed(2) +"</td>"
-							+ "<td>"+ parseFloat(((parseFloat(vendasPorProduto[i].total) - parseFloat(vendasPorProduto[i].custo)) / parseFloat(vendasPorProduto[i].custo)*100)).toFixed(2) +"%</td>"
-							+ "<td>"+ parseFloat(vendasPorProduto[i].total).toFixed(2) +"</td>"
-							+ "<td>"+ parseFloat((parseFloat(vendasPorProduto[i].total) / parseFloat(totalVenda)) * 100).toFixed(2) +"%</td>"
-						+"</tr>";
-					};
-					$("#resultadoVendas").html(cabecalho);
-					$("#resultadoVendas tbody").html(html);
-					$("#totalVenda").text("Total: R$ " + parseFloat(totalVenda).toFixed(2));
+				},
+				error : function(error){
+					bootbox.alert(error.responseText);
 				}
-			},
-			error : function(error){
-				bootbox.alert(error.responseText);
-			}
-		})
+			});
+		}
 	};
 	
 	

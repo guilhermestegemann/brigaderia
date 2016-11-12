@@ -35,37 +35,39 @@ $(document).ready(function(){
 		}else{
 			dataFim = BRIGADERIA.convertData.strToDate(dataFim);
 		}
-		BRIGADERIA.sugestaoCompraService.gerarSugestao({
-			cliente : $("#clientes").val(),
-			dataInicio : dataInicio,
-			dataFim : dataFim,
-			success : function(sugestao){
-				if (sugestao.length == 0) {
-					bootbox.alert("A consulta não retornou nenhuma informação, verifique os filtros aplicados e tente novamente.");
-				}else{
-					var totalSugestao = 0;
-					var html = "";
-					for (var i = 0; i < sugestao.length; i++){
-						html += "<tr>"
-							+ "<td>"+ sugestao[i].ingrediente +"</td>"
-							+ "<td>"+ sugestao[i].nomeIngrediente +"</td>"
-							+ "<td>"+ sugestao[i].unEstoque +"</td>"
-							+ "<td>"+ parseFloat(sugestao[i].qtdeNecessaria).toFixed(3) +"</td>"
-							+ "<td>"+ parseFloat(sugestao[i].estoque).toFixed(3) +"</td>"
-							+ "<td>"+ parseFloat(sugestao[i].qtdeSugestao).toFixed(3) +"</td>"
-							+ "<td>"+ "R$ " + sugestao[i].valorCusto +"</td>"
-							+ "<td>"+ "R$ " + parseFloat(sugestao[i].valorCusto * sugestao[i].qtdeSugestao).toFixed(2) +"</td>"
-						+"</tr>";
-						totalSugestao = parseFloat(totalSugestao) + parseFloat(sugestao[i].valorCusto) * parseFloat(sugestao[i].qtdeSugestao);
-					};
-					$("#resultadoSugestaoCompra tbody").html(html);
-					$("#totalSugestao").text("Total: R$ " + parseFloat(totalSugestao).toFixed(2));
+		if(BRIGADERIA.validarDataFiltro.validar(dataInicio, dataFim)){
+			BRIGADERIA.sugestaoCompraService.gerarSugestao({
+				cliente : $("#clientes").val(),
+				dataInicio : dataInicio,
+				dataFim : dataFim,
+				success : function(sugestao){
+					if (sugestao.length == 0) {
+						bootbox.alert("A consulta não retornou nenhuma informação, verifique os filtros aplicados e tente novamente.");
+					}else{
+						var totalSugestao = 0;
+						var html = "";
+						for (var i = 0; i < sugestao.length; i++){
+							html += "<tr>"
+								+ "<td>"+ sugestao[i].ingrediente +"</td>"
+								+ "<td>"+ sugestao[i].nomeIngrediente +"</td>"
+								+ "<td>"+ sugestao[i].unEstoque +"</td>"
+								+ "<td>"+ parseFloat(sugestao[i].qtdeNecessaria).toFixed(3) +"</td>"
+								+ "<td>"+ parseFloat(sugestao[i].estoque).toFixed(3) +"</td>"
+								+ "<td>"+ parseFloat(sugestao[i].qtdeSugestao).toFixed(3) +"</td>"
+								+ "<td>"+ "R$ " + sugestao[i].valorCusto +"</td>"
+								+ "<td>"+ "R$ " + parseFloat(sugestao[i].valorCusto * sugestao[i].qtdeSugestao).toFixed(2) +"</td>"
+							+"</tr>";
+							totalSugestao = parseFloat(totalSugestao) + parseFloat(sugestao[i].valorCusto) * parseFloat(sugestao[i].qtdeSugestao);
+						};
+						$("#resultadoSugestaoCompra tbody").html(html);
+						$("#totalSugestao").text("Total: R$ " + parseFloat(totalSugestao).toFixed(2));
+					}
+				},
+				error : function(error){
+					bootbox.alert(error.responseText);
 				}
-			},
-			error : function(error){
-				bootbox.alert(error.responseText);
-			}
-		})
+			});
+		}
 	}
 	
 	BRIGADERIA.sugestaoCompra.listarClientes();

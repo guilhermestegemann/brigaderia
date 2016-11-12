@@ -33,8 +33,9 @@ $(document).ready(function (){
 		}else{
 			dataFim = BRIGADERIA.convertData.strToDate(dataFim);
 		}
-		
-		BRIGADERIA.gerenciarOrdemProducao.exibirOrdens (undefined, dataInicio, dataFim, status);
+		if(BRIGADERIA.validarDataFiltro.validar(dataInicio, dataFim)){
+			BRIGADERIA.gerenciarOrdemProducao.exibirOrdens (undefined, dataInicio, dataFim, status);
+		}
 	};
 	
 	BRIGADERIA.gerenciarOrdemProducao.exibirOrdens = function(listaDeOrdens, dataInicio, dataFim, status) {
@@ -253,7 +254,5 @@ $(document).ready(function (){
 	$("#buttonPesquisar").on('click', function(){
 		BRIGADERIA.gerenciarOrdemProducao.buscar();
 	});
-	
-	BRIGADERIA.gerenciarOrdemProducao.buscar();
 });
 

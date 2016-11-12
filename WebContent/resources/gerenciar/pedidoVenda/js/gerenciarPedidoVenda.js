@@ -26,8 +26,9 @@ $(document).ready( function () {
 			dataFim = BRIGADERIA.convertData.strToDate(dataFim);
 		}
 		
-		
-		BRIGADERIA.gerenciarPedidoVenda.exibirPedidos (undefined, dataInicio, dataFim, faturado, cancelado, produzido, codCliente);
+		if(BRIGADERIA.validarDataFiltro.validar(dataInicio, dataFim)){
+			BRIGADERIA.gerenciarPedidoVenda.exibirPedidos (undefined, dataInicio, dataFim, faturado, cancelado, produzido, codCliente);
+		}
 	};
 	
 	BRIGADERIA.gerenciarPedidoVenda.exibirPedidos = function(listaDePedidos, dataInicio, dataFim, faturado, cancelado, produzido, codCliente) {
@@ -103,8 +104,6 @@ $(document).ready( function () {
 	$("#buttonPesquisar").on('click', function(){
 		BRIGADERIA.gerenciarPedidoVenda.buscar();
 	});
-	
-	BRIGADERIA.gerenciarPedidoVenda.buscar();
 	
 	BRIGADERIA.gerenciarPedidoVenda.lancarPedido = function() {
 		$("#conteudo").load("resources/faturamento/pedidoVenda/pedidoVenda.html", function (){
