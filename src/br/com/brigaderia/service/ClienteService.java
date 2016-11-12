@@ -108,13 +108,13 @@ public class ClienteService {
 		}
 	}
 	
-	public List<DadosClientesVO> buscarClientesVO (String valorBusca) throws SQLException {
+	public List<DadosClientesVO> buscarClientesVO (String valorBusca, String ativo) throws SQLException {
 		
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
 			ClienteDAO jdbcCliente = new JDBCClienteDAO(conexao);
-			return jdbcCliente.buscarClientes(valorBusca);
+			return jdbcCliente.buscarClientes(valorBusca, ativo);
 		}finally{
 			conec.fecharConexao();
 		}

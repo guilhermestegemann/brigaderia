@@ -29,7 +29,7 @@ $(document).ready(function() {
 	};
 	
 	BRIGADERIA.clienteService.listar = function(cfg){
-		cfg.url = "rest/clientes/buscarClientes/" + cfg.valorBusca;
+		cfg.url = "rest/clientes/buscarClientes/" + cfg.valorBusca + "/" + cfg.ativo;
 		BRIGADERIA.ajax.get(BRIGADERIA.clienteService.defaultCfg(cfg));
 	};
 	

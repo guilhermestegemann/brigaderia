@@ -25,7 +25,7 @@ public class JDBCClienteDAO implements ClienteDAO{
 	public void cadastrar (Cliente cliente) throws SQLException{
 		
 		String comando = "INSERT INTO CLIENTE (NOME, RG, CPF, ENDERECO, NUMERO, COMPLEMENTO, CEP, CIDADE, BAIRRO, ANIVERSARIO, "
-				+ "EMAIL, TELEFONE, CELULAR, DATACADASTRO) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "EMAIL, TELEFONE, CELULAR, DATACADASTRO, ATIVO) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement p;
 		p = this.conexao.prepareStatement(comando);
 		p.setString(1, cliente.getNome());
@@ -54,21 +54,24 @@ public class JDBCClienteDAO implements ClienteDAO{
 			p.setLong(13, cliente.getCelular());
 		}
 		p.setDate(14, new java.sql.Date(cliente.getDataCadastro().getTime()));
+		p.setString(15, cliente.getAtivo());
 		p.execute();
 	}
 	
-	public List<DadosClientesVO> buscarClientes (String valorBusca) throws SQLException {
+	public List<DadosClientesVO> buscarClientes (String valorBusca, String ativo) throws SQLException {
 		
-		String comando = "SELECT CLIENTE.CODIGO AS CODIGOCLIENTE, CLIENTE.NOME AS NOMECLIENTE, CIDADE.NOME AS NOMECIDADE, "
+		String comando = "SELECT CLIENTE.CODIGO AS CODIGOCLIENTE, CLIENTE.NOME AS NOMECLIENTE, CLIENTE.ATIVO, "
+				       + "CIDADE.NOME AS NOMECIDADE, "
 					   + "ESTADO.UF AS UFESTADO, BAIRRO.NOME AS NOMEBAIRRO, "
 					   + "(SELECT MAX(PEDIDO.EMISSAO) FROM PEDIDO WHERE PEDIDO.CLIENTE = CLIENTE.CODIGO) AS ULTIMAVENDA "
 					   + "FROM CLIENTE "
 				       + "INNER JOIN CIDADE ON CIDADE.CODIGO = CLIENTE.CIDADE "
 					   + "INNER JOIN ESTADO ON ESTADO.CODIGO = CIDADE.ESTADO "
-					   + "INNER JOIN BAIRRO ON BAIRRO.CODIGO = CLIENTE.BAIRRO ";
+					   + "INNER JOIN BAIRRO ON BAIRRO.CODIGO = CLIENTE.BAIRRO "
+					   + "WHERE CLIENTE.ATIVO = '" + ativo + "' ";
 		
 		if (!valorBusca.equals("null") && !valorBusca.equals("")) {
-			comando += "WHERE CLIENTE.NOME LIKE '%" + valorBusca + "%'";
+			comando += "AND CLIENTE.NOME LIKE '%" + valorBusca + "%'";
 		}
 		
 		List<DadosClientesVO> listDadosClientes = new ArrayList<DadosClientesVO>();
@@ -82,7 +85,8 @@ public class JDBCClienteDAO implements ClienteDAO{
 			dadosClientesVO.setCidade(rs.getString("NOMECIDADE"));
 			dadosClientesVO.setUf(rs.getString("UFESTADO"));
 			dadosClientesVO.setBairro(rs.getString("NOMEBAIRRO"));
-			dadosClientesVO.setUltimaVenda(rs.getDate("ULTIMAVENDA")); 
+			dadosClientesVO.setUltimaVenda(rs.getDate("ULTIMAVENDA"));
+			dadosClientesVO.setAtivo(rs.getString("ATIVO"));
 			listDadosClientes.add(dadosClientesVO);
 		}
 		return listDadosClientes;
@@ -118,6 +122,7 @@ public class JDBCClienteDAO implements ClienteDAO{
 			cliente.setEmail(rs.getString("email"));
 			cliente.setTelefone(rs.getLong("telefone"));
 			cliente.setCelular(rs.getLong("celular"));
+			cliente.setAtivo(rs.getString("ativo"));
 		}
 		return cliente;
 	}
@@ -137,7 +142,8 @@ public class JDBCClienteDAO implements ClienteDAO{
 							+ "CLIENTE.ANIVERSARIO = ?, "
 							+ "CLIENTE.EMAIL = ?, "
 							+ "CLIENTE.TELEFONE = ?, "
-							+ "CLIENTE.CELULAR = ? "
+							+ "CLIENTE.CELULAR = ?, "
+							+ "CLIENTE.ATIVO = ? "
 					   + "WHERE CLIENTE.CODIGO = " + cliente.getCodigo();
 	    
 		PreparedStatement p;
@@ -167,6 +173,7 @@ public class JDBCClienteDAO implements ClienteDAO{
 		}else{
 			p.setLong(13, cliente.getCelular());
 		}
+		p.setString(14, cliente.getAtivo());
     	p.executeUpdate();
 	}
 	

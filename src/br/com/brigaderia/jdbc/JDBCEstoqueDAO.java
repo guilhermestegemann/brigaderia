@@ -24,6 +24,8 @@ public class JDBCEstoqueDAO implements EstoqueDAO{
 						+ "PRODUTO.CODIGO, "
 						+ "PRODUTO.DESCRICAO, "
 					    + "PRODUTO.ESTOQUE, "
+					    + "(SELECT COALESCE(SUM(ITEMPEDIDO.QTDE), 0) FROM ITEMPEDIDO WHERE ITEMPEDIDO.PRODUTO = PRODUTO.CODIGO) AS QTDEPENDENTE, "
+					    + "(PRODUTO.ESTOQUE -(SELECT COALESCE(SUM(ITEMPEDIDO.QTDE), 0) FROM ITEMPEDIDO WHERE ITEMPEDIDO.PRODUTO = PRODUTO.CODIGO)) AS ESTOQUEDISPONIVEL, "
 						+ "PRODUTO.VALORCUSTO, "
 					    + "(PRODUTO.VALORCUSTO * PRODUTO.ESTOQUE) AS TOTALCUSTO, "
 						+ "PRODUTO.VALORVENDA, "
@@ -55,6 +57,8 @@ public class JDBCEstoqueDAO implements EstoqueDAO{
 			estoque.setValorVenda(rs.getFloat("VALORVENDA"));
 			estoque.setTotalVenda(rs.getFloat("TOTALVENDA"));
 			estoque.setMargem(rs.getFloat("MARGEM"));
+			estoque.setQtdePendente(rs.getFloat("QTDEPENDENTE"));
+			estoque.setEstoqueDisponivel(rs.getFloat("ESTOQUEDISPONIVEL"));
 			listEstoque.add(estoque);
 			}
 		return listEstoque;

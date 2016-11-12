@@ -78,6 +78,7 @@ $(document).ready(function() {
 					$("#celular").val(cliente.celular);
 				}
 				$("#dataCadastro").val(BRIGADERIA.convertData.dateToStr(cliente.dataCadastro));
+				$("#ativo").val(cliente.ativo);
 				$("#btnConfirmar").attr("onclick", "BRIGADERIA.clientes.salvarEdicao()");
 				$("h1").text("Edição de Clientes");
 				
@@ -100,6 +101,7 @@ $(document).ready(function() {
 		newCliente.celular = $("#celular").val().replace(/[^\d]+/g,'');
 		newCliente.cpf = $("#cpf").val().replace(/[^\d]+/g,'');
 		newCliente.rg = $("#rg").val().replace(/[^\d]+/g,'');
+		newCliente.ativo = $("#ativo").val();
 		if (newCliente.cpf != "") {
 			var cpfValido = BRIGADERIA.validaCpf.validarCpf(newCliente.cpf);
 			if (!cpfValido) {
@@ -134,6 +136,7 @@ $(document).ready(function() {
 		cliente.celular = $("#celular").val().replace(/[^\d]+/g,'');
 		cliente.cpf = $("#cpf").val().replace(/[^\d]+/g,'');
 		cliente.rg = $("#rg").val().replace(/[^\d]+/g,'');
+		cliente.ativo = $("#ativo").val();
 		if (cliente.cpf != "") {
 			var cpfValido = BRIGADERIA.validaCpf.validarCpf(cliente.cpf);
 			if (!cpfValido) {

@@ -46,15 +46,16 @@ public class ClientesRest extends UtilRest{
 	}
 	
 	@GET
-	@Path("/buscarClientes/{valorBusca}")
+	@Path("/buscarClientes/{valorBusca}/{ativo}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	
-	public Response buscarClientes (@PathParam("valorBusca") String valorBusca) {
+	public Response buscarClientes (@PathParam("valorBusca") String valorBusca,
+			                        @PathParam("ativo") String ativo) {
 		
 		try {
 			
 			ClienteService service = new ClienteService();
-			return buildResponse(service.buscarClientesVO(valorBusca));
+			return buildResponse(service.buscarClientesVO(valorBusca, ativo));
 		}catch(SQLException e) {
 			e.printStackTrace();
 			return buildErrorResponse("Ocorreu um erro ao buscar clientes. Entre em contato com o administrador do sistema.");

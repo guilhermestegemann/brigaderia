@@ -19,6 +19,8 @@ $(document).ready( function(){
 							+ "<td>"+ estoque[i].codigoProduto +"</td>"
 							+ "<td>"+ estoque[i].descricao +"</td>"
 							+ "<td>"+ estoque[i].estoque +"</td>"
+							+ "<td>"+ estoque[i].qtdePendente +"</td>"
+							+ "<td>"+ estoque[i].estoqueDisponivel +"</td>"
 							+ "<td>R$ "+ parseFloat(estoque[i].valorCusto).toFixed(2) +"</td>"
 							+ "<td>R$ "+ parseFloat(estoque[i].totalCusto).toFixed(2) +"</td>"
 							+ "<td>R$ "+ parseFloat(estoque[i].valorVenda).toFixed(2) +"</td>"

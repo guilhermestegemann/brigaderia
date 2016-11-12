@@ -5,19 +5,20 @@ $(document).ready(function() {
 
 	
 	BRIGADERIA.gerenciarClientes.buscar = function () {
-		
+		var ativo = $("#filtroAtivo").val();
 		var valorBusca = $("#buscaCliente").val();
 		if (valorBusca == "") {
 			valorBusca = "null";
 		}
 		
-		BRIGADERIA.gerenciarClientes.exibirClientes (undefined, valorBusca);
+		BRIGADERIA.gerenciarClientes.exibirClientes (undefined, valorBusca, ativo);
 	};
 	
-	BRIGADERIA.gerenciarClientes.exibirClientes = function(listaDeClientes, valorBusca) {
+	BRIGADERIA.gerenciarClientes.exibirClientes = function(listaDeClientes, valorBusca, ativo) {
 		
 		BRIGADERIA.clienteService.listar({
 			valorBusca : valorBusca,
+			ativo : ativo,
 			success : function (listaDeClientes) {
 				
 				var html = "";
@@ -89,4 +90,8 @@ $(document).ready(function() {
 			BRIGADERIA.clientes.exibirFormulario();
 		});
 	};
+	
+	$("#filtroAtivo").on('change',function(){
+		BRIGADERIA.gerenciarClientes.buscar();
+	});
 });

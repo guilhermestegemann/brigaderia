@@ -16,7 +16,14 @@ public class DadosClientesVO implements Serializable{
 	private String uf;
 	private String bairro;
 	private Date ultimaVenda;	
-	
+	private String ativo;
+		
+	public String getAtivo() {
+		return ativo;
+	}
+	public void setAtivo(String ativo) {
+		this.ativo = ativo;
+	}
 	public String getUf() {
 		return uf;
 	}

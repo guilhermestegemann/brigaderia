@@ -27,7 +27,14 @@ public class Cliente implements Serializable{
 	private String email;
 	private Long telefone;
 	private Long celular;
+	private String ativo;
 	
+	public String getAtivo() {
+		return ativo;
+	}
+	public void setAtivo(String ativo) {
+		this.ativo = ativo;
+	}
 	public Date getAniversarioDate() {
 		return aniversarioDate;
 	}
