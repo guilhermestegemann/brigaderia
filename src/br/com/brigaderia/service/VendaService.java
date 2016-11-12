@@ -20,7 +20,7 @@ public class VendaService {
 	public List<DadosClientesVO> listarClientes() throws SQLException {
 		
 		ClienteService cliService = new ClienteService();
-		return cliService.buscarClientesVO("null");
+		return cliService.buscarClientesVO("null", "S");
 
 	}
 	

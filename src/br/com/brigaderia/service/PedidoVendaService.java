@@ -107,7 +107,7 @@ public class PedidoVendaService {
 		try {
 			Connection conexao = conec.abrirConexao();
 			ClienteDAO jdbcCliente = new JDBCClienteDAO(conexao);
-			return jdbcCliente.buscarClientes("null");
+			return jdbcCliente.buscarClientes("null", "S");
 		}finally {
 			conec.fecharConexao();
 		}
