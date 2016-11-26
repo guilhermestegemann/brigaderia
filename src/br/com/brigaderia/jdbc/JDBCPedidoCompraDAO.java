@@ -110,7 +110,8 @@ public class JDBCPedidoCompraDAO implements PedidoCompraDAO {
 	public List<ItemPedidoCompra> buscarItensPedido(int numero) throws SQLException  {
 		
 		List<ItemPedidoCompra> listItemPedidoCompra = new ArrayList<ItemPedidoCompra>();
-		String comando = "SELECT ITEMCOMPRA.PRODUTO, PRODUTO.DESCRICAO, PRODUTO.ESTOQUE, PRODUTO.UNENTRADA, ITEMCOMPRA.QTDE, ITEMCOMPRA.UNITARIO, ITEMCOMPRA.TOTAL "
+		String comando = "SELECT ITEMCOMPRA.PRODUTO, PRODUTO.DESCRICAO, PRODUTO.ESTOQUE, PRODUTO.UNENTRADA, ITEMCOMPRA.QTDE, ITEMCOMPRA.UNITARIO, ITEMCOMPRA.TOTAL, "
+				       + "PRODUTO.QTDEENTRADA "
 				       + "FROM ITEMCOMPRA "
 				       + "INNER JOIN PRODUTO ON PRODUTO.CODIGO = ITEMCOMPRA.PRODUTO "
 				       + "WHERE ITEMCOMPRA.NUMERO = " + numero;
@@ -126,6 +127,7 @@ public class JDBCPedidoCompraDAO implements PedidoCompraDAO {
 			itemPedidoCompra.setQtde(rs.getFloat("QTDE"));
 			itemPedidoCompra.setUnitario(rs.getFloat("UNITARIO"));
 			itemPedidoCompra.setTotal(rs.getFloat("TOTAL"));
+			itemPedidoCompra.setQtdeEntrada(rs.getFloat("QTDEENTRADA"));
 			listItemPedidoCompra.add(itemPedidoCompra);
 		}
 		return listItemPedidoCompra;

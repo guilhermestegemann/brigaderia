@@ -150,9 +150,7 @@ public class PedidoCompraService {
 			for (ItemPedidoCompra itemPedidoCompra : listItemPedido) {
 				estoque = itemPedidoCompra.getEstoque();
 				qtde = itemPedidoCompra.getQtde();
-				Produto produto = new Produto();
-				produto = jdbcProduto.buscarPeloCodigo(itemPedidoCompra.getCodigoProduto());
-				qtdeEntrada = produto.getQtdeEntrada();
+				qtdeEntrada = itemPedidoCompra.getQtdeEntrada();
 				if (estoque < qtde) {
 					if (msg.equals("")){
 						msg = "Produtos com inconsistência ao excluir Pedido de Compra.\n";

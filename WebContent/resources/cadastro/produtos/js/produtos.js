@@ -49,7 +49,7 @@ $(document).ready(function() {
 	
 	
 	BRIGADERIA.produtos.listarTipoItem = function (idHtml) { 
-		BRIGADERIA.tipoItem.listar({
+		BRIGADERIA.tipoItemService.listar({
 			success: function(data) {
 				var html = "";
 				

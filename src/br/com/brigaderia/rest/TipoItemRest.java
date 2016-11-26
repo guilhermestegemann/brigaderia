@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response;
 import br.com.brigaderia.exception.BrigaderiaException;
 import br.com.brigaderia.service.TipoItemService;
 
-@Path("tipoitem")
+@Path("tipoItem")
 
 public class TipoItemRest extends UtilRest{
 	

@@ -16,7 +16,7 @@ $(document).ready(function() {
 	
 	
 	BRIGADERIA.clientes.listarCidade = function (codCidade) { 
-		BRIGADERIA.cidade.listar({
+		BRIGADERIA.cidadeService.listar({
 			success: function(data) {
 				var html = "";
 				
@@ -32,7 +32,7 @@ $(document).ready(function() {
 	};
 	
 	BRIGADERIA.clientes.listarBairro = function (codBairro) {
-		BRIGADERIA.bairro.listar({
+		BRIGADERIA.bairroService.listar({
 			success: function(data) {
 				var html = "";
 				
