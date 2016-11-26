@@ -2,8 +2,6 @@ BRIGADERIA.gerenciarClientes = new Object();
 
 $(document).ready(function() {
 	
-
-	
 	BRIGADERIA.gerenciarClientes.buscar = function () {
 		var ativo = $("#filtroAtivo").val();
 		var valorBusca = $("#buscaCliente").val();
