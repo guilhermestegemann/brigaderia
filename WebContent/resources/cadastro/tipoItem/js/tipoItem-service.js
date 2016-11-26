@@ -29,7 +29,6 @@ $(document).ready(function() {
 	};
 	
 	BRIGADERIA.tipoItemService.listar = function(cfg){
-		debugger;
 		cfg.url = "rest/tipoItem/buscar";
 		BRIGADERIA.ajax.get(BRIGADERIA.tipoItemService.defaultCfg(cfg));
 	};
