@@ -13,7 +13,7 @@ $(document).ready(function (){
 	})
 	
 	BRIGADERIA.gerenciarOrdemProducao.lancarOrdemProducao = function() {
-		$("#conteudo").load("resources/movimento/ordemProducao/ordemProducao.html", function (){
+		$("#conteudo").load("movimento/ordemProducao/ordemProducao.html", function (){
 			BRIGADERIA.ordemProducao.exibirFormulario();
 		});
 	};
@@ -242,9 +242,9 @@ $(document).ready(function (){
 	BRIGADERIA.gerenciarOrdemProducao.visualizarOrdemProducao = function(numero, produzida) {
 		var url = "";
 		if (produzida == "S") {
-			url = "resources/movimento/ordemProducao/ordemProducaoView.html";
+			url = "movimento/ordemProducao/ordemProducaoView.html";
 		}else{
-			url = "resources/movimento/ordemProducao/ordemProducao.html"
+			url = "movimento/ordemProducao/ordemProducao.html"
 		}
 		$("#conteudo").load(url, function (){
 			BRIGADERIA.ordemProducao.exibirEdicao(numero, produzida);

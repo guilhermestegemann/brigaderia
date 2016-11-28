@@ -44,7 +44,7 @@ $(document).ready(function() {
 			data: newPedido,
 			success : function (sucesso) {
 				bootbox.alert(sucesso);
-				carregarConteudo ('resources/gerenciar/pedidoVenda/gerenciarPedidoVenda.html');
+				carregarConteudo ('gerenciar/pedidoVenda/gerenciarPedidoVenda.html');
 			},
 			error : function (err) {
 				bootbox.alert(err.responseText);
@@ -90,7 +90,7 @@ $(document).ready(function() {
 			data: pedido,
 			success : function(sucesso) {
 				bootbox.alert(sucesso);
-				carregarConteudo ('resources/gerenciar/pedidoVenda/gerenciarPedidoVenda.html');
+				carregarConteudo ('gerenciar/pedidoVenda/gerenciarPedidoVenda.html');
 			},
 			error : function (err) {
 				bootbox.alert(err.responseText);

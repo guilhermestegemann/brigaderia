@@ -68,13 +68,13 @@ $(document).ready( function () {
 	});
 	
 	BRIGADERIA.gerenciarPerda.lancarPerda = function() {
-		$("#conteudo").load("resources/movimento/perdas/perdas.html", function (){
+		$("#conteudo").load("movimento/perdas/perdas.html", function (){
 		BRIGADERIA.perda.exibirFormulario();
 		});
 	};
 	
 	BRIGADERIA.gerenciarPerda.visualizarPerda = function(numero) {
-		$("#conteudo").load("resources/movimento/perdas/perdasView.html", function (){
+		$("#conteudo").load("movimento/perdas/perdasView.html", function (){
 			BRIGADERIA.perda.exibirEdicao(numero);
 		});	
 	};

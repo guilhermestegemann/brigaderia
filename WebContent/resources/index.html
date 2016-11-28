@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Brigaderia</title>
+
+  <!-- Bootstrap -->
+  <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/css/datepicker.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="index.css">
+  <script src="../assets/js/jquery-2.1.4.min.js"></script>
+  <script src="../assets/js/jquery.mask.min.js"></script>
+  <script src="../assets/js/bootstrap.min.js"></script>
+  <script src="../assets/js/bootstrap-datepicker.js"></script>
+  <script type="text/javascript" src="js/ajax.js"></script>
+  <script type="text/javascript" src="index.js"></script>
+  <script type="text/javascript" src="../assets/js/bootbox.min.js"></script>
+  <script type="text/javascript" src="js/convertData.js"></script>
+  <script type="text/javascript" src="js/validarDataFiltro.js"></script>
+
+</head>
+<body>
+
+ <!-- Single button -->
+
+ <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" >
+        <img alt="Brand" src="../imagem/doceVida.jpg" height="30" width="50">
+      </a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cadastro<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a  onclick= "carregarConteudo('gerenciar/clientes/gerenciarClientes.html')">Clientes</a></li>
+            <li><a  onclick= "carregarConteudo('gerenciar/produtos/gerenciarProdutos.html')">Produtos</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Faturamento<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a  onclick= "carregarConteudo('gerenciar/pedidoCompra/gerenciarPedidoCompra.html')">Pedido de Compra</a></li>
+            <li><a  onclick= "carregarConteudo('gerenciar/pedidoVenda/gerenciarPedidoVenda.html')">Pedido de Venda</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Movimento<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a  onclick= "carregarConteudo('gerenciar/ordemProducao/gerenciarOrdemProducao.html')">Ordem Produção</a></li>
+            <li><a  onclick= "carregarConteudo('gerenciar/perdas/gerenciarPerdas.html')">Perdas</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Relatórios<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a  onclick= "carregarConteudo('relatorios/sugestaoCompra/sugestaoCompra.html')">Sugestão Compras</a></li>
+            <li><a  onclick= "carregarConteudo('relatorios/vendas/vendas.html')">Vendas</a></li>
+            <li><a  onclick= "carregarConteudo('relatorios/estoque/estoque.html')">Estoque</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Gráficos<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a  onclick= "carregarConteudo('graficos/vendas.html')">Vendas</a></li>
+          </ul>
+        </li>
+      </ul>
+      <div class="menu-login">
+        <div class="bs-example">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="../LoginServlet?acao=logout">Logout</a></li>
+          </ul>
+          <div id="myModal" class="modal fade">
+          	<div class="modal-dialog">
+              <div class="modal-content"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<div id="conteudo"></div>
+<div id="subConteudo"></div>
+
+</body>
+</html>

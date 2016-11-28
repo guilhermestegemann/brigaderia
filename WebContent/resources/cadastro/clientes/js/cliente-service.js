@@ -29,6 +29,7 @@ $(document).ready(function() {
 	};
 	
 	BRIGADERIA.clienteService.listar = function(cfg){
+
 		cfg.url = "rest/clientes/buscarClientes/" + cfg.valorBusca + "/" + cfg.ativo;
 		BRIGADERIA.ajax.get(BRIGADERIA.clienteService.defaultCfg(cfg));
 	};
@@ -39,7 +40,7 @@ $(document).ready(function() {
 			data: cliente,
 			success : function (sucesso) {
 				bootbox.alert(sucesso);
-				carregarConteudo ('resources/gerenciar/clientes/gerenciarClientes.html');
+				carregarConteudo ('gerenciar/clientes/gerenciarClientes.html');
 			},
 			error : function (err) {
 				bootbox.alert(err.responseText);
@@ -54,7 +55,7 @@ $(document).ready(function() {
 			data: cliente,
 			success : function(sucesso) {
 				bootbox.alert(sucesso);
-				carregarConteudo ('resources/gerenciar/clientes/gerenciarClientes.html');
+				carregarConteudo ('gerenciar/clientes/gerenciarClientes.html');
 			},
 			error : function (err) {
 				bootbox.alert(err.responseText);

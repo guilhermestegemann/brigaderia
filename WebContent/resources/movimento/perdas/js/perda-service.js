@@ -39,7 +39,7 @@ $(document).ready(function() {
 			data: newPerda,
 			success : function (sucesso) {
 				bootbox.alert(sucesso.replace("\n","<br>"));
-				carregarConteudo('resources/gerenciar/perdas/gerenciarPerdas.html');
+				carregarConteudo('gerenciar/perdas/gerenciarPerdas.html');
 			},
 			error : function (err) {
 				bootbox.alert(err.responseText);
