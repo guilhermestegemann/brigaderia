@@ -5,7 +5,7 @@ $(document).ready(function() {
 	$("#subConteudo").text("");
 	
 	BRIGADERIA.gerenciarProdutos.cadastrarProduto = function() {
-		$("#conteudo").load("resources/cadastro/produtos/produtos.html", function (){
+		$("#conteudo").load("cadastro/produtos/produtos.html", function (){
 		BRIGADERIA.produtos.exibirFormulario();
 		});
 	};
@@ -77,7 +77,7 @@ $(document).ready(function() {
 	}
 	
 	BRIGADERIA.gerenciarProdutos.editarProduto = function (codigoProduto, tipoItem) {
-		$("#conteudo").load("resources/cadastro/produtos/produtos.html", function (){
+		$("#conteudo").load("cadastro/produtos/produtos.html", function (){
 			BRIGADERIA.produtos.exibirEdicao(codigoProduto, tipoItem);
 		});	
 	};

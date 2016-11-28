@@ -81,7 +81,7 @@ public class LoginServlet extends HttpServlet {
 					sessao.setAttribute("id", user.getId());
 					
 					// como obtive sucesso, chamo a página principal
-					response.sendRedirect(context+"/index.html");
+					response.sendRedirect(context+"/resources/index.html");
 					
 				} else {
 					

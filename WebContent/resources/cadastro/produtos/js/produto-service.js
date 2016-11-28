@@ -36,7 +36,7 @@ $(document).ready(function() {
 			data: produto,
 			success : function (sucesso) {
 				bootbox.alert(sucesso);
-				carregarConteudo ('resources/gerenciar/produtos/gerenciarProdutos.html');
+				carregarConteudo ('gerenciar/produtos/gerenciarProdutos.html');
 			},
 			error : function (err) {
 				bootbox.alert(err.responseText);
@@ -67,7 +67,7 @@ $(document).ready(function() {
 			data: produto,
 			success : function(sucesso) {
 				bootbox.alert(sucesso);
-				carregarConteudo ('resources/gerenciar/produtos/gerenciarProdutos.html');
+				carregarConteudo ('gerenciar/produtos/gerenciarProdutos.html');
 			},
 			error : function (err) {
 				bootbox.alert(err.responseText);

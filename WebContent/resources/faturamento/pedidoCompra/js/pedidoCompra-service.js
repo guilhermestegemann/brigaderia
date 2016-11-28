@@ -39,7 +39,7 @@ $(document).ready(function() {
 			data: newPedido,
 			success : function (sucesso) {
 				bootbox.alert(sucesso);
-				carregarConteudo ('resources/gerenciar/pedidoCompra/gerenciarPedidoCompra.html');
+				carregarConteudo ('gerenciar/pedidoCompra/gerenciarPedidoCompra.html');
 			},
 			error : function (err) {
 				bootbox.alert(err.responseText);

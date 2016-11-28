@@ -8,18 +8,18 @@
   <title>Brigaderia</title>
 
   <!-- Bootstrap -->
-  <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/css/datepicker.css" rel="stylesheet">
+  <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/css/datepicker.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="index.css">
-  <script src="assets/js/jquery-2.1.4.min.js"></script>
-  <script src="assets/js/jquery.mask.min.js"></script>
-  <script src="assets/js/bootstrap.min.js"></script>
-  <script src="assets/js/bootstrap-datepicker.js"></script>
-  <script type="text/javascript" src="resources/js/ajax.js"></script>
+  <script src="../assets/js/jquery-2.1.4.min.js"></script>
+  <script src="../assets/js/jquery.mask.min.js"></script>
+  <script src="../assets/js/bootstrap.min.js"></script>
+  <script src="../assets/js/bootstrap-datepicker.js"></script>
+  <script type="text/javascript" src="js/ajax.js"></script>
   <script type="text/javascript" src="index.js"></script>
-  <script type="text/javascript" src="assets/js/bootbox.min.js"></script>
-  <script type="text/javascript" src="resources/js/convertData.js"></script>
-  <script type="text/javascript" src="resources/js/validarDataFiltro.js"></script>
+  <script type="text/javascript" src="../assets/js/bootbox.min.js"></script>
+  <script type="text/javascript" src="js/convertData.js"></script>
+  <script type="text/javascript" src="js/validarDataFiltro.js"></script>
 
 </head>
 <body>
@@ -37,7 +37,7 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" >
-        <img alt="Brand" src="imagem/doceVida.jpg" height="30" width="50">
+        <img alt="Brand" src="../imagem/doceVida.jpg" height="30" width="50">
       </a>
     </div>
 
@@ -47,36 +47,36 @@
         <li class="dropdown">
           <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cadastro<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a  onclick= "carregarConteudo('resources/gerenciar/clientes/gerenciarClientes.html')">Clientes</a></li>
-            <li><a  onclick= "carregarConteudo('resources/gerenciar/produtos/gerenciarProdutos.html')">Produtos</a></li>
+            <li><a  onclick= "carregarConteudo('gerenciar/clientes/gerenciarClientes.html')">Clientes</a></li>
+            <li><a  onclick= "carregarConteudo('gerenciar/produtos/gerenciarProdutos.html')">Produtos</a></li>
           </ul>
         </li>
         <li class="dropdown">
           <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Faturamento<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a  onclick= "carregarConteudo('resources/gerenciar/pedidoCompra/gerenciarPedidoCompra.html')">Pedido de Compra</a></li>
-            <li><a  onclick= "carregarConteudo('resources/gerenciar/pedidoVenda/gerenciarPedidoVenda.html')">Pedido de Venda</a></li>
+            <li><a  onclick= "carregarConteudo('gerenciar/pedidoCompra/gerenciarPedidoCompra.html')">Pedido de Compra</a></li>
+            <li><a  onclick= "carregarConteudo('gerenciar/pedidoVenda/gerenciarPedidoVenda.html')">Pedido de Venda</a></li>
           </ul>
         </li>
         <li class="dropdown">
           <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Movimento<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a  onclick= "carregarConteudo('resources/gerenciar/ordemProducao/gerenciarOrdemProducao.html')">Ordem Produção</a></li>
-            <li><a  onclick= "carregarConteudo('resources/gerenciar/perdas/gerenciarPerdas.html')">Perdas</a></li>
+            <li><a  onclick= "carregarConteudo('gerenciar/ordemProducao/gerenciarOrdemProducao.html')">Ordem Produção</a></li>
+            <li><a  onclick= "carregarConteudo('gerenciar/perdas/gerenciarPerdas.html')">Perdas</a></li>
           </ul>
         </li>
         <li class="dropdown">
           <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Relatórios<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a  onclick= "carregarConteudo('resources/relatorios/sugestaoCompra/sugestaoCompra.html')">Sugestão Compras</a></li>
-            <li><a  onclick= "carregarConteudo('resources/relatorios/vendas/vendas.html')">Vendas</a></li>
-            <li><a  onclick= "carregarConteudo('resources/relatorios/estoque/estoque.html')">Estoque</a></li>
+            <li><a  onclick= "carregarConteudo('relatorios/sugestaoCompra/sugestaoCompra.html')">Sugestão Compras</a></li>
+            <li><a  onclick= "carregarConteudo('relatorios/vendas/vendas.html')">Vendas</a></li>
+            <li><a  onclick= "carregarConteudo('relatorios/estoque/estoque.html')">Estoque</a></li>
           </ul>
         </li>
         <li class="dropdown">
           <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Gráficos<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a  onclick= "carregarConteudo('resources/graficos/vendas.html')">Vendas</a></li>
+            <li><a  onclick= "carregarConteudo('graficos/vendas.html')">Vendas</a></li>
           </ul>
         </li>
       </ul>

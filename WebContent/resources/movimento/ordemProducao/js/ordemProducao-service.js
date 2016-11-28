@@ -44,7 +44,7 @@ $(document).ready(function() {
 			data: newPerda,
 			success : function (sucesso) {
 				bootbox.alert(sucesso);
-				carregarConteudo('resources/gerenciar/ordemProducao/gerenciarOrdemProducao.html');
+				carregarConteudo('gerenciar/ordemProducao/gerenciarOrdemProducao.html');
 			},
 			error : function (err) {
 				bootbox.alert(err.responseText);
@@ -70,7 +70,7 @@ $(document).ready(function() {
 			data : ordemProducao,
 			success : function(sucesso){
 				bootbox.alert(sucesso);
-				carregarConteudo('resources/gerenciar/ordemProducao/gerenciarOrdemProducao.html');
+				carregarConteudo('gerenciar/ordemProducao/gerenciarOrdemProducao.html');
 			},
 			error: function(err){
 				bootbox.alert(err.responseText);

@@ -106,7 +106,7 @@ $(document).ready( function () {
 	});
 	
 	BRIGADERIA.gerenciarPedidoVenda.lancarPedido = function() {
-		$("#conteudo").load("resources/faturamento/pedidoVenda/pedidoVenda.html", function (){
+		$("#conteudo").load("faturamento/pedidoVenda/pedidoVenda.html", function (){
 		BRIGADERIA.pedidoVenda.exibirFormulario();
 		});
 	};
@@ -114,9 +114,9 @@ $(document).ready( function () {
 	BRIGADERIA.gerenciarPedidoVenda.visualizarPedido = function(numero, faturado) {
 		var url = "";
 		if (faturado == "S") {
-			url = "resources/faturamento/pedidoVenda/pedidoVendaView.html";
+			url = "faturamento/pedidoVenda/pedidoVendaView.html";
 		}else{
-			url = "resources/faturamento/pedidoVenda/pedidoVenda.html"
+			url = "faturamento/pedidoVenda/pedidoVenda.html"
 		}
 		$("#conteudo").load(url, function (){
 			BRIGADERIA.pedidoVenda.exibirEdicao(numero, faturado);

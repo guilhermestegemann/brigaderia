@@ -66,13 +66,13 @@ $(document).ready( function () {
 	});
 	
 	BRIGADERIA.gerenciarPedidoCompra.lancarPedido = function() {
-		$("#conteudo").load("resources/faturamento/pedidoCompra/pedidoCompra.html", function (){
+		$("#conteudo").load("faturamento/pedidoCompra/pedidoCompra.html", function (){
 		BRIGADERIA.pedidoCompra.exibirFormulario();
 		});
 	};
 	
 	BRIGADERIA.gerenciarPedidoCompra.visualizarPedido = function(numero) {
-		$("#conteudo").load("resources/faturamento/pedidoCompra/pedidoCompraView.html", function (){
+		$("#conteudo").load("faturamento/pedidoCompra/pedidoCompraView.html", function (){
 			BRIGADERIA.pedidoCompra.exibirEdicao(numero);
 		});	
 	};

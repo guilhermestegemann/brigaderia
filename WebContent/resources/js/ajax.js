@@ -4,6 +4,8 @@ BRIGADERIA = new Object();
 //Criando o sub-objeto ajax do objeto SENAI.
 BRIGADERIA.ajax = new Object();
 
+BRIGADERIA.url = "/Brigaderia/"
+
 //Processa o pedido, solicitação HTTP Ajax a ser recebido pelo Rest.
 
 function ajaxRequestDefault() {
@@ -65,7 +67,7 @@ BRIGADERIA.ajax.post = function(cfg){
 	 * se isto se confirmar retorna o objeto cfg e o armazena também em outro objeto cfg que será fundido no objeto config para que
 	 * uma solicitação, pedido HTTP, Ajax seja enviada para um recurso Rest.
 	 */
-	
+	cfg.url = BRIGADERIA.url + cfg.url;
 	cfg = verifyObjectData(cfg);
 	/* Fundindo os objetos def e cfg e armazenando seus respectivos valores em config.*/
 	
@@ -79,6 +81,7 @@ BRIGADERIA.ajax.post = function(cfg){
 
 BRIGADERIA.ajax.get = function(cfg){
 	var def = new  ajaxRequestDefault();
+	cfg.url = BRIGADERIA.url + cfg.url;
 	cfg.type = "GET";
 	cfg = verifyObjectData(cfg);
 	var config = $.extend(def, cfg);
@@ -87,6 +90,7 @@ BRIGADERIA.ajax.get = function(cfg){
 
 BRIGADERIA.ajax.put = function(cfg){
 	var def = new  ajaxRequestDefault();
+	cfg.url = BRIGADERIA.url + cfg.url;
 	cfg.type = "PUT";
 	cfg = verifyObjectData(cfg);
 	var config = $.extend(def, cfg);
@@ -95,6 +99,7 @@ BRIGADERIA.ajax.put = function(cfg){
 
 BRIGADERIA.ajax.del = function(cfg){
 	var def = new  ajaxRequestDefault();
+	cfg.url = BRIGADERIA.url + cfg.url;
 	cfg.type = "DELETE";
 	cfg = verifyObjectData(cfg);
 	var config = $.extend(def, cfg);

@@ -80,13 +80,13 @@ $(document).ready(function() {
 	}
 	
 	BRIGADERIA.gerenciarClientes.editarCliente = function (codigo) {
-		$("#conteudo").load("resources/cadastro/clientes/clientes.html", function (){
+		$("#conteudo").load("cadastro/clientes/clientes.html", function (){
 			BRIGADERIA.clientes.exibirEdicao(codigo);
 		});	
 	};
 	
 	BRIGADERIA.gerenciarClientes.cadastrarCliente = function () {
-		$("#conteudo").load("resources/cadastro/clientes/clientes.html", function (){
+		$("#conteudo").load("cadastro/clientes/clientes.html", function (){
 			BRIGADERIA.clientes.exibirFormulario();
 		});
 	};
