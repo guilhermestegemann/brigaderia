@@ -89,15 +89,16 @@ public class LoginServlet extends HttpServlet {
 					request.setAttribute("msg", "Usuario ou senha incorretos!!!");
 					System.out.println("Usuario ou senha incorretos!");
 					
-					//response.sendRedirect(context+"/index.jsp?erro=1");
-					RequestDispatcher rd = request.getRequestDispatcher("/index.jsp?erro=1");
-					rd.forward(request, response);
+					response.sendRedirect(context+"/login.html?login=invalid");
+					
+					//RequestDispatcher rd = request.getRequestDispatcher("/login?erro=1");
+					//rd.forward(request, response);
 				}
 				
 			}else if(request.getParameter("acao").equals("logout")) {
 				HttpSession sessao = request.getSession();
 				sessao.invalidate();
-				response.sendRedirect(context+"/index.jsp");
+				response.sendRedirect(context+"/login.html");
 			}
 			
 		}catch(Exception e){

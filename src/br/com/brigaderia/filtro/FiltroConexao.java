@@ -63,7 +63,7 @@ public class FiltroConexao implements Filter {
 				 * do contexto ja posiciona no inicio da URL.
 				 */
 				
-				//((HttpServletResponse) response).sendRedirect(contextPath+"/login.html");
+				((HttpServletResponse) response).sendRedirect(contextPath+"/login.html");
 				
 			}else{
 				/*

@@ -12,4 +12,8 @@ $(document).ready(function(){
 			return;
 		}
 	});
+	if (window.location.search){
+		$("#retorno").text("Usuário e senha inválidos. Tente novamente.");
+	}
+	
 });
