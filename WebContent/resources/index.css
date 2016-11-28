@@ -1,42 +1,42 @@
 body {
-	background-color: #497173;
+	background-color: rgba(193, 191, 191, 0.43);
 }
 
 .jumbotron{
 	background-color:transparent !important;
-	color: white;
+	color: black;
 	padding-top:0px;
 	padding-left: 10px;
 }
 
 .navbar {
-	background-color: #273A76;
-	box-shadow: inset 0px -5px 0px 0px #273A76;
+	background-color: #bbc4c2;
+	box-shadow: inset 0px -5px 0px 0px #bbc4c2;
 	border-width: 0px;
 }
 
 
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
-	background-color: #51669B;
-	color: white;
+	background-color: #7b7f88;
+	color: black;
 
 }
 
 .navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover {
-	color: white;
+	color: black;
 
 }
 
 .dropdown-menu > li > a:focus, .dropdown-menu > li > a:hover {
-	background-color: #51669B;
+	background-color: #7b7f88;
 }
 
 .navbar-default .navbar-nav > li > a {
-	color: white;
+	color: black;
 }
 
 .dropdown-toggle {
-	color: white;
+	color: black;
 }
 
 
@@ -56,7 +56,7 @@ body {
 }
 
 .table th, .table td {
-	color: white;
+	color: black;
 	text-align: center;
 }
 
