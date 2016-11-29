@@ -133,7 +133,7 @@ public class JDBCOrdemProducaoDAO implements OrdemProducaoDAO {
 	public List<ItemOrdemProducao> buscarItensOrdem(int numero) throws SQLException  {
 		
 		List<ItemOrdemProducao> listItemOrdem = new ArrayList<ItemOrdemProducao>();
-		String comando = "SELECT IO.PRODUTO, P.DESCRICAO, P.UNESTOQUE, P.ESTOQUE, P.VALORCUSTO, IO.QTDE "
+		String comando = "SELECT IO.PRODUTO, P.DESCRICAO, P.UNESTOQUE, P.ESTOQUE, P.VALORCUSTO, P.VALORVENDA, IO.QTDE "
 				       + "FROM ITEMORDEMPRODUCAO IO "
 				       + "INNER JOIN PRODUTO P ON P.CODIGO = IO.PRODUTO "
 				       + "WHERE IO.ORDEMPRODUCAO = " + numero;
@@ -147,6 +147,7 @@ public class JDBCOrdemProducaoDAO implements OrdemProducaoDAO {
 			itemOrdem.setUnEstoque(rs.getString("UNESTOQUE"));
 			itemOrdem.setEstoque(rs.getFloat("ESTOQUE"));
 			itemOrdem.setValorCusto(rs.getFloat("VALORCUSTO"));
+			itemOrdem.setValorVenda(rs.getFloat("VALORVENDA"));
 			itemOrdem.setQtde(rs.getFloat("QTDE"));
 			listItemOrdem.add(itemOrdem);
 		}

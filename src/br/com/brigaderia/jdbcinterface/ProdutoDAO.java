@@ -16,6 +16,7 @@ public interface ProdutoDAO {
 	public void deletar(int codigo) throws SQLException;
 	public void atualizarEstoque(int codProduto, float unitario, float margem) throws SQLException;
 	public void atualizarCusto(int codProduto, float custo) throws SQLException;
+	public void atualizarMargem(int codProduto, float margem) throws SQLException;
 	public void movimentaEstoque (int codProduto, float qtde) throws SQLException;
 
 }

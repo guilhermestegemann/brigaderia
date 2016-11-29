@@ -118,7 +118,7 @@ $(document).ready(function() {
 				if (produto.tipoItem == "1") {
 					$("#btnSalvarProduto").hide();
 					$("#btnCancelarProduto").hide();
-					$("#subConteudo").load("resources/cadastro/fichaTecnica/fichaTecnica.html", function (){//passar id da div como parametro
+					$("#subConteudo").load("cadastro/fichaTecnica/fichaTecnica.html", function (){//passar id da div como parametro
 						BRIGADERIA.fichaTecnica.exibirFormulario("Edição");//passar funcao de callback como parametro;
 					});
 				}else if (produto.tipoItem == "2"){

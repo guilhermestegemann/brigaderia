@@ -176,6 +176,15 @@ public void atualizarCusto(int codProduto, float custo) throws SQLException  {
 		PreparedStatement p = this.conexao.prepareStatement(update);
 		p.execute();
 	}
+
+public void atualizarMargem(int codProduto, float margem) throws SQLException  {
+	
+	String update = "UPDATE PRODUTO SET PRODUTO.MARGEM = " + margem
+				  + " WHERE PRODUTO.CODIGO = " + codProduto;		
+	
+	PreparedStatement p = this.conexao.prepareStatement(update);
+	p.execute();
+}
 	
 	public void movimentaEstoque (int codProduto, float qtde) throws SQLException  {
 		String update = "UPDATE PRODUTO SET PRODUTO.ESTOQUE = ESTOQUE + " + qtde + " WHERE PRODUTO.CODIGO = " + codProduto;

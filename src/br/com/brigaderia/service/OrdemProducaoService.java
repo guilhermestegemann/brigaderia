@@ -249,6 +249,7 @@ public class OrdemProducaoService {
 					
 				}
 				jdbcProduto.atualizarCusto(itemOrdemProducao.getCodigoProduto(), novoCusto);
+				jdbcProduto.atualizarMargem(itemOrdemProducao.getCodigoProduto(), ((itemOrdemProducao.getValorVenda() / novoCusto)-1)*100);
 				jdbcProduto.movimentaEstoque(itemOrdemProducao.getCodigoProduto(), itemOrdemProducao.getQtde());
 			}
 			Date hoje  = new Date();

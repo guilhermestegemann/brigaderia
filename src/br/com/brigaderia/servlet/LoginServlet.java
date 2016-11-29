@@ -3,7 +3,6 @@ package br.com.brigaderia.servlet;
 import java.io.IOException;
 import java.sql.Connection;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -91,8 +90,6 @@ public class LoginServlet extends HttpServlet {
 					
 					response.sendRedirect(context+"/login.html?login=invalid");
 					
-					//RequestDispatcher rd = request.getRequestDispatcher("/login?erro=1");
-					//rd.forward(request, response);
 				}
 				
 			}else if(request.getParameter("acao").equals("logout")) {
