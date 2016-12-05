@@ -157,6 +157,7 @@ $(document).ready(function(){
 					bootbox.alert("A consulta não retornou nenhuma informação, verifique os filtros aplicados e tente novamente.");
 				}else{
 					var totalVenda = 0;
+					var margem = 0;
 					var html = "";
 					var cabecalho = "<thead>"
 									+"<tr>"
@@ -175,13 +176,18 @@ $(document).ready(function(){
 						totalVenda = parseFloat(totalVenda) + parseFloat(vendasPorCliente[i].total);
 					}
 					for (var i = 0; i < vendasPorCliente.length; i++){
+						if (vendasPorCliente[i].custo > 0) {
+							margem = parseFloat(((parseFloat(vendasPorCliente[i].total) - parseFloat(vendasPorCliente[i].custo)) / parseFloat(vendasPorCliente[i].custo)*100)).toFixed(2);
+						}else{
+							margem = 100,00;
+						}
 						html += "<tr>"
 							+ "<td>"+ vendasPorCliente[i].codigo +"</td>"
 							+ "<td>"+ vendasPorCliente[i].nome +"</td>"
 							+ "<td>"+ vendasPorCliente[i].pedidos +"</td>"
 							+ "<td>"+ parseFloat(vendasPorCliente[i].valorMedioPedido).toFixed(2) +"</td>"
 							+ "<td>"+ parseFloat(vendasPorCliente[i].custo).toFixed(2) +"</td>"
-							+ "<td>"+ parseFloat(((parseFloat(vendasPorCliente[i].total) - parseFloat(vendasPorCliente[i].custo)) / parseFloat(vendasPorCliente[i].custo)*100)).toFixed(2) +"%</td>"
+							+ "<td>"+ margem +"%</td>"
 							+ "<td>"+ parseFloat(vendasPorCliente[i].total).toFixed(2) +"</td>"
 							+ "<td>"+ parseFloat((parseFloat(vendasPorCliente[i].total) / parseFloat(totalVenda)) * 100).toFixed(2) +"%</td>"
 						+"</tr>";

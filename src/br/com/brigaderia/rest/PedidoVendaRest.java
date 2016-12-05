@@ -36,7 +36,7 @@ public class PedidoVendaRest extends UtilRest{
 			PedidoVenda pedidoVenda = new ObjectMapper().readValue(param, PedidoVenda.class);
 			PedidoVendaService service = new PedidoVendaService();
 			service.adicionarPedido(pedidoVenda);
-			return buildResponse("Pedido de Compra lançado com sucesso.");
+			return buildResponse("Pedido de Venda lançado com sucesso.");
 		}catch (BrigaderiaException e){
 			return buildErrorResponse(e.getMessage());
 		}catch (Exception e) {

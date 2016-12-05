@@ -62,7 +62,6 @@ public class FiltroConexao implements Filter {
 				 * "../../" para informar o caminho da p�gina index.html, a variavel
 				 * do contexto ja posiciona no inicio da URL.
 				 */
-				
 				((HttpServletResponse) response).sendRedirect(contextPath+"/login.html");
 				
 			}else{

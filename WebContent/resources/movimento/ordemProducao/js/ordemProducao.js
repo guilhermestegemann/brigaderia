@@ -91,7 +91,6 @@ $(document).ready(function (){
 		}
 		
 		$(handler).closest('tr').remove();//exclui o tr mais proximo.
-		window.event.preventDefault();
 		$('#produtos').append('<option value="' + codigo + '" selected="unselected">' + descricao + '</option>');
 	};
 	
@@ -109,7 +108,6 @@ $(document).ready(function (){
 					}
 					
 					$(handler).closest('tr').remove();//exclui o tr mais proximo.
-					//window.event.preventDefault();
 					$('#produtos').append('<option value="' + codigo + '">' + descricao + '</option>');
 				}
 			}
@@ -176,7 +174,7 @@ $(document).ready(function (){
 		});	
 	};
 	
-	/*BRIGADERIA.ordemProducao.importarPedidos = function(){
+	BRIGADERIA.ordemProducao.importarPedidos = function(){
 		BRIGADERIA.ordemProducaoService.listarPedidosImportacao ({
 			success : function (listaPedido) {
 				console.log(listaPedido);
@@ -185,6 +183,6 @@ $(document).ready(function (){
 				console.log(error);
 			}
 		})
-	};*/
+	};
 	
 });

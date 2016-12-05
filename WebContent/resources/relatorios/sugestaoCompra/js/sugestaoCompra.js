@@ -23,6 +23,7 @@ $(document).ready(function(){
 	}
 	
 	BRIGADERIA.sugestaoCompra.gerarSugestao = function (){
+		$("#resultadoSugestaoCompra tbody").text("");
 		var dataInicio = $("#dataInicio").val();
 		var dataFim = $("#dataFim").val();
 		if (dataInicio == "") {

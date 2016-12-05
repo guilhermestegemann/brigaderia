@@ -120,7 +120,6 @@ $(document).ready( function () {
 		}
 		
 		$(handler).closest('tr').remove();//exclui o tr mais proximo.
-		window.event.preventDefault();
 		$('#produtos').append('<option value="' + codigo + '" selected="unselected">' + descricao + '</option>');
 		$("#totalPedidoCompra").val(parseFloat(parseFloat($("#totalPedidoCompra").val()) - parseFloat(totalItem)).toFixed(2)) //diminui do total do pedido.
 	};
@@ -139,7 +138,6 @@ $(document).ready( function () {
 					}
 					
 					$(handler).closest('tr').remove();//exclui o tr mais proximo.
-					//window.event.preventDefault();
 					$('#produtos').append('<option value="' + codigo + '">' + descricao + '</option>');
 					$("#totalPedidoCompra").val(parseFloat(parseFloat($("#totalPedidoCompra").val()) - parseFloat(totalItem)).toFixed(2)) //diminui do total do pedido.
 				}

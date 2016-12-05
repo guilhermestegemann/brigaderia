@@ -130,7 +130,6 @@ $(document).ready( function () {
 		}
 		
 		$(handler).closest('tr').remove();//exclui o tr mais proximo.
-		window.event.preventDefault();
 		$('#ingredientes').append('<option value="' + codigo + '" selected="unselected">' + descricao + '</option>');
 		$("#totalPerda").val(parseFloat(parseFloat($("#totalPerda").val()) - parseFloat(totalItem)).toFixed(2)) //diminui do total do pedido.
 	};
@@ -149,7 +148,6 @@ $(document).ready( function () {
 					}
 					
 					$(handler).closest('tr').remove();//exclui o tr mais proximo.
-					//window.event.preventDefault();
 					$('#ingredientes').append('<option value="' + codigo + '">' + descricao + '</option>');
 					$("#totalPerda").val(parseFloat(parseFloat($("#totalPerda").val()) - parseFloat(totalItem)).toFixed(2)) //diminui do total do pedido.
 				}

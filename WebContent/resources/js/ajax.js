@@ -6,6 +6,12 @@ BRIGADERIA.ajax = new Object();
 
 BRIGADERIA.url = "/Brigaderia/"
 
+	
+$(document).ajaxError(function(event, xhr, settings){
+	if (xhr.status == 200 && xhr.state() == "rejected"){
+		window.location = BRIGADERIA.url + "login.html";
+	}
+});
 //Processa o pedido, solicitação HTTP Ajax a ser recebido pelo Rest.
 
 function ajaxRequestDefault() {

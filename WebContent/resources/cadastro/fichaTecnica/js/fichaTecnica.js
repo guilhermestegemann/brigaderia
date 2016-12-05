@@ -156,7 +156,6 @@ $(document).ready(function(){
 		}
 		
 		$(handler).closest('tr').remove();//exclui o tr mais proximo.
-		window.event.preventDefault();
 		$('#ingrediente').append('<option value="' + codigo + '" selected="unselected">' + descricao + '</option>');
 	};
 	
@@ -175,7 +174,6 @@ $(document).ready(function(){
 					}
 					
 					$(handler).closest('tr').remove();
-					window.event.preventDefault();
 					$("#ingrediente").append('<option value="' + codigo + '" selected="selected">' + descricao + '</option>');
 				}
 			}

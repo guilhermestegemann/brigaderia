@@ -13,7 +13,7 @@ $(document).ready(function() {
 			$("#dataCadastro").val("");
 			$("#btnSalvarProduto").hide();
 			$("#btnCancelarProduto").hide();
-			$("#subConteudo").load("resources/cadastro/fichaTecnica/fichaTecnica.html", function (){
+			$("#subConteudo").load("cadastro/fichaTecnica/fichaTecnica.html", function (){
 				BRIGADERIA.fichaTecnica.exibirFormulario();
 			});
 		}else{

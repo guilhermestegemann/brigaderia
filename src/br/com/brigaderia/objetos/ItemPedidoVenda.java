@@ -8,7 +8,6 @@ public class ItemPedidoVenda extends Produto{
 	private static final long serialVersionUID = 1L;
 	
 	private float qtde;
-	private float custo;
 	private float unitario;
 	private float total;
 	
@@ -18,12 +17,7 @@ public class ItemPedidoVenda extends Produto{
 	public void setUnitario(float unitario) {
 		this.unitario = unitario;
 	}
-	public float getCusto() {
-		return custo;
-	}
-	public void setCusto(float custo) {
-		this.custo = custo;
-	}
+
 	public float getTotal() {
 		return total;
 	}

@@ -48,19 +48,19 @@ public class LoginServlet extends HttpServlet {
 				// Recupera o login e senha do usuario
 				String usuario = request.getParameter("usuario");
 				String senhabase64 = request.getParameter("senha");
-				System.out.println("Enviada  "+senhabase64);
+				
 				// Descriptografa senha base64
 				String senha = null;
 				CodificaBase64 base64 = new CodificaBase64();
 				senha = base64.decrypBase64(senhabase64);
-				System.out.println("decript   "+senha);
+				
 				// Criptografa senha para MD5
 				String senhamd5 = null;
 				CodificaMD5 md5 = new CodificaMD5();
 				senhamd5 = md5.convertToMD5(senha);
 				
 				
-				System.out.println(" md5  "+senhamd5);
+				
 				
 				// Abre conexao com bd
 				Conexao conec = new Conexao();
