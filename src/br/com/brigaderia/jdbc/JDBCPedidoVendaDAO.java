@@ -66,8 +66,9 @@ public class JDBCPedidoVendaDAO implements PedidoVendaDAO{
 	
 	public void adicionarProdutos(int numeroPedido, int codProduto, float qtde, float unitario, float total) {
 		
-		String comando = "INSERT INTO ITEMPEDIDO (NUMERO, PRODUTO, QTDE, UNITARIO, TOTAL, CUSTO) "
-				       + " VALUES (?,?,?,?,?, (SELECT PRODUTO.VALORCUSTO FROM PRODUTO WHERE PRODUTO.CODIGO = "+codProduto+"))";
+		String comando = "INSERT INTO ITEMPEDIDO (NUMERO, PRODUTO, QTDE, UNITARIO, TOTAL, CUSTO, TOTALCUSTO) "
+				       + " VALUES (?,?,?,?,?, (SELECT PRODUTO.VALORCUSTO FROM PRODUTO WHERE PRODUTO.CODIGO = "+codProduto+"),"
+				       		+ "((SELECT PRODUTO.VALORCUSTO FROM PRODUTO WHERE PRODUTO.CODIGO = "+codProduto+")*" +qtde+ "))";
 		PreparedStatement p;
 		try {
 			p = this.conexao.prepareStatement(comando);
