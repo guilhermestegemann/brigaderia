@@ -1,10 +1,30 @@
+function format ( d ) {
+    // `d` is the original data object for the row
+    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+        '<tr>'+
+            '<td>Emissao:</td>'+
+            '<td>'+d.dataEmissao+'</td>'+
+        '</tr>'+
+        '<tr>'+
+            '<td>Nome Cliente:</td>'+
+            '<td>'+d.nomeCliente+'</td>'+
+        '</tr>'+
+        '<tr>'+
+            '<td>Extra info:</td>'+
+            '<td>And any further details here (images etc)...</td>'+
+        '</tr>'+
+    '</table>';
+}
+
+
 BRIGADERIA.ordemProducao = new Object();
 
 $(document).ready(function (){
 	
+	var table; //DataTable
 	var produtos;
 	var produtoArray = []; //utilizado ao inserir produtos no formulario.
-	
+	var pedidos = [];
 	
 	$("#produtos").on('change',function(){
 		for (var i = 0; i < produtos.length; i++) {
@@ -178,11 +198,54 @@ $(document).ready(function (){
 		BRIGADERIA.ordemProducaoService.listarPedidosImportacao ({
 			success : function (listaPedido) {
 				console.log(listaPedido);
+				pedidos = listaPedido;
 			},
 			error : function(error)  {
 				console.log(error);
 			}
-		})
+		});
 	};
+	BRIGADERIA.ordemProducao.importarPedidos();
+	
+	BRIGADERIA.ordemProducao.modal = function(){
+		table = $('#pedidos').DataTable( {
+	        data: pedidos,
+	        "columns": [
+	            {
+	                "className":      'details-control',
+	                "orderable":      false,
+	                "data":           null,
+	                "defaultContent": ''
+	            },
+	            { "data": "numero" },
+	            { "data": "dataEmissao" },
+	            { "data": "nomeCliente" },
+	            { "data": "total" }
+	        ],
+	        "order": [[1, 'asc']]
+	    } );
+	};
+	
+	BRIGADERIA.ordemProducao.fechaTable = function(){
+		table.destroy();
+	};
+	
+	
+	$('#pedidos tbody').on('click', 'td.details-control', function () {
+		alert('oi');
+        var tr = $(this).closest('tr');
+        var row = table.row( tr );
+ 
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        }
+        else {
+            // Open this row
+            row.child( format(row.data()) ).show();
+            tr.addClass('shown');
+        }
+    });
 	
 });

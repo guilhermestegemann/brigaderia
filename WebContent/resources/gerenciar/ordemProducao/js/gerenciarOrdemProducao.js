@@ -254,5 +254,7 @@ $(document).ready(function (){
 	$("#buttonPesquisar").on('click', function(){
 		BRIGADERIA.gerenciarOrdemProducao.buscar();
 	});
+	
+	BRIGADERIA.gerenciarOrdemProducao.buscar();
 });
 

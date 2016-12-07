@@ -64,11 +64,18 @@ public class JDBCPedidoVendaDAO implements PedidoVendaDAO{
     	p.executeUpdate();
 	}
 	
-	public void adicionarProdutos(int numeroPedido, int codProduto, float qtde, float unitario, float total) {
-		
+	public void adicionarProdutos(int numeroPedido, int codProduto, float qtde, float unitario, float total) throws SQLException{
+		float custo = 0;
+		float totalCusto = 0;
+		String sqlCusto = "SELECT VALORCUSTO FROM PRODUTO WHERE CODIGO = " + codProduto;
+		Statement stmt = conexao.createStatement();
+		ResultSet rs = stmt.executeQuery(sqlCusto);
+		if (rs.next()) {
+			custo = rs.getFloat("VALORCUSTO");
+		}
+		totalCusto = custo * qtde;
 		String comando = "INSERT INTO ITEMPEDIDO (NUMERO, PRODUTO, QTDE, UNITARIO, TOTAL, CUSTO, TOTALCUSTO) "
-				       + " VALUES (?,?,?,?,?, (SELECT PRODUTO.VALORCUSTO FROM PRODUTO WHERE PRODUTO.CODIGO = "+codProduto+"),"
-				       		+ "((SELECT PRODUTO.VALORCUSTO FROM PRODUTO WHERE PRODUTO.CODIGO = "+codProduto+")*" +qtde+ "))";
+				       + " VALUES (?,?,?,?,?,?,?)";
 		PreparedStatement p;
 		try {
 			p = this.conexao.prepareStatement(comando);
@@ -77,6 +84,8 @@ public class JDBCPedidoVendaDAO implements PedidoVendaDAO{
 			p.setFloat(3, qtde);
 			p.setFloat(4, unitario);
 			p.setFloat(5, total);
+			p.setFloat(6, custo);
+			p.setFloat(7, totalCusto);
 			p.execute();
 		}catch (SQLException e) {
 			e.printStackTrace();

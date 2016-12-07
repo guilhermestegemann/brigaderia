@@ -168,7 +168,7 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 		p.execute();
 	}
 	
-public void atualizarCusto(int codProduto, float custo) throws SQLException  {
+	public void atualizarCusto(int codProduto, float custo) throws SQLException  {
 		
 		String update = "UPDATE PRODUTO SET PRODUTO.VALORCUSTO = " + custo
 					  + " WHERE PRODUTO.CODIGO = " + codProduto;		
@@ -177,7 +177,7 @@ public void atualizarCusto(int codProduto, float custo) throws SQLException  {
 		p.execute();
 	}
 
-public void atualizarMargem(int codProduto, float margem) throws SQLException  {
+	public void atualizarMargem(int codProduto, float margem) throws SQLException  {
 	
 	String update = "UPDATE PRODUTO SET PRODUTO.MARGEM = " + margem
 				  + " WHERE PRODUTO.CODIGO = " + codProduto;		
