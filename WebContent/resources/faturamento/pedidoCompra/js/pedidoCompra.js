@@ -61,6 +61,8 @@ $(document).ready( function () {
 			bootbox.alert("Selecione o Produto!");
 		}else if (!expNumeros.test($("#qtdeProduto").val().replace(",","").replace(".",""))) {
 			bootbox.alert("Quantida inválida.");
+		}else if (parseFloat($("#qtdeProduto").val().replace(",",".")) == 0){
+			bootbox.alert("Quantidade deve ser maior que zero.");
 		}else if (($("#unitario").val() == "") || ($("#unitario").val() <= 0)) {
 			bootbox.alert("Unitário inválido.");
 		}else{
@@ -90,7 +92,7 @@ $(document).ready( function () {
 				$("#totalPedidoCompra").val(parseFloat(parseFloat($("#totalItemPedidoCompra").val()) + parseFloat($("#totalPedidoCompra").val())).toFixed(2)) // soma o total do pedido.
 				var prod = {
 						codigoProduto: $("#produtos").val(),
-						qtde: $("#qtdeProduto").val(),
+						qtde: $("#qtdeProduto").val().replace(",","."),
 						unitario: $("#unitario").val(),
 						total: $("#totalItemPedidoCompra").val()
 				} ;

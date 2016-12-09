@@ -1,19 +1,29 @@
 function format ( d ) {
-    // `d` is the original data object for the row
-    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
-        '<tr>'+
-            '<td>Emissao:</td>'+
-            '<td>'+d.dataEmissao+'</td>'+
-        '</tr>'+
-        '<tr>'+
-            '<td>Nome Cliente:</td>'+
-            '<td>'+d.nomeCliente+'</td>'+
-        '</tr>'+
-        '<tr>'+
-            '<td>Extra info:</td>'+
-            '<td>And any further details here (images etc)...</td>'+
-        '</tr>'+
-    '</table>';
+
+	var html = "<table>" +
+	              "<thead>" +
+                     "<tr>" +
+                        "<th>Código</th>" +
+                        "<th>Nome</th>" +
+                        "<th>Quantidade</th>" +
+                        "<th>UN</th>" +
+                        "<th>Unitário</th>" +
+                        "<th>Total</th>" +
+                     "</tr>" +
+                  "</thead>";
+	
+	for (var i = 0; i < d.itemPedidoVenda.length; i++){
+		html += "<tr>";
+		html += "<td>" + d.itemPedidoVenda[i].codigoProduto + "</td>" +
+		        "<td>" + d.itemPedidoVenda[i].descricao + "</td>" +
+		        "<td>" + d.itemPedidoVenda[i].qtde + "</td>" +
+		        "<td>" + d.itemPedidoVenda[i].unEstoque + "</td>" +
+		        "<td>" + parseFloat(d.itemPedidoVenda[i].unitario).toFixed(2) + "</td>" +
+		        "<td>" + parseFloat(d.itemPedidoVenda[i].total).toFixed(2) + "</td>";
+		html += "</tr><tfoot><tr><td></td></tr></tfoot>";
+	}
+	html += "</table>";
+	return html;
 }
 
 
@@ -61,7 +71,9 @@ $(document).ready(function (){
 		if ($("#produtos").val() == "") {
 			bootbox.alert("Selecione o Produto!");
 		}else if (!expNumeros.test($("#qtdeProduto").val().replace(",","").replace(".",""))) {
-			bootbox.alert("Quantida inválida.");
+			bootbox.alert("Quantidade inválida.");
+		}else if (parseFloat($("#qtdeProduto").val().replace(",",".")) == 0){
+			bootbox.alert("Quantidade deve ser maior que zero.");
 		}else{
 			var html = "";
 			var descricao = "";
@@ -76,7 +88,7 @@ $(document).ready(function (){
 			}
 			
 			if (unEstoque != "") {
-				html =  "<tr class='itemPerda'>"
+				html =  "<tr>"
 						  + "<td >" + $("#produtos").val() + "</td>"
 						  + "<td>" + descricao + "</td>"
 						  + "<td>" + $("#qtdeProduto").val().replace(",",".") + "</td>"
@@ -197,8 +209,12 @@ $(document).ready(function (){
 	BRIGADERIA.ordemProducao.importarPedidos = function(){
 		BRIGADERIA.ordemProducaoService.listarPedidosImportacao ({
 			success : function (listaPedido) {
-				console.log(listaPedido);
 				pedidos = listaPedido;
+				console.log(listaPedido);
+				for (var i = 0; i < listaPedido.length; i++){
+					listaPedido[i].total = parseFloat(listaPedido[i].total).toFixed(2);
+				}
+				console.log(listaPedido);
 			},
 			error : function(error)  {
 				console.log(error);
@@ -208,44 +224,63 @@ $(document).ready(function (){
 	BRIGADERIA.ordemProducao.importarPedidos();
 	
 	BRIGADERIA.ordemProducao.modal = function(){
-		table = $('#pedidos').DataTable( {
-	        data: pedidos,
-	        "columns": [
-	            {
-	                "className":      'details-control',
-	                "orderable":      false,
-	                "data":           null,
-	                "defaultContent": ''
-	            },
-	            { "data": "numero" },
-	            { "data": "dataEmissao" },
-	            { "data": "nomeCliente" },
-	            { "data": "total" }
-	        ],
-	        "order": [[1, 'asc']]
-	    } );
+		if (table === undefined){
+			table = $('#pedidos').DataTable( {
+				"language": {
+					"lengthMenu" : "Exibindo _MENU_ registros",
+					"search": "Pesquisar",
+					"info": "Exibindo _PAGE_ de _PAGES_ páginas",
+					"next": "teste",
+					"paginate": {
+			            previous:   "Anterior",
+			            next:       "Próximo"
+			        },
+				},
+		        data: pedidos,
+		        "columns": [
+		            {
+		                "className":      'details-control',
+		                "orderable":      false,
+		                "data":           null,
+		                "defaultContent": ''
+		            },
+		            { 
+		            	"data": "numero",
+		            	"className": 'dt-body-right'
+		            },
+		            { 
+		            	"data": "dataEmissao",
+		            	"className": 'dt-body-center'
+		            },
+		            { 
+		            	"data": "nomeCliente",
+		            	"className": 'dt-body-center'
+		            },
+		            { 
+		            	"data": "total",
+		                "className": 'dt-body-right'
+		            }
+		        ],
+		        "order": [[1, 'asc']]
+		    } );
+			
+			$('#pedidos tbody').on('click', 'td.details-control', function () {
+		        var tr = $(this).closest('tr');
+		        var row = table.row( tr );
+		 
+		        if ( row.child.isShown() ) {
+		            // This row is already open - close it
+		            row.child.hide();
+		            tr.removeClass('shown');
+		        }
+		        else {
+		            // Open this row
+		            row.child( format(row.data()) ).show();
+		            tr.addClass('shown');
+		        }
+		    });
+		}
+		
 	};
-	
-	BRIGADERIA.ordemProducao.fechaTable = function(){
-		table.destroy();
-	};
-	
-	
-	$('#pedidos tbody').on('click', 'td.details-control', function () {
-		alert('oi');
-        var tr = $(this).closest('tr');
-        var row = table.row( tr );
- 
-        if ( row.child.isShown() ) {
-            // This row is already open - close it
-            row.child.hide();
-            tr.removeClass('shown');
-        }
-        else {
-            // Open this row
-            row.child( format(row.data()) ).show();
-            tr.addClass('shown');
-        }
-    });
 	
 });

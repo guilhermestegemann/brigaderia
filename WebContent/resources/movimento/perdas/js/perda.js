@@ -68,6 +68,8 @@ $(document).ready( function () {
 			bootbox.alert("Selecione o Produto!");
 		}else if (!expNumeros.test($("#qtdeIngrediente").val().replace(",","").replace(".",""))) {
 			bootbox.alert("Quantida inválida.");
+		}else if (parseFloat($("#qtdeIngrediente").val().replace(",",".")) == 0){
+			bootbox.alert("Quantidade deve ser maior que zero.");
 		}else if (($("#unitario").val() == "") || ($("#unitario").val() <= 0)) {
 			bootbox.alert("Unitário inválido.");
 		}else{
@@ -84,7 +86,7 @@ $(document).ready( function () {
 					estoque = ingredientes[i].estoque;
 				}
 			}
-			if (estoque < $("#qtdeIngrediente").val()){
+			if (estoque < parseFloat($("#qtdeIngrediente").val().replace(",","."))){
 				bootbox.alert("Estoque insuficiente.");
 			}else if (unEstoque != "") {
 				html =  "<tr class='itemPerda'>"
@@ -100,7 +102,7 @@ $(document).ready( function () {
 				$("#totalPerda").val(parseFloat(parseFloat($("#totalItemPerda").val()) + parseFloat($("#totalPerda").val())).toFixed(2)) // soma o total do pedido.
 				var prod = {
 						codigoProduto: $("#ingredientes").val(),
-						qtde: $("#qtdeIngrediente").val(),
+						qtde: $("#qtdeIngrediente").val().replace(",","."),
 						unitario: $("#valorCusto").val(),
 						total: $("#totalItemPerda").val()
 				} ;

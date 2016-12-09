@@ -88,11 +88,11 @@
 
 <div id="modalImportarPedidos" class="modal fade" role="dialog">
 
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-md">
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" onclick="BRIGADERIA.ordemProducao.fechaTable()" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Importar Pedidos</h4>
       </div>
       <div class="modal-body">
@@ -101,15 +101,15 @@
             <tr>
                 <th></th>
                 <th>Número</th>
-                <th>Emissão</th>
-                <th>Cliente</th>
+                <th class='dt-head-center'>Emissão</th>
+                <th class='dt-head-center'>Cliente</th>
                 <th>Total</th>
             </tr>
         </thead>
     </table>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" onclick="BRIGADERIA.ordemProducao.fechaTable()" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
       </div>
     </div>
 

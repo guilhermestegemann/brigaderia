@@ -34,12 +34,14 @@ $(document).ready(function(){
 			bootbox.alert("Selecione o Ingrediente!");
 		}else if (!expNumeros.test($("#qtdeIngrediente").val().replace(",","").replace(".",""))) {
 			bootbox.alert("Quantida inválida.");
+		}else if (parseFloat($("#qtdeIngrediente").val().replace(",",".")) == 0){
+			bootbox.alert("Quantidade deve ser maior que zero.");
 		}else{
 			var html = "";
 			var codigo = $("#ingrediente").val();
 			var descricao = "";
 			var un = "";
-			var qtde = $("#qtdeIngrediente").val();
+			var qtde = $("#qtdeIngrediente").val().replace(",",".");
 			
 			for (var i = 0; i < ingredientes.length; i++) {
 				if ((ingredientes[i].codigo == codigo) && (un == "")) {
