@@ -1,14 +1,6 @@
 <script type="text/javascript" src="movimento/ordemProducao/js/ordemProducao-service.js"></script>
 <script type="text/javascript" src="movimento/ordemProducao/js/ordemProducao.js"></script>
-
-<link rel="stylesheet" type="text/css" href="movimento/ordemProducao/dataTable/css/jquery.dataTables.min.css">
-<link rel="stylesheet" type="text/css" href="movimento/ordemProducao/dataTable/css/dataTables.bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="movimento/ordemProducao/css/ordemProducao.css">
-<script type="text/javascript" src="movimento/ordemProducao/dataTable/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="movimento/ordemProducao/dataTable/js/dataTables.bootstrap.min.js"></script>
-
-
-
 <div class='jumbotron'>
 	<h1>Ordem de Produção</h1>
 	<div class="col-sm-12">
@@ -35,9 +27,6 @@
 			<label for='data'>Data</label>
 			<input type="text" class="form-control" id="data" name="data" readonly />
 		</div>
-		<div class="btn pull-right form-group">
-				<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalImportarPedidos" onclick="BRIGADERIA.ordemProducao.modal()" type="button">Importar Pedido</button>
-			</div>
 		<div class="col-sm-12">
 			<hr>
 		</div>
@@ -84,34 +73,4 @@
 		<button class="btn btn-primary btn-lg" id="btnSalvar" onclick= "BRIGADERIA.ordemProducao.adicionar()" type="button">Salvar</button>
 		<button class="btn btn-danger btn-lg" onclick= "carregarConteudoCancel('gerenciar/ordemProducao/gerenciarOrdemProducao.html')" type="button">Cancelar</button>
 	</div>
-</div>
-
-<div id="modalImportarPedidos" class="modal fade" role="dialog">
-
-  <div class="modal-dialog modal-md">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Importar Pedidos</h4>
-      </div>
-      <div class="modal-body">
-        <table id="pedidos" class="display">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Número</th>
-                <th class='dt-head-center'>Emissão</th>
-                <th class='dt-head-center'>Cliente</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-    </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-      </div>
-    </div>
-
-  </div>
 </div>
