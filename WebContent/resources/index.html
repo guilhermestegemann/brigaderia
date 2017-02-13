@@ -16,8 +16,11 @@
   <script src="../assets/js/jquery.mask.min.js"></script>
   <script src="../assets/js/bootstrap.min.js"></script>
   <script src="../assets/js/bootstrap-datepicker.js"></script>
+  <script src="../assets/js/chart/Chart.min.js"></script>
   <script type="text/javascript" src="js/ajax.js"></script>
   <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="graficos/graficos-service.js"></script>
+  <script type="text/javascript" src="graficos/graficos.js"></script>
   <script type="text/javascript" src="../assets/js/bootbox.min.js"></script>
   <script type="text/javascript" src="js/convertData.js"></script>
   <script type="text/javascript" src="js/validarDataFiltro.js"></script>
@@ -37,7 +40,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" >
+      <a class="navbar-brand" onclick= "window.location.reload()">
         <img alt="Brand" src="../imagem/doceVida.jpg" height="30" width="50">
       </a>
     </div>
@@ -93,8 +96,11 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-<div id="conteudo"></div>
+<div id="conteudo">
+<canvas  id="grafico1" width=1350 height="550"></canvas>
+</div>
 <div id="subConteudo"></div>
+
 
 
 </body>

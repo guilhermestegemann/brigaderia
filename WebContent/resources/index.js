@@ -15,3 +15,8 @@ function carregarConteudoCancel (url) {
 	});
 }
 
+//function paginaInicial(){
+//	$("#conteudo").text("");
+//	BRIGADERIA.graficos.grafico1();
+//}
+
