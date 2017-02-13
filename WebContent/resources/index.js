@@ -1,5 +1,6 @@
 function carregarConteudo (url) {
 	$("#conteudo").load(url);
+	$("#grafico").remove("");
 }
 
 function carregarConteudoCancel (url) {

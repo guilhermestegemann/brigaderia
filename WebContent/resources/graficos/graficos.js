@@ -2,7 +2,7 @@ BRIGADERIA.graficos = new Object();
 
 
 $(document).ready(function(){
-	
+	var tipoGraficoProduto = "";
 	
 	BRIGADERIA.graficoService.vendaAnual({
 		success: function(data){
@@ -18,7 +18,7 @@ $(document).ready(function(){
 	});
 	
 	BRIGADERIA.graficos.vendaAnual = function(dados, etiquetas){
-		var contexto = $("#grafico1");
+		var contexto = $("#grafico");
 		var  options = {
 				responsive: false,
 				beginAtZero: true
@@ -57,5 +57,21 @@ $(document).ready(function(){
 		    options: options
 		});
 	};
+	
+	
+	//Radio
+	BRIGADERIA.graficos.eventoRadio = function (radio){
+		tipoGraficoProduto = radio.id;
+	};
+	
+	//Produto
+	$("#gerarGrafico").on("click",function(){
+		if(tipoGraficoProduto === ""){
+			bootbox.alert({
+				message: "Selecione um tipo de relatório.",
+				 size: 'small'
+			});
+		};
+	});
 
 });

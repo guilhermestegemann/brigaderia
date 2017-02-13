@@ -19,7 +19,7 @@
   <script src="../assets/js/chart/Chart.min.js"></script>
   <script type="text/javascript" src="js/ajax.js"></script>
   <script type="text/javascript" src="index.js"></script>
-    <script type="text/javascript" src="graficos/graficos-service.js"></script>
+  <script type="text/javascript" src="graficos/graficos-service.js"></script>
   <script type="text/javascript" src="graficos/graficos.js"></script>
   <script type="text/javascript" src="../assets/js/bootbox.min.js"></script>
   <script type="text/javascript" src="js/convertData.js"></script>
@@ -80,7 +80,7 @@
         <li class="dropdown">
           <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Gráficos<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a  onclick= "carregarConteudo('graficos/vendas.html')">Vendas</a></li>
+            <li><a  onclick= "carregarConteudo('graficos/produtos/produtos.html')">Produtos</a></li>
           </ul>
         </li>
       </ul>
@@ -96,10 +96,9 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-<div id="conteudo">
-<canvas  id="grafico1" width=1350 height="550"></canvas>
-</div>
+<div id="conteudo"></div>
 <div id="subConteudo"></div>
+<canvas  id="grafico" width=1350 height="550"></canvas>
 
 
 
