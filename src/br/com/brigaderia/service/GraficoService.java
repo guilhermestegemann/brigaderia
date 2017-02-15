@@ -9,6 +9,7 @@ import br.com.brigaderia.bd.conexao.Conexao;
 import br.com.brigaderia.jdbc.JDBCGraficoDAO;
 import br.com.brigaderia.jdbcinterface.GraficoDAO;
 import br.com.brigaderia.objetos.VendaAnualVO;
+import br.com.brigaderia.objetos.VendaPorProdutoVO;
 
 public class GraficoService {
 	
@@ -18,6 +19,17 @@ public class GraficoService {
 			Connection conexao = conec.abrirConexao();
 			GraficoDAO jdbcGrafico = new JDBCGraficoDAO(conexao);
 			return jdbcGrafico.vendaAnual();
+		}finally{
+			conec.fecharConexao();
+		}
+	}
+	
+	public List<VendaPorProdutoVO> gerarPorProduto(String dataInicio, String dataFim, String orderBy, int numReg) throws SQLException {
+		Conexao conec = new Conexao();
+		try {
+			Connection conexao = conec.abrirConexao();
+			GraficoDAO jdbcGrafico = new JDBCGraficoDAO(conexao);
+			return jdbcGrafico.gerarPorProduto(dataInicio, dataFim, orderBy, numReg);
 		}finally{
 			conec.fecharConexao();
 		}

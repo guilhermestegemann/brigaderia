@@ -33,4 +33,9 @@ $(document).ready(function() {
 		BRIGADERIA.ajax.get(BRIGADERIA.graficoService.defaultCfg(cfg));
 	};
 	
+	BRIGADERIA.graficoService.porProduto = function(cfg) {
+		cfg.url = "rest/graficos/porProduto/"+cfg.dataInicio+"/"+cfg.dataFim+"/"+cfg.orderBy+"/"+cfg.limit;
+		BRIGADERIA.ajax.get(BRIGADERIA.graficoService.defaultCfg(cfg));
+	}
+	
 });

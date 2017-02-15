@@ -6,12 +6,10 @@ BRIGADERIA.validarDataFiltro.validar = function (dataInicio, dataFim) {
 		if (dataInicio == "null"){
 			bootbox.alert("Favor informar a data início.");
 			retorno = false;
-		}
-		if (dataFim == "null"){
+		}else if (dataFim == "null"){
 			bootbox.alert("Favor informar a data fim.");
 			retorno = false;
-		}
-		if(dataInicio > dataFim){
+		}else if(dataInicio > dataFim){
 			bootbox.alert("Data início não pode ser maior que a data fim.");
 			retorno = false;
 		}
