@@ -1,19 +1,34 @@
 BRIGADERIA.graficos = new Object();
 
 $(document).ready(function(){
+	var myDate = new Date();
+	var anoAtual = myDate.getYear();
+	anoAtual < 1000 ? anoAtual += 1900 : anoAtual;
+	$("#ano").val(anoAtual);
 	
-	BRIGADERIA.graficoService.vendaAnual({
-		success: function(data){
-			var etiquetas = [];
-			var dados = [];
-			
-			for ( var i = 0; i < data.length; i++) {
-				dados.push(data[i].total);
-				etiquetas.push(data[i].mes);
-			}
-			BRIGADERIA.graficos.vendaAnual(dados, etiquetas)
-		}
+	$("#ano").on('change', function(){
+		$("#grafico").remove();
+		$("#divCanvasGraficoAnual").append('<canvas  id="grafico" width=1350 height="550"></canvas>');
+		BRIGADERIA.graficos.buscarDadosGraficoAnual($("#ano").val());
 	});
+	
+	BRIGADERIA.graficos.buscarDadosGraficoAnual = function(ano){
+		BRIGADERIA.graficoService.vendaAnual({
+			ano: ano,
+			success: function(data){
+				var etiquetas = [];
+				var dados = [];
+				
+				for ( var i = 0; i < data.length; i++) {
+					dados.push(parseFloat(data[i].total).toFixed(2));
+					etiquetas.push(data[i].mes);
+				}
+				BRIGADERIA.graficos.vendaAnual(dados, etiquetas)
+			}
+		});
+	};
+
+	
 	
 	BRIGADERIA.graficos.vendaAnual = function(dados, etiquetas){
 		var contexto = $("#grafico");
@@ -37,13 +52,13 @@ $(document).ready(function(){
 			            borderJoinStyle: 'miter',
 			            pointBorderColor: "rgba(75,192,192,1)",
 			            pointBackgroundColor: "#red",
-			            pointBorderWidth: 15,
+			            pointBorderWidth: 1,
 			            pointHoverRadius: 15,
 			            pointHoverBackgroundColor: "rgba(75,192,192,1)",
 			            pointHoverBorderColor: "rgba(220,220,220,1)",
 			            pointHoverBorderWidth: 2,
 			            pointRadius: 10,
-			            pointHitRadius: 10,
+			            pointHitRadius: 1,
 			            data: dados,
 			            spanGaps: true,
 			        }
@@ -55,4 +70,6 @@ $(document).ready(function(){
 		    options: options
 		});
 	};
+	
+	BRIGADERIA.graficos.buscarDadosGraficoAnual(anoAtual);
 });

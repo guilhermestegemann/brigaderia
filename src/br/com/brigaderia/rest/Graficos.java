@@ -23,12 +23,12 @@ public class Graficos extends UtilRest{
 
 	
 	@GET
-	@Path("/vendaAnual")
+	@Path("/vendaAnual/{ano}")
 	@Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-	public Response vendaAnual(){
+	public Response vendaAnual(@PathParam("ano") int ano) throws BrigaderiaException{
 		try {
 			GraficoService service = new GraficoService();
-			return this.buildResponse(service.vendaAnual());
+			return this.buildResponse(service.vendaAnual(ano));
 		}catch (SQLException e) {
 			e.printStackTrace();
 			return buildErrorResponse("Ocorreu um erro ao gerar o gráfico. Entre em contato com o administrador do sistema.");

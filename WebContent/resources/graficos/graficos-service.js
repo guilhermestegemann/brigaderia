@@ -29,7 +29,7 @@ $(document).ready(function() {
 	};
 	
 	BRIGADERIA.graficoService.vendaAnual = function(cfg) {
-		cfg.url = "rest/graficos/vendaAnual";
+		cfg.url = "rest/graficos/vendaAnual/"+cfg.ano;
 		BRIGADERIA.ajax.get(BRIGADERIA.graficoService.defaultCfg(cfg));
 	};
 	

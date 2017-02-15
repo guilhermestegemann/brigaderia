@@ -22,9 +22,165 @@ public class JDBCGraficoDAO implements GraficoDAO{
 		this.conexao = conexao;
 	}
 	
-	public List<VendaAnualVO> vendaAnual() throws SQLException {
+	public List<VendaAnualVO> vendaAnual(int ano) throws SQLException {
 		
-		String sql = "SELECT * FROM VIEW_VENDAANUAL";
+		String sql = 
+	"SELECT " + 
+        "'Janeiro' AS MES, " +
+        "(CASE " +
+            "WHEN (SUM(PEDIDO.TOTAL) IS NOT NULL) THEN SUM(PEDIDO.TOTAL) " +
+            "ELSE 0 " +
+        "END) AS TOTAL " +
+    "FROM " +
+        "PEDIDO " +
+    "WHERE " +
+        "((EXTRACT(MONTH FROM PEDIDO.EMISSAO) = 1) " +
+            "AND (EXTRACT(YEAR FROM PEDIDO.EMISSAO) = "+ano+") " +
+            "AND (PEDIDO.FATURADO = 'S') " +
+            "AND (PEDIDO.CANCELADO = 'N')) " +
+    "UNION SELECT " +
+        "'Fevereiro' AS MES, " +
+        "(CASE " +
+            "WHEN (SUM(PEDIDO.TOTAL) IS NOT NULL) THEN SUM(PEDIDO.TOTAL) " +
+            "ELSE 0 " +
+        "END) AS TOTAL " +
+    "FROM " +
+    	"PEDIDO " +
+    "WHERE " +
+        "((EXTRACT(MONTH FROM PEDIDO.EMISSAO) = 2) " +
+            "AND (EXTRACT(YEAR FROM PEDIDO.EMISSAO) = "+ano+") " +
+            "AND (PEDIDO.FATURADO = 'S') " +
+            "AND (PEDIDO.CANCELADO = 'N')) " +
+    "UNION SELECT " +
+        "'Março' AS MES, " +
+        "(CASE " +
+            "WHEN (SUM(PEDIDO.TOTAL) IS NOT NULL) THEN SUM(PEDIDO.TOTAL) " +
+            "ELSE 0 " +
+        "END) AS TOTAL " +
+    "FROM " +
+    	"PEDIDO " +
+    "WHERE " +
+        "((EXTRACT(MONTH FROM PEDIDO.EMISSAO) = 3) " +
+            "AND (EXTRACT(YEAR FROM PEDIDO.EMISSAO) = "+ano+") " +
+            "AND (PEDIDO.FATURADO = 'S') " +
+            "AND (PEDIDO.CANCELADO = 'N')) " +
+    "UNION SELECT " +
+        "'Abril' AS MES, " +
+        "(CASE " +
+            "WHEN (SUM(PEDIDO.TOTAL) IS NOT NULL) THEN SUM(PEDIDO.TOTAL) " +
+            "ELSE 0 " +
+        "END) AS TOTAL " +
+    "FROM " +
+    	"PEDIDO " +
+    "WHERE " +
+        "((EXTRACT(MONTH FROM PEDIDO.EMISSAO) = 4) " +
+            "AND (EXTRACT(YEAR FROM PEDIDO.EMISSAO) = "+ano+") " +
+            "AND (PEDIDO.FATURADO = 'S') " +
+            "AND (PEDIDO.CANCELADO = 'N')) " +
+    "UNION SELECT " +
+        "'Maio' AS MES," +
+        "(CASE " +
+            "WHEN (SUM(PEDIDO.TOTAL) IS NOT NULL) THEN SUM(PEDIDO.TOTAL) " +
+            "ELSE 0 " +
+        "END) AS TOTAL " +
+    "FROM " +
+    	"PEDIDO " +
+    "WHERE " +
+        "((EXTRACT(MONTH FROM PEDIDO.EMISSAO) = 5) " +
+            "AND (EXTRACT(YEAR FROM PEDIDO.EMISSAO) = "+ano+") " +
+            "AND (PEDIDO.FATURADO = 'S') " + 
+            "AND (PEDIDO.CANCELADO = 'N')) "  +
+    "UNION SELECT " +
+        "'Junho' AS MES, " +
+        "(CASE " +
+            "WHEN (SUM(PEDIDO.TOTAL) IS NOT NULL) THEN SUM(PEDIDO.TOTAL) " +
+            "ELSE 0 " +
+        "END) AS TOTAL " +
+    "FROM " +
+    	"PEDIDO " +
+    "WHERE " +
+        "((EXTRACT(MONTH FROM PEDIDO.EMISSAO) = 6) " +
+            "AND (EXTRACT(YEAR FROM PEDIDO.EMISSAO) = "+ano+") " +
+            "AND (PEDIDO.FATURADO = 'S') " +
+            "AND (PEDIDO.CANCELADO = 'N')) "  +
+    "UNION SELECT " +
+        "'Julho' AS MES, " +
+        "(CASE " +
+            "WHEN (SUM(PEDIDO.TOTAL) IS NOT NULL) THEN SUM(PEDIDO.TOTAL) " +
+            "ELSE 0 " +
+        "END) AS TOTAL " +
+    "FROM " +
+    	"PEDIDO " +
+    "WHERE " +
+        "((EXTRACT(MONTH FROM PEDIDO.EMISSAO) = 7) " +
+            "AND (EXTRACT(YEAR FROM PEDIDO.EMISSAO) = "+ano+") " +
+            "AND (PEDIDO.FATURADO = 'S') " +
+            "AND (PEDIDO.CANCELADO = 'N')) "  +
+    "UNION SELECT " +
+        "'Agosto' AS MES, " +
+        "(CASE " +
+            "WHEN (SUM(PEDIDO.TOTAL) IS NOT NULL) THEN SUM(PEDIDO.TOTAL) " +
+            "ELSE 0 " +
+        "END) AS TOTAL " +
+    "FROM " +
+    	"PEDIDO " +
+    "WHERE " +
+        "((EXTRACT(MONTH FROM PEDIDO.EMISSAO) = 8) " +
+            "AND (EXTRACT(YEAR FROM PEDIDO.EMISSAO) = "+ano+") " +
+            "AND (PEDIDO.FATURADO = 'S') " +
+            "AND (PEDIDO.CANCELADO = 'N')) "  +
+    "UNION SELECT " +
+        "'Setembro' AS MES, " +
+        "(CASE " +
+            "WHEN (SUM(PEDIDO.TOTAL) IS NOT NULL) THEN SUM(PEDIDO.TOTAL) " +
+            "ELSE 0 " +
+        "END) AS TOTAL " +
+    "FROM " +
+    	"PEDIDO " +
+    "WHERE " +
+        "((EXTRACT(MONTH FROM PEDIDO.EMISSAO) = 9) " +
+            "AND (EXTRACT(YEAR FROM PEDIDO.EMISSAO) = "+ano+") " +
+            "AND (PEDIDO.FATURADO = 'S') " +
+            "AND (PEDIDO.CANCELADO = 'N')) "  +
+    "UNION SELECT " +
+        "'Outubro' AS MES, " +
+        "(CASE " +
+            "WHEN (SUM(PEDIDO.TOTAL) IS NOT NULL) THEN SUM(PEDIDO.TOTAL) " +
+            "ELSE 0 " +
+        "END) AS TOTAL " +
+    "FROM " +
+    	"PEDIDO " +
+    "WHERE " +
+        "((EXTRACT(MONTH FROM PEDIDO.EMISSAO) = 10) " +
+            "AND (EXTRACT(YEAR FROM PEDIDO.EMISSAO) = "+ano+") " +
+            "AND (PEDIDO.FATURADO = 'S') " +
+            "AND (PEDIDO.CANCELADO = 'N')) "  +
+    "UNION SELECT " +
+        "'Novembro' AS MES, " +
+        "(CASE " +
+            "WHEN (SUM(PEDIDO.TOTAL) IS NOT NULL) THEN SUM(PEDIDO.TOTAL) " +
+            "ELSE 0 " +
+        "END) AS TOTAL " +
+    "FROM " +
+    	"PEDIDO " +
+    "WHERE " +
+        "((EXTRACT(MONTH FROM PEDIDO.EMISSAO) = 11) " +
+            "AND (EXTRACT(YEAR FROM PEDIDO.EMISSAO) = "+ano+") " +
+            "AND (PEDIDO.FATURADO = 'S') " +
+            "AND (PEDIDO.CANCELADO = 'N')) " + 
+    "UNION SELECT "  +
+        "'Dezembro' AS MES, " +
+        "(CASE " +
+            "WHEN (SUM(PEDIDO.TOTAL) IS NOT NULL) THEN SUM(PEDIDO.TOTAL) " +
+            "ELSE 0 " +
+        "END) AS TOTAL " +
+    "FROM " +
+    	"PEDIDO " +
+    "WHERE " +
+        "((EXTRACT(MONTH FROM PEDIDO.EMISSAO) = 12) " +
+            "AND (EXTRACT(YEAR FROM PEDIDO.EMISSAO) = "+ano+") " +
+            "AND (PEDIDO.FATURADO = 'S') " +
+            "AND (PEDIDO.CANCELADO = 'N'))";
 												   
 		List<VendaAnualVO> listVendaAnual = new ArrayList<VendaAnualVO>();
 		VendaAnualVO venda = null;

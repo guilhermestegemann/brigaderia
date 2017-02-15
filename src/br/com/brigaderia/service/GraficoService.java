@@ -13,12 +13,12 @@ import br.com.brigaderia.objetos.VendaPorProdutoVO;
 
 public class GraficoService {
 	
-	public List<VendaAnualVO> vendaAnual() throws SQLException {
+	public List<VendaAnualVO> vendaAnual(int ano) throws SQLException {
 		Conexao conec = new Conexao();
 		try {
 			Connection conexao = conec.abrirConexao();
 			GraficoDAO jdbcGrafico = new JDBCGraficoDAO(conexao);
-			return jdbcGrafico.vendaAnual();
+			return jdbcGrafico.vendaAnual(ano);
 		}finally{
 			conec.fecharConexao();
 		}

@@ -34,6 +34,11 @@ $(document).ready(function(){
 				message: "Selecione um tipo de relatório.",
 				 size: 'small'
 			});
+		}else if ($("#numRegistro").val()<0){
+			bootbox.alert({
+				message: "Número de registro não pode ser menor que zero.",
+				size: 'medium'
+			});
 		}else if(BRIGADERIA.validarDataFiltro.validar(dataInicio, dataFim)){
 			if (tipoGraficoProduto === "rdbtnMaisVendido"){
 				BRIGADERIA.graficoService.porProduto({
@@ -74,10 +79,8 @@ $(document).ready(function(){
 		var data = "";
 		$("#graficoProduto").remove();
 		$("#divCanvas").append('<canvas  id="graficoProduto" width=1350 height="550"></canvas>');
-		//var canvas = document.getElementById("graficoProduto");
 		var contexto = $("#graficoProduto");
-		//var context = canvas.getContext('2d');
-		//context.restore();
+		
 		var  options = {
 				responsive: false,
 				animation:{
@@ -107,9 +110,7 @@ $(document).ready(function(){
 		    type: 'pie',
 		    data: data,
 		    options: options
-		});	
+		});
+		
 	};
-	
-
-
 });
