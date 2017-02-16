@@ -75,7 +75,9 @@ $(document).ready(function(){
 	};
 	
 	BRIGADERIA.graficosProdutos.porProduto = function(dados, etiquetas){
-		debugger;
+		var cores = ["#0b3372","#db7241","#5b3f32","#d3ac4a","#2b2624","#65d145","#9cbaa4","#4256a5","#89a52c","#40ed6e","#3f4c14","#194224",
+		             "#6a8471","#515652","#212f66","#3d61ed","#878c75","#38c45e","#42eded","#8e8491","#3e88ef","#718093","#1e2d2d","#c63ced",
+		             "#12243d","#233144","#4c1414","#4c175b","#ccc6ce","#f74040","#512727"];
 		var data = "";
 		$("#graficoProduto").remove();
 		$("#divCanvas").append('<canvas  id="graficoProduto" width=1350 height="550"></canvas>');
@@ -92,16 +94,8 @@ $(document).ready(function(){
 			    datasets: [
 			        {
 			        	data: dados,
-			        	backgroundColor: [
-			        	    "#FF6384",
-	                    	"#36A2EB",
-	                    	"#FFCE56"
-	        	       ],
-	        	       hoverBackgroundColor: [
-                            "#FF6384",
-                            "#36A2EB",
-                            "#FFCE56"
-                       ]
+			        	backgroundColor: cores,
+	        	       hoverBackgroundColor: cores
 			        }
 			    ]
 			};
