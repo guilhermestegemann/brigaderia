@@ -41,7 +41,6 @@ $(document).ready( function () {
 		}
 	});
 
-	
 	BRIGADERIA.pedidoVenda.listarProdutos = function () { 
 		BRIGADERIA.pedidoVendaService.listarProdutos({
 			success: function(data) {
