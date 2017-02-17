@@ -181,7 +181,7 @@ $(document).ready( function () {
 							  + "<td>" + itemPedido[i].unEntrada + "</td>"
 							  + "<td>" + itemPedido[i].qtde + "</td>"
 							  + "<td>" + parseFloat(itemPedido[i].unitario).toFixed(2) + "</td>"
-							  + "<td>" + itemPedido[i].total + "</td>"
+							  + "<td>" + parseFloat(itemPedido[i].total).toFixed(2) + "</td>"
 						  + "</tr>";		
 						
 						$("#itensPedidoCompra tbody").append(html);

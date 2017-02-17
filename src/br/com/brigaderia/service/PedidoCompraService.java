@@ -37,7 +37,6 @@ public class PedidoCompraService {
 			pedidoCompra.setNumero(jdbcPedidoCompra.adicionarPedido(pedidoCompra));
 			List<ItemPedidoCompra> listProdutos = new ArrayList<>();
 			listProdutos = pedidoCompra.getItemPedidoCompra();
-			
 			int codProduto, tipoItem;
 			float qtde, unitario, total, custo, qtdeEntrada, estoque, valorVenda, novoCusto, margem;
 			
@@ -57,7 +56,7 @@ public class PedidoCompraService {
 				
 				novoCusto = 0;
 				margem = 0;
-				jdbcPedidoCompra.adicionarProdutos(pedidoCompra.getNumero(), codProduto, qtde, unitario, total);
+				jdbcPedidoCompra.adicionarProdutos(pedidoCompra.getNumero(), codProduto, qtde, unitario, total, qtdeEntrada);
 				
 				//Calculo de Custo Medio
 				if (estoque <= 0) {
@@ -146,23 +145,21 @@ public class PedidoCompraService {
 			List<ItemPedidoCompra> listItemPedido = new ArrayList<ItemPedidoCompra>();
 			listItemPedido = jdbcPedidoCompra.buscarItensPedido(numero);
 			float estoque, qtde;
-			float qtdeEntrada = 0;
 			for (ItemPedidoCompra itemPedidoCompra : listItemPedido) {
 				estoque = itemPedidoCompra.getEstoque();
 				qtde = itemPedidoCompra.getQtde();
-				qtdeEntrada = itemPedidoCompra.getQtdeEntrada();
-				if (estoque < qtde) {
+				if (estoque < (qtde * itemPedidoCompra.getQtdeMultiplaEntrada())) {
 					if (msg.equals("")){
 						msg = "Produtos com inconsistência ao excluir Pedido de Compra.\n";
 					}
 					msg += "Código: " + itemPedidoCompra.getCodigoProduto() + " | Descrição: " + itemPedidoCompra.getDescricao()
-						 + " | Estoque: " + estoque + " | Quantidade: " + qtde + "<br>";	
+						 + " | Estoque: " + estoque + " | Quantidade: " + qtde * itemPedidoCompra.getQtdeMultiplaEntrada() + " | Falta: "+ ((qtde * itemPedidoCompra.getQtdeMultiplaEntrada()) - estoque) + "<br>";	
 				}
 			}
 			if (msg.equals("")) {
 				jdbcPedidoCompra.deletarPedido(numero);
 				for (int i = 0; i < listItemPedido.size(); i++) {
-					jdbcProduto.movimentaEstoque(listItemPedido.get(i).getCodigoProduto(), ((listItemPedido.get(i).getQtde() * qtdeEntrada)*-1));
+					jdbcProduto.movimentaEstoque(listItemPedido.get(i).getCodigoProduto(), ((listItemPedido.get(i).getQtde() * listItemPedido.get(i).getQtdeMultiplaEntrada())*-1));
 				}
 				
 				msg = "Pedido deletado com sucesso";

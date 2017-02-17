@@ -143,7 +143,10 @@ $(document).ready(function (){
 					BRIGADERIA.ordemProducaoService.iniciarProducao({
 						numero : numero,
 						success: function (successo) {
-							bootbox.alert(successo);
+							bootbox.alert({
+								size:'large',
+								message:successo.replace("\n","<br>")
+							});
 							BRIGADERIA.gerenciarOrdemProducao.buscar();
 						},
 						error: function(err) {

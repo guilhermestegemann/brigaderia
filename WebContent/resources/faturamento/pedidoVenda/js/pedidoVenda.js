@@ -228,8 +228,8 @@ $(document).ready( function () {
 							  if (pedido.faturado == "S") {
 								  html += "<td></td><td></td>";
 							  }else{
-								  html += "<td><a href='#'><i class='glyphicon glyphicon-edit' onclick='BRIGADERIA.pedidoVenda.editarProduto(this"+ "," + itemPedidoVO[i].codigoProduto + "," + "\"" + itemPedidoVO[i].descricao + "\"" + "," + itemPedidoVO[i].qtde + "," + "\"" + itemPedidoVO[i].unEstoque + "\"" + "," + parseFloat(itemPedidoVO[i].unitario).toFixed(2) + "," + itemPedidoVO[i].total +")' aria-hidden='true'></i></a>"
-							  	  + "<a href='#'><i class='glyphicon glyphicon-remove-sign' onclick='BRIGADERIA.pedidoVenda.deletarProduto(this"+ "," + itemPedidoVO[i].codigoProduto + "," + "\"" + itemPedidoVO[i].descricao + "\"" + "," + itemPedidoVO[i].total +")' aria-hidden='true'></i></a></td>";
+								  html += "<td><button class='btn btn-primary btn-sm' type='button' onclick='BRIGADERIA.pedidoVenda.editarProduto(this"+ "," + itemPedidoVO[i].codigoProduto + "," + "\"" + itemPedidoVO[i].descricao + "\"" + "," + itemPedidoVO[i].qtde + "," + "\"" + itemPedidoVO[i].unEstoque + "\"" + "," + parseFloat(itemPedidoVO[i].unitario).toFixed(2) + "," + itemPedidoVO[i].total +")' aria-hidden='true'>Editar</button>"
+							  	  + "<button class='btn btn-danger btn-sm' type='button' onclick='BRIGADERIA.pedidoVenda.deletarProduto(this"+ "," + itemPedidoVO[i].codigoProduto + "," + "\"" + itemPedidoVO[i].descricao + "\"" + "," + itemPedidoVO[i].total +")' aria-hidden='true'>Excluir</button></td>";
 							  }
 							  
 						  html += "</tr>";

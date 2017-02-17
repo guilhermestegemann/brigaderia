@@ -133,6 +133,7 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 		return listProdutos;
 	}
 	
+	
 	public void atualizar (Produto produto) throws SQLException {
 		
 		String comando = "UPDATE PRODUTO SET " 

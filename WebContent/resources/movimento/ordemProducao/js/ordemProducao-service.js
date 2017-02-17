@@ -99,8 +99,5 @@ $(document).ready(function() {
 		BRIGADERIA.ajax.put(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));
 	};
 	
-	BRIGADERIA.ordemProducaoService.listarPedidosImportacao = function(cfg) {
-		cfg.url = "rest/ordemProducao/buscarPedidosImportacao";
-		BRIGADERIA.ajax.get(BRIGADERIA.ordemProducaoService.defaultCfg(cfg));
-	}
+
 });

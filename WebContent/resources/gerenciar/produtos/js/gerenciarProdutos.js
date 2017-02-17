@@ -36,9 +36,9 @@ $(document).ready(function() {
 					html += "<tr>"
 					  + "<td>" + listaDeProdutos[i].codigoProduto + "</td>"
 					  + "<td>" + listaDeProdutos[i].descricao + "</td>"
-					  + "<td>" + listaDeProdutos[i].estoque 
-					  + "<td>" + "R$ " + listaDeProdutos[i].valorCusto + "</td>"
-					  + "<td>" + "R$ " +listaDeProdutos[i].valorVenda + "</td>"
+					  + "<td>" + parseFloat(listaDeProdutos[i].estoque).toFixed(2) + "</td>"
+					  + "<td>" + "R$ " + parseFloat(listaDeProdutos[i].valorCusto).toFixed(2) + "</td>"
+					  + "<td>" + "R$ " +parseFloat(listaDeProdutos[i].valorVenda).toFixed(2) + "</td>"
 					  + "<td><button class='btn btn-primary btn-sm' type='button' onclick='BRIGADERIA.gerenciarProdutos.editarProduto(" + listaDeProdutos[i].codigoProduto + "," + listaDeProdutos[i].tipoItem + ")' aria-hidden='true'>Editar</button>"
 					  	 +	"<button class='btn btn-danger btn-sm' type='button' onclick='BRIGADERIA.gerenciarProdutos.deletarProduto(" + listaDeProdutos[i].codigoProduto + "," + listaDeProdutos[i].tipoItem + ")' aria-hidden='true'>Excluir</buttton>  </td>"
 					  + "</tr>";

@@ -10,7 +10,7 @@ import br.com.brigaderia.objetos.PedidoCompra;
 public interface PedidoCompraDAO {
 	
 	public int adicionarPedido(PedidoCompra pedidoCompra) throws SQLException;
-	public void adicionarProdutos(int numeroPedido, int codProduto, float qtde, float unitario, float total);
+	public void adicionarProdutos(int numeroPedido, int codProduto, float qtde, float unitario, float total, float qtdeMultiplaEntrada);
 	public void countProdutos(int codigo) throws SQLException, ProdutoVinculadoEmPedidoCompraException;
 	public List<PedidoCompra> buscarPedidos(String dataIni, String dataFim) throws SQLException;
 	public PedidoCompra buscarPeloNumero(int numero) throws SQLException;

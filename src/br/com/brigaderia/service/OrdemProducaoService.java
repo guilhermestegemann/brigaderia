@@ -15,16 +15,13 @@ import br.com.brigaderia.exception.OrdemNaoProduzidaException;
 import br.com.brigaderia.exception.OrdemProduzidaException;
 import br.com.brigaderia.jdbc.JDBCFichaTecnicaDAO;
 import br.com.brigaderia.jdbc.JDBCOrdemProducaoDAO;
-import br.com.brigaderia.jdbc.JDBCPedidoVendaDAO;
 import br.com.brigaderia.jdbc.JDBCProdutoDAO;
 import br.com.brigaderia.jdbcinterface.FichaTecnicaDAO;
 import br.com.brigaderia.jdbcinterface.OrdemProducaoDAO;
-import br.com.brigaderia.jdbcinterface.PedidoVendaDAO;
 import br.com.brigaderia.jdbcinterface.ProdutoDAO;
 import br.com.brigaderia.objetos.ItemFichaTecnica;
 import br.com.brigaderia.objetos.ItemOrdemProducao;
 import br.com.brigaderia.objetos.OrdemProducao;
-import br.com.brigaderia.objetos.PedidoVenda;
 import br.com.brigaderia.objetos.Produto;
 import br.com.brigaderia.validacoes.ValidaOrdemProducao;
 
@@ -75,16 +72,6 @@ public class OrdemProducaoService {
 		}
 	}
 	
-	public List<PedidoVenda> buscarPedidosImportacao() throws SQLException {
-		 Conexao conec = new Conexao();
-		 try {
-			 Connection conexao = conec.abrirConexao();
-			 PedidoVendaDAO jdbcPedidoVenda = new JDBCPedidoVendaDAO(conexao);
-			 return jdbcPedidoVenda.buscarPedidosImportacao();
-		 }finally{
-			 conec.fecharConexao();
-		 }
-	}
 
 	public List<OrdemProducao> buscarOrdens (String dataIni, String dataFim, String status) throws SQLException {
 		
@@ -161,7 +148,7 @@ public class OrdemProducaoService {
 						msg = "Estoque insuficiente para os seguintes ingredientes: \n";
 					}
 					msg += "Código: " + itemFichaTecnica.getCodigoProduto() + " | Descrição: " + itemFichaTecnica.getDescricao()
-					 + " | Estoque: " + itemFichaTecnica.getEstoque() + " | Quantidade: " + itemFichaTecnica.getQtde() + " <br>";
+					 + " | Estoque: " + itemFichaTecnica.getEstoque() + " | Quantidade: " + itemFichaTecnica.getQtde() + " | Falta: "+ (itemFichaTecnica.getQtde() - itemFichaTecnica.getEstoque()) +" <br>";
 				}
 			}
 			if (msg.equals("")){
@@ -171,7 +158,7 @@ public class OrdemProducaoService {
 				Date hoje  = new Date();
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 				jdbcOrdem.setarEmProducao(numero, sdf.format(hoje));
-				msg = "Ordem de Produção " + numero + " iniciada";
+				msg = "Ordem de Produção número " + numero + " iniciada";
 			}
 			conexao.commit();
 		}catch (BrigaderiaException e) {

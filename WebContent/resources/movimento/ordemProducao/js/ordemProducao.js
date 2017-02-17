@@ -206,23 +206,6 @@ $(document).ready(function (){
 		});	
 	};
 	
-	BRIGADERIA.ordemProducao.importarPedidos = function(){
-		BRIGADERIA.ordemProducaoService.listarPedidosImportacao ({
-			success : function (listaPedido) {
-				pedidos = listaPedido;
-				console.log(listaPedido);
-				for (var i = 0; i < listaPedido.length; i++){
-					listaPedido[i].total = parseFloat(listaPedido[i].total).toFixed(2);
-				}
-				console.log(listaPedido);
-			},
-			error : function(error)  {
-				console.log(error);
-			}
-		});
-	};
-	BRIGADERIA.ordemProducao.importarPedidos();
-	
 	BRIGADERIA.ordemProducao.modal = function(){
 		if (table === undefined){
 			table = $('#pedidos').DataTable( {

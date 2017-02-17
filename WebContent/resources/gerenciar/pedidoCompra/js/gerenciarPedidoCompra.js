@@ -87,7 +87,10 @@ $(document).ready( function () {
 					BRIGADERIA.pedidoCompraService.deletar({
 						numero : numero,
 						success: function (successo) {
-							bootbox.alert(successo.replace("\n","<br>"));
+							bootbox.alert({
+								size:'large',
+								message:successo.replace("\n","<br>")
+							});
 							BRIGADERIA.gerenciarPedidoCompra.buscar();
 						},
 						error: function(err) {

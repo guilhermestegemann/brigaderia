@@ -160,7 +160,7 @@ public class PedidoVendaService {
 						msg = "Estoque insuficiente para os seguinte produtos: \n";
 					}
 					msg += "Código: " + itemPedidoVenda.getCodigoProduto() + " | Descrição: " + itemPedidoVenda.getDescricao()
-						 + " | Estoque: " + itemPedidoVenda.getEstoque() + " | Quantidade: " + itemPedidoVenda.getQtde() + " <br>";	
+						 + " | Estoque: " + itemPedidoVenda.getEstoque() + " | Quantidade: " + itemPedidoVenda.getQtde() + " | Falta: "+ (itemPedidoVenda.getQtde() - itemPedidoVenda.getEstoque()) +" <br>";	
 				}
 			}
 			if (msg.equals("")) {

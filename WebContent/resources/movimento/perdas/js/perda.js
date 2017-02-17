@@ -182,7 +182,6 @@ $(document).ready( function () {
 				$("#totalPerda").val(parseFloat(perda.total).toFixed(2));
 				itemPerda = {};
 				itemPerda = perda.itemPerda;
-				console.log(itemPerda);
 				for (var i = 0; i < itemPerda.length; i++ ) {
 					var html = ""
 						html =  "<tr class='itemPerda'>"

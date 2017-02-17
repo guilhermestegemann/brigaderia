@@ -8,9 +8,16 @@ public class ItemPedidoCompra extends Produto{
 	private static final long serialVersionUID = 1L;
 	
 	private float qtde;
+	private float qtdeMultiplaEntrada;
 	private float unitario;
 	private float total;
 	
+	public float getQtdeMultiplaEntrada() {
+		return qtdeMultiplaEntrada;
+	}
+	public void setQtdeMultiplaEntrada(float qtdeMultiplaEntrada) {
+		this.qtdeMultiplaEntrada = qtdeMultiplaEntrada;
+	}
 	public float getUnitario() {
 		return unitario;
 	}
