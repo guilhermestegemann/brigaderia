@@ -133,8 +133,12 @@ $(document).ready( function () {
 					BRIGADERIA.pedidoVendaService.faturarPedido({
 						numero : numero,
 						success: function (successo) {
+							var tamanho = 'large';
+							if (successo == "Pedido faturado com sucesso!"){
+								tamanho = 'small';
+							}
 							bootbox.alert({
-								size:'large',
+								size:tamanho,
 								message:successo.replace("\n","<br>")
 								});
 							BRIGADERIA.gerenciarPedidoVenda.buscar();
