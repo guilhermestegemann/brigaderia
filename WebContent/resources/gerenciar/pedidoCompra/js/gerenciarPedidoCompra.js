@@ -87,8 +87,12 @@ $(document).ready( function () {
 					BRIGADERIA.pedidoCompraService.deletar({
 						numero : numero,
 						success: function (successo) {
+							var tamanho = "large";
+							if (successo == "Pedido deletado com sucesso!"){
+								tamanho = "small";
+							}
 							bootbox.alert({
-								size:'large',
+								size:tamanho,
 								message:successo.replace("\n","<br>")
 							});
 							BRIGADERIA.gerenciarPedidoCompra.buscar();

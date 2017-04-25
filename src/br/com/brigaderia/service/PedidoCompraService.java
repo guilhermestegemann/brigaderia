@@ -162,7 +162,7 @@ public class PedidoCompraService {
 					jdbcProduto.movimentaEstoque(listItemPedido.get(i).getCodigoProduto(), ((listItemPedido.get(i).getQtde() * listItemPedido.get(i).getQtdeMultiplaEntrada())*-1));
 				}
 				
-				msg = "Pedido deletado com sucesso";
+				msg = "Pedido deletado com sucesso!";
 			}	
 		}finally {
 			conec.fecharConexao();
